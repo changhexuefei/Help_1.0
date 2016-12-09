@@ -56,11 +56,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'cn.jiguang.sdk:jpush:3.0.0'
     compile 'cn.jiguang.sdk:jcore:1.0.0'
-<<<<<<< HEAD
-    compile 'com.android.support:support-v4:25.0.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-=======
     compile 'com.facebook.fresco:fresco:0.14.1'
->>>>>>> 65ae8cc5248604eff42ff91574ec43ee35651e32
 }
