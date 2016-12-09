@@ -27,6 +27,7 @@ public class MainActivity extends BaseActivity {
 	@BindView(R.id.btn_sos)
 	Button mBtnSos;
 
+
 	@Override
 	protected int getLayoutId() {
 		return R.layout.activity_main;
