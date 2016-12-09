@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+	>
+
+<ImageView
+
+	android:layout_marginLeft="@dimen/dp_16"
+	android:id="@+id/im_Stroll_list_icon"
+	android:layout_width="@dimen/dp_60"
+	android:layout_height="@dimen/dp_60"
+	android:src="@mipmap/ic_empty"
+	android:layout_marginTop="@dimen/dp_16"/>
+	<TextView
+	android:id="@+id/tv_stroll_list_title"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="运动圈"
+	android:layout_toRightOf="@id/im_Stroll_list_icon"
+	android:layout_marginTop="@dimen/dp_22"/>
+	<TextView
+		android:id="@+id/tv_stroll_list_num"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="123人"
+		android:layout_toRightOf="@id/im_Stroll_list_icon"
+		android:layout_below="@id/tv_stroll_list_title"
+		android:layout_marginLeft="@dimen/dp_4"
+	    android:layout_marginTop="@dimen/dp_18"
+
+		/>
+	<TextView
+		android:id="@+id/tv_stroll_list_idjoin"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="(已加入)"
+		android:layout_toRightOf="@id/tv_stroll_list_title"
+		android:layout_marginTop="@dimen/dp_22"
+	    android:layout_marginLeft="@dimen/dp_4"
+		/>
+	<TextView
+		android:id="@+id/tv_stroll_list_type"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="游玩"
+		android:layout_alignParentRight="true"
+		android:layout_marginTop="@dimen/dp_22"
+		android:layout_marginRight="@dimen/dp_16"/>
+	<TextView
+		android:id="@+id/tv_stroll_list_address"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="民航小区"
+	     android:layout_alignParentRight="true"
+		android:layout_below="@id/tv_stroll_list_type"
+		android:layout_marginLeft="@dimen/dp_4"
+		android:layout_marginTop="@dimen/dp_18"
+		android:layout_marginRight="@dimen/dp_16"
+
+		/>
+
+
+</RelativeLayout>
