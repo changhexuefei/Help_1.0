@@ -3,11 +3,13 @@ package com.hyzsnt.onekeyhelp.app;
 import android.app.Application;
 import android.content.Context;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.zhy.http.okhttp.log.LoggerInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.OkHttpClient;
 
 /**
@@ -28,6 +30,11 @@ public class App extends Application {
 				.readTimeout(10000L, TimeUnit.MILLISECONDS)
 				.build();
 		HttpUtils.init(okHttpClient);
+		//初始化百度地图
+		SDKInitializer.initialize(mContext);
+		//初始化极光推送
+		JPushInterface.setDebugMode(true);
+		JPushInterface.init(this);
 	}
 
 	/**

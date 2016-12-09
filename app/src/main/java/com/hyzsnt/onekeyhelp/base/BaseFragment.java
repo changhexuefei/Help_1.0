@@ -62,12 +62,12 @@ public abstract class BaseFragment extends Fragment {
 
 			@Override
 			protected String c() {
-				return c();
+				return getC();
 			}
 
 			@Override
 			protected String a() {
-				return a();
+				return getA();
 			}
 		};
 		return mLoadingPage;
@@ -92,9 +92,9 @@ public abstract class BaseFragment extends Fragment {
 
 	public abstract int getLayoutId();
 
-	public abstract String c();
+	public abstract String getC();
 
-	public abstract String a();
+	public abstract String getA();
 
 	@Override
 	public void onAttach(Context context) {
