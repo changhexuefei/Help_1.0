@@ -2,6 +2,7 @@ package com.hyzsnt.onekeyhelp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.hyzsnt.onekeyhelp.http.Api;
@@ -12,14 +13,20 @@ import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 
 public class MainActivity extends AppCompatActivity {
+
+	@BindView(R.id.activity_main)
+	RelativeLayout mActivityMain;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		ButterKnife.bind(this);
 
 		List<String> params = new ArrayList<>();
 		params.add("param1");
