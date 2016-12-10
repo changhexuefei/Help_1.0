@@ -11,6 +11,10 @@ import com.hyzsnt.onekeyhelp.base.BaseActivity;
 
 import butterknife.BindView;
 
+/**
+ * 点击主页面的
+ */
+
 public class CompoundInfoActivity extends BaseActivity {
     //初始化EditText,小区名称，人数，小区简介信息，物业电话，小区地址
     @BindView(R.id.compound_name)
