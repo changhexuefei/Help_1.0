@@ -29,3 +29,13 @@ proguard/
 .idea/
 .gradle
 /build
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+/gradle
+.idea
+/app/build
