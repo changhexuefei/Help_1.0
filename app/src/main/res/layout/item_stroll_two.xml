@@ -1,63 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_88"
 	>
 
-<ImageView
+	<ImageView
 
-	android:layout_marginLeft="@dimen/dp_16"
-	android:id="@+id/im_Stroll_list_icon"
-	android:layout_width="@dimen/dp_60"
-	android:layout_height="@dimen/dp_60"
-	android:src="@mipmap/ic_empty"
-	android:layout_marginTop="@dimen/dp_16"/>
+		android:id="@+id/im_Stroll_list_icon"
+		android:layout_width="@dimen/dp_60"
+		android:layout_height="@dimen/dp_60"
+		android:layout_marginLeft="@dimen/dp_16"
+		android:layout_marginTop="@dimen/dp_16"
+		android:src="@mipmap/ic_empty"/>
+
 	<TextView
-	android:id="@+id/tv_stroll_list_title"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:text="运动圈"
-	android:layout_toRightOf="@id/im_Stroll_list_icon"
-	android:layout_marginTop="@dimen/dp_22"/>
+		android:id="@+id/tv_stroll_list_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/dp_22"
+		android:layout_toRightOf="@id/im_Stroll_list_icon"
+		android:text="运动圈"
+		android:textColor="@color/colorDarkgray"
+		android:textSize="@dimen/sp_12"
+		/>
+
 	<TextView
 		android:id="@+id/tv_stroll_list_num"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="123人"
-		android:layout_toRightOf="@id/im_Stroll_list_icon"
+		android:layout_marginLeft="@dimen/dp_4"
+		android:layout_marginTop="@dimen/dp_22"
+		android:layout_toRightOf="@id/tv_stroll_list_title"
+		android:text="(123人)"
+		android:textColor="@color/colorCameo"
+		android:textSize="@dimen/sp_10"
+		/>
+
+
+	<TextView
+		android:id="@+id/tv_stroll_list_typeone"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_below="@id/tv_stroll_list_title"
 		android:layout_marginLeft="@dimen/dp_4"
-	    android:layout_marginTop="@dimen/dp_18"
-
-		/>
-	<TextView
-		android:id="@+id/tv_stroll_list_idjoin"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="(已加入)"
-		android:layout_toRightOf="@id/tv_stroll_list_title"
-		android:layout_marginTop="@dimen/dp_22"
-	    android:layout_marginLeft="@dimen/dp_4"
-		/>
-	<TextView
-		android:id="@+id/tv_stroll_list_type"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/dp_18"
+		android:layout_toRightOf="@id/im_Stroll_list_icon"
+		android:background="@drawable/stroll_type_one"
+		android:gravity="center"
 		android:text="游玩"
+		android:textColor="@color/color_ff"
+		android:textSize="@dimen/sp_11"/>
+	<TextView
+		android:id="@+id/tv_stroll_list_typetwo"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/tv_stroll_list_title"
+		android:layout_marginLeft="@dimen/dp_4"
+		android:layout_marginTop="@dimen/dp_18"
+		android:layout_toRightOf="@id/tv_stroll_list_typeone"
+		android:background="@drawable/stroll_type_two"
+		android:gravity="center"
+		android:text="美食"
+		android:textColor="@color/color_ff"
+		android:textSize="@dimen/sp_11"/>
+	<TextView
+		android:id="@+id/tv_stroll_list_typethree"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/tv_stroll_list_title"
+		android:layout_marginLeft="@dimen/dp_4"
+		android:layout_marginTop="@dimen/dp_18"
+		android:layout_toRightOf="@id/tv_stroll_list_typetwo"
+		android:background="@drawable/stroll_type_three"
+		android:gravity="center"
+		android:text="游戏"
+		android:textColor="@color/color_ff"
+		android:textSize="@dimen/sp_11"/>
+
+	<ImageView
+		android:id="@+id/tv_stroll_list_isjoin"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_alignParentRight="true"
+		android:layout_marginRight="@dimen/dp_30"
 		android:layout_marginTop="@dimen/dp_22"
-		android:layout_marginRight="@dimen/dp_16"/>
+		android:src="@mipmap/stroll_add"
+		/>
+
 	<TextView
 		android:id="@+id/tv_stroll_list_address"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="民航小区"
-	     android:layout_alignParentRight="true"
-		android:layout_below="@id/tv_stroll_list_type"
+		android:layout_alignParentRight="true"
+		android:layout_below="@id/tv_stroll_list_isjoin"
 		android:layout_marginLeft="@dimen/dp_4"
-		android:layout_marginTop="@dimen/dp_18"
 		android:layout_marginRight="@dimen/dp_16"
-
+		android:layout_marginTop="@dimen/dp_18"
+		android:text="民航小区"
+		android:textColor="@color/colorCameo"
+		android:textSize="@dimen/sp_10"
 		/>
 
 
