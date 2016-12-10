@@ -9,4 +9,13 @@
 	<color name="white">#FFFFFF</color>
 	<color name="lucencyBlack">#88323232</color>
 
+	<color name="colorReseda">#1CCD9A</color>
+	<color name="colorDarkgray">#323232</color>
+	<color name="colorhellrot">#F35C5C</color>
+	<color name="colorCameo">#909090</color>
+	<color name="colorWine">#B60E18</color>
+	<color name="colorLightBlue">#80ADFf</color>
+	<color name="colorOrage">#F4A381</color>
+	<color name="colorLightGreen">#79CF5F</color>
+	<color name="colorGray">#F2F2F2</color>
 </resources>

@@ -103,6 +103,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				}
 				transaction.show(mStrollFragment);
 				break;
+
+
 			case R.id.rb_main_release:
 				if (mReleaseFragment == null) {
 					mReleaseFragment = new ReleaseFragment();
@@ -142,6 +144,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		if (mUserFragment != null) {
 			transaction.hide(mUserFragment);
 		}
+		if (mStrollFragment != null) {
+			transaction.hide(mStrollFragment);
+		}
+
 		//		if (mSosFragment != null) {
 		//			transaction.remove(mSosFragment);
 		//		}
