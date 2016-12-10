@@ -77,15 +77,14 @@ public class StrollFragment extends BaseFragment {
 	}
 
 	@Override
-	public String c() {
+	public String getC() {
 		return null;
 	}
 
 	@Override
-	public String a() {
+	public String getA() {
 		return null;
 	}
-
 
 	@OnClick({R.id.im_create_circle, R.id.im_stroll_seek})
 	public void onClick(View view) {
