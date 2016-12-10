@@ -6,20 +6,24 @@ package com.hyzsnt.onekeyhelp.module.index.bean;
 
 public class MyNeighborInfo {
 
-    private String neighborIcon;
+
+    private int neighborIcon;
     private String neighborName;
-    private String neighborSexIcon;
+    private int neighborSexIcon;
     private String neighborAge;
 
-    public String getNeighborIcon() {
-        return neighborIcon;
+    public MyNeighborInfo(int neighborIcon, String neighborName, int neighborSexIcon, String neighborAge) {
+        this.neighborIcon = neighborIcon;
+        this.neighborName = neighborName;
+        this.neighborSexIcon = neighborSexIcon;
+        this.neighborAge = neighborAge;
     }
 
-    public void setNeighborIcon(String neighborIcon) {
-        this.neighborIcon = neighborIcon;
+    public MyNeighborInfo() {
     }
 
     public String getNeighborName() {
+
         return neighborName;
     }
 
@@ -27,11 +31,11 @@ public class MyNeighborInfo {
         this.neighborName = neighborName;
     }
 
-    public String getNeighborSexIcon() {
+    public int getNeighborSexIcon() {
         return neighborSexIcon;
     }
 
-    public void setNeighborSexIcon(String neighborSexIcon) {
+    public void setNeighborSexIcon(int neighborSexIcon) {
         this.neighborSexIcon = neighborSexIcon;
     }
 
@@ -43,15 +47,12 @@ public class MyNeighborInfo {
         this.neighborAge = neighborAge;
     }
 
-    public MyNeighborInfo() {
+    public int getNeighborIcon() {
 
+        return neighborIcon;
     }
 
-    public MyNeighborInfo(String neighborIcon, String neighborName, String neighborSexIcon, String neighborAge) {
-
+    public void setNeighborIcon(int neighborIcon) {
         this.neighborIcon = neighborIcon;
-        this.neighborName = neighborName;
-        this.neighborSexIcon = neighborSexIcon;
-        this.neighborAge = neighborAge;
     }
 }
