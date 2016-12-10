@@ -39,6 +39,10 @@
 		</activity>
 		<activity android:name=".module.stroll.activity.CreateCircleActivity">
 		</activity>
-	</application>
+        <activity android:name=".module.index.activity.MyNeighborListActivity">
+        </activity>
+        <activity android:name=".module.index.activity.SeekeStateActivity">
+        </activity>
+    </application>
 
 </manifest>
