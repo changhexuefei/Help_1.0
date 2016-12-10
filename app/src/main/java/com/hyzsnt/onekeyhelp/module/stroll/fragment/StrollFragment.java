@@ -35,21 +35,6 @@ public class StrollFragment extends BaseFragment {
 	@BindView(R.id.re_stroll_list)
 	RecyclerView mReStrollList;
 
-	@Nullable
-	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		//获取视图
-		View view = null;
-		//判断网络状态
-		if (NetUtils.isConnected(this.mActivity)) {
-			view = inflater.inflate(R.layout.fragment_stroll, container, false);
-		} else {
-			view = inflater.inflate(R.layout.loading_no_network_view, container, false);
-		}
-		ButterKnife.bind(this, view);
-		return view;
-	}
-
 	@Override
 	protected List<String> getParams() {
 
@@ -77,15 +62,14 @@ public class StrollFragment extends BaseFragment {
 	}
 
 	@Override
-	public String c() {
+	public String getC() {
 		return null;
 	}
 
 	@Override
-	public String a() {
+	public String getA() {
 		return null;
 	}
-
 
 	@OnClick({R.id.im_create_circle, R.id.im_stroll_seek})
 	public void onClick(View view) {
