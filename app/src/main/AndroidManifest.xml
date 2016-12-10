@@ -39,10 +39,6 @@
 		</activity>
 		<activity android:name=".module.stroll.activity.CreateCircleActivity">
 		</activity>
-        <activity android:name=".module.index.activity.CompoundInfoActivity"/>
-        <activity android:name=".module.index.activity.GoodsReplaceActivity"/>
-        <activity android:name=".module.help.activity.HelpActivity">
-        </activity>
         <activity android:name=".module.index.activity.MyNeighborListActivity">
         </activity>
         <activity android:name=".module.index.activity.SeekeStateActivity">
