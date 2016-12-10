@@ -77,12 +77,12 @@ public class StrollFragment extends BaseFragment {
 	}
 
 	@Override
-	public String c() {
+	public String getC() {
 		return null;
 	}
 
 	@Override
-	public String a() {
+	public String getA() {
 		return null;
 	}
 

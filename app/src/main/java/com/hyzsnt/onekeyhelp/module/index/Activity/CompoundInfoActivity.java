@@ -1,7 +1,6 @@
-package com.hyzsnt.onekeyhelp.module.index.Activity;
+package com.hyzsnt.onekeyhelp.module.index.activity;
 
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,13 +31,7 @@ public class CompoundInfoActivity extends BaseActivity {
     @BindView(R.id.btn_return)
     ImageButton ibtn_return;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compound_info);
-        initListener();
 
-    }
 
     public void initListener() {
         ibtn_return.setOnClickListener(new View.OnClickListener() {
@@ -54,13 +47,17 @@ public class CompoundInfoActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.id.activity_compound_info;
     }
 
     @Override
     protected void initData() {
-
-
+        tv_compound_name.setText("兴隆小区");
+        tv_compound_info.setText("12222222");
+        tv_compound_address.setText("高碑店");
+        tv_compound_people_num.setText("1000人");
+        tv_estate_phone.setText("12345678");
+        iv_compound_icon.setImageResource(R.mipmap.ic_launcher);
 
     }
 }
