@@ -1,14 +1,7 @@
 <resources>
-<<<<<<< HEAD
-    <string name="app_name">OneKeyHelp</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-=======
 	<string name="app_name">OneKeyHelp</string>
+	<string name="hello_blank_fragment">Hello blank fragment</string>
 	<string name="stroll_title">闲逛</string>
 	<string name="stroll_circle_create">创建圈子</string>
 	<string name="stroll_hot_circle">热门圈子</string>
-
->>>>>>> 65ae8cc5248604eff42ff91574ec43ee35651e32
 </resources>
