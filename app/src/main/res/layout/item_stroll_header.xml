@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_width="110dp"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:orientation="vertical">
 
+	<ImageView
+		android:id="@+id/im_stroll_header"
+		android:layout_width="@dimen/dp_90"
+		android:layout_height="@dimen/dp_46"
+		android:src="@mipmap/ic_no_network"
+		/>
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<TextView
+			android:id="@+id/tv_stroll_header_title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/dp_2"
+			android:text="健身圈"
+			android:textSize="@dimen/sp_12"/>
+
+		<TextView
+			android:id="@+id/tv_stroll_header_num"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/dp_2"
+			android:text="134人"
+			android:textSize="@dimen/sp_10"/>
+	</LinearLayout>
 </LinearLayout>

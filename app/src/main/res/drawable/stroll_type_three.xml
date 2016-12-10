@@ -2,14 +2,14 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
 	 >
 
-	<solid android:color="@color/colorhellrot"/>
+	<solid android:color="@color/colorLightGreen"/>
 	<size
 		android:width="@dimen/dp_36"
 		android:height="@dimen/dp_16">
 	</size>
 	<stroke
 		android:width="@dimen/dp_2"
-		android:color="@color/colorhellrot"
+		android:color="@color/colorLightGreen"
 		/>
 	<corners android:radius="@dimen/dp_4"></corners>
 

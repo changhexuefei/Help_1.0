@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
+import com.hyzsnt.onekeyhelp.module.stroll.fragment.StrollFragment;
 import com.hyzsnt.onekeyhelp.module.user.fragment.UserFragment;
 import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
 
@@ -39,6 +40,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	 */
 	private HomeLoginFragment mHomeLoginFragment;//登陆状态
 	private HomeUnLoginFragment mHomeUnLoginFragment;//未登录状态
+	/**
+	 * 闲逛
+	 */
+	private StrollFragment mStrollFragment;
 	/**
 	 * 发布
 	 */
@@ -91,8 +96,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				}
 				break;
 			case R.id.rb_main_stroll:
-
+				if (mStrollFragment == null) {
+					mStrollFragment = new StrollFragment();
+					transaction.add(R.id.fl_main_content, mStrollFragment);
+					transaction.show(mStrollFragment);
+				}
+				transaction.show(mStrollFragment);
 				break;
+
+
 			case R.id.rb_main_release:
 
 
@@ -134,6 +146,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		if (mUserFragment != null) {
 			transaction.hide(mUserFragment);
 		}
+		if (mStrollFragment != null) {
+			transaction.hide(mStrollFragment);
+		}
+
 		//		if (mSosFragment != null) {
 		//			transaction.remove(mSosFragment);
 		//		}

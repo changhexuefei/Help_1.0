@@ -1,13 +1,18 @@
 package com.hyzsnt.onekeyhelp.module.stroll.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.base.BaseActivity;
 
-public class CreateCircleActivity extends AppCompatActivity {
+public class CreateCircleActivity extends BaseActivity {
+
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_create_circle);
+	protected int getLayoutId() {
+		return R.layout.activity_create_circle;
+	}
+
+	@Override
+	protected void initData() {
+
 	}
 }
