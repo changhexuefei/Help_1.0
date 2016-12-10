@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_my_neighbor_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hyzsnt.onekeyhelp.module.index.activity.MyNeighborListActivity">
+    <LinearLayout
+        android:background="#1ccc9b"
+        android:orientation="horizontal"
+        android:id="@+id/search_neighbor"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+
+        <ImageButton
+            android:layout_marginLeft="12dp"
+            android:background="@null"
+            android:id="@+id/btn_return"
+            android:src="@mipmap/ic_return"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="邻居列表"
+            />
+
+
+    </LinearLayout>
+    <SearchView
+        android:queryHint="搜索"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/search_box_shape"
+        android:id="@+id/search_bar"
+        android:layout_below="@+id/search_neighbor"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+
+        />
+
+
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
+        android:layout_marginTop="8dp"
+        android:id="@+id/my_neighbor_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/search_bar"
+
+        >
+
+
+    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+
+
+</RelativeLayout>

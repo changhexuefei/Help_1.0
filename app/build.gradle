@@ -60,4 +60,6 @@ dependencies {
     compile 'cn.jiguang.sdk:jcore:1.0.0'
     //fresco
     compile 'com.facebook.fresco:fresco:0.14.1'
+    //圆形图片
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }

@@ -8,15 +8,11 @@ import com.hyzsnt.onekeyhelp.base.BaseActivity;
 
 public class GoodsReplaceActivity extends BaseActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods_replace);
-    }
+
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.id.activity_goods_replace;
     }
 
     @Override

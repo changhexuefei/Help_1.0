@@ -28,13 +28,21 @@
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".module.index.activity.CompoundInfoActivity" />
-        <activity android:name=".module.index.activity.GoodsReplaceActivity"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
+		<activity android:name=".module.index.activity.CompoundInfoActivity"/>
+		<activity android:name=".module.index.activity.GoodsReplaceActivity"/>
 		<activity android:name=".module.help.activity.HelpActivity">
 		</activity>
-	</application>
+		<activity android:name=".module.stroll.activity.SeekCircleActivity">
+		</activity>
+		<activity android:name=".module.stroll.activity.CreateCircleActivity">
+		</activity>
+        <activity android:name=".module.index.activity.MyNeighborListActivity">
+        </activity>
+        <activity android:name=".module.index.activity.SeekeStateActivity">
+        </activity>
+    </application>
 
 </manifest>

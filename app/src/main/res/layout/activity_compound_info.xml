@@ -9,9 +9,9 @@
 
     <LinearLayout
 
-        android:background="#099659"
+        android:background="#1ccc9b"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="48dp">
 
         <ImageButton
             android:layout_marginLeft="12dp"

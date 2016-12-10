@@ -4,4 +4,9 @@
 	<string name="stroll_title">闲逛</string>
 	<string name="stroll_circle_create">创建圈子</string>
 	<string name="stroll_hot_circle">热门圈子</string>
+	<string name="circle_create">圈子创建</string>
+
+	<string name="home_life_circle">生活圈</string>
+	<string name="home_run_circle">夜跑圈</string>
+	<string name="home_fitness_circle">健身圈</string>
 </resources>
