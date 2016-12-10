@@ -73,6 +73,12 @@ public abstract class BaseFragment extends Fragment {
 		return mLoadingPage;
 	}
 
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		showLoadingPage();
+	}
+
 	public void showLoadingPage() {
 		mLoadingPage.show();
 	}
