@@ -3,6 +3,12 @@
 	<color name="colorPrimary">#3F51B5</color>
 	<color name="colorPrimaryDark">#303F9F</color>
 	<color name="colorAccent">#FF4081</color>
+	<color name="blackGray">#444444</color>
+	<color name="lightGray">#646464</color>
+	<color name="lightGreen">#1CCD9A</color>
+	<color name="white">#FFFFFF</color>
+	<color name="lucencyBlack">#88323232</color>
+
 	<color name="colorReseda">#1CCD9A</color>
 	<color name="colorDarkgray">#323232</color>
 	<color name="colorhellrot">#F35C5C</color>

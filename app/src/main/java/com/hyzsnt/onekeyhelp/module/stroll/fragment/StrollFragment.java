@@ -31,6 +31,7 @@ public class StrollFragment extends BaseFragment {
 	@BindView(R.id.re_stroll_list)
 	RecyclerView mReStrollList;
 	@Nullable
+
 	@Override
 	protected List<String> getParams() {
 		return null;

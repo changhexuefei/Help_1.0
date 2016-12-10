@@ -1,13 +1,49 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/home_ll_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal"
+        android:background="#1CCD9A">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/dp_48"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/home_image_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home_image_location"
+                />
+            <TextView
+                android:id="@+id/home_tv_title"
+                android:layout_alignLeft="@id/home_image_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="兴隆小区"
+                android:textSize="@dimen/sp_16"
+                android:layout_marginLeft="@dimen/dp_10"/>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/homeimage_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dp_14"
+            android:src="@drawable/home_image_search"/>
+    </LinearLayout>
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
+        android:id="@+id/home_lrv"
+        android:layout_below="@id/home_ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.github.jdsjlzx.recyclerview.LRecyclerView>
 
-</FrameLayout>
+
+</RelativeLayout>

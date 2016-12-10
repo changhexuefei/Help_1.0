@@ -80,19 +80,19 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 			case R.id.rb_main_home:
 
 				if(isLogin){
-					if (mHomeUnLoginFragment == null) {
-						mHomeUnLoginFragment = new HomeUnLoginFragment();
-						transaction.add(R.id.fl_main_content, mHomeUnLoginFragment);
-						transaction.show(mHomeUnLoginFragment);
-					}
-					transaction.show(mHomeUnLoginFragment);
-				}else{
 					if (mHomeLoginFragment == null) {
 						mHomeLoginFragment = new HomeLoginFragment();
 						transaction.add(R.id.fl_main_content, mHomeLoginFragment);
 						transaction.show(mHomeLoginFragment);
 					}
 					transaction.show(mHomeLoginFragment);
+				}else{
+					if (mHomeUnLoginFragment == null) {
+						mHomeUnLoginFragment = new HomeUnLoginFragment();
+						transaction.add(R.id.fl_main_content, mHomeUnLoginFragment);
+						transaction.show(mHomeUnLoginFragment);
+					}
+					transaction.show(mHomeUnLoginFragment);
 				}
 				break;
 			case R.id.rb_main_stroll:
@@ -106,8 +106,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 
 			case R.id.rb_main_release:
-
-
 				if (mReleaseFragment == null) {
 					mReleaseFragment = new ReleaseFragment();
 					transaction.add(R.id.fl_main_content, mReleaseFragment);
