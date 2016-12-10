@@ -15,7 +15,7 @@ import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener{
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
 
 	@BindView(R.id.rb_main_home)
@@ -33,7 +33,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@BindView(R.id.btn_sos)
 	Button mBtnSos;
 
-	private boolean isLogin=false;
+	private boolean isLogin = false;
 
 	/**
 	 * 首页
@@ -52,6 +52,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	 * 我的
 	 */
 	private UserFragment mUserFragment;
+
 	@Override
 	protected int getLayoutId() {
 		return R.layout.activity_main;
@@ -62,15 +63,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	}
 
-    @Override
-    protected void initListener() {
-        super.initListener();
+	@Override
+	protected void initListener() {
+		super.initListener();
 		/**
 		 * 首页
 		 */
 		mRgMainBottom.setOnCheckedChangeListener(this);
 		mRgMainBottom.check(R.id.rb_main_home);
-    }
+	}
 
 	@Override
 	public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
@@ -79,14 +80,14 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		switch (checkedId) {
 			case R.id.rb_main_home:
 
-				if(isLogin){
+				if (isLogin) {
 					if (mHomeLoginFragment == null) {
 						mHomeLoginFragment = new HomeLoginFragment();
 						transaction.add(R.id.fl_main_content, mHomeLoginFragment);
 						transaction.show(mHomeLoginFragment);
 					}
 					transaction.show(mHomeLoginFragment);
-				}else{
+				} else {
 					if (mHomeUnLoginFragment == null) {
 						mHomeUnLoginFragment = new HomeUnLoginFragment();
 						transaction.add(R.id.fl_main_content, mHomeUnLoginFragment);
@@ -126,6 +127,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 
 	}
+
 	/**
 	 * 隐藏所有fragment
 	 */
@@ -147,10 +149,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		if (mStrollFragment != null) {
 			transaction.hide(mStrollFragment);
 		}
-
-		//		if (mSosFragment != null) {
-		//			transaction.remove(mSosFragment);
-		//		}
 		transaction.commit();
 	}
 
