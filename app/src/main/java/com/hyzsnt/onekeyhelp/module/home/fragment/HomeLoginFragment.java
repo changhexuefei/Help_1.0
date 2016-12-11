@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
+import com.hyzsnt.onekeyhelp.module.home.adapter.HomeLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class HomeLoginFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
-        HomeUnLoginAdapter mHomeLoginAdapter=new HomeUnLoginAdapter(getActivity());
+        HomeLoginAdapter mHomeLoginAdapter=new HomeLoginAdapter(getActivity());
         homeLoginRv.setLayoutManager(new LinearLayoutManager(getActivity()));
         homeLoginRv.setAdapter(mHomeLoginAdapter);
         homeLoginRv.setItemAnimator(new DefaultItemAnimator());
