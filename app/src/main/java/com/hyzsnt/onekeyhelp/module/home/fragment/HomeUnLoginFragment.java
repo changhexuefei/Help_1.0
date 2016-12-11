@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
-import com.hyzsnt.onekeyhelp.module.home.adapter.HomeAdapter;
+import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class HomeUnLoginFragment extends BaseFragment {
 	@Override
 	protected void initData(String content) {
 		Log.e("+++++++++++", "");
-		HomeAdapter mHomeAdapter = new HomeAdapter(getActivity());
+		HomeUnLoginAdapter mHomeAdapter = new HomeUnLoginAdapter(getActivity());
 		//LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
 		//homeLrv.setAdapter(adapter);
 		homeLrv.setLayoutManager(new LinearLayoutManager(getActivity()));
