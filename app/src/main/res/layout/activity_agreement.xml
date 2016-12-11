@@ -1,0 +1,515 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+	<RelativeLayout
+		android:id="@+id/detailed_title"
+		android:layout_width="match_parent"
+		android:layout_height="44dp"
+		android:background="@color/white">
+
+		<ImageView
+			android:id="@+id/iv_agreement_zuo"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:padding="15dp"
+			android:src="@drawable/back"/>
+
+		<TextView
+			android:id="@+id/zhong"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="《一键帮助用户协议》"
+			android:textSize="16sp"/>
+	</RelativeLayout>
+
+	<ScrollView
+		android:background="#FFFFFF"
+		android:id="@+id/sv_agreement"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:orientation="vertical">
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:text="一键帮助软件许可及服务协议"
+				android:textColor="#1ccd9b"
+				android:textSize="15sp"
+				android:textStyle="bold"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"
+				android:text="第一条 特别提示"
+				android:textColor="#1ccd9b"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="1、环宇智盛(北京)网络科技有限公司旗下产品一键帮助（以下简称“一键帮助”）在此特别提醒您（用户）在注册成为用户之前，请认真阅读本《一键帮助软件许可及服务协议》（以下简称“协议”），确保您充分理解本协议中各条款，包括免除一键帮助责任的条款及限制用户权利的条款。请您审慎阅读并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权注册、登录或使用本协议所涉服务。您的注册、登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="2、本协议约定一键帮助与用户之间关于“一键帮助”软件服务（以下简称“服务”）的权利义务。“用户”是指注册、 登录、使用本服务的个人。本协议可由一键帮助随时更新， 更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知。在一键帮助修改协议条款后，如果用户不接受修改后的条款，请立即停止使用一键帮助提供的服务，用户继续使用一键帮助提供的服务将被视为接受修改后的协议。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"
+				android:text="第二条 账号注册"
+				android:textColor="#1ccd9b"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="1、用户在使用本服务前需要注册一个“一键帮助”账号。“一键帮助”账号应当使用手机号码绑定注册， 请用户使用尚未与“一键帮助”账号绑定的手机号码，以及未被一键帮助根据本协议封禁的手机号码注册“一键帮助”账号。 一键帮助可以根据用户需求或产品需要对账号注册和绑定的方式进行变更，而无须事先通知用户。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="2、如果注册申请者有被一键帮助封禁的先例或涉嫌虚假注册及滥用他人名义注册，及其他不能得到许可的理由， 一键帮助将拒绝其注册申请。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="3、注册成功后，用户可以通过“一键帮助”软件中“我的”界面浏览或更改本人的个人信息。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="4、用户注册时所填写的个人信息如有变动，用户需通过“我的”界面及时更改。 用户因未及时更改造成的损失一键帮助概不负责。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"
+				android:text="第三条 服务内容"
+				android:textColor="#1ccd9b"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="1、本服务的具体内容由一键帮助根据实际情况提供，包括但不限于："
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（1） 人群帮助：用户安装运行“一键帮助”软件后可以在软件中获取或提供帮助；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（2） 社区管理： “一键帮助”软件中内设社区管理功能，便捷社区管理者对于居民的日常管理。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（3） 便民服务：“一键帮助”软件中为居民的日常生活提供便捷的生活服务。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="2、在遵守相关法律法规前提下，根据合作广告主的要求，一键帮助有权决定用户在“一键帮助”软件界面上看到的广告内容。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="3、用户获取或使用的商品及服务的种类与兑换价格由一键帮助全权决定。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"
+				android:text="第四条 用户账户安全"
+				android:textColor="#1ccd9b"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="1、注册用户的登陆密码管理由用户来负责，用户不应把自己的密码告诉其他第三者。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="2、如用户没有完成手机号注册流程，仍然继续使用“一键帮助”软件，系统将提示用户进行手机绑定。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="3、用户如果遗失自己的登陆密码，需及时通知一键帮助，并按照一键帮助的指导来解决该问题。如果该用户没有完成账号注册所导致的损失， 一键帮助对此不负任何责任。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"
+				android:text="第五条 服务的变更、中断、终止"
+				android:textColor="#1ccd9b"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="1、因设备维修或更换、故障和通信中断等技术原因而中断业务，一键帮助可视情况事前或事后通知用户。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="2、当一键帮助用户发生如下情况时，一键帮助可单方面终止本协议，取消用户继续使用一键帮助产品及服务的资格："
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（1） 自然伤害；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（2） 盗用他人的个人信息或手机；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（3） 注册用户时提供虚假信息；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（4） 以非法手段（包括且不限于黑客攻击等）来积累或使用积分；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（5） 妨碍其他用户的正常使用；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（6） 伪称是一键帮助的工作人员或管理人员；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（7） 擅自强行更改一键帮助的计算机系统，或威胁侵入系统；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（8） 擅自传播谣言，用各种手段来毁损一键帮助的名誉与妨碍一键帮助的正常营业；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（9） 利用一键帮助的产品及服务宣传垃圾广告；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（10） 其他违反本协议的行为及违法行为。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"
+				android:text="第六条 用户个人隐私信息保护"
+				android:textColor="#1ccd9b"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="1、一键帮助未经用户同意不向任何第三方公开、透露用户个人隐私信息。但以下特定情形除外："
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（1） 一键帮助根据法律法规规定或有权机关的指示提供用户的个人隐私信息；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（2） 由于用户将其用户密码告知他人或与他人共享注册帐户与密码，由此导致的任何个人信息的泄漏， 或其他非因一键帮助原因导致的个人隐私信息的泄露；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（3） 用户自行向第三方公开其个人隐私信息；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（4） 用户与一键帮助及合作单位之间就用户个人隐私信息的使用公开达成约定， 一键帮助因此向合作单位公开用户个人隐私信息；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（5） 任何由于黑客攻击、电脑病毒侵入及其他非因一键帮助原因导致用户个人隐私信息的泄露。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="2、用户同意一键帮助可在以下事项中使用用户的个人隐私信息："
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（1) 向用户及时发送重要通知，如软件更新、本协议条款的变更；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（2）  一键帮助内部进行审计、数据分析和研究等，以改进一键帮助的产品、服务和与用户之间的沟通；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（3） 依本协议约定，一键帮助管理、审查用户信息及进行处理措施；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（4）  适用法律法规规定的其他事项。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"
+				android:text="第七条 用户使用规范"
+				android:textColor="#1ccd9b"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="1、一键帮助用户不能利用一键帮助提供的服务进行如下行为："
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（1） 用户擅自更改、消除或毁损一键帮助广告业务提供的各种信息；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（2） 利用技术手段批量建立虚假账号；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（3） 侵害一键帮助以及第三者的知识产权；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（4） 提交、发布虚假信息，或盗用他人资料，冒充、利用他人名义；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（5） 未经一键帮助许可,而传播广告或淫秽暴力等信息；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（6） 其他不遵守本协议的行为；"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="	（7） 其他违法以及不正当的行为。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"
+				android:text="第八条 免责条款"
+				android:textColor="#1ccd9b"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="1、一键帮助提供的服务中包括广告，用户同意在使用过程中显示一键帮助与第三方供应商、 合作伙伴提供的广告。除法律法规明确规定外，用户应自行对依该广告信息进行的交易负责， 对用户因依该广告信息进行的交易或前述广告商提供的内容而遭受的损失或损害，一键帮助不承担任何责任。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"
+				android:text="第九条 知识产权保护"
+				android:textColor="#1ccd9b"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="1、一键帮助的商标、广告业务以及所提供的有关广告内容的知识产权都归属于一键帮助。 用户从一键帮助获得的信息内容不经一键帮助的许可不能擅自复制、发布与出版。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:layout_marginTop="10dp"
+				android:text="第十条 其他"
+				android:textColor="#1ccd9b"
+				android:textSize="15sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="1、一键帮助郑重提醒用户注意本协议中免除一键帮助责任和限制用户权利的条款，请用户仔细阅读，自主考虑风险。 未成年人应在法定监护人的陪同下阅读本协议。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="2、本协议的效力、解释及纠纷的解决，适用于中华人民共和国法律。若用户和一键帮助之间发生任何纠纷或争议， 首先应友好协商解决，协商不成的，用户同意将纠纷或争议提交一键帮助住所地有管辖权的人民法院管辖。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="3、本协议的任何条款无论因何种原因无效或不具可执行性，其余条款仍有效，对双方具有约束力。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="4、本协议的版权由一键帮助所有，一键帮助保留一切解释和修改的权力。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="5、本协议从2016年10月28日起适用。"
+				android:textColor="#999999"
+				android:textSize="10sp"/>
+
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>
