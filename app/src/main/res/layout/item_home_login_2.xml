@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="@dimen/dp_16"
     android:paddingRight="@dimen/dp_16"
@@ -49,9 +49,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/home_circle"
                 android:gravity="center_vertical"
-                android:text="26"
-                android:textSize="@dimen/sp_10"
-                android:drawableRight="@drawable/home_image_search"/>
+                android:text="26♂"
+                android:textSize="@dimen/sp_10" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginRight="@dimen/dp_2"
