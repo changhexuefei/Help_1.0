@@ -47,7 +47,6 @@
                 android:layout_marginTop="@dimen/dp_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/home_circle_link"
                 android:gravity="center_vertical"
                 android:text="26♂"
                 android:textSize="@dimen/sp_10" />
@@ -125,8 +124,7 @@
                 android:layout_height="wrap_content"
                 android:text="旅游"
                 android:textSize="@dimen/sp_12"
-                android:textColor="@color/white"
-                android:background="@drawable/home_circle_link"/>
+                android:textColor="@color/white" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
