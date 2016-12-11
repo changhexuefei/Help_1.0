@@ -3,15 +3,6 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.4.0\d85884acf6810a3bbbecb587f239005cbc846dc4\bolts-tasks-1.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
-        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\bolts-tasks-1.4.0_c64325f78a24c085b700c554244dc03fa6bc6a89\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\work\OneKeyHelp_v3.0\app\libs\baidumapapi_map_v4_1_1.jar"
         jumboMode="true"
         optimize="true"
@@ -30,21 +21,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
-        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.1_eca7daa6400913222c4e708500db64dc728b9f08\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\libs\internal_impl-25.0.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
         <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_ab7fd67ce208f2925792b56ab6a8b4022c6ff4bb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.1_eca7daa6400913222c4e708500db64dc728b9f08\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -120,15 +111,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.facebook.fresco\fresco\0.14.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="c77602d43223db798b1ca56cf307ab0ee3c0e63f">
-        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.facebook.fresco-fresco-0.14.1_ad4e00265b5c05e47091dd959681ad0c5fa7d40a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\cn.jiguang.sdk\jcore\1.0.0\jars\libs\jcore-android_v1.0.0.jar"
         jumboMode="true"
         optimize="true"
@@ -144,15 +126,6 @@
         revision="25.0.1"
         sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
         <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_7988b80f89f7865a7ca5c62144266feb0e77b91a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.facebook.fresco\fbcore\0.14.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="e5bf70f3683146e4875c006624543cb0a13eac91">
-        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.facebook.fresco-fbcore-0.14.1_f770197bdb1112a66fd642eef857c751b5b6a48e\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -192,21 +165,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.github.jdsjlzx\LRecyclerView\1.2.9\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="6ec2652687e30447b7044c78c5270031b9d343d1">
-        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.github.jdsjlzx-LRecyclerView-1.2.9_ee015c6afd0c9f686c2d82437696ef13bb658c47\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\work\OneKeyHelp_v3.0\app\libs\baidumapapi_cloud_v4_1_1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="93ef91d018051b8b5e001eb5e106b983fee8a549">
         <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_cloud_v4_1_1_258351b2640cde97fd587d24af54799b703ecace\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.github.jdsjlzx\LRecyclerView\1.2.9\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6ec2652687e30447b7044c78c5270031b9d343d1">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.github.jdsjlzx-LRecyclerView-1.2.9_ee015c6afd0c9f686c2d82437696ef13bb658c47\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -237,15 +210,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.facebook.fresco\drawee\0.14.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="cf5e2940501f8f7b9175df6491cebb84f5690f14">
-        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.facebook.fresco-drawee-0.14.1_00959a6b1f84230fee2160644869a893b3ff9a12\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.zhy\okhttputils\2.6.2\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -264,15 +228,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.facebook.fresco\imagepipeline\0.14.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="8795af3e130206443f2d5ed45f1b26067aff70dc">
-        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.facebook.fresco-imagepipeline-0.14.1_44bb59e34e8c6b479c10f9d7cbc72088b2e5f415\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.jakewharton\butterknife\8.4.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -286,7 +241,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="41ecc2f3759896a490e3a24e871dff3e08d5c420">
+        sha1="814e5d04c59e9afb9b848ebee44b3d61adfcd0c2">
         <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_0cc517c84829f52dce04535a47a5469752c71d82\classes.dex" />
     </item>
     <item
@@ -295,7 +250,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="129bebc8a17136c1b9d66af72d64a1e8f9149f16">
+        sha1="7eba2863a9be4b1c2603cfa5444bd8054156c648">
         <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_6a75801d87acc71f7286a11b959128f71be6a707\classes.dex" />
     </item>
     <item
@@ -336,15 +291,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.facebook.fresco\imagepipeline-base\0.14.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="b881010e06dc39be15b7465cd16492eedbab246f">
-        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.facebook.fresco-imagepipeline-base-0.14.1_981fa494e0a1cdbb7b437d3ebf766d52590b6b49\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\cn.jiguang.sdk\jpush\3.0.0\jars\libs\jpush-android_v3.0.0.jar"
         jumboMode="true"
         optimize="true"
@@ -363,21 +309,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
-        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_f3209640a0119e888cc24a7ccbca3c9a842877f0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.3.1\19047bdb6a4fc00a44124f64ca98e88fc204e7e3\okhttp-3.3.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="19047bdb6a4fc00a44124f64ca98e88fc204e7e3">
         <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-3.3.1_2ea39afb3973a142a4b831a99bc4e2df1de6a0a5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_f3209640a0119e888cc24a7ccbca3c9a842877f0\classes.dex" />
     </item>
 
 </items>

@@ -1,10 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/activity_seek_circle"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:orientation="vertical"
 	tools:context="com.hyzsnt.onekeyhelp.module.stroll.activity.SeekCircleActivity">
 
+	<RelativeLayout
+		android:id="@+id/relayout_create_circle_one"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/dp_48"
+		android:background="@color/colorReseda"
+		>
+
+		<ImageView
+			android:id="@+id/im_search_back"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:paddingLeft="@dimen/dp_18"
+			android:paddingRight="@dimen/dp_6"
+
+			android:src="@mipmap/circle_back"
+			/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:layout_centerVertical="true"
+			android:layout_gravity="center_horizontal"
+			android:text="搜素"
+			android:textColor="@color/color_ff"
+			android:textSize="@dimen/sp_20"
+			android:textStyle="bold"
+			/>
+	</RelativeLayout>
+
+	<RelativeLayout
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+
+	android:background="#F0F0F0">
+<android.support.v7.widget.SearchView
+	    android:id="@+id/search_seek_cricle"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+		android:background="#FFF"
+	    android:layout_marginRight="@dimen/dp_10"
+	    android:layout_marginLeft="@dimen/dp_10"
+	    android:layout_marginTop="@dimen/dp_12"
+	     android:queryHint="请输入你要搜索的圈子">
+    </android.support.v7.widget.SearchView>
+	<android.support.v7.widget.RecyclerView
+		android:layout_below="@id/search_seek_cricle"
+		android:id="@+id/re_seek_circle"
+		android:layout_marginTop="@dimen/dp_22"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+	    android:layout_marginLeft="@dimen/dp_10"
+	    android:layout_marginRight="@dimen/dp_10"
+		></android.support.v7.widget.RecyclerView>
 </RelativeLayout>
+</LinearLayout>

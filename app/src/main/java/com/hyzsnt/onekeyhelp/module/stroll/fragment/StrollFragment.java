@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CreateCircleActivity;
+import com.hyzsnt.onekeyhelp.module.stroll.activity.SeekCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.StrollFragmentAadapter;
 
 import java.util.ArrayList;
@@ -76,6 +77,8 @@ public class StrollFragment extends BaseFragment {
                 mActivity.startActivity(new Intent(mActivity, CreateCircleActivity.class));
 				break;
 			case R.id.im_stroll_seek:
+				//跳转到创建圈子页面
+				mActivity.startActivity(new Intent(mActivity, SeekCircleActivity.class));
 				break;
 		}
 	}

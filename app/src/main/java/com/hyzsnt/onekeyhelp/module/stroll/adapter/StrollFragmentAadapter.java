@@ -25,6 +25,7 @@ public class StrollFragmentAadapter extends RecyclerView.Adapter<RecyclerView.Vi
 	private Context mContext;
 	private ArrayList<String> mList;
 	private LayoutInflater mLayoutInflater;
+	private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
 	public StrollFragmentAadapter(Context context, ArrayList<String> list) {
 		mContext = context;
@@ -94,5 +95,9 @@ public class StrollFragmentAadapter extends RecyclerView.Adapter<RecyclerView.Vi
 			return ITEM_TYPE_TWO;
 		}
 
+	}
+	//define interface
+	public static interface OnRecyclerViewItemClickListener {
+		void onItemClick(View view , String data);
 	}
 }

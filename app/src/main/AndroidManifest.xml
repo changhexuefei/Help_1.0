@@ -39,6 +39,8 @@
 		</activity>
 		<activity android:name=".module.stroll.activity.CreateCircleActivity">
 		</activity>
+		<activity android:name=".module.stroll.adapter.StrollDetailsActivity">
+		</activity>
 	</application>
 
 </manifest>

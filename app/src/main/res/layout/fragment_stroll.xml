@@ -12,10 +12,11 @@
 		<ImageView
 			android:layout_centerVertical="true"
 			android:id="@+id/im_create_circle"
-			android:layout_marginLeft="@dimen/dp_18"
-			android:layout_marginRight="@dimen/dp_6"
-			android:layout_width="@dimen/dp_18"
-			android:layout_height="@dimen/dp_18"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+
+			android:paddingLeft="@dimen/dp_18"
+			android:paddingRight="@dimen/dp_6"
 		    android:src="@mipmap/stroll_create"
 			/>
 		<TextView
@@ -49,7 +50,9 @@
 	           android:layout_width="wrap_content"
 	           android:layout_height="wrap_content"
 	           android:src="@mipmap/stroll_seek"
-			android:layout_marginRight="@dimen/dp_18"/>
+
+			android:paddingRight="@dimen/dp_18"
+			android:paddingLeft="@dimen/dp_6"/>
 
 	</RelativeLayout>
 
