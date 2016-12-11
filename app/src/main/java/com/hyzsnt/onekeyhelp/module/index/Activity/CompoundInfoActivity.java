@@ -1,6 +1,4 @@
 package com.hyzsnt.onekeyhelp.module.index.activity;
-
-
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;

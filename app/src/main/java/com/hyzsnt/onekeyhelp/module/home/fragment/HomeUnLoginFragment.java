@@ -2,6 +2,8 @@ package com.hyzsnt.onekeyhelp.module.home.fragment;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
@@ -48,9 +51,12 @@ public class HomeUnLoginFragment extends BaseFragment {
 	@Override
 	protected void initData(String content) {
 		Log.e("+++++++++++", "");
-		HomeAdapter mHomeAdapter = new HomeAdapter(mActivity);
-		LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
+		HomeAdapter mHomeAdapter = new HomeAdapter(getActivity());
+		//LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
+		//homeLrv.setAdapter(adapter);
+		homeLrv.setLayoutManager(new LinearLayoutManager(getActivity()));
 		homeLrv.setAdapter(mHomeAdapter);
+		homeLrv.setItemAnimator(new DefaultItemAnimator());
 	}
 
 	@Override
@@ -82,8 +88,7 @@ public class HomeUnLoginFragment extends BaseFragment {
 	protected void initView(View contentView) {
 		super.initView(contentView);
 		Log.e("----------", "");
-	    /*HomeAdapter mHomeAdapter=new HomeAdapter(getActivity());
-        homeLrv.setAdapter(mHomeAdapter);*/
+
 
 	}
 }

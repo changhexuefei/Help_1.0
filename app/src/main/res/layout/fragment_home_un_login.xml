@@ -45,12 +45,7 @@
 			android:src="@drawable/home_image_search"/>
 	</LinearLayout>
 
-	<!--<com.github.jdsjlzx.recyclerview.LRecyclerView-->
-	<!--android:id="@+id/home_lrv"-->
-	<!--android:layout_below="@id/home_ll_title"-->
-	<!--android:layout_width="match_parent"-->
-	<!--android:layout_height="wrap_content">-->
-	<!--</com.github.jdsjlzx.recyclerview.LRecyclerView>-->
+
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/home_lrv"
 		android:layout_width="match_parent"
