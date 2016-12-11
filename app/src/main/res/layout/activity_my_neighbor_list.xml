@@ -31,34 +31,31 @@
             android:text="邻居列表"
             />
 
-
     </LinearLayout>
-    <SearchView
-        android:queryHint="搜索"
+    <EditText
+        android:background="@drawable/search_box_shape"
+        android:hint="搜索"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/search_box_shape"
-        android:id="@+id/search_bar"
+        android:id="@+id/et_search"
         android:layout_below="@+id/search_neighbor"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center"
+        android:drawableLeft="@drawable/search"
 
         />
 
 
-    <com.github.jdsjlzx.recyclerview.LRecyclerView
+    <android.support.v7.widget.RecyclerView
         android:layout_marginTop="8dp"
         android:id="@+id/my_neighbor_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/search_bar"
-
+        android:layout_below="@+id/et_search"
         >
-
-
-    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+    </android.support.v7.widget.RecyclerView>
 
 
 </RelativeLayout>

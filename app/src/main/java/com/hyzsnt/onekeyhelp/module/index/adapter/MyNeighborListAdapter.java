@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.index.bean.MyNeighborInfo;
 
@@ -16,7 +15,7 @@ import java.util.List;
  * Created by gao on 2016/12/10.
  */
 
-public class MyNeighborListAdapter extends LRecyclerView.Adapter<LRecyclerView.ViewHolder> {
+public class MyNeighborListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<MyNeighborInfo> mNeighborInfos;
     private static final int TYPE_ITEM = 1;
@@ -27,8 +26,8 @@ public class MyNeighborListAdapter extends LRecyclerView.Adapter<LRecyclerView.V
     }
 
     @Override
-    public LRecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == TYPE_ITEM) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == TYPE_ITEM) {
 
             View view = View.inflate(parent.getContext(), R.layout.item_neighbor, null);
             view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
@@ -42,11 +41,11 @@ public class MyNeighborListAdapter extends LRecyclerView.Adapter<LRecyclerView.V
             return new FooterViewHolder(view);
 
         }
-            return null;
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(LRecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             itemViewHolder.iv_neighbor_icon.setImageResource(R.mipmap.ic_launcher);
@@ -58,13 +57,13 @@ public class MyNeighborListAdapter extends LRecyclerView.Adapter<LRecyclerView.V
 
     @Override
     public int getItemCount() {
-        return mNeighborInfos.size()+ 1;
+        return mNeighborInfos.size();
     }
 
 
-    public class ItemViewHolder extends LRecyclerView.ViewHolder{
-        TextView tv_neighbor_name,tv_neighbor_age;
-        ImageView iv_neighbor_icon,iv_neighbor_sex_icon;
+    public class ItemViewHolder extends RecyclerView.ViewHolder {
+        TextView tv_neighbor_name, tv_neighbor_age;
+        ImageView iv_neighbor_icon, iv_neighbor_sex_icon;
 
 
         public ItemViewHolder(View itemView) {
@@ -77,6 +76,7 @@ public class MyNeighborListAdapter extends LRecyclerView.Adapter<LRecyclerView.V
 
         }
     }
+
     class FooterViewHolder extends RecyclerView.ViewHolder {
         private TextView tv_footer;
 
@@ -87,6 +87,6 @@ public class MyNeighborListAdapter extends LRecyclerView.Adapter<LRecyclerView.V
     }
 
 
-    }
+}
 
 

@@ -7,85 +7,89 @@
     android:layout_height="match_parent"
     tools:context="com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity">
 
-    <SearchView
-        android:layout_below="@+id/action0"
+    <EditText
         android:id="@+id/search_estate_bar"
-        android:queryHint="请输入你想搜索的小区"
-        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/action0"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/search"
         android:background="@drawable/search_box_shape"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_centerHorizontal="true"/>
+        android:hint="请输入你想搜索的小区"/>
 
     <RelativeLayout
 
-        android:background="#1ccc9b"
-
         android:id="@+id/action0"
+
         android:layout_width="match_parent"
         android:layout_height="48dp"
-
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#1ccc9b">
+
         <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
             android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="搜索"
-            android:id="@+id/textView5"/>
+            android:textColor="#ffffff"
+            android:textSize="18sp"/>
 
         <TextView
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="12dp"
+            android:id="@+id/tv_cancel"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:textColor="#ffffff"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+
+            android:layout_marginRight="12dp"
+            android:enabled="true"
+            android:gravity="center"
             android:text="取消"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
             />
-
-
     </RelativeLayout>
+
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="40dp"
-        android:layout_below="@+id/search_estate_bar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search_estate_bar"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp">
+
         <Button
             android:id="@+id/city"
-            android:background="@drawable/search_page_btn_shape"
-            android:onClick="click"
             android:layout_width="45dp"
             android:layout_height="20dp"
+            android:background="@drawable/search_page_btn_shape"
+            android:onClick="click"
             android:text="城市"
             />
 
         <Button
 
+            android:id="@+id/county"
+            android:layout_width="45dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/search_page_btn_shape"
             android:onClick="click"
-            android:layout_width="45dp"
-            android:layout_height="20dp"
-            android:text="区县"
-            android:id="@+id/county"/>
+            android:text="区县"/>
 
         <Button
             android:id="@+id/hot_pints"
+            android:layout_width="45dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/search_page_btn_shape"
             android:onClick="click"
-            android:layout_width="45dp"
-            android:layout_height="20dp"
             android:text="热点"
             />
 
