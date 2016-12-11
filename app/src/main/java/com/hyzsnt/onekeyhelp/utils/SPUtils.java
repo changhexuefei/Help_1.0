@@ -3,6 +3,8 @@ package com.hyzsnt.onekeyhelp.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.hyzsnt.onekeyhelp.app.App;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -167,5 +169,8 @@ public class SPUtils {
 			}
 			editor.commit();
 		}
+	}
+	public static boolean isLogin(Context context){
+		return (boolean)get(App.getContext(), "islogin", false);
 	}
 }
