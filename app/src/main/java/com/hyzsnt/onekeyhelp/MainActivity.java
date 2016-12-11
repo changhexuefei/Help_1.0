@@ -33,7 +33,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@BindView(R.id.btn_sos)
 	Button mBtnSos;
 
-	private boolean isLogin = false;
+	private boolean isLogin = true;
 
 	/**
 	 * 首页
@@ -87,6 +87,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 						transaction.show(mHomeLoginFragment);
 					}
 					transaction.show(mHomeLoginFragment);
+					isLogin=false;
 				} else {
 					if (mHomeUnLoginFragment == null) {
 						mHomeUnLoginFragment = new HomeUnLoginFragment();
@@ -94,6 +95,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 						transaction.show(mHomeUnLoginFragment);
 					}
 					transaction.show(mHomeUnLoginFragment);
+					isLogin=true;
 				}
 				break;
 			case R.id.rb_main_stroll:
@@ -104,8 +106,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				}
 				transaction.show(mStrollFragment);
 				break;
-
-
 			case R.id.rb_main_release:
 				if (mReleaseFragment == null) {
 					mReleaseFragment = new ReleaseFragment();
