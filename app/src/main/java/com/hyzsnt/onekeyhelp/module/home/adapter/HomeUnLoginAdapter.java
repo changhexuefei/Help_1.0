@@ -25,14 +25,14 @@ import butterknife.BindView;
  * Created by hyzs on 2016/12/10.
  */
 
-public class HomeAdapter extends RecyclerView.Adapter {
+public class HomeUnLoginAdapter extends RecyclerView.Adapter {
     private RecyclerView homeLrvHead;
     private Context mContext;
     private MainActivity activity;
     private View v1;
     private View v2;
 
-    public HomeAdapter(Context mContext) {
+    public HomeUnLoginAdapter(Context mContext) {
         this.mContext = mContext;
         activity=(MainActivity)mContext;
     }
@@ -85,11 +85,11 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
         }
     }
-    public class HomeViewHolder2 extends RecyclerView.ViewHolder{
+    static class HomeViewHolder2 extends RecyclerView.ViewHolder{
         public ImageView homeIvDetail;
         public HomeViewHolder2(View itemView) {
             super(itemView);
-            homeIvDetail=(ImageView)v2.findViewById(R.id.home_iv_detail);
+            homeIvDetail=(ImageView)itemView.findViewById(R.id.home_iv_detail);
         }
     }
 
