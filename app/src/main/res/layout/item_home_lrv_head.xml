@@ -13,12 +13,13 @@
         android:textColor="#444444"
         android:paddingLeft="@dimen/dp_18"
         android:gravity="center_vertical"/>
-    <com.github.jdsjlzx.recyclerview.LRecyclerView
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/home_lrv_head"
         android:layout_below="@id/home_tv_star_circle"
         android:layout_width="match_parent"
         android:layout_height="150dp">
-    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+    </android.support.v7.widget.RecyclerView>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_48"
