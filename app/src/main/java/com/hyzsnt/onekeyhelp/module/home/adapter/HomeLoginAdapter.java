@@ -25,7 +25,7 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
             View v0 = LayoutInflater.from(mContext).inflate(R.layout.item_home_login_head, parent, false);
             return new HomeUnLoginAdapter.HomeViewHolder1(v0);
         } else if(viewType == 1){
-            View v1 = LayoutInflater.from(mContext).inflate(R.layout.item_home_login_2,parent, false);
+            View v1 = LayoutInflater.from(mContext).inflate(R.layout.item_home_login_1,parent, false);
             return new HomeUnLoginAdapter.HomeViewHolder2(v1);
         }else{
             View v2 = LayoutInflater.from(mContext).inflate(R.layout.item_home_login_2, parent, false);
