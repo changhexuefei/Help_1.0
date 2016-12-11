@@ -66,22 +66,9 @@ public class MyNeighborListActivity extends BaseActivity implements TextWatcher 
     @Override
     protected void initData() {
         mNeighborListAdapter = new MyNeighborListAdapter();
-//        mAdapter = new LRecyclerViewAdapter(mNeighborListAdapter);
         final LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mMyNeighborList.setLayoutManager(manager);
         mMyNeighborList.setHasFixedSize(true);
-//        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mSwipeRefreshLayout.setRefreshing(false);
-//                        mNeighborListAdapter.notifyDataSetChanged();
-//                    }
-//                },2000);
-//            }
-//        });
         //设置Item增加、移除动画
         mMyNeighborList.setItemAnimator(new DefaultItemAnimator());
         //添加分割线
@@ -118,20 +105,19 @@ public class MyNeighborListActivity extends BaseActivity implements TextWatcher 
     }
 
 
-
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        Toast.makeText(this,charSequence,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, charSequence, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        Toast.makeText(this,charSequence,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, charSequence, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
-        Log.d("TextChanged", "afterTextChanged: "+editable);
-        Toast.makeText(this, "您输入的是："+editable.toString(), Toast.LENGTH_SHORT).show();
+        Log.d("TextChanged", "afterTextChanged: " + editable);
+        Toast.makeText(this, "您输入的是：" + editable.toString(), Toast.LENGTH_SHORT).show();
     }
 }
