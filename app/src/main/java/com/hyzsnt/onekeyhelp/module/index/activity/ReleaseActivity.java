@@ -1,13 +1,15 @@
 package com.hyzsnt.onekeyhelp.module.index.activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 发布页面
@@ -15,15 +17,14 @@ import butterknife.BindView;
 
 public class ReleaseActivity extends BaseActivity {
 
-
-    @BindView(R.id.house_lease)
-    Button mHouseLease;
-    @BindView(R.id.eave)
-    Button mEave;
-    @BindView(R.id.casual_comment)
-    Button mCasualComment;
     @BindView(R.id.btn_cancel)
     Button mBtnCancel;
+    @BindView(R.id.iv_talk)
+    ImageView mIvTalk;
+    @BindView(R.id.iv_unuse_goods)
+    ImageView mIvUnuseGoods;
+    @BindView(R.id.iv_house_lease)
+    ImageView mIvHouseLease;
 
     @Override
     protected int getLayoutId() {
@@ -32,30 +33,6 @@ public class ReleaseActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        //房屋出租按钮
-        mHouseLease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(ReleaseActivity.this,"view"+view.getId(),Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //家中闲置
-        mEave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(ReleaseActivity.this,"view"+view.getId(),Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        //随便说说
-        mCasualComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(ReleaseActivity.this,"view"+view.getId(),Toast.LENGTH_SHORT).show();
-
-            }
-        });
 
 
         mBtnCancel.setOnClickListener(new View.OnClickListener() {
@@ -68,4 +45,16 @@ public class ReleaseActivity extends BaseActivity {
     }
 
 
+    @OnClick({R.id.iv_talk, R.id.iv_unuse_goods, R.id.iv_house_lease})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_talk:
+                startActivity(new Intent(this, TalkActivity.class));
+                break;
+            case R.id.iv_unuse_goods:
+                break;
+            case R.id.iv_house_lease:
+                break;
+        }
+    }
 }
