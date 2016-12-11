@@ -1,6 +1,7 @@
 package com.hyzsnt.onekeyhelp.module.home.fragment;
 
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,11 +12,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeAdapter;
+import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
 
 import java.util.List;
 
@@ -80,6 +80,8 @@ public class HomeUnLoginFragment extends BaseFragment {
 			case R.id.home_image_location:
 				break;
 			case R.id.homeimage_search:
+				Intent i=new Intent(getActivity(), SeekeStateActivity.class);
+				startActivity(i);
 				break;
 		}
 	}
