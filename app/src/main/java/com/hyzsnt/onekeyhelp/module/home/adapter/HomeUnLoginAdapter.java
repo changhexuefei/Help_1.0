@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.hyzsnt.onekeyhelp.MainActivity;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 
 /**
  * Created by hyzs on 2016/12/10.
