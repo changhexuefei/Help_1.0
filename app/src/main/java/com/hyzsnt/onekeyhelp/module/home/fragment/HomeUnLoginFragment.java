@@ -55,7 +55,7 @@ public class HomeUnLoginFragment extends BaseFragment {
 
 	@Override
 	protected void initData(String content) {
-		
+
 		HomeUnLoginAdapter mHomeAdapter = new HomeUnLoginAdapter(getActivity());
 		//LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
 		//homeLrv.setAdapter(adapter);
