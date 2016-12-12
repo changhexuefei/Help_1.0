@@ -111,7 +111,7 @@
 		android:visibility="invisible"
 		android:layout_width="59dp"
 		android:layout_height="59dp"
-		android:layout_below="@id/fl_help_content"
+		android:layout_alignParentBottom="true"
 		android:layout_centerHorizontal="true"
 		android:background="@drawable/for_help3x"
 		android:gravity="center"
