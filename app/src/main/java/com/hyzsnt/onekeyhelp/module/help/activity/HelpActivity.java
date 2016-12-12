@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -17,6 +16,7 @@ import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.module.help.fragment.MapHelpFragment;
 import com.hyzsnt.onekeyhelp.module.help.fragment.NearbyHelpFragment;
+import com.hyzsnt.onekeyhelp.utils.DensityUtils;
 import com.hyzsnt.onekeyhelp.utils.ScreenUtils;
 
 import butterknife.BindView;
@@ -54,12 +54,11 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@Override
 	protected void initData() {
 		tv_help.setVisibility(View.VISIBLE);
-		ObjectAnimator upAnima = ObjectAnimator.ofFloat(tv_help, "translationY", ScreenUtils.getScreenHeight(this)-1100, -ScreenUtils.getScreenHeight(this) / 2);
-		Log.d("高--------",ScreenUtils.getScreenHeight(this)+"");
-		upAnima.setDuration(1200).start();
-		float translationY = btn_cancel.getTranslationY();
-		ObjectAnimator downAnima = ObjectAnimator.ofFloat(btn_cancel, "translationY",-100, -translationY);
-		downAnima.setDuration(1200).start();
+		ObjectAnimator upAnima = ObjectAnimator.ofFloat(tv_help, "translationY", -ScreenUtils.getScreenHeight(this) / 2 - ScreenUtils.getStatusHeight(this) + DensityUtils.dp2px(this, 8));
+		upAnima.setDuration(1000).start();
+		int height = btn_cancel.getHeight();
+		ObjectAnimator downAnima = ObjectAnimator.ofFloat(btn_cancel, "translationY", height - DensityUtils.dp2px(this, 50));
+		downAnima.setDuration(1000).start();
 	}
 
 	@Override
@@ -158,5 +157,9 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		showDialog(null);
 	}
 
+	@Override
+	public void onBackPressed() {
+		showDialog(null);
+	}
 }
 
