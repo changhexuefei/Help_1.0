@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_release"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f8f8f8">
+    android:background="#f8f8f8"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/release"
@@ -20,114 +21,169 @@
             android:layout_height="wrap_content"
             android:text="发布"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp"/>
     </LinearLayout>
 
-
-    <ImageView
+    <LinearLayout
         android:id="@+id/iv_talk"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginLeft="86dp"
-        android:layout_marginTop="86dp"
-        app:srcCompat="@mipmap/talk"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/iv_talk"
-        android:layout_marginLeft="19dp"
-        android:layout_toRightOf="@+id/iv_talk"
-        android:orientation="vertical">
+        android:layout_marginTop="40dp">
 
-        <TextView
+        <ImageView
+            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="true"
-            android:text="随便说说"
-            android:textColor="#333333"
-            android:textSize="15sp"
-            />
+            android:layout_marginLeft="86dp"
+            app:srcCompat="@mipmap/talk"/>
 
-        <TextView
+        <LinearLayout
+            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="晒晒新鲜事，和邻居聊家常"
-            android:textColor="#afafaf"
-            android:textSize="12sp"
-            />
+            android:layout_marginLeft="19dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:text="随便说说"
+                android:textColor="#333333"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="晒晒新鲜事，和邻居聊家常"
+                android:textColor="#afafaf"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
     </LinearLayout>
 
-    <ImageView
+    <LinearLayout
+        android:id="@+id/iv_general_message"
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="86dp"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@mipmap/general_message"/>
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="true"
+                android:text="综合信息"
+                android:textColor="#333333"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="晒晒新鲜事，和邻居聊家常"
+                android:textColor="#afafaf"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
         android:id="@+id/iv_unuse_goods"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignLeft="@+id/iv_talk"
-        android:layout_alignStart="@+id/iv_talk"
-        android:layout_below="@+id/iv_talk"
-        android:layout_marginTop="59dp"
-        app:srcCompat="@mipmap/unuse_goods"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/iv_unuse_goods"
-        android:layout_marginLeft="19dp"
-        android:layout_toRightOf="@+id/iv_unuse_goods"
-        android:orientation="vertical">
+        android:layout_marginTop="30dp">
 
-        <TextView
+        <ImageView
+            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="家中闲置"
-            android:textColor="#afafaf"
-            android:textSize="15sp"
-            />
+            android:layout_marginLeft="86dp"
+            app:srcCompat="@mipmap/unuse_goods"
+            android:id="@+id/imageView2"/>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="跟邻居分享闲置的好东西"
-            android:textColor="#afafaf"
-            android:textSize="12sp"
-            />
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="19dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="家中闲置"
+                android:textColor="#afafaf"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="跟邻居分享闲置的好东西"
+                android:textColor="#afafaf"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
     </LinearLayout>
 
-
-    <ImageView
-        android:id="@+id/iv_house_lease"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_alignLeft="@+id/iv_unuse_goods"
-        android:layout_alignStart="@+id/iv_unuse_goods"
-        android:layout_below="@+id/iv_unuse_goods"
-        android:layout_marginTop="59dp"
-        app:srcCompat="@mipmap/house_lease"/>
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/iv_house_lease"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_vertical"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/iv_house_lease"
-        android:layout_marginLeft="19dp"
-        android:layout_toRightOf="@+id/iv_house_lease"
-        android:orientation="vertical">
+        android:layout_marginTop="30dp">
 
-        <TextView
+        <ImageView
+            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="房屋出租"
-            android:textColor="#afafaf"
-            android:textSize="15sp"
-            />
+            android:layout_marginLeft="86dp"
+            app:srcCompat="@mipmap/house_lease"
+            android:id="@+id/imageView"/>
 
-        <TextView
+        <LinearLayout
+            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="邻居出租、求租、问邻居更好"
-            android:textColor="#afafaf"
-            android:textSize="12sp"
-            />
+            android:layout_marginLeft="19dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="房屋出租"
+                android:textColor="#afafaf"
+                android:textSize="15sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="邻居出租、求租、问邻居更好"
+                android:textColor="#afafaf"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
+
     </LinearLayout>
 
 
@@ -135,14 +191,13 @@
         android:id="@+id/btn_cancel"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="38dp"
         android:background="#1ccd9a"
         android:text="取消"
         android:textColor="@color/white"
-        android:textSize="16sp"
-        android:layout_below="@+id/iv_house_lease"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="16sp"/>
 
 
-</RelativeLayout>
+</LinearLayout>
 
