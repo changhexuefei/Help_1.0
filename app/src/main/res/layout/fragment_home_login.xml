@@ -11,8 +11,8 @@
         android:background="#1CCD9A"
         android:orientation="horizontal">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:src="@drawable/home_login_switchover"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp_12"/>
@@ -37,7 +37,8 @@
                 android:layout_alignLeft="@id/home_image_location"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:text="兴隆小区"
-                android:textSize="@dimen/sp_16"/>
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/white"/>
         </LinearLayout>
 
         <ImageView

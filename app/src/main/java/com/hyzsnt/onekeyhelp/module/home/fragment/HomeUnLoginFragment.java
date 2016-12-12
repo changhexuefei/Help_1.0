@@ -14,13 +14,18 @@ import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
+import com.hyzsnt.onekeyhelp.http.Api;
+import com.hyzsnt.onekeyhelp.http.HttpUtils;
+import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,7 +55,25 @@ public class HomeUnLoginFragment extends BaseFragment {
 
 	@Override
 	protected void initData(String content) {
-		Log.e("+++++++++++", "");
+		List params=new ArrayList<String>();
+		params.add("兴隆区");
+		String str=HttpUtils.post(Api.PUBLIC, Api.Public.TEST, params,new ResponseHandler() {
+			@Override
+			public void onError(Call call, Exception e, int id) {
+				Log.e("+++++++++++","失败"+call+"----"+e+"@@@@@"+id);
+			}
+
+			@Override
+			public void onSuccess(String response, int id) {
+				Log.e("+++++++++++",response+"米西米西"+id);
+			}
+
+			@Override
+			public void inProgress(float progress, long total, int id) {
+				Log.e("+++++++++++",progress+"过程中"+total+"很爱很爱"+id);
+			}
+		});
+		Log.e("+++++++++++",str);
 		HomeUnLoginAdapter mHomeAdapter = new HomeUnLoginAdapter(getActivity());
 		//LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
 		//homeLrv.setAdapter(adapter);
