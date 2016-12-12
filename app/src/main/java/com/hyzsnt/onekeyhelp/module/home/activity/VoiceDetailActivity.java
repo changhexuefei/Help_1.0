@@ -1,10 +1,13 @@
 package com.hyzsnt.onekeyhelp.module.home.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
+import com.hyzsnt.onekeyhelp.module.home.adapter.VoiceDetailAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -14,6 +17,8 @@ import butterknife.ButterKnife;
  */
 
 public class VoiceDetailActivity extends BaseActivity {
+
+
     @BindView(R.id.home_voice_rlv)
     RecyclerView homeVoiceRlv;
 
@@ -24,6 +29,16 @@ public class VoiceDetailActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        VoiceDetailAdapter mVoiceDetailAdapter = new VoiceDetailAdapter(this);
+        homeVoiceRlv.setLayoutManager(new LinearLayoutManager(this));
+        homeVoiceRlv.setAdapter(mVoiceDetailAdapter);
+        homeVoiceRlv.setItemAnimator(new DefaultItemAnimator());
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

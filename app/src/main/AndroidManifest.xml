@@ -54,12 +54,9 @@
         </activity>
         <activity android:name=".module.login.activity.AgreementActivity">
         </activity>
-        <activity android:name=".module.index.activity.ReleaseActivity">
-
-        </activity>
         <activity android:name=".module.index.activity.CompoundInfoActivity">
         </activity>
-        <activity android:name=".module.index.activity.TalkActivity">
+        <activity android:name=".module.home.activity.VoiceDetailActivity">
         </activity>
     </application>
 
