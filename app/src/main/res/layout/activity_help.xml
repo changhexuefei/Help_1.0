@@ -6,6 +6,14 @@
 	android:layout_height="match_parent"
 	tools:context="com.hyzsnt.onekeyhelp.module.help.activity.HelpActivity">
 
+
+	<FrameLayout
+		android:id="@+id/fl_help_content"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_above="@+id/rg_help_bottom">
+	</FrameLayout>
+
 	<RadioGroup
 		android:id="@+id/rg_help_title"
 		android:layout_width="120dp"
@@ -46,13 +54,6 @@
 			android:textColor="@drawable/radiogroup_textcolor"
 			android:textSize="12sp"/>
 	</RadioGroup>
-
-	<FrameLayout
-		android:id="@+id/fl_help_content"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_above="@+id/rg_help_bottom">
-	</FrameLayout>
 
 	<RadioGroup
 		android:id="@+id/rg_help_bottom"
@@ -108,7 +109,6 @@
 
 	<TextView
 		android:id="@+id/tv_help"
-		android:visibility="invisible"
 		android:layout_width="59dp"
 		android:layout_height="59dp"
 		android:layout_below="@id/fl_help_content"
@@ -117,6 +117,7 @@
 		android:gravity="center"
 		android:text="求助"
 		android:textColor="#ffffff"
-		android:textSize="13sp"/>
+		android:textSize="13sp"
+		android:visibility="invisible"/>
 
 </RelativeLayout>
