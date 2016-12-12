@@ -131,7 +131,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_marginLeft="@dimen/dp_18"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="@dimen/dp_100"
                 android:layout_height="@dimen/dp_62"
                 >
@@ -168,7 +168,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_marginLeft="@dimen/dp_18"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="@dimen/dp_100"
                 android:layout_height="@dimen/dp_62"
                 >
@@ -177,7 +177,10 @@
                     android:layout_width="@dimen/dp_100"
                     android:layout_height="@dimen/dp_62"
                     android:src="@drawable/img"
-                    />
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/imageView" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_14"
