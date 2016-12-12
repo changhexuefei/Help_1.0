@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="104dp">
+	<ImageView
+		android:id="@+id/im_circle_details_header"
+		android:layout_width="match_parent"
+		android:layout_height="104dp"
+		android:src="@mipmap/ic_error"/>
+	<TextView
+		android:id="@+id/tv_circle_details_num"
+		android:layout_width="60dp"
+		android:layout_height="20dp"
+		android:textColor="#ffffff"
+		android:textSize="@dimen/sp_12"
+		android:text="1342人"
+		android:gravity="center"
+		android:background="#e0000000"
+		android:layout_alignParentRight="true"
+		android:alpha="0.2"/>
+</RelativeLayout>

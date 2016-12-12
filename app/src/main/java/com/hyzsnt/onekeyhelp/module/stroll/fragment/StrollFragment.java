@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
+import com.hyzsnt.onekeyhelp.module.stroll.activity.CircleDetailsActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CreateCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.SeekCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.StrollFragmentAadapter;
@@ -31,6 +32,7 @@ public class StrollFragment extends BaseFragment {
 	ImageView mImStrollSeek;
 	@BindView(R.id.re_stroll_list)
 	RecyclerView mReStrollList;
+
 	@Nullable
 
 	@Override
@@ -51,7 +53,16 @@ public class StrollFragment extends BaseFragment {
 
 		mReStrollList.setLayoutManager(new LinearLayoutManager(mActivity));
 		//实例化适配器
-		mReStrollList.setAdapter(new StrollFragmentAadapter(mActivity, list));
+		StrollFragmentAadapter adapter = new StrollFragmentAadapter(mActivity, list);
+		mReStrollList.setAdapter(adapter);
+
+		adapter.setOnItemClickListener(new StrollFragmentAadapter.OnRecyclerViewItemClickListener() {
+			@Override
+			public void onItemClick(View view, int data) {
+
+				startActivity(new Intent(mActivity, CircleDetailsActivity.class));
+			}
+		});
 	}
 
 	@Override
@@ -74,7 +85,7 @@ public class StrollFragment extends BaseFragment {
 		switch (view.getId()) {
 			case R.id.im_create_circle:
 				//跳转到创建圈子页面
-                mActivity.startActivity(new Intent(mActivity, CreateCircleActivity.class));
+				mActivity.startActivity(new Intent(mActivity, CreateCircleActivity.class));
 				break;
 			case R.id.im_stroll_seek:
 				//跳转到创建圈子页面

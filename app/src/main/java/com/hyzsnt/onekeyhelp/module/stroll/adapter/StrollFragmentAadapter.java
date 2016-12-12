@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by Administrator on 2016/12/9.
  */
 
-public class StrollFragmentAadapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class StrollFragmentAadapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 	//类型
 	private final int ITEM_TYPE_ONE = 1;
 	private final int ITEM_TYPE_TWO = 2;
@@ -37,9 +37,12 @@ public class StrollFragmentAadapter extends RecyclerView.Adapter<RecyclerView.Vi
 	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       //判断添加的样式
 		if (viewType == ITEM_TYPE_ONE) {
+
 			return new StrollViewHolerOne(mLayoutInflater.inflate(R.layout.item_stroll_one, parent, false));
 		} else {
-			return new StrollViewHolertwo(mLayoutInflater.inflate(R.layout.item_stroll_two, parent, false));
+			View view = mLayoutInflater.inflate(R.layout.item_stroll_two, parent, false);
+			view.setOnClickListener(this);
+			return new StrollViewHolertwo(view);
 		}
 	}
 
@@ -47,8 +50,20 @@ public class StrollFragmentAadapter extends RecyclerView.Adapter<RecyclerView.Vi
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 		if(holder instanceof StrollViewHolerOne){
 			((StrollViewHolerOne) holder).header_list.setAdapter(new StrollHeaderAdapter(mContext));
+		}else if(holder instanceof StrollViewHolertwo){
+			//将数据保存在itemView的Tag中，以便点击时进行获取
+			holder.itemView.setTag(position);
+
 		}
 
+	}
+
+	@Override
+	public void onClick(View view) {
+		if (mOnItemClickListener != null) {
+			//注意这里使用getTag方法获取数据
+			mOnItemClickListener.onItemClick(view,(Integer) view.getTag());
+		}
 	}
 
 
@@ -73,11 +88,11 @@ public class StrollFragmentAadapter extends RecyclerView.Adapter<RecyclerView.Vi
 		TextView list_num;
 		public StrollViewHolertwo(View itemView) {
 			super(itemView);
-			list_address = (TextView) itemView.findViewById(R.id.tv_stroll_list_address);
+			/*list_address = (TextView) itemView.findViewById(R.id.tv_stroll_list_address);
 			list_typeone = (TextView) itemView.findViewById(R.id.tv_stroll_list_typeone);
 			list_num = (TextView) itemView.findViewById(R.id.tv_stroll_list_num);
 			list_titile = (TextView) itemView.findViewById(R.id.tv_stroll_list_title);
-			list_isjoin = (ImageView) itemView.findViewById(R.id.tv_stroll_list_isjoin);
+			list_isjoin = (ImageView) itemView.findViewById(R.id.tv_stroll_list_isjoin);*/
 
 		}
 	}
@@ -98,6 +113,9 @@ public class StrollFragmentAadapter extends RecyclerView.Adapter<RecyclerView.Vi
 	}
 	//define interface
 	public static interface OnRecyclerViewItemClickListener {
-		void onItemClick(View view , String data);
+		void onItemClick(View view , int data);
+	}
+	public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+		this.mOnItemClickListener = listener;
 	}
 }

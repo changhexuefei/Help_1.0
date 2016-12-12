@@ -1,6 +1,5 @@
 package com.hyzsnt.onekeyhelp.module.stroll.activity;
 
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CreateCircleActivity extends BaseActivity {
@@ -63,12 +61,6 @@ public class CreateCircleActivity extends BaseActivity {
 
 	}
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// TODO: add setContentView(...) invocation
-		ButterKnife.bind(this);
-	}
 
 	@OnClick({R.id.im_circle_back, R.id.relayout_create_circle_two, R.id.activity_create_circle})
 	public void onClick(View view) {
