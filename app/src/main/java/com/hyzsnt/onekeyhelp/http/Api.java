@@ -62,6 +62,6 @@ public class Api {
 	 * 首页类
 	 */
 	public static final class Community {
-
+		public static final String GETCOMMUNITYLIST = "getCommunityList";
 	}
 }
