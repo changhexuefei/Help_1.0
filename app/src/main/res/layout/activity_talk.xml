@@ -98,17 +98,18 @@
                 android:layout_height="@dimen/dp_62"
                 android:layout_marginLeft="10dp"></ImageView>
         </LinearLayout>
+
         <TextView
             android:id="@+id/add_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableTop="@mipmap/add_icon"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="end|bottom"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
             android:drawablePadding="15dp"
+            android:drawableTop="@mipmap/add_icon"
             android:enabled="true"
             android:text="此处最多上传3张图片"
             android:textColor="#989898"/>
