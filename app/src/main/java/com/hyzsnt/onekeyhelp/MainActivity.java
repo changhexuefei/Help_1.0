@@ -1,12 +1,15 @@
 package com.hyzsnt.onekeyhelp;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
+import com.hyzsnt.onekeyhelp.module.help.activity.HelpActivity;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.fragment.StrollFragment;
@@ -14,10 +17,14 @@ import com.hyzsnt.onekeyhelp.module.user.fragment.UserFragment;
 import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+
+import static com.hyzsnt.onekeyhelp.R.id.rg_main_bottom;
 
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
 
+	public static final int START_HELP = 1;
 	@BindView(R.id.rb_main_home)
 	RadioButton mRbMainHome;
 	@BindView(R.id.rb_main_stroll)
@@ -26,7 +33,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	RadioButton mRbMainRelease;
 	@BindView(R.id.rb_main_user)
 	RadioButton mRbMainUser;
-	@BindView(R.id.rg_main_bottom)
+	@BindView(rg_main_bottom)
 	RadioGroup mRgMainBottom;
 	@BindView(R.id.fl_main_content)
 	FrameLayout mFlMainContent;
@@ -87,7 +94,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 						transaction.show(mHomeLoginFragment);
 					}
 					transaction.show(mHomeLoginFragment);
-					isLogin=false;
+					isLogin = false;
 				} else {
 					if (mHomeUnLoginFragment == null) {
 						mHomeUnLoginFragment = new HomeUnLoginFragment();
@@ -95,7 +102,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 						transaction.show(mHomeUnLoginFragment);
 					}
 					transaction.show(mHomeUnLoginFragment);
-					isLogin=true;
+					isLogin = true;
 				}
 				break;
 			case R.id.rb_main_stroll:
@@ -152,4 +159,38 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		transaction.commit();
 	}
 
+	/**
+	 * 开始求救
+	 *
+	 * @param view
+	 */
+	@OnClick(R.id.btn_sos)
+	public void startHelp(View view) {
+		Intent intent = new Intent(this, HelpActivity.class);
+		startActivityForResult(intent, START_HELP);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == MainActivity.START_HELP && resultCode == RESULT_OK) {
+			String inx = data.getStringExtra("data");
+			int i = R.id.rb_main_home;
+			switch (inx) {
+				case "1":
+					i = R.id.rb_main_home;
+					break;
+				case "2":
+					i = R.id.rb_main_stroll;
+					break;
+				case "3":
+					i = R.id.rb_main_release;
+					break;
+				case "4":
+					i = R.id.rb_main_user;
+					break;
+			}
+			mRgMainBottom.check(i);
+		}
+	}
 }
