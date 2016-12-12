@@ -6,6 +6,8 @@
     android:id="@+id/activity_my_neighbor_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.hyzsnt.onekeyhelp.module.index.activity.MyNeighborListActivity">
 
     <FrameLayout
@@ -42,7 +44,6 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/search_box_shape"
-        android:drawableLeft="@drawable/search"
         android:gravity="center"
         android:hint="搜索"
 

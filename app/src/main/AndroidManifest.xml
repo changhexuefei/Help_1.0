@@ -26,10 +26,8 @@
             android:value="8YGxkZtWGuYqmm9Tsyw86lulSBCSIyiQ"/>
 
         <activity android:name=".MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
@@ -60,6 +58,8 @@
 
         </activity>
         <activity android:name=".module.index.activity.CompoundInfoActivity">
+        </activity>
+        <activity android:name=".module.index.activity.TalkActivity">
         </activity>
     </application>
 
