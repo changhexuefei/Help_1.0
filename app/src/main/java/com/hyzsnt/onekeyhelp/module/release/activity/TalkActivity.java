@@ -35,7 +35,7 @@ public class TalkActivity extends BaseActivity {
     boolean isChecked = true;
     @BindView(R.id.add_icon)
     TextView mAddIcon;
-    
+
 
     @Override
     protected int getLayoutId() {
@@ -86,7 +86,7 @@ public class TalkActivity extends BaseActivity {
         mAddIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAddIcon.setVisibility(View.GONE);
+
             }
         });
 
