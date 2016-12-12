@@ -3,8 +3,6 @@ package com.hyzsnt.onekeyhelp.module.release.activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -15,8 +13,7 @@ import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-
-public class TalkActivity extends BaseActivity {
+public class GeneralMessageActivity extends BaseActivity {
 
 
     @BindView(R.id.btn_return)
@@ -27,15 +24,8 @@ public class TalkActivity extends BaseActivity {
     EditText mEtTitle;
     @BindView(R.id.et_content)
     EditText mEtContent;
-    @BindView(R.id.cbx)
-    CheckBox mCbx;
     @BindView(R.id.btn_release)
     Button mBtnRelease;
-    //checkBox默认选中
-    boolean isChecked = true;
-    @BindView(R.id.add_icon)
-    TextView mAddIcon;
-    
 
     @Override
     protected int getLayoutId() {
@@ -45,25 +35,12 @@ public class TalkActivity extends BaseActivity {
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        String tag = intent.getStringExtra("tag");
-        if (tag.equals("iv_talk")) {
-            mTvMsg.setText("发表说说");
+        String tag = intent.getStringExtra("tag1");
+        if (tag.equals("iv_gener")) {
+            mTvMsg.setText("发表综合信息");
 
         }
-        mCbx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    //do something
-                } else {
-                    //do something else
-                }
-            }
-        });
-        mCbx.setChecked(isChecked);
-
     }
-
 
     @OnClick({R.id.btn_return, R.id.btn_release})
     public void onClick(View view) {
@@ -79,17 +56,5 @@ public class TalkActivity extends BaseActivity {
             case R.id.btn_release:
                 break;
         }
-    }
-
-    @OnClick(R.id.add_icon)
-    public void onClick() {
-        mAddIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAddIcon.setVisibility(View.GONE);
-            }
-        });
-
-
     }
 }
