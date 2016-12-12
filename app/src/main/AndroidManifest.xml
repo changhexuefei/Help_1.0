@@ -26,11 +26,7 @@
             android:value="8YGxkZtWGuYqmm9Tsyw86lulSBCSIyiQ"/>
 
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
 
         </activity>
         <activity android:name=".module.index.activity.GoodsReplaceActivity"/>
@@ -38,6 +34,11 @@
         <activity android:name=".module.stroll.activity.SeekCircleActivity"/>
         <activity android:name=".module.stroll.activity.CreateCircleActivity"/>
         <activity android:name=".module.index.activity.MyNeighborListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".module.index.activity.SeekeStateActivity">
         </activity>

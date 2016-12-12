@@ -5,9 +5,12 @@
     android:id="@+id/activity_seeke_state"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity">
 
     <EditText
+        android:gravity="center"
         android:id="@+id/search_estate_bar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -16,7 +19,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/search"
         android:background="@drawable/search_box_shape"
         android:hint="请输入你想搜索的小区"/>
 
