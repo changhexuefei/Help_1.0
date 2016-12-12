@@ -104,7 +104,7 @@
             android:id="@+id/add_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:drawableTop="@mipmap/add_icon"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_gravity="end|bottom"
