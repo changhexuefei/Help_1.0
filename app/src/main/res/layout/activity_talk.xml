@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_talk"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hyzsnt.onekeyhelp.module.index.activity.TalkActivity">
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/talker"
@@ -13,127 +15,126 @@
         android:layout_height="48dp"
         android:background="#1ccc9b">
 
+        <ImageButton
+            android:id="@+id/btn_return"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:src="@mipmap/ic_return"/>
+
         <TextView
+            android:id="@+id/tv_msg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="随便说说"
+            android:text="发表说说"
             android:textColor="@color/white"
             android:textSize="18sp"/>
-
-        <Button
-            android:id="@+id/btn_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:background="#00000000"
-            android:text="取消"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            />
     </FrameLayout>
 
-    <ImageView
-        android:id="@+id/talker_icon"
-        android:layout_width="80dp"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#f5f5f5"/>
+
+
+    <EditText
+        android:id="@+id/et_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#ffffff"
+        android:gravity="center_vertical"
+        android:hint="点击输入标题栏"
+        android:padding="10dp"
+        android:textColor="#989898"
+        android:textSize="14sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="#f5f5f5"/>
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_below="@+id/talker"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="26dp"
-        android:src="@drawable/img"/>
+        android:background="#ffffff"
+        android:hint="点击输入您的内容"
+        android:maxLines="100"
+        android:padding="10dp"
+        android:textColor="#989898"
+        android:textSize="14sp"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/talker_icon"
-        android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@+id/talker_icon"
-        android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="#f5f5f5"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
             android:enabled="true"
-            android:text="青城山下"
-            android:textColor="#666666"
-            android:textSize="15sp"
-            />
-
-        <TextView
+            android:layout_gravity="end|bottom"
+            android:id="@+id/add_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="1分钟前"
-            android:textColor="#999999"
-            android:textSize="12sp"
-            />
-    </LinearLayout>
+            android:drawablePadding="15dp"
+            android:drawableTop="@mipmap/addicon"
+            android:text="此处最多上传3张图片"
+            android:textColor="#989898"/>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/icon_gridView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:horizontalSpacing="10dp"
+            android:numColumns="3"
+            android:verticalSpacing="10dp">
+        </android.support.v7.widget.RecyclerView>
+
+
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/dialog_delete"
-        android:layout_marginTop="100dp"
-        android:background="#f2f2f2"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_above="@+id/btn_release">
+        android:background="#f5f5f5"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/ibtn_press_talk"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:src="@mipmap/press_talk"
-            />
+            android:layout_marginTop="30dp"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="按住说话"
-            android:textColor="#19cc9b"/>
-    </LinearLayout>
+            <CheckBox
+                android:id="@+id/cbx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26dp"/>
 
-    <Button
-        android:layout_alignParentBottom="true"
-        android:background="#1ccd9a"
-        android:textSize="18sp"
-        android:textColor="#ffffff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="发布"
-        android:id="@+id/btn_release"/>
-
-    <LinearLayout
-        android:id="@+id/dialog_delete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/talker_icon"
-        android:layout_marginTop="26dp"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:id="@+id/dialog_box"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:src="@mipmap/dialog_box"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="同步到小区状态"
+                android:textSize="14sp"/>
+        </LinearLayout>
 
         <Button
-            android:id="@+id/btn_del_record"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="80dp"
-            android:background="#00000000"
-            android:text="删除录音"
-            android:textColor="#f84544"/>
+            android:id="@+id/btn_release"
+            android:layout_width="340dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="56dp"
+            android:background="#1ccd9a"
+            android:text="发布"
+            android:textColor="#f5f5f5"
+            android:textSize="16sp"/>
     </LinearLayout>
 
-
-</RelativeLayout>
+</LinearLayout>
