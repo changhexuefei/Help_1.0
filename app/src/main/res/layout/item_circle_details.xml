@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="100dp"
+              android:orientation="vertical"
+              android:gravity="center_vertical"
+
+	>
+<RelativeLayout
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+ <ImageView
+	 android:id="@+id/im_circle_details_item_photo"
+	 android:layout_width="54dp"
+	 android:layout_height="54dp"
+	 android:src="@mipmap/ic_error"
+	 android:layout_marginLeft="@dimen/dp_18"
+	 android:layout_centerVertical="true"/>
+
+	<TextView
+		android:id="@+id/tv_circle_details_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="林明"
+	    android:layout_marginTop="@dimen/dp_6"
+		android:textSize="@dimen/sp_14"
+		android:textColor="#323232"
+		android:layout_marginLeft="@dimen/dp_5"
+		android:layout_toRightOf="@id/im_circle_details_item_photo"/>
+	<TextView
+		android:id="@+id/tv_circle_details_time"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="一分钟前"
+		android:layout_marginTop="8dp"
+		android:textSize="@dimen/sp_10"
+
+		android:textColor="#909090"
+		android:layout_marginLeft="@dimen/dp_5"
+		android:layout_toRightOf="@id/tv_circle_details_name"/>
+
+	<TextView
+		android:id="@+id/tv_circle_details_distance"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="1.22千米"
+		android:layout_marginTop="8dp"
+		android:layout_marginLeft="@dimen/dp_5"
+		android:textColor="#909090"
+		android:textSize="@dimen/sp_10"
+		android:layout_toRightOf="@id/tv_circle_details_time"/>
+	<LinearLayout
+		android:layout_below="@id/tv_circle_details_name"
+		android:orientation="horizontal"
+		android:layout_width="wrap_content"
+		android:layout_marginLeft="@dimen/dp_5"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/dp_12"
+		android:gravity="center"
+		android:background="@drawable/circle_details_sex"
+		android:layout_toRightOf="@id/im_circle_details_item_photo">
+		<TextView
+			android:id="@+id/tv_circle_details_age"
+			android:layout_width="wrap_content"
+			android:textSize="9sp"
+			android:layout_height="wrap_content"
+			android:textColor="#FFFFFF"
+			android:text="26"/>
+		<ImageView
+			android:id="@+id/im_circle_details_sex"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:src="@mipmap/man"
+			android:layout_marginLeft="@dimen/dp_1" />
+	</LinearLayout>
+</RelativeLayout>
+	<TextView
+		android:id="@+id/tv_circle_details_about"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="77dp"
+		android:text="这是一个标题"
+		android:textSize="@dimen/sp_12"
+		android:textColor="#4C4C4C"/>
+</LinearLayout>

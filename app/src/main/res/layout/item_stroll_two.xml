@@ -24,17 +24,7 @@
 		android:textSize="@dimen/sp_12"
 		/>
 
-	<TextView
-		android:id="@+id/tv_stroll_list_num"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginLeft="@dimen/dp_4"
-		android:layout_marginTop="@dimen/dp_22"
-		android:layout_toRightOf="@id/tv_stroll_list_title"
-		android:text="(123人)"
-		android:textColor="@color/colorCameo"
-		android:textSize="@dimen/sp_10"
-		/>
+
 
 
 	<TextView
@@ -77,26 +67,27 @@
 		android:textColor="@color/color_ff"
 		android:textSize="@dimen/sp_11"/>
 
-	<ImageView
-		android:id="@+id/tv_stroll_list_isjoin"
+	<TextView
+		android:id="@+id/tv_stroll_list_num"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_alignParentRight="true"
-		android:layout_marginRight="@dimen/dp_30"
+		android:layout_marginRight="@dimen/dp_16"
 		android:layout_marginTop="@dimen/dp_22"
-		android:src="@mipmap/stroll_add"
+		android:textSize="@dimen/sp_12"
+		android:text="3125人"
 		/>
 
 	<TextView
-		android:id="@+id/tv_stroll_list_address"
+		android:id="@+id/tv_stroll_list_topic"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_alignParentRight="true"
-		android:layout_below="@id/tv_stroll_list_isjoin"
+		android:layout_below="@id/tv_stroll_list_num"
 		android:layout_marginLeft="@dimen/dp_4"
 		android:layout_marginRight="@dimen/dp_16"
 		android:layout_marginTop="@dimen/dp_18"
-		android:text="民航小区"
+		android:text="128条话题"
 		android:textColor="@color/colorCameo"
 		android:textSize="@dimen/sp_10"
 		/>

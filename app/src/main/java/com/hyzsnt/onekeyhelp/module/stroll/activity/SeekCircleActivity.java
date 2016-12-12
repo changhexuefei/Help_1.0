@@ -1,6 +1,5 @@
 package com.hyzsnt.onekeyhelp.module.stroll.activity;
 
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -14,7 +13,6 @@ import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SeekCircleActivity extends BaseActivity {
@@ -46,13 +44,6 @@ public class SeekCircleActivity extends BaseActivity {
 		mtypelist.add(new CircleType("旅行",R.mipmap.circle_travel,R.drawable.circle_type_nine));
 		mReSeekCircle.setLayoutManager(new GridLayoutManager(this,3));
 		mReSeekCircle.setAdapter(new CircleTypeAdapter(this,mtypelist));
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// TODO: add setContentView(...) invocation
-		ButterKnife.bind(this);
 	}
 
 	@OnClick(R.id.im_search_back)

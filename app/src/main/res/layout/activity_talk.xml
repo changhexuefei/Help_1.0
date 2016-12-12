@@ -96,10 +96,8 @@
             <ImageView
                 android:layout_width="@dimen/dp_100"
                 android:layout_height="@dimen/dp_62"
-                android:layout_marginLeft="10dp"
-                android:scaleType="fitXY"/>
+                android:layout_marginLeft="10dp"></ImageView>
         </LinearLayout>
-
         <TextView
             android:id="@+id/add_icon"
             android:layout_width="wrap_content"
