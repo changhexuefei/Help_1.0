@@ -18,8 +18,8 @@ import java.util.List;
 public class MyNeighborListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<MyNeighborInfo> mNeighborInfos;
-    private static final int TYPE_ITEM = 1;
-    private static final int TYPE_FOOTER = 2;
+//    private static final int TYPE_ITEM = 1;
+//    private static final int TYPE_FOOTER = 2;
 
     public void setNeighborInfos(List<MyNeighborInfo> neighborInfos) {
         mNeighborInfos = neighborInfos;
@@ -27,31 +27,31 @@ public class MyNeighborListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_ITEM) {
+//        if (viewType == TYPE_ITEM) {
 
             View view = View.inflate(parent.getContext(), R.layout.item_neighbor, null);
             view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
                     RecyclerView.LayoutParams.WRAP_CONTENT));
             return new ItemViewHolder(view);
-        }
-        if (viewType == TYPE_FOOTER) {
-            View view = View.inflate(parent.getContext(), R.layout.neighbor_list_footer_view, null);
-            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
-                    RecyclerView.LayoutParams.WRAP_CONTENT));
-            return new FooterViewHolder(view);
-
-        }
-        return null;
+//        }
+//        if (viewType == TYPE_FOOTER) {
+//            View view = View.inflate(parent.getContext(), R.layout.neighbor_list_footer_view, null);
+//            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+//                    RecyclerView.LayoutParams.WRAP_CONTENT));
+//            return new FooterViewHolder(view);
+//
+//        }
+//        return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-            itemViewHolder.iv_neighbor_icon.setImageResource(R.mipmap.ic_launcher);
+            itemViewHolder.iv_neighbor_icon.setImageResource(mNeighborInfos.get(position).getNeighborIcon());
             itemViewHolder.tv_neighbor_name.setText(mNeighborInfos.get(position).getNeighborName());
             itemViewHolder.tv_neighbor_age.setText(mNeighborInfos.get(position).getNeighborAge());
-            itemViewHolder.iv_neighbor_sex_icon.setImageResource(R.mipmap.ic_empty);
+            itemViewHolder.iv_neighbor_sex_icon.setImageResource(mNeighborInfos.get(position).getNeighborSexIcon());
         }
     }
 

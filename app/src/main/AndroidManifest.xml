@@ -38,6 +38,7 @@
         <activity android:name=".module.stroll.activity.SeekCircleActivity"/>
         <activity android:name=".module.stroll.activity.CreateCircleActivity"/>
         <activity android:name=".module.index.activity.MyNeighborListActivity">
+
         </activity>
         <activity android:name=".module.index.activity.SeekeStateActivity">
         </activity>
@@ -59,8 +60,6 @@
         <activity android:name=".module.index.activity.CompoundInfoActivity">
         </activity>
         <activity android:name=".module.index.activity.TalkActivity">
-        </activity>
-        <activity android:name=".module.home.activity.VoiceDetailActivity">
         </activity>
     </application>
 

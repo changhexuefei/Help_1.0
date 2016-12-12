@@ -1,4 +1,4 @@
-package com.hyzsnt.onekeyhelp.module.index.activity;
+package com.hyzsnt.onekeyhelp.module.release.activity;
 
 import android.os.Bundle;
 import android.view.View;
