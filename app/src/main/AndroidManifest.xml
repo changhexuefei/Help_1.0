@@ -31,12 +31,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
         <activity android:name=".module.index.activity.GoodsReplaceActivity"/>
         <activity android:name=".module.help.activity.HelpActivity"/>
         <activity android:name=".module.stroll.activity.SeekCircleActivity"/>
         <activity android:name=".module.stroll.activity.CreateCircleActivity"/>
         <activity android:name=".module.index.activity.MyNeighborListActivity">
+
         </activity>
         <activity android:name=".module.index.activity.SeekeStateActivity">
         </activity>
@@ -56,6 +58,8 @@
         </activity>
         <activity android:name=".module.release.activity.TalkActivity"/>
         <activity android:name=".module.release.activity.GeneralMessageActivity">
+        </activity>
+        <activity android:name=".module.home.activity.VoiceDetailActivity">
         </activity>
     </application>
 

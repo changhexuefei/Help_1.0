@@ -6,11 +6,117 @@
 	android:layout_height="match_parent"
 	tools:context="com.hyzsnt.onekeyhelp.module.help.activity.HelpActivity">
 
+	<RadioGroup
+		android:id="@+id/rg_help_title"
+		android:layout_width="120dp"
+		android:layout_height="35dp"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="5dp"
+		android:background="@drawable/btn_top_title_bac"
+		android:orientation="horizontal"
+		android:padding="1dp">
 
-	<com.baidu.mapapi.map.MapView
-		android:id="@+id/bmapView"
+		<RadioButton
+			android:id="@+id/rb_map"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_gravity="center"
+			android:layout_weight="1"
+			android:background="@drawable/btn_top_title_bac_selector"
+			android:button="@android:color/transparent"
+			android:drawablePadding="2dp"
+			android:gravity="center"
+			android:paddingTop="1dp"
+			android:text="地图"
+			android:textColor="@drawable/radiogroup_textcolor"
+			android:textSize="12sp"/>
+
+		<RadioButton
+			android:id="@+id/rb_near"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_gravity="center"
+			android:layout_weight="1"
+			android:background="@drawable/btn_top_title_bac_selector_right"
+			android:button="@android:color/transparent"
+			android:drawablePadding="2dp"
+			android:gravity="center"
+			android:paddingTop="1dp"
+			android:text="附近"
+			android:textColor="@drawable/radiogroup_textcolor"
+			android:textSize="12sp"/>
+	</RadioGroup>
+
+	<FrameLayout
+		android:id="@+id/fl_help_content"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:clickable="true"/>
+		android:layout_above="@+id/rg_help_bottom">
+	</FrameLayout>
+
+	<RadioGroup
+		android:id="@+id/rg_help_bottom"
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:layout_alignParentBottom="true"
+		android:background="#F2F2F2"
+		android:orientation="horizontal">
+
+		<RadioButton
+			android:id="@+id/rb_help_home"
+			style="@style/main_bottom_style"
+			android:drawableTop="@drawable/main_home_selector"
+			android:text="首页"/>
+
+		<RadioButton
+			android:id="@+id/rb_help_stroll"
+			style="@style/main_bottom_style"
+			android:drawableTop="@drawable/main_stroll_selector"
+			android:text="闲逛"/>
+
+		<View
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"/>
+
+		<RadioButton
+			android:id="@+id/rb_help_release"
+			style="@style/main_bottom_style"
+			android:drawableTop="@drawable/main_release_selector"
+			android:text="发布"/>
+
+		<RadioButton
+			android:id="@+id/rb_help_user"
+			style="@style/main_bottom_style"
+			android:drawableTop="@drawable/main_user_selector"
+			android:text="我的"/>
+
+	</RadioGroup>
+
+	<Button
+		android:id="@+id/btn_cancel"
+		android:layout_width="59dp"
+		android:layout_height="59dp"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:layout_marginBottom="-45dp"
+		android:background="@drawable/for_help3x"
+		android:gravity="center"
+		android:text="取消"
+		android:textColor="#ffffff"
+		android:textSize="13sp"/>
+
+	<TextView
+		android:id="@+id/tv_help"
+		android:visibility="invisible"
+		android:layout_width="59dp"
+		android:layout_height="59dp"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:background="@drawable/for_help3x"
+		android:gravity="center"
+		android:text="求助"
+		android:textColor="#ffffff"
+		android:textSize="13sp"/>
 
 </RelativeLayout>
