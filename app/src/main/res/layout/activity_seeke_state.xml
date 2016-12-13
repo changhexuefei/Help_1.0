@@ -10,7 +10,6 @@
     tools:context="com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity">
 
     <EditText
-        android:gravity="center"
         android:id="@+id/search_estate_bar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -20,16 +19,14 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/search_box_shape"
+        android:gravity="center"
         android:hint="请输入你想搜索的小区"/>
 
     <RelativeLayout
-
         android:id="@+id/action0"
-
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentLeft="true"
-
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="#1ccc9b">
@@ -49,7 +46,6 @@
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-
             android:layout_marginRight="12dp"
             android:enabled="true"
             android:gravity="center"
