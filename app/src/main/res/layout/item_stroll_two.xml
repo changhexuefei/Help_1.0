@@ -10,18 +10,20 @@
 		android:layout_width="@dimen/dp_60"
 		android:layout_height="@dimen/dp_60"
 		android:layout_marginLeft="@dimen/dp_16"
-		android:layout_marginTop="@dimen/dp_16"
-		android:src="@mipmap/ic_empty"/>
+		android:layout_marginTop="6dp"
+		android:src="@mipmap/cc"
+		android:layout_marginBottom="10dp"/>
 
 	<TextView
 		android:id="@+id/tv_stroll_list_title"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="@dimen/dp_22"
+		android:layout_marginTop="12dp"
 		android:layout_toRightOf="@id/im_Stroll_list_icon"
 		android:text="运动圈"
 		android:textColor="@color/colorDarkgray"
 		android:textSize="@dimen/sp_12"
+	    android:layout_marginLeft="@dimen/dp_6"
 		/>
 
 
@@ -32,7 +34,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/tv_stroll_list_title"
-		android:layout_marginLeft="@dimen/dp_4"
+		android:layout_marginLeft="@dimen/dp_6"
 		android:layout_marginTop="@dimen/dp_18"
 		android:layout_toRightOf="@id/im_Stroll_list_icon"
 		android:background="@drawable/stroll_type_one"
@@ -73,8 +75,9 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentRight="true"
 		android:layout_marginRight="@dimen/dp_16"
-		android:layout_marginTop="@dimen/dp_22"
+		android:layout_marginTop="@dimen/dp_12"
 		android:textSize="@dimen/sp_12"
+		android:textColor="#909090"
 		android:text="3125人"
 		/>
 
@@ -88,8 +91,9 @@
 		android:layout_marginRight="@dimen/dp_16"
 		android:layout_marginTop="@dimen/dp_18"
 		android:text="128条话题"
-		android:textColor="@color/colorCameo"
-		android:textSize="@dimen/sp_10"
+		android:textColor="#909090"
+		android:textSize="@dimen/sp_12"
+
 		/>
 
 

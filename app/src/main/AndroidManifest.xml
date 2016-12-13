@@ -33,7 +33,8 @@
         <activity android:name=".module.index.activity.GoodsReplaceActivity"/>
         <activity android:name=".module.help.activity.HelpActivity"/>
         <activity android:name=".module.stroll.activity.SeekCircleActivity"/>
-        <activity android:name=".module.stroll.activity.CreateCircleActivity"/>
+        <activity android:name=".module.stroll.activity.CreateCircleActivity"
+                  android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:name=".module.index.activity.MyNeighborListActivity">
         </activity>
         <activity android:name=".module.index.activity.SeekeStateActivity">
@@ -53,8 +54,6 @@
         <activity android:name=".module.index.activity.CompoundInfoActivity">
         </activity>
         <activity android:name=".module.stroll.activity.CircleDetailsActivity">
-        </activity>
-        <activity android:name=".module.stroll.activity.HH">
         </activity>
         <activity android:name=".module.release.activity.TalkActivity"/>
         <activity android:name=".module.release.activity.GeneralMessageActivity"/>

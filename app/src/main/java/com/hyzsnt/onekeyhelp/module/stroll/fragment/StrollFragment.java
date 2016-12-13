@@ -5,16 +5,22 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CircleDetailsActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CreateCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.SeekCircleActivity;
-import com.hyzsnt.onekeyhelp.module.stroll.adapter.StrollFragmentAadapter;
+import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleFragmentAdapter;
+import com.hyzsnt.onekeyhelp.module.stroll.adapter.StrollHeaderAdapter;
+import com.hyzsnt.onekeyhelp.module.stroll.widget.CustomExpandaleListView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,8 +36,15 @@ public class StrollFragment extends BaseFragment {
 	ImageView mImCreateCircle;
 	@BindView(R.id.im_stroll_seek)
 	ImageView mImStrollSeek;
-	@BindView(R.id.re_stroll_list)
-	RecyclerView mReStrollList;
+	@BindView(R.id.re_stroll_header_list)
+	RecyclerView mReStrollHeaderList;
+	@BindView(R.id.tv_stroll_gragment_round)
+	TextView mTvStrollGragmentRound;
+	@BindView(R.id.tv_stroll_fragment_me)
+	TextView mTvStrollFragmentMe;
+	@BindView(R.id.ex_circle_fragment)
+	CustomExpandaleListView mExCircleFragment;
+
 
 	@Nullable
 
@@ -50,19 +63,45 @@ public class StrollFragment extends BaseFragment {
 		list.add("hh1");
 		list.add("hh1");
 		list.add("hh1");
+		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+		ArrayList<String> lists = new ArrayList<>();
+		list.add("fgf");
+		list.add("fgf");
+		list.add("fgf");
+		list.add("fgf");
+		map.put("hh", list);
+		map.put("hh", list);
+		map.put("hh", list);
+		map.put("hh", list);
+		map.put("hh", list);
+		map.put("hh", list);
+		map.put("hh", list);
+		map.put("hh", list);
+		LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
+		layoutManager.setOrientation(LinearLayout.HORIZONTAL);
+		mReStrollHeaderList.setLayoutManager(layoutManager);
+		mReStrollHeaderList.setAdapter(new StrollHeaderAdapter(mActivity));
 
-		mReStrollList.setLayoutManager(new LinearLayoutManager(mActivity));
-		//实例化适配器
-		StrollFragmentAadapter adapter = new StrollFragmentAadapter(mActivity, list);
-		mReStrollList.setAdapter(adapter);
-
-		adapter.setOnItemClickListener(new StrollFragmentAadapter.OnRecyclerViewItemClickListener() {
+		CircleFragmentAdapter mCircleFragmentAdapter = new CircleFragmentAdapter(mActivity, map);
+		mExCircleFragment.setAdapter(new CircleFragmentAdapter(mActivity,map));
+		for (int i = 0; i < mCircleFragmentAdapter.getGroupCount(); i++)
+		{
+			mExCircleFragment.expandGroup(i);// 关键步骤3,初始化时，将ExpandableListView以展开的方式呈现
+		}
+		mExCircleFragment.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 			@Override
-			public void onItemClick(View view, int data) {
-
-				startActivity(new Intent(mActivity, CircleDetailsActivity.class));
+			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+				return true;
 			}
 		});
+		mExCircleFragment.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+				 startActivity(new Intent(mActivity, CircleDetailsActivity.class));
+				return false;
+			}
+		});
+
 	}
 
 	@Override
@@ -91,7 +130,12 @@ public class StrollFragment extends BaseFragment {
 				//跳转到创建圈子页面
 				mActivity.startActivity(new Intent(mActivity, SeekCircleActivity.class));
 				break;
+			case R.id.tv_stroll_gragment_round:
+				break;
+			case R.id.tv_stroll_fragment_me:
+				break;
 		}
 	}
+
 
 }
