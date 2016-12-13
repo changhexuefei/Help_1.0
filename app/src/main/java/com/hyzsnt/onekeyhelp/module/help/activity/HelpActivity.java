@@ -1,10 +1,14 @@
 package com.hyzsnt.onekeyhelp.module.help.activity;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -22,8 +26,9 @@ import com.hyzsnt.onekeyhelp.utils.ScreenUtils;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, Animator.AnimatorListener {
 
+	private static final int TIME_DOWN = 1;
 	@BindView(R.id.rg_help_title)
 	RadioGroup rg_help_title;
 	@BindView(R.id.fl_help_content)
@@ -45,6 +50,22 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	private MapHelpFragment mMapHelpFragment;
 	private NearbyHelpFragment mNearbyHelpFragment;
+	private int time = 5;
+	private Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+				case TIME_DOWN:
+					if (time == 0) {
+						tv_help.setVisibility(View.GONE);
+					} else {
+						tv_help.setText("" + time);
+						time--;
+						sendEmptyMessageDelayed(TIME_DOWN, 1000);
+					}
+					break;
+			}
+		}
+	};
 
 	@Override
 	protected int getLayoutId() {
@@ -53,12 +74,21 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
+		initAnimator();
+
+	}
+
+	/**
+	 * 初始化动画
+	 */
+	private void initAnimator() {
 		tv_help.setVisibility(View.VISIBLE);
-		ObjectAnimator upAnima = ObjectAnimator.ofFloat(tv_help, "translationY", -ScreenUtils.getScreenHeight(this) / 2 - ScreenUtils.getStatusHeight(this) + DensityUtils.dp2px(this, 8));
+		ObjectAnimator upAnima = ObjectAnimator.ofFloat(tv_help, "translationY", -ScreenUtils.getScreenHeight(this) / 2 + DensityUtils.dp2px(this, 8));
 		upAnima.setDuration(1000).start();
 		int height = btn_cancel.getHeight();
 		ObjectAnimator downAnima = ObjectAnimator.ofFloat(btn_cancel, "translationY", height - DensityUtils.dp2px(this, 50));
 		downAnima.setDuration(1000).start();
+		upAnima.addListener(this);
 	}
 
 	@Override
@@ -141,6 +171,7 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 							setResult(RESULT_OK, intent);
 						}
 						finish();
+						overridePendingTransition(0, 0);
 					}
 				}).setNegativeButton("继续求救", new DialogInterface.OnClickListener() {
 					@Override
@@ -158,8 +189,38 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	}
 
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		handler.removeCallbacksAndMessages(TIME_DOWN);
+	}
+
+	@Override
 	public void onBackPressed() {
 		showDialog(null);
+	}
+
+	@Override
+	public void onAnimationStart(Animator animation) {
+
+	}
+
+	@Override
+	public void onAnimationEnd(Animator animation) {
+		tv_help.setText("");
+		tv_help.setBackgroundResource(R.drawable.shape_help_red);
+		tv_help.setTextSize(DensityUtils.dp2px(this, 12));
+		tv_help.setGravity(Gravity.CENTER);
+		handler.sendEmptyMessage(TIME_DOWN);
+	}
+
+	@Override
+	public void onAnimationCancel(Animator animation) {
+
+	}
+
+	@Override
+	public void onAnimationRepeat(Animator animation) {
+
 	}
 }
 
