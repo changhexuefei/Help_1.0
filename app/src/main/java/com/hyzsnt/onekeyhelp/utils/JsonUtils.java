@@ -19,8 +19,8 @@ public class JsonUtils {
 	public static boolean isSuccess(String result) {
 		try {
 			JSONObject jsonObject = new JSONObject(result);
-			int status = jsonObject.optInt("code", 1);
-			if (status == 0) {
+			int status = jsonObject.optInt("res",0);
+			if (status == 1) {
 				return true;
 			} else {
 				return false;
@@ -33,26 +33,12 @@ public class JsonUtils {
 
 	/**
 	 * @param result
-	 * @return 获取成功结果之后的data节点数据
-	 */
-	public static String getSuccessData(String result, String feild) {
-		try {
-			JSONObject jsonObject = new JSONObject(result);
-			return jsonObject.optString(feild, "data");
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return "";
-		}
-	}
-
-	/**
-	 * @param result
 	 * @return 获取调用失败的信息
 	 */
 	public static String getErrorMessage(String result) {
 		try {
 			JSONObject jsonObject = new JSONObject(result);
-			return jsonObject.optString("error", "");
+			return jsonObject.optString("restr", "");
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return "";
