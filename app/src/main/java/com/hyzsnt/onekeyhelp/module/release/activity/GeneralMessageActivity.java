@@ -16,7 +16,6 @@ import butterknife.OnClick;
 
 public class GeneralMessageActivity extends BaseActivity {
 
-
     @BindView(R.id.btn_return)
     ImageButton mBtnReturn;
     @BindView(R.id.tv_msg)
@@ -39,7 +38,6 @@ public class GeneralMessageActivity extends BaseActivity {
         String tag = intent.getStringExtra("tag1");
         if (tag.equals("iv_gener")) {
             mTvMsg.setText("发表综合信息");
-
         }
     }
 
@@ -61,7 +59,6 @@ public class GeneralMessageActivity extends BaseActivity {
                         startActivity(new Intent(GeneralMessageActivity.this, StateActivity.class));
                     }
                 });
-
                 break;
         }
     }
