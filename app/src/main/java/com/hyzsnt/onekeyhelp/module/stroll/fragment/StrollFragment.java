@@ -12,12 +12,14 @@ import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
+import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CircleDetailsActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CreateCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.SeekCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleFragmentAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.StrollHeaderAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.widget.CustomExpandaleListView;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,17 +52,20 @@ public class StrollFragment extends BaseFragment {
 
 	@Override
 	protected List<String> getParams() {
+
 		return null;
 	}
 
 	@Override
 	protected void initData(String content) {
+		LogUtils.e(content);
 		//演示数据
 		ArrayList<String> list = new ArrayList<>();
 		list.add("hh1");
 		list.add("hh1");
 		list.add("hh1");
 		list.add("hh1");
+
 		list.add("hh1");
 		list.add("hh1");
 		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
@@ -111,12 +116,12 @@ public class StrollFragment extends BaseFragment {
 
 	@Override
 	public String getC() {
-		return null;
+		return Api.CIRCLE;
 	}
 
 	@Override
 	public String getA() {
-		return null;
+		return Api.Circle.CIRCLE_HOTTAG;
 	}
 
 	@OnClick({R.id.im_create_circle, R.id.im_stroll_seek})
