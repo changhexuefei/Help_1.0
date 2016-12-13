@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
+import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -77,6 +78,12 @@ public class TalkActivity extends BaseActivity {
                 });
                 break;
             case R.id.btn_release:
+                mBtnRelease.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(TalkActivity.this, StateActivity.class));
+                    }
+                });
                 break;
         }
     }

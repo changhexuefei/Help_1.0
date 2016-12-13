@@ -44,7 +44,7 @@
         android:layout_height="40dp"
         android:background="#ffffff"
         android:gravity="center_vertical"
-        android:hint="点击输入标题栏"
+        android:hint="点击输入标题栏......"
         android:padding="10dp"
         android:textColor="#989898"
         android:textSize="14sp"/>
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="#ffffff"
-        android:hint="点击输入您的内容"
+        android:hint="点击输入您的内容......"
         android:maxLines="100"
         android:padding="10dp"
         android:textColor="#989898"
@@ -96,7 +96,8 @@
             <ImageView
                 android:layout_width="@dimen/dp_100"
                 android:layout_height="@dimen/dp_62"
-                android:layout_marginLeft="10dp"></ImageView>
+                android:layout_marginLeft="10dp"
+                android:scaleType="fitXY"/>
         </LinearLayout>
 
         <TextView
