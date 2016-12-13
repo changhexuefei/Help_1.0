@@ -11,20 +11,25 @@ import android.widget.ImageView;
 import com.hyzsnt.onekeyhelp.MainActivity;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.home.activity.VoiceDetailActivity;
+import com.hyzsnt.onekeyhelp.module.home.inner.OnRecyclerViewItemClickListener;
 import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 
 /**
  * Created by hyzs on 2016/12/11.
  */
 
-public class HomeLoginAdapter extends RecyclerView.Adapter {
+public class HomeLoginAdapter extends RecyclerView.Adapter{
     private Context mContext;
     private MainActivity activity;
+    private OnRecyclerViewItemClickListener mOnItemClickListener;
     public HomeLoginAdapter(Context mContext) {
         this.mContext = mContext;
         activity=(MainActivity)mContext;
     }
-
+    //条目电击事件
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
@@ -40,14 +45,23 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(getItemViewType(position)==1){
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        if(position==1){
             if(holder instanceof HomeLoginAdapter.HomeLoginViewHolder1){
                 ((HomeLoginAdapter.HomeLoginViewHolder1) holder).ivVoice.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent i=new Intent(mContext, VoiceDetailActivity.class);
                         mContext.startActivity(i);
+                    }
+                });
+            }
+        }else if(position>1){
+            if(holder instanceof HomeLoginAdapter.HomeLoginViewHolder2){
+                ((HomeLoginViewHolder2) holder).itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mOnItemClickListener.onItemClick(v,position);
                     }
                 });
             }

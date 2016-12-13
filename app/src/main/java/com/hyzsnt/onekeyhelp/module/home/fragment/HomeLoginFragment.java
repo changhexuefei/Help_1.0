@@ -1,6 +1,7 @@
 package com.hyzsnt.onekeyhelp.module.home.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,8 +13,11 @@ import android.view.ViewGroup;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
+import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
+import com.hyzsnt.onekeyhelp.module.home.activity.VoiceDetailActivity;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
+import com.hyzsnt.onekeyhelp.module.home.inner.OnRecyclerViewItemClickListener;
 
 import java.util.List;
 
@@ -44,6 +48,15 @@ public class HomeLoginFragment extends BaseFragment {
         homeLoginRv.setLayoutManager(new LinearLayoutManager(getActivity()));
         homeLoginRv.setAdapter(mHomeLoginAdapter);
         homeLoginRv.setItemAnimator(new DefaultItemAnimator());
+
+        mHomeLoginAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent i=new Intent(getActivity(), StateActivity.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override
