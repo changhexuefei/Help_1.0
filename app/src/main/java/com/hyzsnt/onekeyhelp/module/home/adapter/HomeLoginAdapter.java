@@ -2,11 +2,14 @@ package com.hyzsnt.onekeyhelp.module.home.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.hyzsnt.onekeyhelp.MainActivity;
 import com.hyzsnt.onekeyhelp.R;
@@ -46,7 +49,16 @@ public class HomeLoginAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if(position==1){
+        if(position==0){
+            if(holder instanceof HomeLoginAdapter.HomeLoginViewHolder0){
+                HomeLoginHeadAdapter homeHeadAdapter = new HomeLoginHeadAdapter(mContext);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+                layoutManager.setOrientation(LinearLayout.HORIZONTAL);
+                ((HomeLoginAdapter.HomeLoginViewHolder0) holder).itemItemHeadRLV.setLayoutManager(layoutManager);
+                ((HomeLoginAdapter.HomeLoginViewHolder0) holder).itemItemHeadRLV.setAdapter(homeHeadAdapter);
+                ((HomeLoginAdapter.HomeLoginViewHolder0) holder).itemItemHeadRLV.setItemAnimator(new DefaultItemAnimator());
+            }
+        }else if(position==1){
             if(holder instanceof HomeLoginAdapter.HomeLoginViewHolder1){
                 ((HomeLoginAdapter.HomeLoginViewHolder1) holder).ivVoice.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -83,8 +95,10 @@ public class HomeLoginAdapter extends RecyclerView.Adapter{
         }
     }
     static class HomeLoginViewHolder0 extends RecyclerView.ViewHolder{
+        public RecyclerView itemItemHeadRLV;
         public HomeLoginViewHolder0(View itemView) {
             super(itemView);
+            itemItemHeadRLV= (RecyclerView) itemView.findViewById(R.id.item_homehead_rlv);
         }
     }
     static class HomeLoginViewHolder1 extends RecyclerView.ViewHolder{
