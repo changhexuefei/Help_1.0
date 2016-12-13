@@ -55,6 +55,19 @@
 			android:textSize="12sp"/>
 	</RadioGroup>
 
+	<TextView
+		android:id="@+id/tv_help"
+		android:layout_width="56dp"
+		android:layout_height="56dp"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:background="@drawable/for_help3x"
+		android:gravity="center"
+		android:text="求助"
+		android:textColor="#ffffff"
+		android:textSize="13sp"
+		android:visibility="invisible"/>
+
 	<RadioGroup
 		android:id="@+id/rg_help_bottom"
 		android:layout_width="match_parent"
@@ -94,6 +107,7 @@
 
 	</RadioGroup>
 
+
 	<Button
 		android:id="@+id/btn_cancel"
 		android:layout_width="59dp"
@@ -107,17 +121,5 @@
 		android:textColor="#ffffff"
 		android:textSize="13sp"/>
 
-	<TextView
-		android:id="@+id/tv_help"
-		android:layout_width="56dp"
-		android:layout_height="56dp"
-		android:layout_alignParentBottom="true"
-		android:layout_centerHorizontal="true"
-		android:background="@drawable/for_help3x"
-		android:gravity="center"
-		android:text="求助"
-		android:textColor="#ffffff"
-		android:textSize="13sp"
-		android:visibility="invisible"/>
 
 </RelativeLayout>
