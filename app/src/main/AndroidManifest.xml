@@ -37,6 +37,7 @@
         <activity android:name=".module.index.activity.MyNeighborListActivity">
         </activity>
         <activity android:name=".module.index.activity.SeekeStateActivity">
+
         </activity>
         <activity android:name=".activity.SplashActivity">
         </activity>
