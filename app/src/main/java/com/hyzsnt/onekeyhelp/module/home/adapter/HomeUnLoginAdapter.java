@@ -2,6 +2,8 @@ package com.hyzsnt.onekeyhelp.module.home.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,15 +13,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.hyzsnt.onekeyhelp.MainActivity;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
+import com.hyzsnt.onekeyhelp.utils.BitmapUtils;
+
+import butterknife.BindView;
 
 /**
  * Created by hyzs on 2016/12/10.
  */
 
 public class HomeUnLoginAdapter extends RecyclerView.Adapter {
+    @BindView(R.id.home_curcum_headportrait)
+    ImageView homeCurcumHeadportrait;
     private RecyclerView homeLrvHead;
     private Context mContext;
     private MainActivity activity;
@@ -28,7 +36,7 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
 
     public HomeUnLoginAdapter(Context mContext) {
         this.mContext = mContext;
-        activity=(MainActivity)mContext;
+        activity = (MainActivity) mContext;
     }
 
     @Override
@@ -45,20 +53,23 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(getItemViewType(position)==0){
-            homeLrvHead= (RecyclerView) v1.findViewById(R.id.home_lrv_head);
-            HomeHeadAdapter homeHeadAdapter=new HomeHeadAdapter(mContext);
+        if (getItemViewType(position) == 0) {
+            homeLrvHead = (RecyclerView) v1.findViewById(R.id.home_lrv_head);
+            HomeHeadAdapter homeHeadAdapter = new HomeHeadAdapter(mContext);
             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
             layoutManager.setOrientation(LinearLayout.HORIZONTAL);
             homeLrvHead.setLayoutManager(layoutManager);
             homeLrvHead.setAdapter(homeHeadAdapter);
             homeLrvHead.setItemAnimator(new DefaultItemAnimator());
-        }else{
-            if(holder instanceof HomeViewHolder2){
+        } else {
+            if (holder instanceof HomeViewHolder2) {
+                Bitmap bit= BitmapDescriptorFactory.fromResource(R.drawable.img).getBitmap();
+                Bitmap bitmap1=BitmapUtils.toRoundBitmap(bit);
+                ((HomeViewHolder2) holder).mHomeCurcumHeadportrait.setImageBitmap(bitmap1);
                 ((HomeViewHolder2) holder).homeIvDetail.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent i=new Intent(mContext, CompoundInfoActivity.class);
+                        Intent i = new Intent(mContext, CompoundInfoActivity.class);
                         activity.startActivity(i);
                     }
                 });
@@ -74,16 +85,21 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
 
     static class HomeViewHolder1 extends RecyclerView.ViewHolder {
         private RecyclerView rv;
+
         public HomeViewHolder1(View itemView) {
             super(itemView);
 
         }
     }
-    static class HomeViewHolder2 extends RecyclerView.ViewHolder{
+
+    static class HomeViewHolder2 extends RecyclerView.ViewHolder {
         public ImageView homeIvDetail;
+        public ImageView mHomeCurcumHeadportrait;
         public HomeViewHolder2(View itemView) {
             super(itemView);
-            homeIvDetail=(ImageView)itemView.findViewById(R.id.home_iv_detail);
+
+            homeIvDetail = (ImageView) itemView.findViewById(R.id.home_iv_detail);
+            mHomeCurcumHeadportrait= (ImageView) itemView.findViewById(R.id.home_curcum_headportrait);
         }
     }
 
