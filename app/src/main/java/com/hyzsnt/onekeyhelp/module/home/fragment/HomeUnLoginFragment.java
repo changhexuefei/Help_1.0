@@ -56,8 +56,11 @@ public class HomeUnLoginFragment extends BaseFragment {
 	@Override
 	protected void initData(String content) {
 		List params=new ArrayList<String>();
+		params.add(1+"");
+		params.add(21+"");
+		params.add(1+"");
 		params.add("兴隆区");
-		String str=HttpUtils.post(Api.PUBLIC, Api.Public.TEST, params,new ResponseHandler() {
+		String str=HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYLIST, params,new ResponseHandler() {
 			@Override
 			public void onError(Call call, Exception e, int id) {
 				Log.e("+++++++++++","失败"+call+"----"+e+"@@@@@"+id);
@@ -113,7 +116,5 @@ public class HomeUnLoginFragment extends BaseFragment {
 	protected void initView(View contentView) {
 		super.initView(contentView);
 		Log.e("----------", "");
-
-
 	}
 }
