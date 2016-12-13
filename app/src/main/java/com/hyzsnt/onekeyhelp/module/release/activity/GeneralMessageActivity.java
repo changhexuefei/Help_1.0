@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
+import com.hyzsnt.onekeyhelp.module.release.view.MyEditText;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -21,7 +22,7 @@ public class GeneralMessageActivity extends BaseActivity {
     @BindView(R.id.tv_msg)
     TextView mTvMsg;
     @BindView(R.id.et_title)
-    EditText mEtTitle;
+    MyEditText mEtTitle;
     @BindView(R.id.et_content)
     EditText mEtContent;
     @BindView(R.id.btn_release)
