@@ -3,345 +3,345 @@
 
     <item
         is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\cn.jiguang.sdk\jpush\3.0.0\jars\libs\jpush-android_v3.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="5358fffeba877c99f1834050ec39b1e6c15daf11">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\jpush-android_v3.0.0_a0e417e0b2ae147d9380df6b8fce13379d8b9495\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Android\Sdk\Sdk\extras\android\m2repository\com\android\support\support-annotations\25.0.1\support-annotations-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.1_5dc1d0ad72a5021295a170fb1f6862d225c0c5a2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.github.jdsjlzx\LRecyclerView\1.2.9\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="6ec2652687e30447b7044c78c5270031b9d343d1">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.github.jdsjlzx-LRecyclerView-1.2.9_feded863732897da55f95682fdcb12f3ca64de67\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\2.1.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="a2af9c72ccaa4c5c049b500ca6ea664a4ce1f7d4">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\de.hdodenhof-circleimageview-2.1.0_97f6f5e57f7a6325b9f66cfc567799f5c25adb34\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\libs\baidumapapi_search_v4_1_1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="b73dac26619f94061d28c54a7982ae8e0e783903">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_search_v4_1_1_64be88f5fdd163b18c1fdf17d5bd2e75fe0182c0\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_18fa6b73b5d996bc355682e11e7a132733fbd20f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="fb0af2f33245486957518d7ed60edd07abf02c03">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_d4968ad8dcc8ba6cd2f3b29006741d2069d0d9fb\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\gao\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.8.0\5ea7af56cc7c567ed9856d99efb30740e9b17ff\okio-1.8.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="05ea7af56cc7c567ed9856d99efb30740e9b17ff">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.8.0_60d286baba2194268afd31f15ca9e0ac9a86702e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.0.1_46e49976f45acde904a770434750528b8626eb4e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.zhy\okhttputils\2.6.2\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="155fef2600f48631a9e9665c0873743b6d24e324">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.zhy-okhttputils-2.6.2_6849a2661f7ae08fc8a1d9ae014915bcd50e53ac\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\libs\baidumapapi_util_v4_1_1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="d5630c44b212b90ad64c2bc2a994cbf28d1b08a7">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_util_v4_1_1_2476b3393b3c45e1e60f1e19ff61c9257d07b72c\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="f83b00041ecfba705603fec40363416c7de69719">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_1a0adee06bdccf2898d115b5b63cdf0499f27526\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\cn.jiguang.sdk\jcore\1.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="55fd55bf1eadded81a5eeff81e187aacfc0bcf19">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\cn.jiguang.sdk-jcore-1.0.0_689417ca9f4133d1b638698c3d4c90d37bb3a7ff\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_774f890ae2e070b3e48c971dcf03e872360616ba\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\libs\baidumapapi_base_v4_1_1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="00cd7d6a741c6a922c9cf7b0db52a357ebf12cdb">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_base_v4_1_1_916d33b0b3c0ba3fdd850131f9dd184b4efa3647\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.1_8a9a6318b0299be8ae8a299011e4dfbdfaf2ba1e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.1_26d9ca8e7f84b09f66d24aa2a54533763befe7d3\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\gao\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.4.0\ea392375cf9ff59234a82e7928a204215ccc98cd\butterknife-annotations-8.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="ea392375cf9ff59234a82e7928a204215ccc98cd">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\butterknife-annotations-8.4.0_ae1aa220d0125c4e87288fdeea41b19e5f4718dd\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.1_8f209b7c6113b6782a202fa7c92c8d0f98722adf\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.0.1_56b75b6c296cfeeb99a6937721a492044a797d96\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_8613c23669dc273db5bc2c81e7b73937d4353861\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="bb997986988f237cdf73b0af62998492eef38289">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_852d59ad2028039045eb7c26ed39a5f75026ba94\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\gao\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_408f3cf0c5f15cacad8a59788446f00b56461a4e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.1_a9fcf7ffdc9628fbd34b0b9234007965690e5b2e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\cn.jiguang.sdk\jpush\3.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="e4724d54590b7ac296c346490bb448428dedf826">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\cn.jiguang.sdk-jpush-3.0.0_672efd16b5f26eac1611688b5eb4a4b0ee8a51ea\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\design\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.0.1_420a26b79c967c3b1718012d5d5da4902143cc39\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.0.1_5b90f5ded9fdf9e8f810269a6a0586620a6ffb9a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_af7b795be7975c058a8f72ef91e576cf1ad4d714\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.jakewharton\butterknife\8.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="a07818a1ecabdb149998823429cce555af4b9cba">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.jakewharton-butterknife-8.4.0_329cc9cf5bfda4497db3a426f2a3278868f3ca03\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\cn.jiguang.sdk\jcore\1.0.0\jars\libs\jcore-android_v1.0.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="fef269f798d1ae15bc5f01888e02f18dfc6144b7">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\jcore-android_v1.0.0_9f6a0eef9ee8c41c2c3eb938ceeade349ea61e90\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.1_e75bc4cc12070a3d0a794738f12aa1196804249e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.1_763a16cc115c17ce6292fe2d7f8cc011f57e2d4e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\libs\baidumapapi_cloud_v4_1_1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="93ef91d018051b8b5e001eb5e106b983fee8a549">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_cloud_v4_1_1_89e351b88071d17caca4cc7910662d9ce64d0f53\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\gao\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.3.1\19047bdb6a4fc00a44124f64ca98e88fc204e7e3\okhttp-3.3.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="19047bdb6a4fc00a44124f64ca98e88fc204e7e3">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-3.3.1_ae48251bbf609588f277ae626679483753127120\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_16472ba9022960b9155785eb6066631c84d015f5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\libs\baidumapapi_map_v4_1_1.jar"
+        jar="D:\work\OneKeyHelp_v3.0\app\libs\baidumapapi_map_v4_1_1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="930064f0a91ff20ceb8dd4504b7dadec5aabea82">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_map_v4_1_1_ea6790a528c7fdeecd3a60b570e7c8f3ea69208b\classes.dex" />
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_map_v4_1_1_f0d391ca66b66c8df8a543ef2d9fe967366780b3\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\libs\baidumapapi_radar_v4_1_1.jar"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\design\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.0.1_ced3d7d580e7aefc407f70586b54510e646e8fe5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_ab7fd67ce208f2925792b56ab6a8b4022c6ff4bb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.1_eca7daa6400913222c4e708500db64dc728b9f08\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\libs\baidumapapi_util_v4_1_1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d5630c44b212b90ad64c2bc2a994cbf28d1b08a7">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_util_v4_1_1_c9e3b6523a0a0892610660a173799910540b80b2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife-annotations\8.4.0\ea392375cf9ff59234a82e7928a204215ccc98cd\butterknife-annotations-8.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="ea392375cf9ff59234a82e7928a204215ccc98cd">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\butterknife-annotations-8.4.0_a2a255623276bf6fd1b525dcb3e3c692cac62c3e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_38f135f63ccab6c3e60cf941983be4cbc3af7ff5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\libs\baidumapapi_search_v4_1_1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b73dac26619f94061d28c54a7982ae8e0e783903">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_search_v4_1_1_07043cf006cf7ba934fbc6e7565d216f9f20f448\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\cn.jiguang.sdk\jcore\1.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="55fd55bf1eadded81a5eeff81e187aacfc0bcf19">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\cn.jiguang.sdk-jcore-1.0.0_73f445bea271ef2d0af038b1e3f76725afafc14a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.squareup.okio\okio\1.8.0\5ea7af56cc7c567ed9856d99efb30740e9b17ff\okio-1.8.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="05ea7af56cc7c567ed9856d99efb30740e9b17ff">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\okio-1.8.0_06f7f952010e37a20e0067d81e65675288b9e24f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\libs\baidumapapi_base_v4_1_1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="00cd7d6a741c6a922c9cf7b0db52a357ebf12cdb">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_base_v4_1_1_eaed2ac1b824d4a1a746957b2451313350e252b0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.1_368db8e55177a3a645efcee988dcd309c2498e55\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\cn.jiguang.sdk\jcore\1.0.0\jars\libs\jcore-android_v1.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="fef269f798d1ae15bc5f01888e02f18dfc6144b7">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\jcore-android_v1.0.0_d55593a0fed75b1380951b117cae66da1307bfd5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_7988b80f89f7865a7ca5c62144266feb0e77b91a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.1_3ed0ddd1ffa1d80972ff7333ef5f05978ce2fd64\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.1_cb0d733b93953909bd83cba6edb8a396d7f9a9e8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.1_b78edb04881f3b66ef23535caccec0255c1e18d8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.0.1_bcbf146f2dd055b56845e3596c79e169f8430d32\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_1f3ddf859a86296da03fddcf50d19f29d652df81\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\libs\baidumapapi_cloud_v4_1_1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="93ef91d018051b8b5e001eb5e106b983fee8a549">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_cloud_v4_1_1_258351b2640cde97fd587d24af54799b703ecace\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.github.jdsjlzx\LRecyclerView\1.2.9\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6ec2652687e30447b7044c78c5270031b9d343d1">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.github.jdsjlzx-LRecyclerView-1.2.9_ee015c6afd0c9f686c2d82437696ef13bb658c47\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.0.1_e206d702288e3bbe780c82f17611f97927514de8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.1_9a6273d486e26e18ef192f4bf106ca4226addbe8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.0.1_7f9fdc2c21fad6bb0309d37378b77814295ff23a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.zhy\okhttputils\2.6.2\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="155fef2600f48631a9e9665c0873743b6d24e324">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.zhy-okhttputils-2.6.2_ca0c49556d2f30c74fce294559e9f6b2a7d33902\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\libs\baidumapapi_radar_v4_1_1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="ec3b3b79fdcc8fe059676554e31053027043edf8">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_radar_v4_1_1_691dadfa30995db4b8bc1b316248c0faa3583909\classes.dex" />
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\2\baidumapapi_radar_v4_1_1_298af098f5f938dc01eaf2b35422127cf38b523c\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\classes.jar"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.jakewharton\butterknife\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a07818a1ecabdb149998823429cce555af4b9cba">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.jakewharton-butterknife-8.4.0_6d88fe5319c5f80f45864887c330caac562c7733\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="8ed5b3bdab8857025d24ba0763fce46fce5a8115">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_0cc517c84829f52dce04535a47a5469752c71d82\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bc06ba5dc92363b86d62cefc6653e4da454a736d">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_6a75801d87acc71f7286a11b959128f71be6a707\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.0.1\support-annotations-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.1_16b927aa0dd2b2321d15d940863d62ef4fef4cda\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\2.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a2af9c72ccaa4c5c049b500ca6ea664a4ce1f7d4">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\de.hdodenhof-circleimageview-2.1.0_6427794e73b6e8e91f0f3e9a33cf2c6f0d6c90ba\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_fa03ddd37a81d36163e3dc7527a5a13d2a91fee9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\cn.jiguang.sdk\jpush\3.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e4724d54590b7ac296c346490bb448428dedf826">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\cn.jiguang.sdk-jpush-3.0.0_8f3471254fb3778a4b61dcfcc5796e339d274ad1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_b71266b4d8f7e7ca2ba13163b841c07f8477f415\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\cn.jiguang.sdk\jpush\3.0.0\jars\libs\jpush-android_v3.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="5358fffeba877c99f1834050ec39b1e6c15daf11">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\jpush-android_v3.0.0_8bd392a22f7487203d48439548fed6680551ca1c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
-        <dex dex="H:\Project\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.1_32a76874a2a4882eed98019724f553903dfe4965\classes.dex" />
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.1_40d83ad5453917a669beb06f79a61a10e1771214\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.3.1\19047bdb6a4fc00a44124f64ca98e88fc204e7e3\okhttp-3.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="19047bdb6a4fc00a44124f64ca98e88fc204e7e3">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\okhttp-3.3.1_2ea39afb3973a142a4b831a99bc4e2df1de6a0a5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\work\OneKeyHelp_v3.0\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="D:\work\OneKeyHelp_v3.0\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_f3209640a0119e888cc24a7ccbca3c9a842877f0\classes.dex" />
     </item>
 
 </items>

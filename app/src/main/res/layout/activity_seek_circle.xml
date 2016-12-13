@@ -31,8 +31,7 @@
 			android:layout_gravity="center_horizontal"
 			android:text="搜索"
 			android:textColor="@color/color_ff"
-			android:textSize="@dimen/sp_20"
-			android:textStyle="bold"
+			android:textSize="@dimen/sp_16"
 			/>
 	</RelativeLayout>
 	<RelativeLayout
