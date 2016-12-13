@@ -9,20 +9,20 @@ import android.view.ViewGroup;
 import com.hyzsnt.onekeyhelp.R;
 
 /**
- * Created by hyzs on 2016/12/11.
+ * Created by hyzs on 2016/12/13.
  */
 
-public class HomeHeadAdapter extends RecyclerView.Adapter {
-    private Context mHeadContext;
+public class HomeLoginHeadAdapter extends RecyclerView.Adapter {
+    private Context mContext;
 
-    public HomeHeadAdapter(Context mHeadContext) {
-        this.mHeadContext = mHeadContext;
+    public HomeLoginHeadAdapter(Context mContext) {
+        this.mContext = mContext;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mHeadContext).inflate(R.layout.item_home_star, parent, false);
-        return new HomeHeadViewHolder(v);
+        View v0 = LayoutInflater.from(mContext).inflate(R.layout.item_item_home_login_head, parent, false);
+        return new HomeUnLoginAdapter.HomeViewHolder1(v0);
     }
 
     @Override
@@ -32,10 +32,11 @@ public class HomeHeadAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 20;
+        return 4;
     }
-    static class HomeHeadViewHolder extends RecyclerView.ViewHolder{
-        public HomeHeadViewHolder(View itemView) {
+
+    static class HomeItemHeadViewHolder extends RecyclerView.ViewHolder{
+        public HomeItemHeadViewHolder(View itemView) {
             super(itemView);
         }
     }
