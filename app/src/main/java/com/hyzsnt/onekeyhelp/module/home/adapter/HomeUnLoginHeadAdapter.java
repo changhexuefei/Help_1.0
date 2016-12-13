@@ -12,10 +12,10 @@ import com.hyzsnt.onekeyhelp.R;
  * Created by hyzs on 2016/12/11.
  */
 
-public class HomeHeadAdapter extends RecyclerView.Adapter {
+public class HomeUnLoginHeadAdapter extends RecyclerView.Adapter {
     private Context mHeadContext;
 
-    public HomeHeadAdapter(Context mHeadContext) {
+    public HomeUnLoginHeadAdapter(Context mHeadContext) {
         this.mHeadContext = mHeadContext;
     }
 
