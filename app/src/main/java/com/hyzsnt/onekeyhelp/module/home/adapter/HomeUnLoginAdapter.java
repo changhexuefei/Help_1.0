@@ -26,8 +26,6 @@ import butterknife.BindView;
  */
 
 public class HomeUnLoginAdapter extends RecyclerView.Adapter {
-    @BindView(R.id.home_curcum_headportrait)
-    ImageView homeCurcumHeadportrait;
     private RecyclerView homeLrvHead;
     private Context mContext;
     private MainActivity activity;
