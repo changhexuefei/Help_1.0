@@ -2,7 +2,6 @@ package com.hyzsnt.onekeyhelp.module.index.activity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,16 +16,13 @@ import butterknife.BindView;
  * 在主页面点击搜索图标进入到搜索页面
  */
 
-public class SeekeStateActivity extends BaseActivity implements TextWatcher {
+public class SeekeStateActivity extends BaseActivity {
 
     @BindView(R.id.tv_cancel)
     TextView tv_cancel;
     @BindView(R.id.search_estate_bar)
     EditText mSearchEstateBar;
 
-    private CharSequence temp;//监听前的文本
-    private int editStart;//光标开始位置
-    private int editEnd;//光标结束位置
 
     @Override
     protected int getLayoutId() {
@@ -35,10 +31,27 @@ public class SeekeStateActivity extends BaseActivity implements TextWatcher {
 
     @Override
     protected void initData() {
+
         tv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        mSearchEstateBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+//
             }
         });
     }
@@ -57,25 +70,4 @@ public class SeekeStateActivity extends BaseActivity implements TextWatcher {
         }
     }
 
-
-    @Override
-    public void beforeTextChanged(CharSequence c, int i, int i1, int i2) {
-
-        Log.i("TAG", "输入文本之前的状态");
-        temp = c;
-    }
-
-    @Override
-    public void onTextChanged(CharSequence c, int i, int i1, int i2) {
-
-        Log.i("TAG", "输入文字中的状态，count是一次性输入字符数");
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        Log.i("TAG", "输入文字后的状态");
-        editStart = mSearchEstateBar.getSelectionStart();
-        editEnd = mSearchEstateBar.getSelectionEnd();
-
-    }
 }
