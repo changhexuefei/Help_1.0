@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="92dp"
-              android:layout_height="68dp"
-              android:gravity="center"
+                android:layout_width="92dp"
+                android:layout_height="68dp"
                 android:layout_marginRight="@dimen/dp_12"
-              >
+                android:gravity="center">
 
 	<ImageView
 		android:id="@+id/im_stroll_header"
 		android:layout_width="92dp"
 		android:layout_height="68dp"
-		android:src="@mipmap/aa"
-	    android:scaleType="fitXY"
-		/>
+		android:scaleType="fitXY"
+		android:src="@mipmap/aa"/>
 
 	<LinearLayout
-		android:layout_alignParentBottom="true"
 		android:layout_width="92dp"
 		android:layout_height="18dp"
-		android:orientation="horizontal"
+		android:layout_alignParentBottom="true"
+		android:alpha="0.35"
 		android:background="#000000"
 		android:gravity="center"
-		android:alpha="0.35">
+		android:orientation="horizontal">
 
 		<TextView
 			android:id="@+id/tv_stroll_header_title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/dp_2"
-			android:text="健身圈"
 			android:layout_marginRight="@dimen/dp_5"
+			android:text="健身圈"
 			android:textColor="#ffffff"
 			android:textSize="@dimen/sp_11"/>
 
