@@ -2,6 +2,7 @@ package com.hyzsnt.onekeyhelp.module.index.activity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -9,8 +10,15 @@ import android.widget.Toast;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
+import com.hyzsnt.onekeyhelp.http.HttpUtils;
+import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
+import com.hyzsnt.onekeyhelp.module.index.bean.HotAreaInfo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
+import okhttp3.Call;
 
 /**
  * 在主页面点击搜索图标进入到搜索页面
@@ -22,7 +30,7 @@ public class SeekeStateActivity extends BaseActivity {
     TextView tv_cancel;
     @BindView(R.id.search_estate_bar)
     EditText mSearchEstateBar;
-
+    private HotAreaInfo mHotAreaInfo;
 
     @Override
     protected int getLayoutId() {
@@ -31,6 +39,28 @@ public class SeekeStateActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        List<String> parms = new ArrayList<>();
+        parms.add("110000");
+//        parms.add("2");
+
+
+
+        HttpUtils.post("public", "getRegional", parms, new JsonResponseHandler() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Toast.makeText(SeekeStateActivity.this, "你输入的有误", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(String response, int id) {
+                Log.d("111111111","response"+ response);
+                Toast.makeText(SeekeStateActivity.this, "链接成功", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
 
         tv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +81,7 @@ public class SeekeStateActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-//
+
             }
         });
     }
