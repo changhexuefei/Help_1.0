@@ -168,6 +168,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	public void startHelp(View view) {
 		Intent intent = new Intent(this, HelpActivity.class);
 		startActivityForResult(intent, START_HELP);
+		overridePendingTransition(0, 0);
 	}
 
 	@Override
