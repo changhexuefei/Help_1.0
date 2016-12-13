@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.http.Api;
@@ -18,7 +19,9 @@ import com.hyzsnt.onekeyhelp.module.stroll.activity.CreateCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.SeekCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleFragmentAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.StrollHeaderAdapter;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleHotTag;
 import com.hyzsnt.onekeyhelp.module.stroll.widget.CustomExpandaleListView;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import java.util.ArrayList;
@@ -58,34 +61,30 @@ public class StrollFragment extends BaseFragment {
 
 	@Override
 	protected void initData(String content) {
+		CircleHotTag hotTagData = null;
 		LogUtils.e(content);
-		//演示数据
-		ArrayList<String> list = new ArrayList<>();
-		list.add("hh1");
-		list.add("hh1");
-		list.add("hh1");
-		list.add("hh1");
-
-		list.add("hh1");
-		list.add("hh1");
-		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-		ArrayList<String> lists = new ArrayList<>();
-		list.add("fgf");
-		list.add("fgf");
-		list.add("fgf");
-		list.add("fgf");
-		map.put("hh", list);
-		map.put("hh", list);
-		map.put("hh", list);
-		map.put("hh", list);
-		map.put("hh", list);
-		map.put("hh", list);
-		map.put("hh", list);
-		map.put("hh", list);
+		//添加数据到热门标签
+		//设置Recycleview横向排布
 		LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
 		layoutManager.setOrientation(LinearLayout.HORIZONTAL);
 		mReStrollHeaderList.setLayoutManager(layoutManager);
-		mReStrollHeaderList.setAdapter(new StrollHeaderAdapter(mActivity));
+		//解析数据
+        if(JsonUtils.isSuccess(content)){
+	        Gson gson = new Gson();
+	        hotTagData = gson.fromJson(content, CircleHotTag.class);
+	        hotTagData.getList();
+	        //添加适配器到Recycleview
+	        mReStrollHeaderList.setAdapter(new StrollHeaderAdapter(mActivity,hotTagData.getList()));
+        }else{
+	        String err = JsonUtils.getErrorMessage(content);
+	        LogUtils.e(err);
+        }
+
+
+		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+
+
+
 
 		CircleFragmentAdapter mCircleFragmentAdapter = new CircleFragmentAdapter(mActivity, map);
 		mExCircleFragment.setAdapter(new CircleFragmentAdapter(mActivity,map));
