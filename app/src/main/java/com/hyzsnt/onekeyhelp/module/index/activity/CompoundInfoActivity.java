@@ -1,6 +1,5 @@
 package com.hyzsnt.onekeyhelp.module.index.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -10,7 +9,6 @@ import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class CompoundInfoActivity extends BaseActivity {
 
@@ -87,13 +85,6 @@ public class CompoundInfoActivity extends BaseActivity {
         });
 
 
-
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }
