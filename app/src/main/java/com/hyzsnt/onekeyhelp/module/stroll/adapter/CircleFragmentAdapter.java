@@ -4,6 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.TextView;
+
+import com.hyzsnt.onekeyhelp.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,12 +61,19 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-		return View.inflate(mContext,android.R.layout.simple_list_item_1,null);
+
+		 if(view==null){
+              view = View.inflate(mContext,android.R.layout.simple_list_item_1,null);
+			 TextView tv1 = (TextView) view.findViewById(android.R.id.text1);
+			 tv1.setText("朝阳小区");
+		 }
+
+		return view;
 	}
 
 	@Override
 	public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
-		return null;
+		return View.inflate(mContext, R.layout.item_stroll_two,null);
 	}
 
 	@Override

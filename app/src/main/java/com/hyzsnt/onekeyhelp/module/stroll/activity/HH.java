@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
+import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleFragmentAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +45,7 @@ public class HH extends BaseActivity {
 		LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 		layoutManager.setOrientation(LinearLayout.HORIZONTAL);
 		mReStrollHeaderList.setLayoutManager(layoutManager);
-
+		mExCircleFragment.setAdapter(new CircleFragmentAdapter(this,map));
 	}
 
 
