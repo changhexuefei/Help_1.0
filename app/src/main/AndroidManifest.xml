@@ -39,12 +39,7 @@
 			android:name="com.baidu.lbsapi.API_KEY"
 			android:value="8YGxkZtWGuYqmm9Tsyw86lulSBCSIyiQ"/>
 		<!--主页面-->
-		<activity android:name=".MainActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-		</activity>
+		<activity android:name=".MainActivity"/>
 		<activity android:name=".module.index.activity.GoodsReplaceActivity"/>
 		<!-- 一键求助页面-->
 		<activity android:name=".module.help.activity.HelpActivity"/>
@@ -55,7 +50,12 @@
 		<!--欢迎页-->
 		<activity android:name=".activity.SplashActivity"/>
 		<!--引导页-->
-		<activity android:name=".activity.GuideActivity"/>
+		<activity android:name=".activity.GuideActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+		</activity>
 		<!--登录页面-->
 		<activity android:name=".module.login.activity.LoginActivity"/>
 		<!--重置密码页-->

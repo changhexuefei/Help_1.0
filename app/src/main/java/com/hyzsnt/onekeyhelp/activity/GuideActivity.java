@@ -58,7 +58,7 @@ public class GuideActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				SPUtils.put(App.getContext(), "isStartGuide", true);
-				if (SPUtils.isLogin(App.getContext())) {
+				if (SPUtils.isLogin()) {
 					Intent intent = new Intent(App.getContext(), MainActivity.class);
 					startActivity(intent);
 					finish();

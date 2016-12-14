@@ -170,7 +170,8 @@ public class SPUtils {
 			editor.commit();
 		}
 	}
-	public static boolean isLogin(Context context){
-		return (boolean)get(App.getContext(), "islogin", false);
+
+	public static boolean isLogin() {
+		return (boolean) get(App.getContext(), "islogin", false);
 	}
 }

@@ -51,7 +51,7 @@ public class SplashActivity extends BaseActivity {
 	}
 
 	private void switchPage() {
-		if (SPUtils.isLogin(this)) {
+		if (SPUtils.isLogin()) {
 			LogUtils.e("已经登录...");
 			startActivity(new Intent(this, MainActivity.class));
 			finish();
