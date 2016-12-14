@@ -69,6 +69,7 @@
 		<activity android:name=".module.release.activity.TalkActivity"/>
 		<activity android:name=".module.release.activity.GeneralMessageActivity"/>
 		<activity android:name=".module.home.activity.StateActivity"/>
+		<activity android:name=".module.home.activity.VoiceDetailActivity"/>
 		<!-- 百度地图定位服务-->
 		<service
 			android:name="com.baidu.location.f"
