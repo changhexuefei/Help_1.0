@@ -1,5 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.help.activity;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
@@ -25,10 +26,14 @@ import com.hyzsnt.onekeyhelp.utils.ScreenUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 
+@RuntimePermissions
 public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, Animator.AnimatorListener {
 
 	private static final int TIME_DOWN = 1;
+	private static final int START_RECORD = 2;
 	@BindView(R.id.rg_help_title)
 	RadioGroup rg_help_title;
 	@BindView(R.id.fl_help_content)
@@ -57,15 +62,24 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				case TIME_DOWN:
 					if (time == 0) {
 						tv_help.setVisibility(View.GONE);
+						sendEmptyMessage(START_RECORD);
 					} else {
 						tv_help.setText("" + time);
 						time--;
 						sendEmptyMessageDelayed(TIME_DOWN, 1000);
 					}
 					break;
+				case START_RECORD:
+					startRecord();
+					break;
 			}
 		}
 	};
+
+	@NeedsPermission(Manifest.permission.RECORD_AUDIO)
+	public void startRecord() {
+
+	}
 
 	@Override
 	protected int getLayoutId() {
