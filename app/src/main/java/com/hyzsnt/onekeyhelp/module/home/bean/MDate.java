@@ -1,17 +1,19 @@
 package com.hyzsnt.onekeyhelp.module.home.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by hyzs on 2016/12/14.
  */
 
-public class Date {
+public class MDate implements Serializable {
     private String res;//结果0失败，1成功
     private String restr;//失败则返回文字信息
     private Info info;//请求信息及用户信息
     private ArrayList<CommunityList> communityList;//小区集合
-    public Date() {
+
+    public MDate() {
     }
 
     public String getRes() {
@@ -48,7 +50,7 @@ public class Date {
 
     @Override
     public String toString() {
-        return "Date{" +
+        return "MDate{" +
                 "res='" + res + '\'' +
                 ", restr='" + restr + '\'' +
                 ", info=" + info +

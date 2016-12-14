@@ -34,9 +34,6 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
-
-import static com.hyzsnt.onekeyhelp.R.id.rg_main_bottom;
-
 @RuntimePermissions
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener {
 
@@ -50,7 +47,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	RadioButton mRbMainRelease;
 	@BindView(R.id.rb_main_user)
 	RadioButton mRbMainUser;
-	@BindView(rg_main_bottom)
+	@BindView(R.id.rg_main_bottom)
 	RadioGroup mRgMainBottom;
 	@BindView(R.id.fl_main_content)
 	FrameLayout mFlMainContent;

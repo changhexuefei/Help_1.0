@@ -21,6 +21,7 @@ import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
 import com.hyzsnt.onekeyhelp.module.login.activity.RegisterActivity;
 
@@ -47,7 +48,7 @@ public class HomeUnLoginFragment extends BaseFragment {
     RecyclerView homeLrv;
     @BindView(R.id.home_image_location)
     ImageView homeImageLocation;
-
+    private String str="";
     public HomeUnLoginFragment() {
         // Required empty public constructor
     }
@@ -62,7 +63,7 @@ public class HomeUnLoginFragment extends BaseFragment {
         List params = new ArrayList<String>();
         //params.add("13521632836");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
         params.add("0");
-        params.add("1");
+        params.add("10");
         params.add("1");
         params.add("5");
         params.add("39.923594");
@@ -70,7 +71,7 @@ public class HomeUnLoginFragment extends BaseFragment {
         params.add("");
         params.add("");
         params.add("");
-        String str = HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYLIST, params, new ResponseHandler() {
+        HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYLIST, params, new ResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
                 Log.e("+++++++++++", "失败" + call + "----" + e + "@@@@@" + id);
@@ -79,6 +80,7 @@ public class HomeUnLoginFragment extends BaseFragment {
             @Override
             public void onSuccess(String response, int id) {
                 Log.e("+++++++++++", response);
+                str=response;
             }
 
             @Override
@@ -93,6 +95,11 @@ public class HomeUnLoginFragment extends BaseFragment {
         homeLrv.setLayoutManager(new LinearLayoutManager(getActivity()));
         homeLrv.setAdapter(mHomeAdapter);
         homeLrv.setItemAnimator(new DefaultItemAnimator());
+
+        ArrayList<MDate> dates=new ArrayList<>();
+        mHomeAdapter.setDates(dates);
+        mHomeAdapter.notifyDataSetChanged();
+
     }
 
     @Override

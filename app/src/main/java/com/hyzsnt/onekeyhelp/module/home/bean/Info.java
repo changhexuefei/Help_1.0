@@ -1,10 +1,12 @@
 package com.hyzsnt.onekeyhelp.module.home.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by hyzs on 2016/12/14.
  */
 
-public class Info {
+public class Info implements Serializable {
     private Coordinateres coordinateres;//检索类别为0时，返回该用户定位结果
     private String curnum;//当前页行数
     private String curpage;//当前页
