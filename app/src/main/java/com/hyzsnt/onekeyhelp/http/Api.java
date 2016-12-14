@@ -8,7 +8,7 @@ public class Api {
 	/**
 	 * 接口基础地址
 	 */
-	public static final String BASE_URL = "http://192.168.1.123/mbapi.php";
+	public static final String BASE_URL = "http://192.168.1.188/mbapi.php";
 
 	/**
 	 * 接口验证key
@@ -53,6 +53,8 @@ public class Api {
 		 * }
 		 */
 		public static final String TEST = "test";
+		public static final String REGISTER = "register";
+		public static final String LOGIN = "login";
 	}
 
 	/**

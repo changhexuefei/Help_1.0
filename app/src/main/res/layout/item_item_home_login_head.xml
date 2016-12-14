@@ -10,6 +10,5 @@
             android:id="@+id/item_item_head_img"
             android:layout_width="@dimen/dp_110"
             android:layout_height="@dimen/dp_110"
-            android:src="@drawable/img"
             android:scaleType="fitXY"/>
 </LinearLayout>
