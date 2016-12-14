@@ -1,13 +1,16 @@
 package com.hyzsnt.onekeyhelp.module.index.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.index.bean.MyNeighborInfo;
+import com.hyzsnt.onekeyhelp.utils.BitmapUtils;
 
 import java.util.List;
 
@@ -29,10 +32,10 @@ public class MyNeighborListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 //        if (viewType == TYPE_ITEM) {
 
-            View view = View.inflate(parent.getContext(), R.layout.item_neighbor, null);
-            view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
-                    RecyclerView.LayoutParams.WRAP_CONTENT));
-            return new ItemViewHolder(view);
+        View view = View.inflate(parent.getContext(), R.layout.item_neighbor, null);
+        view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT));
+        return new ItemViewHolder(view);
 //        }
 //        if (viewType == TYPE_FOOTER) {
 //            View view = View.inflate(parent.getContext(), R.layout.neighbor_list_footer_view, null);
@@ -49,7 +52,9 @@ public class MyNeighborListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (holder instanceof ItemViewHolder) {
 
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-            itemViewHolder.iv_neighbor_icon.setImageResource(mNeighborInfos.get(position).getNeighborIcon());
+            Bitmap bitmap = BitmapDescriptorFactory.fromResource(R.drawable.test).getBitmap();
+            Bitmap bit = BitmapUtils.toRoundBitmap(bitmap);
+            itemViewHolder.iv_neighbor_icon.setImageBitmap(bit);
             itemViewHolder.tv_neighbor_name.setText(mNeighborInfos.get(position).getNeighborName());
             itemViewHolder.tv_neighbor_age.setText(mNeighborInfos.get(position).getNeighborAge());
             itemViewHolder.iv_neighbor_sex_icon.setImageResource(mNeighborInfos.get(position).getNeighborSexIcon());

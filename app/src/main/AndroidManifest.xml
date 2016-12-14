@@ -29,22 +29,33 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
+        <!--物品置换-->
         <activity android:name=".module.index.activity.GoodsReplaceActivity" />
         <activity android:name=".module.help.activity.HelpActivity" />
         <activity android:name=".module.stroll.activity.SeekCircleActivity" />
         <activity android:name=".module.stroll.activity.CreateCircleActivity" />
-        <activity android:name=".module.index.activity.MyNeighborListActivity"></activity>
-        <activity android:name=".module.index.activity.SeekeStateActivity"></activity>
+        <!--我的邻居列表-->
+        <activity android:name=".module.index.activity.MyNeighborListActivity">
+
+        </activity>
+        <!--搜索小区-->
+        <activity android:name=".module.index.activity.SeekeStateActivity">
+
+        </activity>
         <activity android:name=".activity.SplashActivity"></activity>
         <activity android:name=".activity.GuideActivity"></activity>
         <activity android:name=".module.login.activity.LoginActivity"></activity>
         <activity android:name=".module.login.activity.ResetPasswordActivity"></activity>
         <activity android:name=".module.login.activity.RegisterActivity"></activity>
         <activity android:name=".module.login.activity.AgreementActivity"></activity>
+        <!--小区简介-->
         <activity android:name=".module.index.activity.CompoundInfoActivity"></activity>
         <activity android:name=".module.stroll.activity.CircleDetailsActivity"></activity>
+        <!--发布说说-->
         <activity android:name=".module.release.activity.TalkActivity" />
+        <!--发布综合信息-->
         <activity android:name=".module.release.activity.GeneralMessageActivity" />
         <activity android:name=".module.home.activity.StateActivity"></activity>
     </application>

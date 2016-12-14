@@ -18,9 +18,9 @@ import com.hyzsnt.onekeyhelp.R;
  */
 
 public class MyEditText extends RelativeLayout {
-    private int maxLength=200;
-    private  int minLines=5;
-    private  Context mContext;
+    private int maxLength = 200;
+    private int minLines = 5;
+    private Context mContext;
     private EditText et;
     private TextView tv;
 
@@ -30,18 +30,18 @@ public class MyEditText extends RelativeLayout {
 
     public MyEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.mContext=context;
-        if (attrs!=null) {
+        this.mContext = context;
+        if (attrs != null) {
             setCustomAttributes(attrs);
         }
         init(context);
     }
 
 
-    public MyEditText(Context context,int maxlenth) {
+    public MyEditText(Context context, int maxlenth) {
         super(context);
-        this.mContext=context;
-        maxLength=maxlenth;
+        this.mContext = context;
+        maxLength = maxlenth;
         init(context);
 
     }
@@ -49,14 +49,16 @@ public class MyEditText extends RelativeLayout {
     private void setCustomAttributes(AttributeSet attrs) {
         TypedArray a = mContext.obtainStyledAttributes(attrs, R.styleable.MyEditText);
         //最大长度
-        maxLength = a.getInt(R.styleable.MyEditText_maxlength,200);
+        maxLength = a.getInt(R.styleable.MyEditText_maxlength, 200);
         //最小高度
         minLines = a.getInt(R.styleable.MyEditText_minlines, 5);
 
     }
-    public void hint(String s){
+
+    public void hint(String s) {
         et.setHint(s);
     }
+
     //初始化
     private void init(Context context) {
         View view = View.inflate(context, R.layout.myedittext, null);
@@ -66,7 +68,7 @@ public class MyEditText extends RelativeLayout {
         et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)}); //最大输入长度
         tv = (TextView) view.findViewById(R.id.tv);
         int length = et.getText().toString().length();
-        tv.setText(length+"/"+maxLength);
+        tv.setText(length + "/" + maxLength);
         et.addTextChangedListener(new TextWatcher() {
 
 
@@ -84,27 +86,31 @@ public class MyEditText extends RelativeLayout {
             @Override
             public void afterTextChanged(Editable s) {
                 int length = et.getText().toString().length();
-                tv.setText(length+"/"+maxLength);
+                tv.setText(length + "/" + maxLength);
             }
         });
 
         addView(view);
 
     }
+
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
                 MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec);
     }
+
     //实现类似于Edittext的方法
-    public void setText(String s){
+    public void setText(String s) {
         et.setText(s);
     }
-    public Editable getText(){
+
+    public Editable getText() {
         return et.getText();
     }
-    public void setEndable(boolean flag){
+
+    public void setEndable(boolean flag) {
         et.setEnabled(flag);
     }
 
