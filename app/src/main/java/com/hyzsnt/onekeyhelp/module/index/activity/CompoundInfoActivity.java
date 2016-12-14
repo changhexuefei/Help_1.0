@@ -12,7 +12,6 @@ import butterknife.BindView;
 
 public class CompoundInfoActivity extends BaseActivity {
 
-
     @BindView(R.id.btn_return)
     ImageButton mBtnReturn;
     @BindView(R.id.compound_icon)
@@ -55,7 +54,7 @@ public class CompoundInfoActivity extends BaseActivity {
     protected void initData() {
         mCompoundName.setText("兴隆小区");
         mCompoundInfo.setText("兴隆小区位于北京，为高层建筑住宅，占地面积达7593.93平方米。");
-        mCompoundIcon.setImageResource(R.mipmap.ic_launcher);
+        mCompoundIcon.setImageResource(R.drawable.img);
         mCompoundPeopleNum.setText("1000人");
 
         mSubdistrictName.setText("好哦哦你扭扭捏捏");
