@@ -12,17 +12,16 @@ import com.hyzsnt.onekeyhelp.R;
  * Created by hyzs on 2016/12/11.
  */
 
-public class HomeHeadAdapter extends RecyclerView.Adapter {
+public class HomeUnLoginHeadAdapter extends RecyclerView.Adapter {
     private Context mHeadContext;
 
-    public HomeHeadAdapter(Context mHeadContext) {
+    public HomeUnLoginHeadAdapter(Context mHeadContext) {
         this.mHeadContext = mHeadContext;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mHeadContext).inflate(R.layout.item_home_star, parent, false);
-
         return new HomeHeadViewHolder(v);
     }
 

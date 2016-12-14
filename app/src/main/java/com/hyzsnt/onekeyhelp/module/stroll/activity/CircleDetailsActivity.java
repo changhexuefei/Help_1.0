@@ -14,7 +14,7 @@ import butterknife.OnClick;
 
 public class CircleDetailsActivity extends BaseActivity {
 
-	public boolean isjoin =false;
+	public boolean isjoin =true;
 	@BindView(R.id.im_circle_details_back)
 	ImageView mImCircleDetailsBack;
 	@BindView(R.id.frlayout_circle_dietails)

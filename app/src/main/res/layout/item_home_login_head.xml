@@ -3,151 +3,119 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_18"
-        android:layout_marginLeft="@dimen/dp_16"
-        android:layout_marginRight="@dimen/dp_16"
-        android:layout_marginBottom="@dimen/dp_18"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_100"
-            android:background="#B3F6E2"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="@dimen/dp_50"
-                android:layout_height="@dimen/dp_50"
-                android:src="@drawable/home_login_synthesize"/>
-            <TextView
-                android:layout_marginTop="@dimen/dp_12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="综合信息"
-                android:gravity="bottom"
-                android:textColor="#56746B"
-                android:textSize="@dimen/sp_14"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_100"
-            android:background="#B3F6E2"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="@dimen/dp_50"
-                android:layout_height="@dimen/dp_50"
-                android:src="@drawable/home_login_exchange_goods"/>
-            <TextView
-                android:layout_marginTop="@dimen/dp_12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="物品交换"
-                android:gravity="bottom"
-                android:textColor="#56746B"
-                android:textSize="@dimen/sp_14"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_100"
-            android:background="#B3F6E2"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="@dimen/dp_50"
-                android:layout_height="@dimen/dp_50"
-                android:src="@drawable/home_login_exchange_house"/>
-            <TextView
-                android:layout_marginTop="@dimen/dp_12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="房屋租赁"
-                android:gravity="bottom"
-                android:textColor="#56746B"
-                android:textSize="@dimen/sp_14"
-                />
-        </LinearLayout>
 
-    </LinearLayout>
-        <View
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:id="@+id/item_homehead_rlv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_110"
+        android:layout_marginBottom="@dimen/dp_5">
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+            android:layout_marginTop="@dimen/dp_5"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_1"
-            android:background="#F2FFFB"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_80"
+            android:layout_height="@dimen/dp_110"
             android:orientation="horizontal"
-            >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="小区简介"
-                android:textSize="@dimen/dp_12"
-                android:textColor="#323232"
-                />
-            <ImageView
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_width="@dimen/dp_35"
-                android:layout_height="@dimen/dp_35"
-                android:src="@drawable/home_login_school_detail"/>
-        </LinearLayout>
-        <View
-            android:layout_width="@dimen/px_1"
-            android:layout_height="match_parent"
-            android:background="#F2FFFB"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_weight="1">
+
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_width="@dimen/dp_172"
+                android:layout_height="@dimen/dp_110"
+                android:background="@drawable/home_backgroud_violet"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2356人"
-                    android:textSize="@dimen/sp_10"
-                    android:textColor="#808080"
-                    android:layout_gravity="center_horizontal"/>
+                    android:src="@drawable/home_seek_help" />
                 <TextView
+                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我的邻居"
-                    android:textSize="@dimen/sp_12"
-                    android:textColor="#323232"
+                    android:text="寻求看护"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="#7D68a0"
                     />
             </LinearLayout>
 
-            <ImageView
+            <LinearLayout
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_width="@dimen/dp_35"
-                android:layout_height="@dimen/dp_35"
-                android:src="@drawable/home_login_neighbor"/>
+                android:layout_width="@dimen/dp_172"
+                android:layout_height="@dimen/dp_110"
+                android:orientation="vertical"
+                android:gravity="center"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_backgroud_blackred"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_width="@dimen/dp_35"
+                        android:layout_height="@dimen/dp_35"
+                        android:src="@drawable/home_login_school_detail"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="小区简介"
+                        android:textSize="@dimen/dp_16"
+                        android:textColor="#845556"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_backgroud_cyan"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+
+                    <ImageView
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_width="@dimen/dp_35"
+                        android:layout_height="@dimen/dp_35"
+                        android:src="@drawable/home_login_neighbor"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="我的邻居"
+                            android:textSize="@dimen/sp_16"
+                            android:textColor="#388176"
+                            android:id="@+id/textView6" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2356人"
+                            android:textSize="@dimen/sp_16"
+                            android:textColor="#388176"
+                            android:layout_gravity="center_horizontal"/>
+                    </LinearLayout>
+                </LinearLayout>
         </LinearLayout>
 
-</LinearLayout>
+
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_30"
         android:orientation="horizontal"
-        android:background="#F1F1F1">
+        android:background="#F1F1F1"
+        android:layout_marginTop="@dimen/dp_10">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

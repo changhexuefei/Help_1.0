@@ -26,6 +26,10 @@ public class Api {
 	 * 首页类字段
 	 */
 	public static final String COMMUNITY = "community";
+	/**
+	 * 闲逛类字段
+	 */
+	public static final String CIRCLE ="circle";
 
 	/**
 	 * 公共类
@@ -64,4 +68,13 @@ public class Api {
 	public static final class Community {
 		public static final String GETCOMMUNITYLIST = "getCommunityList";
 	}
+
+	public static final class Circle{
+		/**
+		 闲逛获取热门标签a
+		 */
+		public static final String CIRCLE_HOTTAG ="getRecomTags";
+	}
+
+
 }

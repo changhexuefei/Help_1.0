@@ -32,8 +32,7 @@ public class CreateCircleActivity extends BaseActivity {
 	EditText mEtCreateCircleDes;
 	@BindView(R.id.re_create_circle_type)
 	RecyclerView mReCreateCircleType;
-	@BindView(R.id.im_circle_create)
-	ImageView mImCircleCreate;
+
 	@BindView(R.id.activity_create_circle)
 	RelativeLayout mActivityCreateCircle;
 	//圈子类型集合

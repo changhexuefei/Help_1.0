@@ -3,7 +3,6 @@ package com.hyzsnt.onekeyhelp.module.home.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +17,6 @@ import com.hyzsnt.onekeyhelp.MainActivity;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 import com.hyzsnt.onekeyhelp.utils.BitmapUtils;
-
-import butterknife.BindView;
 
 /**
  * Created by hyzs on 2016/12/10.
@@ -53,7 +50,7 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == 0) {
             homeLrvHead = (RecyclerView) v1.findViewById(R.id.home_lrv_head);
-            HomeHeadAdapter homeHeadAdapter = new HomeHeadAdapter(mContext);
+            HomeUnLoginHeadAdapter homeHeadAdapter = new HomeUnLoginHeadAdapter(mContext);
             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
             layoutManager.setOrientation(LinearLayout.HORIZONTAL);
             homeLrvHead.setLayoutManager(layoutManager);

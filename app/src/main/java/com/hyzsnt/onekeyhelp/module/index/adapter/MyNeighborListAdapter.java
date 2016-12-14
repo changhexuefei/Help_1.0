@@ -47,6 +47,7 @@ public class MyNeighborListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
+
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             itemViewHolder.iv_neighbor_icon.setImageResource(mNeighborInfos.get(position).getNeighborIcon());
             itemViewHolder.tv_neighbor_name.setText(mNeighborInfos.get(position).getNeighborName());
