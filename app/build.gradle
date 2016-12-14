@@ -18,7 +18,7 @@ android {
             abiFilters 'armeabi-v7a'
             // 还可以添加 'armeabi', 'x86', 'x86_64', 'mips', 'mips64', 'armeabi-v8a'
         }
-
+        //配置极光推送
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "b8dfd483777e6301eb028cb2", //JPush上注册的包名对应的appkey.
@@ -57,5 +57,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     //glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    //Gson
     compile 'com.google.code.gson:gson:2.8.0'
 }

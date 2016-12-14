@@ -18,6 +18,7 @@ import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.module.help.service.LocationService;
 import com.hyzsnt.onekeyhelp.module.help.listener.MyOrientationListener;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import java.util.List;
 
@@ -133,6 +134,10 @@ public class MapHelpFragment extends BaseFragment implements BDLocationListener 
 
 	@Override
 	public void onReceiveLocation(BDLocation bdLocation) {
+
+		LogUtils.e(bdLocation.getLatitude() + "");
+		LogUtils.e(bdLocation.getLongitude() + "");
+
 		MyLocationData data = new MyLocationData.Builder()//
 				.direction(mCurrentX)//
 				.accuracy(500)//
