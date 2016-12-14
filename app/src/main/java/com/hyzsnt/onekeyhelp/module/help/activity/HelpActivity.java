@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
@@ -82,12 +83,19 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	}
 
 	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		HelpActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+	}
+
+	@Override
 	protected int getLayoutId() {
 		return R.layout.activity_help;
 	}
 
 	@Override
 	protected void initData() {
+		HelpActivityPermissionsDispatcher.startRecordWithCheck(this);
 		initAnimator();
 
 	}
