@@ -11,10 +11,23 @@ import com.hyzsnt.onekeyhelp.MainActivity;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
+import com.hyzsnt.onekeyhelp.http.Api;
+import com.hyzsnt.onekeyhelp.http.HttpUtils;
+import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.utils.InPutUtils;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
+import com.hyzsnt.onekeyhelp.utils.ToastUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
+import okhttp3.Call;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
@@ -43,7 +56,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 	@Override
 	protected void initListener() {
 		super.initListener();
-		if (SPUtils.isLogin(App.getContext())) {
+		if (SPUtils.isLogin()) {
 			startActivity(new Intent(this, MainActivity.class));
 			finish();
 		}
@@ -58,11 +71,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 			switch (v.getId()) {
 				case R.id.tv_login_reset:// 忘记密码
 					startActivity(new Intent(this, ResetPasswordActivity.class));
-					//					start(ResetPasswordFragment.newInstance());
 					break;
 				case R.id.tv_login_register:// 注册
 					startActivity(new Intent(this, RegisterActivity.class));
-					//					start(RegisterFragment.newInstance());
 					break;
 				case R.id.btn_login:// 登录
 					String user_phone = phone_edit.getText().toString();
@@ -94,8 +105,39 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 	 * @param user_pass
 	 */
 	private void login(String user_phone, String user_pass) {
-		startActivity(new Intent(this, MainActivity.class));
-		finish();
-		SPUtils.put(App.getContext(), "islogin", true);
+		List<String> params = new ArrayList<>();
+		params.add(user_phone);
+		HttpUtils.post(Api.PUBLIC, Api.Public.LOGIN, params, new JsonResponseHandler() {
+			@Override
+			public void onError(Call call, Exception e, int id) {
+				LogUtils.e("onError:" + e.getMessage());
+				ToastUtils.showShort(LoginActivity.this, "录登失败，网络异常！");
+			}
+
+			@Override
+			public void onSuccess(String response, int id) {
+				LogUtils.e("onSuccess:" + response);
+				if (JsonUtils.isSuccess(response)) {
+					try {
+						JSONObject jsonObject = new JSONObject(response);
+						int res = jsonObject.optInt("res", 0);
+						if (res == 0) {
+							ToastUtils.showShort(LoginActivity.this, "录登失败！");
+						} else if (res == 1) {
+							startActivity(new Intent(LoginActivity.this, MainActivity.class));
+							finish();
+							SPUtils.put(App.getContext(), "islogin", true);
+						} else {
+							ToastUtils.showShort(LoginActivity.this, "未知错误！请重试。");
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+						ToastUtils.showShort(LoginActivity.this, "录登失败，系统数据异常！");
+					}
+				} else {
+					ToastUtils.showShort(LoginActivity.this, JsonUtils.getErrorMessage(response));
+				}
+			}
+		});
 	}
 }

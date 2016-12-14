@@ -51,7 +51,7 @@ public class SplashActivity extends BaseActivity {
 	}
 
 	private void switchPage() {
-		if (SPUtils.isLogin(this)) {
+		if (SPUtils.isLogin()) {
 			LogUtils.e("已经登录...");
 			startActivity(new Intent(this, MainActivity.class));
 			finish();
@@ -59,12 +59,9 @@ public class SplashActivity extends BaseActivity {
 			LogUtils.e("没有登录...");
 			boolean isStartGuide = (boolean) SPUtils.get(App.getContext(), "isStartGuide", false);
 			if (isStartGuide) {
-				//				startWithPop(LoginFragment.newInstance());
 				startActivity(new Intent(this, LoginActivity.class));
 				finish();
-				SPUtils.put(App.getContext(), "isStartGuide", true);
 			} else {
-				//				startWithPop(GuideFragment.newInstance());
 				startActivity(new Intent(this, GuideActivity.class));
 				finish();
 			}

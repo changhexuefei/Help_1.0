@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
+import com.hyzsnt.onekeyhelp.module.help.bean.LocationInfo;
 import com.zhy.http.okhttp.log.LoggerInterceptor;
 
 import java.util.concurrent.TimeUnit;
@@ -18,6 +19,7 @@ import okhttp3.OkHttpClient;
 
 public class App extends Application {
 	private static Context mContext;
+	private static LocationInfo mLocationInfo;
 
 	@Override
 	public void onCreate() {
@@ -44,5 +46,23 @@ public class App extends Application {
 	 */
 	public static Context getContext() {
 		return mContext;
+	}
+
+	/**
+	 * 获取全局Location对象
+	 *
+	 * @return Location
+	 */
+	public static LocationInfo getLocation() {
+		return mLocationInfo;
+	}
+
+	/**
+	 * 设置Location
+	 *
+	 * @param locationInfo
+	 */
+	public static void setLocation(LocationInfo locationInfo) {
+		mLocationInfo = locationInfo;
 	}
 }

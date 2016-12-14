@@ -57,17 +57,16 @@ public class GuideActivity extends BaseActivity {
 		btn_start_main.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				SPUtils.put(App.getContext(), "isStartGuide", true);
-				if (SPUtils.isLogin(App.getContext())) {
+				if (SPUtils.isLogin()) {
 					Intent intent = new Intent(App.getContext(), MainActivity.class);
 					startActivity(intent);
 					finish();
 				} else {
-					//					startWithPop(LoginFragment.newInstance());
 					Intent intent = new Intent(App.getContext(), LoginActivity.class);
 					startActivity(intent);
 					finish();
 				}
+				SPUtils.put(App.getContext(), "isStartGuide", true);
 			}
 		});
 	}

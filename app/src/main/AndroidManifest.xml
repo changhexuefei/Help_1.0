@@ -45,6 +45,7 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+		<!--物品置换-->
 		<activity android:name=".module.index.activity.GoodsReplaceActivity"/>
 		<!-- 一键求助页面-->
 		<activity android:name=".module.help.activity.HelpActivity"/>
@@ -53,12 +54,16 @@
 		<!--创建圈子-->
 		<activity android:name=".module.stroll.activity.CreateCircleActivity"
 		          android:windowSoftInputMode="adjustPan|stateHidden"/>
+		<activity android:name=".module.stroll.activity.CreateCircleActivity"/>
+		<!--我的邻居列表-->
 		<activity android:name=".module.index.activity.MyNeighborListActivity"/>
+		<!--搜索小区-->
 		<activity android:name=".module.index.activity.SeekeStateActivity"/>
 		<!--欢迎页-->
 		<activity android:name=".activity.SplashActivity"/>
 		<!--引导页-->
-		<activity android:name=".activity.GuideActivity"/>
+		<activity android:name=".activity.GuideActivity">
+		</activity>
 		<!--登录页面-->
 		<activity android:name=".module.login.activity.LoginActivity"/>
 		<!--重置密码页-->
@@ -67,10 +72,13 @@
 		<activity android:name=".module.login.activity.RegisterActivity"/>
 		<!--用户协议页-->
 		<activity android:name=".module.login.activity.AgreementActivity"/>
+		<!--小区简介-->
 		<activity android:name=".module.index.activity.CompoundInfoActivity"/>
 		<!--圈子详情-->
 		<activity android:name=".module.stroll.activity.CircleDetailsActivity"/>
+		<!--发布说说-->
 		<activity android:name=".module.release.activity.TalkActivity"/>
+		<!--发布综合信息-->
 		<activity android:name=".module.release.activity.GeneralMessageActivity"/>
 		<activity android:name=".module.home.activity.StateActivity"/>
 		<activity android:name=".module.home.activity.VoiceDetailActivity"/>
@@ -79,7 +87,7 @@
 			android:name="com.baidu.location.f"
 			android:enabled="true"
 			android:process=":remote"/>
-
 	</application>
+
 
 </manifest>

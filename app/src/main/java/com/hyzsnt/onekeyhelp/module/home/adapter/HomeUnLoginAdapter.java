@@ -15,8 +15,11 @@ import android.widget.LinearLayout;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.hyzsnt.onekeyhelp.MainActivity;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 import com.hyzsnt.onekeyhelp.utils.BitmapUtils;
+
+import java.util.ArrayList;
 
 /**
  * Created by hyzs on 2016/12/10.
@@ -28,10 +31,18 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
     private MainActivity activity;
     private View v1;
     private View v2;
-
+    private ArrayList<MDate> dates=new ArrayList<>();
     public HomeUnLoginAdapter(Context mContext) {
         this.mContext = mContext;
         activity = (MainActivity) mContext;
+    }
+
+    public ArrayList<MDate> getDates() {
+        return dates;
+    }
+
+    public void setDates(ArrayList<MDate> dates) {
+        this.dates = dates;
     }
 
     @Override
