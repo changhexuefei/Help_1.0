@@ -3,7 +3,7 @@ package com.hyzsnt.onekeyhelp.module.index.bean;
 import java.util.List;
 
 
-public class CommunityList {
+public class CommunityList{
     /**
      * res : 1
      * restr :

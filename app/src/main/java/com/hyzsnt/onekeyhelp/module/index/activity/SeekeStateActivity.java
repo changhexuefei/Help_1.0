@@ -53,15 +53,15 @@ public class SeekeStateActivity extends BaseActivity {
     @Override
     protected void initData() {
         List<String> parms = new ArrayList<>();
-        parms.add("0");
+        parms.add("1");
         parms.add("4");
         parms.add("1");
-        parms.add("5");
-        parms.add("39.923594");
-        parms.add("116.539995");
-//        parms.add("110000");
+        parms.add("");
+//        parms.add("39.923594");
+//        parms.add("116.539995");
+//        parms.add("110105");
 //        parms.add("2");
-        HttpUtils.post("community", "getCommunityList", parms, new JsonResponseHandler() {
+        HttpUtils.post("community", "getMemberListByCommunity", parms, new JsonResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
                 Toast.makeText(SeekeStateActivity.this, "你输入的有误", Toast.LENGTH_SHORT).show();
@@ -93,7 +93,6 @@ public class SeekeStateActivity extends BaseActivity {
                 }
             }
         });
-
 
         tv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
