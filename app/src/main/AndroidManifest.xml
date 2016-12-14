@@ -54,7 +54,7 @@
 		<!--创建圈子-->
 		<activity android:name=".module.stroll.activity.CreateCircleActivity"
 		          android:windowSoftInputMode="adjustPan|stateHidden"/>
-		<activity android:name=".module.stroll.activity.CreateCircleActivity"/>
+		
 		<!--我的邻居列表-->
 		<activity android:name=".module.index.activity.MyNeighborListActivity">
 
