@@ -47,6 +47,7 @@
         <activity android:name=".module.release.activity.TalkActivity" />
         <activity android:name=".module.release.activity.GeneralMessageActivity" />
         <activity android:name=".module.home.activity.StateActivity"></activity>
+        <activity android:name=".module.home.activity.VoiceDetailActivity"></activity>
     </application>
 
 </manifest>
