@@ -62,7 +62,7 @@ public class HomeUnLoginFragment extends BaseFragment {
         List params = new ArrayList<String>();
         //params.add("13521632836");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
         params.add("0");
-        params.add("1");
+        params.add("10");
         params.add("1");
         params.add("5");
         params.add("39.923594");

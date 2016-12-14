@@ -1,9 +1,11 @@
 package com.hyzsnt.onekeyhelp.module.home.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by hyzs on 2016/12/14.
  */
-public class Coordinateres {
+public class Coordinateres implements Serializable {
     private String position;//位置描述
     private String regid;//行政区域ID
     private String regname;//行政区域名称
