@@ -13,30 +13,31 @@ import com.hyzsnt.onekeyhelp.R;
  */
 
 public class HomeUnLoginHeadAdapter extends RecyclerView.Adapter {
-    private Context mHeadContext;
+	private Context mHeadContext;
 
-    public HomeUnLoginHeadAdapter(Context mHeadContext) {
-        this.mHeadContext = mHeadContext;
-    }
+	public HomeUnLoginHeadAdapter(Context mHeadContext) {
+		this.mHeadContext = mHeadContext;
+	}
 
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mHeadContext).inflate(R.layout.item_home_star, parent, false);
-        return new HomeHeadViewHolder(v);
-    }
+	@Override
+	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		View v = LayoutInflater.from(mHeadContext).inflate(R.layout.item_home_star, parent, false);
+		return new HomeHeadViewHolder(v);
+	}
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+	@Override
+	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-    }
+	}
 
-    @Override
-    public int getItemCount() {
-        return 20;
-    }
-    static class HomeHeadViewHolder extends RecyclerView.ViewHolder{
-        public HomeHeadViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
+	@Override
+	public int getItemCount() {
+		return 20;
+	}
+
+	static class HomeHeadViewHolder extends RecyclerView.ViewHolder {
+		public HomeHeadViewHolder(View itemView) {
+			super(itemView);
+		}
+	}
 }

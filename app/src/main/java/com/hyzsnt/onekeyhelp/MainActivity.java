@@ -8,20 +8,25 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.module.help.activity.HelpActivity;
+import com.hyzsnt.onekeyhelp.module.help.bean.LocationInfo;
+import com.hyzsnt.onekeyhelp.module.help.service.LocationService;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
+import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.fragment.StrollFragment;
 import com.hyzsnt.onekeyhelp.module.user.fragment.UserFragment;
-import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.hyzsnt.onekeyhelp.R.id.rg_main_bottom;
 
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener {
 
 
 	public static final int START_HELP = 1;
@@ -59,6 +64,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	 * 我的
 	 */
 	private UserFragment mUserFragment;
+	private LocationService mLocationService;
 
 	@Override
 	protected int getLayoutId() {
@@ -67,7 +73,20 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
+		mLocationService = new LocationService(this);
+		mLocationService.registerListener(this);
+	}
 
+	@Override
+	protected void onStart() {
+		super.onStart();
+		mLocationService.start();
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		mLocationService.stop();
 	}
 
 	@Override
@@ -193,5 +212,22 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 			}
 			mRgMainBottom.check(i);
 		}
+	}
+
+	@Override
+	public void onReceiveLocation(BDLocation bdLocation) {
+		LocationInfo location;
+		if (App.getLocation() != null) {
+			location = App.getLocation();
+
+		} else {
+			location = new LocationInfo();
+		}
+		location.setLatitude(bdLocation.getLatitude());
+		location.setLongitude(bdLocation.getLongitude());
+		location.setLocType(bdLocation.getLocType());
+		location.setTime(bdLocation.getTime());
+		location.setAddrStr(bdLocation.getAddrStr());
+		App.setLocation(location);
 	}
 }
