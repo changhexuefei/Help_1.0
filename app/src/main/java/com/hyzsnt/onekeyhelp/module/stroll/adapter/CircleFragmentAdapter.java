@@ -1,7 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.stroll.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,44 +8,45 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.bumptech.glide.Glide;
 import com.hyzsnt.onekeyhelp.R;
-import com.hyzsnt.onekeyhelp.utils.BitmapUtils;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleRound;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/12/12.
  */
 
 public class CircleFragmentAdapter extends BaseExpandableListAdapter {
-	private Context mContext;
-	HashMap<String,ArrayList<String>> list;
 
-	public CircleFragmentAdapter(Context context,HashMap<String,ArrayList<String>> list) {
-		mContext = context;
+	Context mactivity;
+	List<CircleRound.ListEntry> list;
+
+	public CircleFragmentAdapter(Context mactivity, List<CircleRound.ListEntry> list) {
+		this.mactivity = mactivity;
 		this.list = list;
 	}
 
 	@Override
 	public int getGroupCount() {
-		return 5;
+		return list.size();
 	}
 
 	@Override
 	public int getChildrenCount(int i) {
-		return 2;
+		return list.get(i).getCircle().size();
 	}
 
 	@Override
 	public Object getGroup(int i) {
-		return null;
+		return list.get(i).getCommunity().getCmname();
 	}
 
 	@Override
 	public Object getChild(int i, int i1) {
-		return i1;
+		return list.get(i).getCircle().get(i1);
 	}
 
 	@Override
@@ -66,21 +66,24 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-
-		 if(view==null){
-              view = View.inflate(mContext,R.layout.item_stroll_one,null);
-			 TextView tv1 = (TextView) view.findViewById(R.id.tv_stroll_list_group);
-
-		 }
-
+		GroupViewHolder group = null;
+		if (view == null) {
+			group = new GroupViewHolder();
+			view = View.inflate(mactivity, R.layout.item_stroll_one, null);
+			group.group_name = (TextView) view.findViewById(R.id.tv_stroll_list_group);
+			view.setTag(group);
+		} else {
+			group = (GroupViewHolder) view.getTag();
+		}
+		group.group_name.setText(list.get(i).getCommunity().getCmname());
 		return view;
 	}
 
 	@Override
 	public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
 		ChildViewHolder childViewHolder = null;
-		if(view==null){
-			view=LayoutInflater.from(mContext).inflate(R.layout.item_stroll_two,null);
+		if (view == null) {
+			view = LayoutInflater.from(mactivity).inflate(R.layout.item_stroll_two, null);
 			childViewHolder = new ChildViewHolder();
 			childViewHolder.child_icon = (ImageView) view.findViewById(R.id.im_Stroll_list_icon);
 			childViewHolder.child_name = (TextView) view.findViewById(R.id.tv_stroll_list_title);
@@ -90,13 +93,32 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 			childViewHolder.child_type_two = (TextView) view.findViewById(R.id.tv_stroll_list_typetwo);
 			childViewHolder.child_type_three = (TextView) view.findViewById(R.id.tv_stroll_list_typethree);
 			view.setTag(childViewHolder);
-		}else{
+		} else {
 			childViewHolder = (ChildViewHolder) view.getTag();
 		}
-		Bitmap bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.cc).getBitmap();
+		CircleRound.ListEntry.CircleEntry circles = list.get(i).getCircle().get(i1);
+		Glide.with(mactivity).load(circles.getCccover()).into(childViewHolder.child_icon);
+		childViewHolder.child_num.setText(circles.getCurnum()+"人");
+		childViewHolder.child_name.setText(circles.getCcname());
+        childViewHolder.child_topic.setText(circles.getFlag()+"条话题");
+		String flags =circles.getTags();
+		String[] flist = flags.split("|");
+		for(int j=0;j<flist.length;j++){
+			LogUtils.e(flist[j]);
+           if(flist.length==3){
+               childViewHolder.child_type_three.setText(flist[2]);
+	           childViewHolder.child_type_three.setVisibility(View.VISIBLE);
+           }
+			if(flist.length>=2){
+				childViewHolder.child_type_two.setText(flist[1]);
+				childViewHolder.child_type_two.setVisibility(View.VISIBLE);
+			} if(flist.length>=1){
+				childViewHolder.child_type_one.setText(flist[0]);
+				childViewHolder.child_type_one.setVisibility(View.VISIBLE);
+			}
+		}
 
-		Bitmap bit = BitmapUtils.toRoundBitmap(bitmap);
-		childViewHolder.child_icon.setImageBitmap(bit);
+
 
 		return view;
 	}
@@ -105,13 +127,15 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 	public boolean isChildSelectable(int i, int i1) {
 		return true;
 	}
+
 	//优化
-	class GroupViewHolder{
+	class GroupViewHolder {
 		public TextView group_name;
+
 	}
 
-	class ChildViewHolder{
-       public ImageView child_icon;
+	class ChildViewHolder {
+		public ImageView child_icon;
 		public TextView child_name;
 		public TextView child_type_one;
 		public TextView child_type_two;

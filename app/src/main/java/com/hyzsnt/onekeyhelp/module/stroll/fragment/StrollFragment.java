@@ -9,7 +9,6 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.R;
@@ -23,6 +22,7 @@ import com.hyzsnt.onekeyhelp.module.stroll.activity.SeekCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleFragmentAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.StrollHeaderAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleHotTag;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleRound;
 import com.hyzsnt.onekeyhelp.module.stroll.widget.CustomExpandaleListView;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
@@ -88,9 +88,9 @@ public class StrollFragment extends BaseFragment {
         //mTvStrollFragmentRound.setOnClickListener(this);
        //获取周边信息
 		ArrayList<String> list1 = new ArrayList<>();
-		list1.add("3");
-		list1.add("39.923594");
-		list1.add("116.539995");
+		list1.add("1");
+		list1.add("39.923263");
+		list1.add("116.539572");
 		list1.add("");
 		list1.add("");
 		HttpUtils.post(Api.CIRCLE, Api.Circle.CIRCLELIST, list1, new ResponseHandler() {
@@ -103,7 +103,26 @@ public class StrollFragment extends BaseFragment {
 			public void onSuccess(String response, int id) {
 				if(JsonUtils.isSuccess(response)){
 					Gson gson =new Gson();
-
+					CircleRound round= gson.fromJson(response, CircleRound.class);
+					CircleFragmentAdapter mCircleFragmentAdapter = new CircleFragmentAdapter(mActivity,round.getList());
+					mExCircleFragment.setAdapter(mCircleFragmentAdapter);
+					for (int i = 0; i < mCircleFragmentAdapter.getGroupCount(); i++)
+					{
+						mExCircleFragment.expandGroup(i);// 关键步骤3,初始化时，将ExpandableListView以展开的方式呈现
+					}
+					mExCircleFragment.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+						@Override
+						public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+							return true;
+						}
+					});
+					mExCircleFragment.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+						@Override
+						public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+							startActivity(new Intent(mActivity, CircleDetailsActivity.class));
+							return false;
+						}
+					});
 				}
 			}
 
@@ -113,27 +132,12 @@ public class StrollFragment extends BaseFragment {
 			}
 		});
 
+
 		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 
-		CircleFragmentAdapter mCircleFragmentAdapter = new CircleFragmentAdapter(mActivity, map);
-		mExCircleFragment.setAdapter(new CircleFragmentAdapter(mActivity,map));
-		for (int i = 0; i < mCircleFragmentAdapter.getGroupCount(); i++)
-		{
-			mExCircleFragment.expandGroup(i);// 关键步骤3,初始化时，将ExpandableListView以展开的方式呈现
-		}
-		mExCircleFragment.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-			@Override
-			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-				return true;
-			}
-		});
-		mExCircleFragment.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-			@Override
-			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-				 startActivity(new Intent(mActivity, CircleDetailsActivity.class));
-				return false;
-			}
-		});
+
+
+
 
 	}
 
@@ -152,7 +156,7 @@ public class StrollFragment extends BaseFragment {
 		return Api.Circle.CIRCLE_HOTTAG;
 	}
 
-	@OnClick({R.id.im_create_circle, R.id.im_stroll_seek})
+	@OnClick({R.id.im_create_circle, R.id.im_stroll_seek,R.id.tv_stroll_fragment_round,R.id.tv_stroll_fragment_me})
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.im_create_circle:
@@ -165,11 +169,12 @@ public class StrollFragment extends BaseFragment {
 				break;
 			case R.id.tv_stroll_fragment_round:
 				mTvStrollFragmentRound.setBackgroundResource(R.drawable.skip_btn_on_bg);
-				mTvStrollFragmentMe.setBackgroundResource(R.drawable.skip_btn_on_bg);
-				mTvStrollFragmentMe.setText("88gh");
-				Toast.makeText(mActivity,"hhhh",Toast.LENGTH_LONG).show();
+				mTvStrollFragmentMe.setBackgroundResource(R.drawable.skip_btn_nomal_bg);
 				break;
 			case R.id.tv_stroll_fragment_me:
+
+				mTvStrollFragmentRound.setBackgroundResource(R.drawable.skip_btn_nomal_bg);
+				mTvStrollFragmentMe.setBackgroundResource(R.drawable.skip_btn_on_bg);
 				break;
 		}
 	}

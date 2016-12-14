@@ -4,7 +4,7 @@
                 android:layout_height="@dimen/dp_88"
 	>
 
-	<ImageView
+	<de.hdodenhof.circleimageview.CircleImageView
 
 		android:id="@+id/im_Stroll_list_icon"
 		android:layout_width="@dimen/dp_60"
@@ -41,7 +41,8 @@
 		android:gravity="center"
 		android:text="游玩"
 		android:textColor="@color/color_ff"
-		android:textSize="@dimen/sp_11"/>
+		android:textSize="@dimen/sp_11"
+		android:visibility="gone"/>
 	<TextView
 		android:id="@+id/tv_stroll_list_typetwo"
 		android:layout_width="wrap_content"
@@ -54,6 +55,8 @@
 		android:gravity="center"
 		android:text="美食"
 		android:textColor="@color/color_ff"
+		android:visibility="gone"
+
 		android:textSize="@dimen/sp_11"/>
 	<TextView
 		android:id="@+id/tv_stroll_list_typethree"
@@ -66,6 +69,7 @@
 		android:background="@drawable/stroll_type_three"
 		android:gravity="center"
 		android:text="游戏"
+		android:visibility="gone"
 		android:textColor="@color/color_ff"
 		android:textSize="@dimen/sp_11"/>
 
@@ -78,6 +82,7 @@
 		android:layout_marginTop="@dimen/dp_12"
 		android:textSize="@dimen/sp_12"
 		android:textColor="#909090"
+
 		android:text="3125人"
 		/>
 
