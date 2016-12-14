@@ -49,7 +49,11 @@
 		<activity android:name=".module.index.activity.GoodsReplaceActivity"/>
 		<!-- 一键求助页面-->
 		<activity android:name=".module.help.activity.HelpActivity"/>
+		<!--搜索圈子-->
 		<activity android:name=".module.stroll.activity.SeekCircleActivity"/>
+		<!--创建圈子-->
+		<activity android:name=".module.stroll.activity.CreateCircleActivity"
+		          android:windowSoftInputMode="adjustPan|stateHidden"/>
 		<activity android:name=".module.stroll.activity.CreateCircleActivity"/>
 		<!--我的邻居列表-->
 		<activity android:name=".module.index.activity.MyNeighborListActivity">
@@ -76,6 +80,7 @@
 		<activity android:name=".module.login.activity.AgreementActivity"/>
 		<!--小区简介-->
 		<activity android:name=".module.index.activity.CompoundInfoActivity"/>
+		<!--圈子详情-->
 		<activity android:name=".module.stroll.activity.CircleDetailsActivity"/>
 		<!--发布说说-->
 		<activity android:name=".module.release.activity.TalkActivity"/>

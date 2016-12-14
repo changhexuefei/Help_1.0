@@ -1,7 +1,11 @@
 package com.hyzsnt.onekeyhelp;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -20,12 +24,17 @@ import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
 import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.fragment.StrollFragment;
 import com.hyzsnt.onekeyhelp.module.user.fragment.UserFragment;
+import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.hyzsnt.onekeyhelp.R.id.rg_main_bottom;
-
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
+@RuntimePermissions
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener {
 
 
@@ -38,7 +47,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	RadioButton mRbMainRelease;
 	@BindView(R.id.rb_main_user)
 	RadioButton mRbMainUser;
-	@BindView(rg_main_bottom)
+	@BindView(R.id.rg_main_bottom)
 	RadioGroup mRgMainBottom;
 	@BindView(R.id.fl_main_content)
 	FrameLayout mFlMainContent;
@@ -73,8 +82,49 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
+		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
+		initLocation();
+	}
+
+	@NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
+	public void initLocation() {
 		mLocationService = new LocationService(this);
 		mLocationService.registerListener(this);
+	}
+
+	@OnShowRationale({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
+	public void showRationaleForLocation(final PermissionRequest request) {
+		new AlertDialog.Builder(this)
+				.setMessage("一键帮助需要定位权限，否则将无法正常运行！")//(dialog, button) -> request.proceed()
+				.setPositiveButton("允许", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						request.proceed();
+					}
+				})
+				.setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						request.cancel();
+					}
+				})
+				.show();
+	}
+
+	@OnPermissionDenied({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
+	public void showDeniedForLocation() {
+		ToastUtils.showShort(this, "您已经拒绝一键帮助获取定位权限，部分功能将无法正常使用！");
+	}
+
+	@OnNeverAskAgain({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
+	public void showNeverAskForLocation() {
+		ToastUtils.showShort(this, "您已经拒绝一键帮助获取定位权限，部分功能将无法正常使用！");
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
 	}
 
 	@Override

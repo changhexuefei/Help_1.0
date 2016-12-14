@@ -62,4 +62,5 @@ public class CircleTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 		}
 	}
+
 }

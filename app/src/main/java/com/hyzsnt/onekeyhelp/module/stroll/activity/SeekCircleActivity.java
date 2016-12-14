@@ -1,8 +1,10 @@
 package com.hyzsnt.onekeyhelp.module.stroll.activity;
 
+import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.hyzsnt.onekeyhelp.R;
@@ -44,10 +46,32 @@ public class SeekCircleActivity extends BaseActivity {
 		mtypelist.add(new CircleType("旅行",R.mipmap.circle_travel,R.drawable.circle_type_nine));
 		mReSeekCircle.setLayoutManager(new GridLayoutManager(this,3));
 		mReSeekCircle.setAdapter(new CircleTypeAdapter(this,mtypelist));
+		int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.dp_13);
+
+		mReSeekCircle.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+
 	}
 
 	@OnClick(R.id.im_search_back)
 	public void onClick() {
 		finish();
+	}
+	public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
+
+		private int space;
+
+		public SpaceItemDecoration(int space) {
+			this.space = space;
+		}
+
+		@Override
+		public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+
+
+			outRect.top = space;
+
+			outRect.left = space/2;
+
+		}
 	}
 }
