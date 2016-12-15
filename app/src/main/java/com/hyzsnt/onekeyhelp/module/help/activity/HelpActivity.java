@@ -1,11 +1,13 @@
 package com.hyzsnt.onekeyhelp.module.help.activity;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
@@ -25,10 +27,16 @@ import com.hyzsnt.onekeyhelp.utils.ScreenUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 
+@RuntimePermissions
 public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, Animator.AnimatorListener {
 
 	private static final int TIME_DOWN = 1;
+	private static final int START_RECORD = 2;
+	private static final int STOP_RECORD = 3;
+
 	@BindView(R.id.rg_help_title)
 	RadioGroup rg_help_title;
 	@BindView(R.id.fl_help_content)
@@ -57,15 +65,38 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				case TIME_DOWN:
 					if (time == 0) {
 						tv_help.setVisibility(View.GONE);
+						sendEmptyMessage(START_RECORD);
 					} else {
 						tv_help.setText("" + time);
 						time--;
 						sendEmptyMessageDelayed(TIME_DOWN, 1000);
 					}
 					break;
+				case START_RECORD:
+					startRecord();
+					break;
+				case STOP_RECORD:
+					stopRecord();
+					break;
 			}
 		}
 	};
+
+	private void stopRecord() {
+
+	}
+
+
+	@NeedsPermission(Manifest.permission.RECORD_AUDIO)
+	public void startRecord() {
+
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		HelpActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+	}
 
 	@Override
 	protected int getLayoutId() {
@@ -74,6 +105,7 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
+		HelpActivityPermissionsDispatcher.startRecordWithCheck(this);
 		initAnimator();
 
 	}
