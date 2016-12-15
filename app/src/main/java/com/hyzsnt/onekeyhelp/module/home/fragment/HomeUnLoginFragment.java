@@ -24,7 +24,6 @@ import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
-import com.hyzsnt.onekeyhelp.module.login.activity.RegisterActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +90,7 @@ public class HomeUnLoginFragment extends BaseFragment {
             public void onSuccess(String response, int id) {
                 Log.e("+++++++++++", response);
                 str=response;
-                ArrayList<MDate> dates= Resovle.getDate(response);
+                ArrayList<MDate> dates= Resovle.getCommunityList(response);
                 mHomeAdapter.setDates(dates);
                 mHomeAdapter.notifyDataSetChanged();
             }

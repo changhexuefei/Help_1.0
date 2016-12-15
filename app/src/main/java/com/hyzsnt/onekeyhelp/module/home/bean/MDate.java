@@ -1,7 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.home.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by hyzs on 2016/12/14.
@@ -10,8 +9,8 @@ import java.util.ArrayList;
 public class MDate implements Serializable {
     private String res;//结果0失败，1成功
     private String restr;//失败则返回文字信息
-    private Info info;//请求信息及用户信息
-    private ArrayList<CommunityList> communityList;//小区集合
+    private MInfo mInfo;//请求信息及用户信息
+    private MList mList;//小区集合
 
     public MDate() {
     }
@@ -32,20 +31,20 @@ public class MDate implements Serializable {
         this.restr = restr;
     }
 
-    public Info getInfo() {
-        return info;
+    public MInfo getmInfo() {
+        return mInfo;
     }
 
-    public void setInfo(Info info) {
-        this.info = info;
+    public void setmInfo(MInfo mInfo) {
+        this.mInfo = mInfo;
     }
 
-    public ArrayList<CommunityList> getCommunityList() {
-        return communityList;
+    public MList getmList() {
+        return mList;
     }
 
-    public void setCommunityList(ArrayList<CommunityList> communityList) {
-        this.communityList = communityList;
+    public void setmList(MList mList) {
+        this.mList = mList;
     }
 
     @Override
@@ -53,8 +52,8 @@ public class MDate implements Serializable {
         return "MDate{" +
                 "res='" + res + '\'' +
                 ", restr='" + restr + '\'' +
-                ", info=" + info +
-                ", communityList=" + communityList +
+                ", mInfo=" + mInfo +
+                ", mList=" + mList +
                 '}';
     }
 }

@@ -16,7 +16,6 @@ import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.home.activity.VoiceDetailActivity;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.inner.OnRecyclerViewItemClickListener;
-import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 
 import java.util.ArrayList;
 
