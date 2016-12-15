@@ -44,6 +44,7 @@
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
+
 		</activity>
 		<!--物品置换-->
 		<activity android:name=".module.index.activity.GoodsReplaceActivity"/>
@@ -62,7 +63,6 @@
 
 		<!--搜索小区-->
 		<activity android:name=".module.index.activity.SeekeStateActivity">
-
 
 		</activity>
 		<!--欢迎页-->

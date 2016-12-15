@@ -6,7 +6,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.module.index.bean.CommunityList;
 
 import java.util.List;
@@ -35,10 +37,9 @@ public class CommunityListAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (holder instanceof ItemViewHolder) {
 
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-//            Bitmap bitmap = BitmapDescriptorFactory.fromResource(R.drawable.test).getBitmap();
-//            Bitmap bit = BitmapUtils.toRoundBitmap(bitmap);
+            Glide.with(App.getContext()).load(R.drawable.test).into(itemViewHolder.mSeekCurcumHeadportrait);
             itemViewHolder.mSeekCurcumHeadportrait.setImageResource(R.drawable.test);
-//            itemViewHolder.mSeekCurcumHeadportrait.setImageBitmap(bit);
+
             itemViewHolder.tv_community_name.setText(mCommunityLists.get(position).getCmname());
 //            itemViewHolder.homeIvDetail.setImageResource(mCommunityLists.get(position).getNeighborSexIcon());
         }
