@@ -130,19 +130,43 @@ public class Api {
 	 * 首页类
 	 */
 	public static final class Community {
+		/**
+		 * 1、获取小区列表				a:getCommunityList
+		 2、获取单个小区信息			a:getCommunityInfo
+		 3、获取单个小区下圈子列表		a:getCircleListByCommunity
+		 4、获取小区成员列表			a:getMemberListByCommunity
+		 5、获取动态信息列表			a:getDynamicListByCommunity
+		 6、删除动态				a:deleteDynamic
+		 7、动态点赞				a:giveGoodToDynamic			?
+		 8、发布动态回复				a:publishDynamicReply			?
+		 9、删除动态回复				a:publishDynamicReply			?
+
+		 */
 		public static final String GETCOMMUNITYLIST = "getCommunityList";
+		public static final String GETCOMMUNITYINFO = "getCommunityInfo";
+		public static final String GETCIRCLELISTBYCOMMUNITY = "getCircleListByCommunity";
+		public static final String GETMEMBERLISTBYCOMMUNITY = "getMemberListByCommunity";
+		public static final String GETDYNAMICLISTBYCOMMUNITY = "getDynamicListByCommunity";
 	}
 
 	public static final class Circle {
 		/**
 		 * 闲逛获取热门标签a
 		 */
-
 		public static final String CIRCLE_HOTTAG ="getRecomTags";
 		/**
-	 * 闲逛周边圈子列表
+	     * 闲逛周边圈子列表
 		 */
-		public static final String CIRCLELIST ="getCircleList";
+		public static final String ROUNDLIST ="getCircleList";
+		/**
+		 * 闲逛我的列表
+		 */
+		public static final String MELIST ="getCircleListByUser";
+		/**
+		 * 闲逛圈子详情
+		 *
+		 */
+		public static final String CIRCLE_DETAILS ="getCircleInfo";
 	}
 
 

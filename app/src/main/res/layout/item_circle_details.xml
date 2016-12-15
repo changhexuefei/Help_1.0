@@ -82,4 +82,10 @@
 		android:text="这是一个标题"
 		android:textSize="@dimen/sp_12"
 		android:textColor="#4C4C4C"/>
+	<View
+		android:id="@+id/view1"
+		android:layout_marginTop="@dimen/dp_4"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="#ededed"></View>
 </LinearLayout>

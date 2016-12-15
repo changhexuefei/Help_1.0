@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.hyzsnt.onekeyhelp">
-
+	<!-- 录音权限-->
+	<uses-permission android:name="android.permission.RECORD_AUDIO"/>
 	<!-- 联网权限-->
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<!-- 打电话权限-->
