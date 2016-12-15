@@ -28,7 +28,6 @@ import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -67,73 +66,10 @@ public class StrollFragment extends BaseFragment {
 
 	@Override
 	protected void initData(String content) {
-		CircleHotTag hotTagData = null;
-		LogUtils.e(content);
-		//添加数据到热门标签
-		//设置Recycleview横向排布
-		LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
-		layoutManager.setOrientation(LinearLayout.HORIZONTAL);
-		mReStrollHeaderList.setLayoutManager(layoutManager);
-		//解析数据
-		if (isSuccess(content)) {
-			Gson gson = new Gson();
-			hotTagData = gson.fromJson(content, CircleHotTag.class);
-			hotTagData.getList();
-			//添加适配器到Recycleview
-			mReStrollHeaderList.setAdapter(new StrollHeaderAdapter(mActivity, hotTagData.getList()));
-		} else {
-			String err = JsonUtils.getErrorMessage(content);
-			LogUtils.e(err);
-		}
-		//mTvStrollFragmentRound.setOnClickListener(this);
+		//热门圈子
+		HotTags(content);
 		//获取周边信息
-		ArrayList<String> list1 = new ArrayList<>();
-		list1.add("1");
-		list1.add("39.923263");
-		list1.add("116.539572");
-		list1.add("");
-		list1.add("");
-		HttpUtils.post(Api.CIRCLE, Api.Circle.CIRCLELIST, list1, new ResponseHandler() {
-			@Override
-			public void onError(Call call, Exception e, int id) {
-
-			}
-
-			@Override
-			public void onSuccess(String response, int id) {
-				if (JsonUtils.isSuccess(response)) {
-					Gson gson = new Gson();
-					CircleRound round = gson.fromJson(response, CircleRound.class);
-					CircleFragmentAdapter mCircleFragmentAdapter = new CircleFragmentAdapter(mActivity, round.getList());
-					mExCircleFragment.setAdapter(mCircleFragmentAdapter);
-					for (int i = 0; i < mCircleFragmentAdapter.getGroupCount(); i++) {
-						mExCircleFragment.expandGroup(i);// 关键步骤3,初始化时，将ExpandableListView以展开的方式呈现
-					}
-					mExCircleFragment.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-						@Override
-						public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-							return true;
-						}
-					});
-					mExCircleFragment.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-						@Override
-						public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-							startActivity(new Intent(mActivity, CircleDetailsActivity.class));
-							return false;
-						}
-					});
-				}
-			}
-
-			@Override
-			public void inProgress(float progress, long total, int id) {
-
-			}
-		});
-
-
-		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-
+		CircleRound();
 
 	}
 
@@ -166,14 +102,133 @@ public class StrollFragment extends BaseFragment {
 			case R.id.tv_stroll_fragment_round:
 				mTvStrollFragmentRound.setBackgroundResource(R.drawable.skip_btn_on_bg);
 				mTvStrollFragmentMe.setBackgroundResource(R.drawable.skip_btn_nomal_bg);
+				CircleRound();
 				break;
 			case R.id.tv_stroll_fragment_me:
 
 				mTvStrollFragmentRound.setBackgroundResource(R.drawable.skip_btn_nomal_bg);
 				mTvStrollFragmentMe.setBackgroundResource(R.drawable.skip_btn_on_bg);
+				CircleMe();
 				break;
 		}
 	}
 
+	/**
+	 * 添加数据到热门标签
+	 */
+	public void HotTags(String content) {
+		//实例化热门圈子类
+		CircleHotTag hotTagData = null;
+		//设置Recycleview横向排布
+		LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
+		layoutManager.setOrientation(LinearLayout.HORIZONTAL);
+		mReStrollHeaderList.setLayoutManager(layoutManager);
+		//解析数据
+		if (isSuccess(content)) {
+			Gson gson = new Gson();
+			hotTagData = gson.fromJson(content, CircleHotTag.class);
+			hotTagData.getList();
+			//添加适配器到Recycleview
+			mReStrollHeaderList.setAdapter(new StrollHeaderAdapter(mActivity, hotTagData.getList()));
+		} else {
+			String err = JsonUtils.getErrorMessage(content);
+			LogUtils.e(err);
+		}
+	}
+
+	/**
+	 * 获取周边信息
+	 */
+	public void CircleRound() {
+		//参数p
+		ArrayList<String> list1 = new ArrayList<>();
+		list1.add("1");
+		list1.add("39.923263");
+		list1.add("116.539572");
+		list1.add("");
+		list1.add("");
+		//网络请求
+		HttpUtils.post(Api.CIRCLE, Api.Circle.ROUNDLIST, list1, new ResponseHandler() {
+			@Override
+			public void onError(Call call, Exception e, int id) {
+
+			}
+
+			@Override
+			public void onSuccess(String response, int id) {
+				getdata(response);
+			}
+
+			@Override
+			public void inProgress(float progress, long total, int id) {
+
+			}
+		});
+	}
+	/**
+	 *获取已加入圈子信息
+	 */
+	public void  CircleMe(){
+		//参数p
+		ArrayList<String> list1 = new ArrayList<>();
+		list1.add("1");
+		list1.add("39.923263");
+		list1.add("116.539572");
+		list1.add("");
+		list1.add("");
+		//请求数据
+		HttpUtils.post(Api.CIRCLE, Api.Circle.MELIST, list1, new ResponseHandler() {
+			@Override
+			public void onError(Call call, Exception e, int id) {
+
+			}
+
+			@Override
+			public void onSuccess(String response, int id) {
+				getdata(response);
+			}
+
+			@Override
+			public void inProgress(float progress, long total, int id) {
+
+			}
+		});
+	}
+	/**
+	 * 解析json数据
+	 *
+	 */
+	public void getdata(String response){
+		//解析数据
+		if (JsonUtils.isSuccess(response)) {
+			Gson gson = new Gson();
+			final CircleRound round = gson.fromJson(response, CircleRound.class);
+			//添加适配器
+			CircleFragmentAdapter mCircleFragmentAdapter = new CircleFragmentAdapter(mActivity, round.getList());
+			mExCircleFragment.setAdapter(mCircleFragmentAdapter);
+			//设置将ExpandableListView以展开的方式呈现
+			for (int i = 0; i < mCircleFragmentAdapter.getGroupCount(); i++) {
+				mExCircleFragment.expandGroup(i);
+			}
+			//设置group不能点击收缩
+			mExCircleFragment.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+				@Override
+				public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+					return true;
+				}
+			});
+			//子条目点击跳转
+			mExCircleFragment.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+				@Override
+				public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+					Intent intent = new Intent(mActivity, CircleDetailsActivity.class);
+					intent.putExtra("ccid",round.getList().get(groupPosition).getCircle().get(childPosition).getCcid());
+					startActivity(intent);
+
+					return false;
+				}
+			});
+		}
+	}
 
 }

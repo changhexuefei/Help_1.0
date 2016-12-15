@@ -137,12 +137,20 @@ public class Api {
 		/**
 		 * 闲逛获取热门标签a
 		 */
-
 		public static final String CIRCLE_HOTTAG ="getRecomTags";
 		/**
-	 * 闲逛周边圈子列表
+	     * 闲逛周边圈子列表
 		 */
-		public static final String CIRCLELIST ="getCircleList";
+		public static final String ROUNDLIST ="getCircleList";
+		/**
+		 * 闲逛我的列表
+		 */
+		public static final String MELIST ="getCircleListByUser";
+		/**
+		 * 闲逛圈子详情
+		 *
+		 */
+		public static final String CIRCLE_DETAILS ="getCircleInfo";
 	}
 
 

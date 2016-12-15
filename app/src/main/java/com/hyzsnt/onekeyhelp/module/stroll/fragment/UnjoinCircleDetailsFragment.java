@@ -8,8 +8,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.CiecleDetailss;
 
 import java.util.List;
 
@@ -60,6 +62,7 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 	LinearLayout mLinearLayout2;
 	@BindView(R.id.llayout_unjoin_circle_join)
 	LinearLayout mLlayoutUnjoinCircleJoin;
+	private CiecleDetailss mDetailss;
 
 	@Override
 	protected List<String> getParams() {
@@ -69,6 +72,16 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 
 	@Override
 	protected void initData(String content) {
+		CiecleDetailss.InfoEntry info = mDetailss.getInfo();
+		//设置背景图
+		Glide.with(mActivity).load(info.getCccover()).into(mImUnjoinCircleCover);
+		mTvUnjionCircleNikename.setText(info.getNickname());
+		mTvUnjionCircleNum.setText(info.getCurnum()+"人");
+		mTvUnjoinCircleSummary.setText(info.getSummary());
+		Glide.with(mActivity).load(info.getHeadportraid()).into(mImUnjoinCircleHeadportraid);
+		if(info.getGender().equals("1")){
+             mImUnjoinCirclegender.setImageResource(R.mipmap.man);
+		}
 
 	}
 
@@ -93,5 +106,11 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 		View rootView = super.onCreateView(inflater, container, savedInstanceState);
 		ButterKnife.bind(this, rootView);
 		return rootView;
+	}
+
+	@Override
+	public void getArgs(Bundle bundle) {
+		super.getArgs(bundle);
+		mDetailss = bundle.getParcelable("details");
 	}
 }

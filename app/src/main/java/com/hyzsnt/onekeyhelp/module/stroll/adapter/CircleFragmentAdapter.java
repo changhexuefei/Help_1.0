@@ -8,7 +8,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleRound;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
@@ -85,6 +84,7 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 		if (view == null) {
 			view = LayoutInflater.from(mactivity).inflate(R.layout.item_stroll_two, null);
 			childViewHolder = new ChildViewHolder();
+			childViewHolder.view1 =view.findViewById(R.id.view1);
 			childViewHolder.child_icon = (ImageView) view.findViewById(R.id.im_Stroll_list_icon);
 			childViewHolder.child_name = (TextView) view.findViewById(R.id.tv_stroll_list_title);
 			childViewHolder.child_num = (TextView) view.findViewById(R.id.tv_stroll_list_num);
@@ -96,8 +96,11 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 		} else {
 			childViewHolder = (ChildViewHolder) view.getTag();
 		}
+		if(i1==0){
+			childViewHolder.view1.setVisibility(View.GONE);
+		}
 		CircleRound.ListEntry.CircleEntry circles = list.get(i).getCircle().get(i1);
-		Glide.with(mactivity).load(circles.getCccover()).into(childViewHolder.child_icon);
+		//Glide.with(mactivity).load(circles.getCccover()).into(childViewHolder.child_icon);
 		childViewHolder.child_num.setText(circles.getCurnum()+"人");
 		childViewHolder.child_name.setText(circles.getCcname());
         childViewHolder.child_topic.setText(circles.getFlag()+"条话题");
@@ -135,6 +138,7 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 	}
 
 	class ChildViewHolder {
+		public View view1;
 		public ImageView child_icon;
 		public TextView child_name;
 		public TextView child_type_one;
