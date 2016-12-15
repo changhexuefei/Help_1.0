@@ -94,6 +94,7 @@ public class HomeUnLoginFragment extends BaseFragment {
                 ArrayList<MDate> dates= Resovle.getDate(response);
                 mHomeAdapter.setDates(dates);
                 mHomeAdapter.notifyDataSetChanged();
+                Log.e("+++++++++++",dates.get(0).getCommunityList()+"");
             }
 
             @Override
