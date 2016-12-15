@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by hyzs on 2016/12/14.
  */
-public class CommunityList implements Serializable{
+public class CommunityListList implements Serializable{
 
     private String cmid;//小区ID
     private String cmname;//小区名称
@@ -19,7 +19,7 @@ public class CommunityList implements Serializable{
     private String distance;//当前距离
     private ArrayList<Circle> circleList;//圈子集合
 
-    public CommunityList() {
+    public CommunityListList() {
     }
 
     public String getCmid() {
@@ -102,19 +102,4 @@ public class CommunityList implements Serializable{
         this.circleList = circleList;
     }
 
-    @Override
-    public String toString() {
-        return "CommunityList{" +
-                "cmid='" + cmid + '\'' +
-                ", cmname='" + cmname + '\'' +
-                ", cmcover='" + cmcover + '\'' +
-                ", curnum='" + curnum + '\'' +
-                ", ifjoin='" + ifjoin + '\'' +
-                ", ifcur='" + ifcur + '\'' +
-                ", lat='" + lat + '\'' +
-                ", lng='" + lng + '\'' +
-                ", distance='" + distance + '\'' +
-                ", circleList=" + circleList +
-                '}';
-    }
 }
