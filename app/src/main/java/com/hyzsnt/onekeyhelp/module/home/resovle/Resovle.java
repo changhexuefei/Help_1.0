@@ -1,115 +1,114 @@
 package com.hyzsnt.onekeyhelp.module.home.resovle;
-
 import com.hyzsnt.onekeyhelp.module.home.bean.Circle;
-import com.hyzsnt.onekeyhelp.module.home.bean.CommunityList;
+import com.hyzsnt.onekeyhelp.module.home.bean.CommunityInfoInfo;
+import com.hyzsnt.onekeyhelp.module.home.bean.CommunityInfoList;
+import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListInfo;
+import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListList;
 import com.hyzsnt.onekeyhelp.module.home.bean.Coordinateres;
-import com.hyzsnt.onekeyhelp.module.home.bean.Info;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.bean.MInfo;
+import com.hyzsnt.onekeyhelp.module.home.bean.MList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by hyzs on 2016/12/14.
  */
 
 public class Resovle {
-    //首页未加入圈子解析
-    public static ArrayList<MDate> getDate(String str){
-        ArrayList<MDate> dates=new ArrayList<>();
-        MDate mDate=new MDate();
-        try {
+    //首页未加入小区解析
+    public static ArrayList<MDate> getCommunityList(String str) {
+        ArrayList<MDate> dates = new ArrayList<>();
+        MDate mDate = new MDate();
+        try{
             JSONObject jsonDate=new JSONObject(str);
-            String res="";
             if(jsonDate.has("res")){
-                res=jsonDate.getString("res");
+                String res=jsonDate.getString("res");
+                mDate.setRes(res);
             }
-            mDate.setRes(res);
-
-            String restr="";
             if(jsonDate.has("restr")){
-                restr=jsonDate.getString("restr");
+                String  restr=jsonDate.getString("restr");
+                mDate.setRestr(restr);
             }
-            mDate.setRestr(restr);
+            //获取info
+            if(jsonDate.has("info")) {
+                MInfo mInfo = new MInfo();
+                CommunityListInfo communityListInfo = new CommunityListInfo();
+                    JSONObject jsonCommunityListInfo = jsonDate.getJSONObject("info");
+                    if (jsonCommunityListInfo.has("curnum")) {
+                        communityListInfo.setCurnum(jsonCommunityListInfo.getString("curnum"));
+                    }
+                    if (jsonCommunityListInfo.has("curpage")) {
+                        communityListInfo.setCurnum(jsonCommunityListInfo.getString("curpage"));
+                    }
+                    if (jsonCommunityListInfo.has("perpage")) {
+                        communityListInfo.setCurnum(jsonCommunityListInfo.getString("perpage"));
+                    }
+                    if (jsonCommunityListInfo.has("totalnum")) {
+                        communityListInfo.setCurnum(jsonCommunityListInfo.getString("totalnum"));
+                    }
+                    if (jsonCommunityListInfo.has("totalpage")) {
+                        communityListInfo.setCurnum(jsonCommunityListInfo.getString("totalpage"));
+                    }
+                    if (jsonCommunityListInfo.has("coordinateres")) {
+                        Coordinateres coordinateres = new Coordinateres();
+                        JSONObject jsoncoordinateres = jsonCommunityListInfo.getJSONObject("coordinateres");
 
-            Info info=null;
-            Coordinateres coordinateres=null;
-            if(jsonDate.has("info")){
-                coordinateres=new Coordinateres();
-                JSONObject jsonInfo=jsonDate.getJSONObject("info");
-                info=new Info();
-                if (jsonInfo.has("curnum")){
-                    info.setCurnum(jsonInfo.getString("curnum"));
-                }
-                if (jsonInfo.has("curpage")){
-                    info.setCurnum(jsonInfo.getString("curpage"));
-                }
-                if (jsonInfo.has("perpage")){
-                    info.setCurnum(jsonInfo.getString("perpage"));
-                }
-                if (jsonInfo.has("totalnum")){
-                    info.setCurnum(jsonInfo.getString("totalnum"));
-                }
-                if (jsonInfo.has("totalpage")){
-                    info.setCurnum(jsonInfo.getString("totalpage"));
-                }
-                if (jsonInfo.has("coordinateres")){
-                    coordinateres=new Coordinateres();
-                    JSONObject jsoncoordinateres= jsonInfo.getJSONObject("coordinateres");
-
-                    if (jsoncoordinateres.has("position")){
-                        coordinateres.setPosition(jsoncoordinateres.getString("position"));
+                        if (jsoncoordinateres.has("position")) {
+                            coordinateres.setPosition(jsoncoordinateres.getString("position"));
+                        }
+                        if (jsoncoordinateres.has("regid")) {
+                            coordinateres.setRegid(jsoncoordinateres.getString("regid"));
+                        }
+                        if (jsoncoordinateres.has("regname")) {
+                            coordinateres.setRegname(jsoncoordinateres.getString("regname"));
+                        }
+                        communityListInfo.setCoordinateres(coordinateres);
                     }
-                    if (jsoncoordinateres.has("regid")){
-                        coordinateres.setRegid(jsoncoordinateres.getString("regid"));
-                    }
-                    if (jsoncoordinateres.has("regname")){
-                        coordinateres.setRegname(jsoncoordinateres.getString("regname"));
-                    }
-                    info.setCoordinateres(coordinateres);
-                }
+                mInfo.setCommunityListInfo(communityListInfo);
+                mDate.setmInfo(mInfo);
             }
-            mDate.setInfo(info);
-            //获取小区列表
-            if (jsonDate.has("list")){
-                ArrayList<CommunityList> communityLists=new ArrayList<>();
-                JSONArray list = jsonDate.getJSONArray("list");
-                for (int i = 0; i <list.length() ; i++) {
-                    CommunityList communityList=new CommunityList();
-                    JSONObject jsonCommunityList=list.getJSONObject(i);
-                    if(jsonCommunityList.has("cmid")){
-                        communityList.setCmid(jsonCommunityList.getString("cmid"));
+            //获取list
+            if(jsonDate.has("list")){
+                MList mList=new MList();
+                ArrayList<CommunityListList> communityListLists=new ArrayList<>();
+                JSONArray jsoncommunityListLists=jsonDate.getJSONArray("list");
+                for (int i = 0; i < jsoncommunityListLists.length(); i++) {
+                    JSONObject jsoncommunityListList=jsoncommunityListLists.getJSONObject(i);
+                    CommunityListList communityListList=new CommunityListList();
+                    if(jsoncommunityListList.has("cmid")){
+                        communityListList.setCmid(jsoncommunityListList.getString("cmid"));
                     }
-                    if(jsonCommunityList.has("cmname")){
-                        communityList.setCmname(jsonCommunityList.getString("cmname"));
+                    if(jsoncommunityListList.has("cmname")){
+                        communityListList.setCmname(jsoncommunityListList.getString("cmname"));
                     }
-                    if(jsonCommunityList.has("cmcover")){
-                        communityList.setCmcover(jsonCommunityList.getString("cmcover"));
+                    if(jsoncommunityListList.has("cmcover")){
+                        communityListList.setCmcover(jsoncommunityListList.getString("cmcover"));
                     }
-                    if(jsonCommunityList.has("curnum")){
-                        communityList.setCurnum(jsonCommunityList.getString("curnum"));
+                    if(jsoncommunityListList.has("curnum")){
+                        communityListList.setCurnum(jsoncommunityListList.getString("curnum"));
                     }
-                    if(jsonCommunityList.has("ifjoin")){
-                        communityList.setIfjoin(jsonCommunityList.getString("ifjoin"));
+                    if(jsoncommunityListList.has("ifjoin")){
+                        communityListList.setIfjoin(jsoncommunityListList.getString("ifjoin"));
                     }
-                    if(jsonCommunityList.has("ifcur")){
-                        communityList.setIfcur(jsonCommunityList.getString("ifcur"));
+                    if(jsoncommunityListList.has("ifcur")){
+                        communityListList.setIfcur(jsoncommunityListList.getString("ifcur"));
                     }
-                    if(jsonCommunityList.has("lat")){
-                        communityList.setLat(jsonCommunityList.getString("lat"));
+                    if(jsoncommunityListList.has("lat")){
+                        communityListList.setLat(jsoncommunityListList.getString("lat"));
                     }
-                    if(jsonCommunityList.has("lng")){
-                        communityList.setLng(jsonCommunityList.getString("lng"));
+                    if(jsoncommunityListList.has("lng")){
+                        communityListList.setLng(jsoncommunityListList.getString("lng"));
                     }
-                    if(jsonCommunityList.has("distance")){
-                        communityList.setDistance(jsonCommunityList.getString("distance"));
+                    if(jsoncommunityListList.has("distance")){
+                        communityListList.setDistance(jsoncommunityListList.getString("distance"));
                     }
-                    if(jsonCommunityList.has("circle")){
+                    if(jsoncommunityListList.has("circle  111111111")){
                         ArrayList<Circle> circleList=new ArrayList<>();
-                        JSONArray jsonCircleList=jsonCommunityList.getJSONArray("circle");
+                        JSONArray jsonCircleList=jsoncommunityListList.getJSONArray("circle");
                         for (int j = 0; j <jsonCircleList.length() ; j++) {
                             Circle circle=new Circle();
                             JSONObject jsonCircleListJSONObject = jsonCircleList.getJSONObject(j);
@@ -136,16 +135,114 @@ public class Resovle {
                             }
 
                         }
-                        communityList.setCircleList(circleList);
+
+                        communityListList.setCircleList(circleList);
                     }
-                    communityLists.add(communityList);
+                    communityListLists.add(communityListList);
                 }
-                mDate.setCommunityList(communityLists);
+                mList.setCommunityListLists(communityListLists);
+                mDate.setmList(mList);
             }
 
         }catch (Exception e){
-        }
 
+        }
+        dates.add(mDate);
+        return dates;
+    }
+    public static ArrayList<MDate> getCommunityInfo(String str) {
+        ArrayList<MDate> dates = new ArrayList<>();
+        MDate mDate = new MDate();
+        try{
+            JSONObject jsonDate=new JSONObject(str);
+            if(jsonDate.has("res")){
+                String res=jsonDate.getString("res");
+                mDate.setRes(res);
+            }
+            if(jsonDate.has("restr")){
+                String  restr=jsonDate.getString("restr");
+                mDate.setRestr(restr);
+            }
+            //获取info
+            if(jsonDate.has("info")) {
+                MInfo mInfo = new MInfo();
+                CommunityInfoInfo communityInfoInfo = new CommunityInfoInfo();
+                JSONObject jsonCommunityInfoInfo = jsonDate.getJSONObject("info");
+                if (jsonCommunityInfoInfo.has("cmid")) {
+                    communityInfoInfo.setCmid(jsonCommunityInfoInfo.getString("cmid"));
+                }
+                if (jsonCommunityInfoInfo.has("cmname")) {
+                    communityInfoInfo.setCmname(jsonCommunityInfoInfo.getString("cmname"));
+                }
+                if (jsonCommunityInfoInfo.has("cmcover")) {
+                    communityInfoInfo.setCmcover(jsonCommunityInfoInfo.getString("cmcover"));
+                }
+                if (jsonCommunityInfoInfo.has("curnum")) {
+                    communityInfoInfo.setCurnum(jsonCommunityInfoInfo.getString("curnum"));
+                }
+                if (jsonCommunityInfoInfo.has("ifjoin")) {
+                    communityInfoInfo.setIfjoin(jsonCommunityInfoInfo.getString("ifjoin"));
+                }
+                if (jsonCommunityInfoInfo.has("lat")) {
+                    communityInfoInfo.setLat(jsonCommunityInfoInfo.getString("lat"));
+                }
+                if (jsonCommunityInfoInfo.has("lng")) {
+                    communityInfoInfo.setLng(jsonCommunityInfoInfo.getString("lng"));
+                }
+                if (jsonCommunityInfoInfo.has("distance")) {
+                    communityInfoInfo.setDistance(jsonCommunityInfoInfo.getString("distance"));
+                }
+                if (jsonCommunityInfoInfo.has("summary")) {
+                    communityInfoInfo.setSummary(jsonCommunityInfoInfo.getString("summary"));
+                }
+
+                mInfo.setCommunityInfoInfo(communityInfoInfo);
+                mDate.setmInfo(mInfo);
+            }
+            //获取list
+            if(jsonDate.has("list")){
+                MList mList=new MList();
+                ArrayList<CommunityInfoList> communityInfoLists=new ArrayList<>();
+                JSONArray jsoncommunityInfoLists=jsonDate.getJSONArray("list");
+                for (int i = 0; i < jsoncommunityInfoLists.length(); i++) {
+                    JSONObject jsoncommunityInfoList=jsoncommunityInfoLists.getJSONObject(i);
+                    CommunityInfoList communityInfoList=new CommunityInfoList();
+                    if(jsoncommunityInfoList.has("kind")){
+                        communityInfoList.setKind(jsoncommunityInfoList.getString("kind"));
+                    }
+                    if(jsoncommunityInfoList.has("id")){
+                        communityInfoList.setId(jsoncommunityInfoList.getString("id"));
+                    }
+                    if(jsoncommunityInfoList.has("name")){
+                        communityInfoList.setName(jsoncommunityInfoList.getString("name"));
+                    }
+                    if(jsoncommunityInfoList.has("address")){
+                        communityInfoList.setAddress(jsoncommunityInfoList.getString("address"));
+                    }
+                    if(jsoncommunityInfoList.has("telno")){
+                        communityInfoList.setTelno(jsoncommunityInfoList.getString("telno"));
+                    }
+                    if(jsoncommunityInfoList.has("lat")){
+                        communityInfoList.setLat(jsoncommunityInfoList.getString("lat"));
+                    }
+                    if(jsoncommunityInfoList.has("lng")){
+                        communityInfoList.setLng(jsoncommunityInfoList.getString("lng"));
+                    }
+                    if(jsoncommunityInfoList.has("distance")){
+                        communityInfoList.setDistance(jsoncommunityInfoList.getString("distance"));
+                    }
+                    if(jsoncommunityInfoList.has("summary")){
+                        communityInfoList.setSummary(jsoncommunityInfoList.getString("summary"));
+                    }
+                    communityInfoLists.add(communityInfoList);
+                }
+                mList.setCommunityInfoLists(communityInfoLists);
+                mDate.setmList(mList);
+            }
+
+        }catch (Exception e){
+
+        }
         dates.add(mDate);
         return dates;
     }

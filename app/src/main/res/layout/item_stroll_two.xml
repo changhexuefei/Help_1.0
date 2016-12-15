@@ -3,14 +3,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_88"
 	>
-
+<View
+	android:id="@+id/view1"
+	android:layout_width="match_parent"
+	android:layout_height="1dp"
+	android:background="#ededed"></View>
 	<de.hdodenhof.circleimageview.CircleImageView
 
 		android:id="@+id/im_Stroll_list_icon"
-		android:layout_width="@dimen/dp_60"
-		android:layout_height="@dimen/dp_60"
+		android:layout_width="@dimen/dp_50"
+		android:layout_height="@dimen/dp_50"
 		android:layout_marginLeft="@dimen/dp_16"
-		android:layout_marginTop="6dp"
+		android:layout_marginTop="10dp"
 		android:src="@mipmap/cc"
 		android:layout_marginBottom="10dp"/>
 

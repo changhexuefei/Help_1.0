@@ -99,8 +99,4 @@ public class MyDecoration extends RecyclerView.ItemDecoration {
     }
 
 
-
-
-
-
 }
