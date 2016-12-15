@@ -1,18 +1,19 @@
 package com.hyzsnt.onekeyhelp.module.index.adapter;
 
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.bumptech.glide.Glide;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.module.index.bean.MyNeighborInfo;
-import com.hyzsnt.onekeyhelp.utils.BitmapUtils;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by gao on 2016/12/10.
@@ -20,11 +21,13 @@ import java.util.List;
 
 public class MyNeighborListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<MyNeighborInfo> mNeighborInfos;
+
+    private List<MyNeighborInfo.ListBean> mNeighborInfos;
 //    private static final int TYPE_ITEM = 1;
 //    private static final int TYPE_FOOTER = 2;
 
-    public void setNeighborInfos(List<MyNeighborInfo> neighborInfos) {
+
+    public void setNeighborInfos(List<MyNeighborInfo.ListBean> neighborInfos) {
         mNeighborInfos = neighborInfos;
     }
 
@@ -50,14 +53,16 @@ public class MyNeighborListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-            Bitmap bitmap = BitmapDescriptorFactory.fromResource(R.drawable.test).getBitmap();
-            Bitmap bit = BitmapUtils.toRoundBitmap(bitmap);
-            itemViewHolder.iv_neighbor_icon.setImageBitmap(bit);
-            itemViewHolder.tv_neighbor_name.setText(mNeighborInfos.get(position).getNeighborName());
-            itemViewHolder.tv_neighbor_age.setText(mNeighborInfos.get(position).getNeighborAge());
-            itemViewHolder.iv_neighbor_sex_icon.setImageResource(mNeighborInfos.get(position).getNeighborSexIcon());
+            Glide.with(App.getContext()).load(mNeighborInfos.get(position).getHeadportraid())
+                    .into(itemViewHolder.iv_neighbor_icon);
+            itemViewHolder.tv_neighbor_name.setText(mNeighborInfos.get(position).getNickname());
+            itemViewHolder.tv_neighbor_age.setText(mNeighborInfos.get(position).getPhoneno());
+            if (mNeighborInfos.get(position).getGender().equals("0")) {
+                itemViewHolder.iv_neighbor_sex_icon.setImageResource(R.mipmap.man);
+            } else {
+                itemViewHolder.iv_neighbor_sex_icon.setImageResource(R.mipmap.woman);
+            }
         }
     }
 
@@ -69,14 +74,15 @@ public class MyNeighborListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView tv_neighbor_name, tv_neighbor_age;
-        ImageView iv_neighbor_icon, iv_neighbor_sex_icon;
+        CircleImageView iv_neighbor_icon;
+        ImageView iv_neighbor_sex_icon;
 
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             tv_neighbor_name = (TextView) itemView.findViewById(R.id.neighbor_name);
             tv_neighbor_age = (TextView) itemView.findViewById(R.id.neighbor_age);
-            iv_neighbor_icon = (ImageView) itemView.findViewById(R.id.neighbor_icon);
+            iv_neighbor_icon = (CircleImageView) itemView.findViewById(R.id.neighbor_icon);
             iv_neighbor_sex_icon = (ImageView) itemView.findViewById(R.id.neighbor_sex_icon);
 
 

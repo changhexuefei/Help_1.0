@@ -22,6 +22,7 @@ import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
 import com.hyzsnt.onekeyhelp.module.login.activity.RegisterActivity;
 
@@ -60,6 +61,15 @@ public class HomeUnLoginFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
+
+        final HomeUnLoginAdapter mHomeAdapter = new HomeUnLoginAdapter(getActivity());
+        //LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
+        //homeLrv.setAdapter(adapter);
+        homeLrv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        homeLrv.setAdapter(mHomeAdapter);
+        homeLrv.setItemAnimator(new DefaultItemAnimator());
+
+
         List params = new ArrayList<String>();
         //params.add("13521632836");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
         params.add("0");
@@ -81,6 +91,10 @@ public class HomeUnLoginFragment extends BaseFragment {
             public void onSuccess(String response, int id) {
                 Log.e("+++++++++++", response);
                 str=response;
+                ArrayList<MDate> dates= Resovle.getDate(response);
+                mHomeAdapter.setDates(dates);
+                mHomeAdapter.notifyDataSetChanged();
+                Log.e("+++++++++++",dates.get(0).getCommunityList()+"");
             }
 
             @Override
@@ -89,17 +103,6 @@ public class HomeUnLoginFragment extends BaseFragment {
             }
         });
         Log.e("+++++++++++", str);
-        HomeUnLoginAdapter mHomeAdapter = new HomeUnLoginAdapter(getActivity());
-        //LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
-        //homeLrv.setAdapter(adapter);
-        homeLrv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        homeLrv.setAdapter(mHomeAdapter);
-        homeLrv.setItemAnimator(new DefaultItemAnimator());
-
-        ArrayList<MDate> dates=new ArrayList<>();
-        mHomeAdapter.setDates(dates);
-        mHomeAdapter.notifyDataSetChanged();
-
     }
 
     @Override

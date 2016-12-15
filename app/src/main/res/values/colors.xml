@@ -22,5 +22,5 @@
 
 	<color name="pink">#FA9D9F</color>
 	<color name="fieldYellow">#E1B898</color>
-
+	<color name="btn_bg">#adadad</color>
 </resources>

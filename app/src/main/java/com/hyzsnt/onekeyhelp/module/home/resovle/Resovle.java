@@ -38,6 +38,7 @@ public class Resovle {
             Info info=null;
             Coordinateres coordinateres=null;
             if(jsonDate.has("info")){
+                coordinateres=new Coordinateres();
                 JSONObject jsonInfo=jsonDate.getJSONObject("info");
                 info=new Info();
                 if (jsonInfo.has("curnum")){

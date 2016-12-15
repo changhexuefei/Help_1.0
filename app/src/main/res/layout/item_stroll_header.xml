@@ -16,7 +16,7 @@
 		android:layout_width="92dp"
 		android:layout_height="18dp"
 		android:layout_alignParentBottom="true"
-		android:alpha="0.35"
+		android:alpha="0.5"
 		android:background="#000000"
 		android:gravity="center"
 		android:orientation="horizontal">
@@ -26,9 +26,9 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/dp_2"
-			android:layout_marginRight="@dimen/dp_5"
+			android:paddingRight="@dimen/dp_6"
 			android:text="健身圈"
-			android:textColor="#ffffff"
+			android:textColor="#FFFFFF"
 			android:textSize="@dimen/sp_11"/>
 
 		<TextView

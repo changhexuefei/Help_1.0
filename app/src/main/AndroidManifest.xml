@@ -45,17 +45,27 @@
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
+
 		</activity>
 		<!--物品置换-->
 		<activity android:name=".module.index.activity.GoodsReplaceActivity"/>
 		<!-- 一键求助页面-->
 		<activity android:name=".module.help.activity.HelpActivity"/>
+		<!--搜索圈子-->
 		<activity android:name=".module.stroll.activity.SeekCircleActivity"/>
-		<activity android:name=".module.stroll.activity.CreateCircleActivity"/>
+		<!--创建圈子-->
+		<activity android:name=".module.stroll.activity.CreateCircleActivity"
+		          android:windowSoftInputMode="adjustPan|stateHidden"/>
+
 		<!--我的邻居列表-->
-		<activity android:name=".module.index.activity.MyNeighborListActivity"/>
+		<activity android:name=".module.index.activity.MyNeighborListActivity">
+
+		</activity>
+
 		<!--搜索小区-->
-		<activity android:name=".module.index.activity.SeekeStateActivity"/>
+		<activity android:name=".module.index.activity.SeekeStateActivity">
+
+		</activity>
 		<!--欢迎页-->
 		<activity android:name=".activity.SplashActivity"/>
 		<!--引导页-->
@@ -71,6 +81,7 @@
 		<activity android:name=".module.login.activity.AgreementActivity"/>
 		<!--小区简介-->
 		<activity android:name=".module.index.activity.CompoundInfoActivity"/>
+		<!--圈子详情-->
 		<activity android:name=".module.stroll.activity.CircleDetailsActivity"/>
 		<!--发布说说-->
 		<activity android:name=".module.release.activity.TalkActivity"/>

@@ -164,14 +164,14 @@
 			</RelativeLayout>
 
 
-			<RelativeLayout
+			<LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="170dp"
+				android:layout_height="248dp"
 				android:layout_below="@id/llayout1"
 				android:layout_marginLeft="@dimen/dp_12"
 				android:layout_marginRight="@dimen/dp_12"
-				android:layout_marginTop="@dimen/dp_16"
-
+				android:layout_marginTop="@dimen/dp_30"
+				android:orientation="vertical"
 				android:id="@+id/relativeLayout">
 
 				<TextView
@@ -180,18 +180,20 @@
 					android:layout_height="wrap_content"
 					android:paddingLeft="@dimen/dp_2"
 					android:paddingTop="@dimen/dp_2"
-					android:text="圈子分类"/>
+					android:text="圈子分类"
+					android:layout_marginBottom="@dimen/dp_6"/>
 
 				<android.support.v7.widget.RecyclerView
 					android:layout_below="@id/tv_text2"
 					android:id="@+id/re_create_circle_type"
 					android:layout_width="match_parent"
-					android:layout_height="150dp"
+					android:layout_height="170dp"
 					android:background="@drawable/create_circle_edit_bg"
 					android:paddingLeft="@dimen/dp_2">
 
 				</android.support.v7.widget.RecyclerView>
-			</RelativeLayout>
+
+			</LinearLayout>
 
 
 		</RelativeLayout>
@@ -199,18 +201,17 @@
 	</ScrollView>
 
 
-			<TextView
-				android:layout_height="@dimen/dp_48"
-				android:layout_width="match_parent"
-				android:layout_marginLeft="@dimen/dp_12"
-				android:text="创建圈子"
-				android:gravity="center"
-			    android:background="#1CCD9A"
-			    android:textColor="#FFFFFF"
-			    android:layout_alignParentBottom="true"
-			    android:layout_marginRight="@dimen/dp_12"
+	<TextView
+		android:layout_height="@dimen/dp_48"
+		android:layout_width="match_parent"
+		android:text="创建圈子"
+		android:gravity="center"
+	    android:background="#1CCD9A"
+	    android:textColor="#FFFFFF"
 
-			    android:textSize="15sp"
-				/>
+		android:textSize="15sp"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:id="@+id/textView7"/>
 
 </RelativeLayout>
