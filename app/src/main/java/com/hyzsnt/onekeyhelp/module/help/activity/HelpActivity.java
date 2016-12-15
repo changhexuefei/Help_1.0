@@ -35,6 +35,8 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	private static final int TIME_DOWN = 1;
 	private static final int START_RECORD = 2;
+	private static final int STOP_RECORD = 3;
+
 	@BindView(R.id.rg_help_title)
 	RadioGroup rg_help_title;
 	@BindView(R.id.fl_help_content)
@@ -73,9 +75,17 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				case START_RECORD:
 					startRecord();
 					break;
+				case STOP_RECORD:
+					stopRecord();
+					break;
 			}
 		}
 	};
+
+	private void stopRecord() {
+
+	}
+
 
 	@NeedsPermission(Manifest.permission.RECORD_AUDIO)
 	public void startRecord() {
