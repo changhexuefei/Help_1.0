@@ -1,7 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.home.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by hyzs on 2016/12/15.

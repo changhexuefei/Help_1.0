@@ -24,7 +24,6 @@ public class HomeLoginHeadAdapter extends RecyclerView.Adapter {
         homeLoginTitleList.add(R.drawable.home_login_synthesize);
         homeLoginTitleList.add(R.drawable.home_login_exchange_house);
         homeLoginTitleList.add(R.drawable.home_login_exchange_goods);
-        homeLoginTitleList.add(R.drawable.home_login_commentary_stroll);
     }
 
     @Override

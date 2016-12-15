@@ -68,7 +68,7 @@ public class HomeUnLoginFragment extends BaseFragment {
         homeLrv.setAdapter(mHomeAdapter);
         homeLrv.setItemAnimator(new DefaultItemAnimator());
 
-        //假数据
+
         List params = new ArrayList<String>();
         //params.add("13521632836");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
         params.add("0");
@@ -83,19 +83,24 @@ public class HomeUnLoginFragment extends BaseFragment {
         HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYLIST, params, new ResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
+                Log.e("+++++++++++", "失败" + call + "----" + e + "@@@@@" + id);
             }
+
             @Override
             public void onSuccess(String response, int id) {
                 Log.e("+++++++++++", response);
+                str=response;
                 ArrayList<MDate> dates= Resovle.getCommunityList(response);
                 mHomeAdapter.setDates(dates);
                 mHomeAdapter.notifyDataSetChanged();
-                Log.e("+++++++++++", dates+"");
             }
+
             @Override
             public void inProgress(float progress, long total, int id) {
+                Log.e("+++++++++++", progress + "过程中" + total + "很爱很爱" + id);
             }
         });
+        Log.e("+++++++++++", str);
     }
 
     @Override
@@ -129,6 +134,7 @@ public class HomeUnLoginFragment extends BaseFragment {
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
+        Log.e("----------", "");
     }
 
     @Override

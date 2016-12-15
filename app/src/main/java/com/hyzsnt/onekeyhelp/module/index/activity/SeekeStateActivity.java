@@ -1,14 +1,19 @@
 package com.hyzsnt.onekeyhelp.module.index.activity;
 
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
@@ -17,6 +22,9 @@ import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.module.index.adapter.CommunityListAdapter;
 import com.hyzsnt.onekeyhelp.module.index.bean.CommunityList;
+import com.hyzsnt.onekeyhelp.module.index.bean.MyDecoration;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +43,9 @@ public class SeekeStateActivity extends BaseActivity {
     @BindView(R.id.search_estate_bar)
     EditText mSearchEstateBar;
     @BindView(R.id.community_list_rec)
-    RecyclerView mCommunityListRec;
+    LRecyclerView mCommunityListRec;
+    @BindView(R.id.iv_delete)
+    ImageView mIvDelete;
     //    private HotAreaInfo mHotAreaInfo;
     private List<CommunityList.ListBean> listBeen;
     private CommunityList mList = null;
@@ -45,7 +55,20 @@ public class SeekeStateActivity extends BaseActivity {
     private static final String REGIONAL = "getRegional";
     //获取热门地区的接口 a
     private static final String HOTAREA = "getHotArea";
-
+    //每次展现数量
+    private static final String NUM = "1";
+    //获取页数，初次检索默认1
+    private static final String PAGENUM = "1";
+    //定位检索
+    private static final String LOCATIONSEARCH = "0";
+    //区域检索
+    private static final String AREASEARCH = "1";
+    //用户ID
+    private String userid = "4";
+    //上级行政区域ID
+    private String regid = "110000";
+    //条件集合
+    List<String> parms = new ArrayList<>();
 
 //    List<String> p = new ArrayList<>();
 //    SharedPreferences sp = App.getContext().getSharedPreferences("",Context.MODE_PRIVATE);
@@ -57,21 +80,22 @@ public class SeekeStateActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        List<String> parms = new ArrayList<>();
-
         String lat = Double.toString(App.getLocation().getLatitude());
         Log.d("lat", lat);
         String lon = Double.toString(App.getLocation().getLongitude());
         Log.d("lon", lon);
-        parms.add("1");
-        parms.add("4");
+        parms.add(LOCATIONSEARCH);
+        parms.add("10");
+        parms.add(PAGENUM);
+        parms.add(userid);
         parms.add(lat);
         parms.add(lon);
-        parms.add("110000");
-//        parms.add("116.539995");
-//        parms.add("110105");
-//        parms.add("2");
-        HttpUtils.post(Api.PUBLIC, HOTAREA, parms, new JsonResponseHandler() {
+        parms.add(regid);
+        parms.add("");
+        parms.add("");
+        parms.add("");
+
+        HttpUtils.post(Api.COMMUNITY, "getCommunityList", parms, new JsonResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
                 Toast.makeText(SeekeStateActivity.this, "你输入的有误", Toast.LENGTH_SHORT).show();
@@ -82,30 +106,31 @@ public class SeekeStateActivity extends BaseActivity {
                 Log.d("111111111", "response" + response);
                 Toast.makeText(SeekeStateActivity.this, "链接成功", Toast.LENGTH_SHORT).show();
 
-//                mAdapter = new CommunityListAdapter();
-//                LinearLayoutManager manager = new LinearLayoutManager(SeekeStateActivity.this, LinearLayoutManager.VERTICAL, false);
-//                mCommunityListRec.setLayoutManager(manager);
-//                mCommunityListRec.setHasFixedSize(true);
-//                mCommunityListRec.setItemAnimator(new DefaultItemAnimator());
-//                //添加分割线
-//                mCommunityListRec.addItemDecoration(new MyDecoration(SeekeStateActivity.this, MyDecoration.VERTICAL_LIST));
-//                listBeen = new ArrayList<CommunityList.ListBean>();
-//                if (JsonUtils.isSuccess(response)) {
-//                    Gson gson = new Gson();
-//                    mList = gson.fromJson(response, CommunityList.class);
-//                    listBeen = mList.getList();
-//                    mAdapter.setCommunityLists(listBeen);
-//                    mCommunityListRec.setAdapter(mAdapter);
-//                } else {
-//                    String err = JsonUtils.getErrorMessage(response);
-//                    LogUtils.e(err);
-//
-//                }
+                mAdapter = new CommunityListAdapter();
+                LinearLayoutManager manager = new LinearLayoutManager(SeekeStateActivity.this, LinearLayoutManager.VERTICAL, false);
+                mCommunityListRec.setLayoutManager(manager);
+                mCommunityListRec.setHasFixedSize(true);
+                mCommunityListRec.setItemAnimator(new DefaultItemAnimator());
+                //添加分割线
+                mCommunityListRec.addItemDecoration(new MyDecoration(SeekeStateActivity.this, MyDecoration.VERTICAL_LIST));
+                listBeen = new ArrayList<CommunityList.ListBean>();
+                if (JsonUtils.isSuccess(response)) {
+                    Gson gson = new Gson();
+                    mList = gson.fromJson(response, CommunityList.class);
+                    listBeen = mList.getList();
+
+                    mAdapter.setCommunityLists(listBeen);
+                    LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mAdapter);
+                    mCommunityListRec.setAdapter(adapter);
+                } else {
+                    String err = JsonUtils.getErrorMessage(response);
+                    LogUtils.e(err);
+
+                }
             }
         });
-
-
     }
+
 
 
     public void click(View view) {
@@ -141,7 +166,15 @@ public class SeekeStateActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //如果长度为0
+                if (s.length() == 0) {
+                    //隐藏“删除”图片
+                    mIvDelete.setVisibility(View.GONE);
+                } else {//长度不为0
+                    //显示“删除图片”
+                    mIvDelete.setVisibility(View.VISIBLE);
 
+                }
             }
 
             @Override
@@ -149,7 +182,18 @@ public class SeekeStateActivity extends BaseActivity {
 
             }
         });
+        //设置删除图片的点击事件
+        mIvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //把EditText内容设置为空
+                mSearchEstateBar.setText("");
+                //把ListView隐藏
+//                mListView.setVisibility(View.GONE);
+            }
+        });
 
 
     }
+
 }

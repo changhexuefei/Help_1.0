@@ -9,18 +9,36 @@
     android:focusableInTouchMode="true"
     tools:context="com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity">
 
-    <EditText
-        android:id="@+id/search_estate_bar"
+    <RelativeLayout
+        android:layout_marginTop="8dp"
+        android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/action0"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/search_box_shape"
-        android:gravity="center"
-        android:hint="请输入你想搜索的小区"/>
+        android:layout_below="@+id/action0">
+
+        <EditText
+            android:id="@+id/search_estate_bar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/search_box_shape"
+            android:gravity="center"
+            android:hint="请输入你想搜索的小区"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:paddingRight="30dp"
+            android:src="@mipmap/delete"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/action0"
@@ -60,7 +78,7 @@
         android:id="@+id/classify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/search_estate_bar"
+        android:layout_below="@+id/search"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="10dp">
 
@@ -94,15 +112,16 @@
             />
 
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/classify"
+
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/community_list_rec"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/classify"
+        android:layout_marginTop="5dp">
 
 
-    </android.support.v7.widget.RecyclerView>
+    </com.github.jdsjlzx.recyclerview.LRecyclerView>
 
 
 </RelativeLayout>
