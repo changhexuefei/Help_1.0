@@ -75,18 +75,18 @@ public class StrollFragment extends BaseFragment {
 		layoutManager.setOrientation(LinearLayout.HORIZONTAL);
 		mReStrollHeaderList.setLayoutManager(layoutManager);
 		//解析数据
-        if(isSuccess(content)){
-	        Gson gson = new Gson();
-	        hotTagData = gson.fromJson(content, CircleHotTag.class);
-	        hotTagData.getList();
-	        //添加适配器到Recycleview
-	        mReStrollHeaderList.setAdapter(new StrollHeaderAdapter(mActivity,hotTagData.getList()));
-        }else{
-	        String err = JsonUtils.getErrorMessage(content);
-	        LogUtils.e(err);
-        }
-        //mTvStrollFragmentRound.setOnClickListener(this);
-       //获取周边信息
+		if (isSuccess(content)) {
+			Gson gson = new Gson();
+			hotTagData = gson.fromJson(content, CircleHotTag.class);
+			hotTagData.getList();
+			//添加适配器到Recycleview
+			mReStrollHeaderList.setAdapter(new StrollHeaderAdapter(mActivity, hotTagData.getList()));
+		} else {
+			String err = JsonUtils.getErrorMessage(content);
+			LogUtils.e(err);
+		}
+		//mTvStrollFragmentRound.setOnClickListener(this);
+		//获取周边信息
 		ArrayList<String> list1 = new ArrayList<>();
 		list1.add("1");
 		list1.add("39.923263");
@@ -101,13 +101,12 @@ public class StrollFragment extends BaseFragment {
 
 			@Override
 			public void onSuccess(String response, int id) {
-				if(JsonUtils.isSuccess(response)){
-					Gson gson =new Gson();
-					CircleRound round= gson.fromJson(response, CircleRound.class);
-					CircleFragmentAdapter mCircleFragmentAdapter = new CircleFragmentAdapter(mActivity,round.getList());
+				if (JsonUtils.isSuccess(response)) {
+					Gson gson = new Gson();
+					CircleRound round = gson.fromJson(response, CircleRound.class);
+					CircleFragmentAdapter mCircleFragmentAdapter = new CircleFragmentAdapter(mActivity, round.getList());
 					mExCircleFragment.setAdapter(mCircleFragmentAdapter);
-					for (int i = 0; i < mCircleFragmentAdapter.getGroupCount(); i++)
-					{
+					for (int i = 0; i < mCircleFragmentAdapter.getGroupCount(); i++) {
 						mExCircleFragment.expandGroup(i);// 关键步骤3,初始化时，将ExpandableListView以展开的方式呈现
 					}
 					mExCircleFragment.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -136,9 +135,6 @@ public class StrollFragment extends BaseFragment {
 		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 
 
-
-
-
 	}
 
 	@Override
@@ -156,7 +152,7 @@ public class StrollFragment extends BaseFragment {
 		return Api.Circle.CIRCLE_HOTTAG;
 	}
 
-	@OnClick({R.id.im_create_circle, R.id.im_stroll_seek,R.id.tv_stroll_fragment_round,R.id.tv_stroll_fragment_me})
+	@OnClick({R.id.im_create_circle, R.id.im_stroll_seek, R.id.tv_stroll_fragment_round, R.id.tv_stroll_fragment_me})
 	public void onClick(View view) {
 		switch (view.getId()) {
 			case R.id.im_create_circle:
@@ -178,7 +174,6 @@ public class StrollFragment extends BaseFragment {
 				break;
 		}
 	}
-
 
 
 }

@@ -102,7 +102,7 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 		childViewHolder.child_name.setText(circles.getCcname());
         childViewHolder.child_topic.setText(circles.getFlag()+"条话题");
 		String flags =circles.getTags();
-		String[] flist = flags.split("|");
+		String[] flist = flags.split("\\|");
 		for(int j=0;j<flist.length;j++){
 			LogUtils.e(flist[j]);
            if(flist.length==3){
