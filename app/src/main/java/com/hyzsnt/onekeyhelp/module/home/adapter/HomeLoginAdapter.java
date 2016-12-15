@@ -14,8 +14,11 @@ import android.widget.LinearLayout;
 import com.hyzsnt.onekeyhelp.MainActivity;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.home.activity.VoiceDetailActivity;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.inner.OnRecyclerViewItemClickListener;
 import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
+
+import java.util.ArrayList;
 
 /**
  * Created by hyzs on 2016/12/11.
@@ -25,10 +28,20 @@ public class HomeLoginAdapter extends RecyclerView.Adapter{
     private Context mContext;
     private MainActivity activity;
     private OnRecyclerViewItemClickListener mOnItemClickListener;
+    private ArrayList<MDate> dates=new ArrayList<>();
     public HomeLoginAdapter(Context mContext) {
         this.mContext = mContext;
         activity=(MainActivity)mContext;
     }
+
+    public ArrayList<MDate> getDates() {
+        return dates;
+    }
+
+    public void setDates(ArrayList<MDate> dates) {
+        this.dates = dates;
+    }
+
     //条目电击事件
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
         this.mOnItemClickListener = listener;
