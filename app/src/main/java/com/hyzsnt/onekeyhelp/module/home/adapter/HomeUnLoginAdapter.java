@@ -93,17 +93,6 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
                     public void onClick(View view) {
 
                         List params = new ArrayList<String>();
-                        //params.add("13521632836");//用户ID：5   纬度	：	39.923594   经度	：	116.539995
-//                        params.add("0");
-//                        params.add("8");
-//                        params.add("1");
-//                        params.add("5");
-//                        params.add("39.923594");
-//                        params.add("116.539995");
-//                        params.add("15551675396");
-//                        params.add("");
-//                        params.add("");
-
                         params.add(2061+"");//2061  2803
                         params.add(5+"");
                         HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, params, new ResponseHandler() {
@@ -117,8 +106,6 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
                                 ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
                                 Bundle bundle=new Bundle();
                                 bundle.putSerializable("communityInfoList",communityInfoList);
-
-                                Log.e("+++++++++++",communityInfoList+"");
                                 Intent i = new Intent(mContext, CompoundInfoActivity.class);
                                 i.putExtras(bundle);
                                 mContext.startActivity(i);
