@@ -9,10 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal">
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_marginLeft="10dp"
             android:id="@+id/seek_curcum_headportrait"
-            android:scaleType="fitXY"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
@@ -35,10 +34,10 @@
                 android:textColor="#444444"
                 android:layout_weight="1"/>
             <TextView
-                android:id="@+id/community_people_num"
+                android:id="@+id/community_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1389人"
+                android:text="100米"
                 android:textSize="@dimen/sp_10"
                 android:textColor="#444444"
                 android:layout_gravity="bottom"

@@ -62,4 +62,7 @@ dependencies {
     //PermissionsDispatcher
     compile 'com.github.hotchemi:permissionsdispatcher:2.3.0'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.0'
+    //多张图片选择
+    compile 'cn.finalteam:galleryfinal:1.4.6'
+    compile files('libs/universal-image-loader-1.9.5.jar')
 }
