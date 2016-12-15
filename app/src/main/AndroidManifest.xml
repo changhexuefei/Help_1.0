@@ -56,9 +56,15 @@
 		          android:windowSoftInputMode="adjustPan|stateHidden"/>
 
 		<!--我的邻居列表-->
-		<activity android:name=".module.index.activity.MyNeighborListActivity"/>
+		<activity android:name=".module.index.activity.MyNeighborListActivity">
+
+		</activity>
+
 		<!--搜索小区-->
-		<activity android:name=".module.index.activity.SeekeStateActivity"/>
+		<activity android:name=".module.index.activity.SeekeStateActivity">
+
+
+		</activity>
 		<!--欢迎页-->
 		<activity android:name=".activity.SplashActivity"/>
 		<!--引导页-->

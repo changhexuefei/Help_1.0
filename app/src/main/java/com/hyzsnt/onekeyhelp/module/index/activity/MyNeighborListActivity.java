@@ -11,16 +11,23 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
+import com.hyzsnt.onekeyhelp.http.Api;
+import com.hyzsnt.onekeyhelp.http.HttpUtils;
+import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.module.index.adapter.MyNeighborListAdapter;
 import com.hyzsnt.onekeyhelp.module.index.bean.MyDecoration;
 import com.hyzsnt.onekeyhelp.module.index.bean.MyNeighborInfo;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import okhttp3.Call;
 
 public class MyNeighborListActivity extends BaseActivity implements TextWatcher {
 
@@ -31,8 +38,9 @@ public class MyNeighborListActivity extends BaseActivity implements TextWatcher 
     RecyclerView mMyNeighborList;
     @BindView(R.id.et_search)
     EditText mEtSearch;
-
-    private List<MyNeighborInfo> mInfoList;
+    private final static String MLBC = "getMemberListByCommunity";
+    List<String> parms = new ArrayList<>();
+    private List<MyNeighborInfo.ListBean> mInfoList;
     private MyNeighborListAdapter mNeighborListAdapter;
 
     private int lastVisibleItemPosition;
@@ -47,47 +55,54 @@ public class MyNeighborListActivity extends BaseActivity implements TextWatcher 
 
     @Override
     protected void initData() {
-        mInfoList = new ArrayList<>();
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
-        mInfoList.add(new MyNeighborInfo(R.drawable.test, "张三", R.mipmap.man, "12"));
+        parms.add("1");
+        parms.add("4");
+        parms.add("1");
+        parms.add("");
 
-
-        mNeighborListAdapter = new MyNeighborListAdapter();
-        final LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mMyNeighborList.setLayoutManager(manager);
-        mMyNeighborList.setHasFixedSize(true);
-        //设置Item增加、移除动画
-        mMyNeighborList.setItemAnimator(new DefaultItemAnimator());
-        //添加分割线
-        mMyNeighborList.addItemDecoration(new MyDecoration(
-                this, MyDecoration.VERTICAL_LIST));
-        mNeighborListAdapter.setNeighborInfos(mInfoList);
-        mMyNeighborList.setAdapter(mNeighborListAdapter);
-        mMyNeighborList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        HttpUtils.post(Api.COMMUNITY, MLBC, parms, new JsonResponseHandler() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
+            public void onError(Call call, Exception e, int id) {
 
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                lastVisibleItemPosition = manager.findLastVisibleItemPosition();
+            public void onSuccess(String response, int id) {
+                mNeighborListAdapter = new MyNeighborListAdapter();
+                final LinearLayoutManager manager = new LinearLayoutManager(MyNeighborListActivity.this, LinearLayoutManager.VERTICAL, false);
+                mMyNeighborList.setLayoutManager(manager);
+                mMyNeighborList.setHasFixedSize(true);
+                mMyNeighborList.setItemAnimator(new DefaultItemAnimator());
+                //添加分割线
+                mMyNeighborList.addItemDecoration(new MyDecoration(MyNeighborListActivity.this, MyDecoration.VERTICAL_LIST));
+                mInfoList = new ArrayList<MyNeighborInfo.ListBean>();
+                if (JsonUtils.isSuccess(response)) {
+                    Gson gson = new Gson();
+                    MyNeighborInfo myNeighborInfo = gson.fromJson(response, MyNeighborInfo.class);
+                    mInfoList = myNeighborInfo.getList();
+                    mNeighborListAdapter.setNeighborInfos(mInfoList);
+                    mMyNeighborList.setAdapter(mNeighborListAdapter);
+                    mMyNeighborList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                            super.onScrollStateChanged(recyclerView, newState);
+
+                        }
+
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            super.onScrolled(recyclerView, dx, dy);
+                            lastVisibleItemPosition = manager.findLastVisibleItemPosition();
+                        }
+                    });
+
+                } else {
+                    String err = JsonUtils.getErrorMessage(response);
+                    LogUtils.e(err);
+                }
             }
         });
+
 
         mBtnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,9 +129,6 @@ public class MyNeighborListActivity extends BaseActivity implements TextWatcher 
         Log.d("TextChanged", "afterTextChanged: " + editable);
         Toast.makeText(this, "您输入的是：" + editable.toString(), Toast.LENGTH_SHORT).show();
     }
-
-
-
 
 
 }

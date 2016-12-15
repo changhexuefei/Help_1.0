@@ -82,8 +82,6 @@ public class CompoundInfoActivity extends BaseActivity {
                 finish();
             }
         });
-
-
     }
 
 }
