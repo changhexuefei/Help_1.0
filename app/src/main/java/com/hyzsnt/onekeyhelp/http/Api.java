@@ -167,6 +167,15 @@ public class Api {
 		 *
 		 */
 		public static final String CIRCLE_DETAILS ="getCircleInfo";
+		/**
+		 * 闲逛成员列表
+		 */
+		public static final String CIRCLE_MEMBER ="getMemberListCircle";
+		/**
+		 * 闲逛加入申请列表
+		 *
+		 */
+		public static final String CIRCLE_join ="getJoinApplyList";
 	}
 
 
