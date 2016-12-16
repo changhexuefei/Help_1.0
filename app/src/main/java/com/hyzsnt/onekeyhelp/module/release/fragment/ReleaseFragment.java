@@ -3,6 +3,7 @@ package com.hyzsnt.onekeyhelp.module.release.fragment;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -12,10 +13,14 @@ import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.module.release.activity.GeneralMessageActivity;
 import com.hyzsnt.onekeyhelp.module.release.activity.TalkActivity;
 
+
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.hyzsnt.onekeyhelp.utils.SPUtils.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +42,7 @@ public class ReleaseFragment extends BaseFragment {
 
     public ReleaseFragment() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -46,7 +52,16 @@ public class ReleaseFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
+        Map<String, ?> map = getAll(getContext());
 
+
+        Log.d("登录", isLogin()+"");
+        //登录状态下，可以看到综合信息一栏，未登录状态，不能看到综合信息
+        if (isLogin()) {
+            mIvGeneralMessage.setVisibility(View.GONE);
+        } else {
+            mIvGeneralMessage.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -10,102 +10,50 @@
         android:layout_marginTop="@dimen/dp_10"
         android:id="@+id/item_homehead_rlv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_110"
-        android:layout_marginBottom="@dimen/dp_5">
+        android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
 
     <LinearLayout
+            android:layout_marginLeft="@dimen/dp_5"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_110"
             android:orientation="horizontal"
             android:layout_weight="1">
-
-            <LinearLayout
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_width="@dimen/dp_172"
-                android:layout_height="@dimen/dp_110"
-                android:background="@drawable/home_backgroud_violet"
-                android:orientation="vertical"
-                android:gravity="center">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/home_seek_help" />
-                <TextView
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="寻求看护"
-                    android:textSize="@dimen/sp_16"
-                    android:textColor="#7D68a0"
-                    />
-            </LinearLayout>
-
+                    android:src="@drawable/home_login_seek_help" />
             <LinearLayout
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_width="@dimen/dp_172"
-                android:layout_height="@dimen/dp_110"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
                 >
-                <LinearLayout
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/home_login_community"/>
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/home_backgroud_blackred"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="@dimen/dp_5"
                     android:gravity="center">
-
                     <ImageView
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_width="@dimen/dp_35"
-                        android:layout_height="@dimen/dp_35"
-                        android:src="@drawable/home_login_school_detail"/>
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="小区简介"
-                        android:textSize="@dimen/dp_16"
-                        android:textColor="#845556"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/home_backgroud_cyan"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-
-                    <ImageView
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_width="@dimen/dp_35"
-                        android:layout_height="@dimen/dp_35"
                         android:src="@drawable/home_login_neighbor"/>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="我的邻居"
-                            android:textSize="@dimen/sp_16"
-                            android:textColor="#388176"
-                            android:id="@+id/textView6" />
-                        <TextView
+                            android:layout_marginTop="@dimen/dp_25"
+                            android:layout_marginLeft="@dimen/dp_85"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="2356人"
-                            android:textSize="@dimen/sp_16"
-                            android:textColor="#388176"
+                            android:textSize="@dimen/sp_14"
+                            android:textColor="#5D979D"
                             android:layout_gravity="center_horizontal"/>
-                    </LinearLayout>
-                </LinearLayout>
+                </RelativeLayout>
         </LinearLayout>
 
 

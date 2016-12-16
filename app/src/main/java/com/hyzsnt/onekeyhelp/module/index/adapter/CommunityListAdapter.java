@@ -11,7 +11,12 @@ import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.module.index.bean.CommunityList;
 
+import java.text.DecimalFormat;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.R.attr.format;
 
 /**
  * Created by gao on 2016/12/14.
@@ -35,10 +40,13 @@ public class CommunityListAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
-
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             Glide.with(App.getContext()).load(R.drawable.test).into(itemViewHolder.mSeekCurcumHeadportrait);
             itemViewHolder.mSeekCurcumHeadportrait.setImageResource(R.drawable.test);
+            double dis = Double.parseDouble(mCommunityLists.get(position).getDistance());
+            DecimalFormat df = new DecimalFormat("######0"); //四色五入转换成整数
+            String distance = df.format(dis);
+            itemViewHolder.tv_community_distance.setText(distance+" 米");
 
             itemViewHolder.tv_community_name.setText(mCommunityLists.get(position).getCmname());
 //            itemViewHolder.homeIvDetail.setImageResource(mCommunityLists.get(position).getNeighborSexIcon());
@@ -52,14 +60,15 @@ public class CommunityListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         ImageView ivDetail;
-        ImageView mSeekCurcumHeadportrait;
-        TextView tv_community_name;
+        CircleImageView mSeekCurcumHeadportrait;
+        TextView tv_community_distance,tv_community_name;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            tv_community_name= (TextView) itemView.findViewById(R.id.community_name);
+            tv_community_name = (TextView) itemView.findViewById(R.id.community_name);
+            tv_community_distance = (TextView) itemView.findViewById(R.id.community_distance);
             ivDetail = (ImageView) itemView.findViewById(R.id.iv_detail);
-            mSeekCurcumHeadportrait = (ImageView) itemView.findViewById(R.id.seek_curcum_headportrait);
+            mSeekCurcumHeadportrait = (CircleImageView) itemView.findViewById(R.id.seek_curcum_headportrait);
         }
     }
 

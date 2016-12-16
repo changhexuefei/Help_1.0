@@ -17,8 +17,11 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.audio.AudioManager;
+import com.hyzsnt.onekeyhelp.audio.ErrorCode;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.module.help.fragment.MapHelpFragment;
 import com.hyzsnt.onekeyhelp.module.help.fragment.NearbyHelpFragment;
@@ -81,15 +84,20 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 			}
 		}
 	};
+	private AudioManager mAudioManager;
 
 	private void stopRecord() {
-
+		mAudioManager.stopRecordAndFile();
+		String path = mAudioManager.getRecordFilePath();
+		Toast.makeText(HelpActivity.this, "录制完成" + path, Toast.LENGTH_SHORT).show();
 	}
 
 
-	@NeedsPermission(Manifest.permission.RECORD_AUDIO)
 	public void startRecord() {
-
+		mAudioManager = AudioManager.getInstance();
+		int code = mAudioManager.startRecordAndFile();
+		Toast.makeText(HelpActivity.this, "code:" + ErrorCode.getErrorInfo(this, code), Toast.LENGTH_SHORT).show();
+		handler.sendEmptyMessageDelayed(STOP_RECORD, 10000);
 	}
 
 	@Override
@@ -105,8 +113,13 @@ public class HelpActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
-		HelpActivityPermissionsDispatcher.startRecordWithCheck(this);
+		HelpActivityPermissionsDispatcher.initPermissionWithCheck(this);
+		initPermission();
 		initAnimator();
+	}
+
+	@NeedsPermission({Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+	public void initPermission() {
 
 	}
 

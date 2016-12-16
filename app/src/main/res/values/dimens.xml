@@ -25,6 +25,7 @@
 	<dimen name="dp_17">17dp</dimen>
 	<dimen name="dp_20">20dp</dimen>
 	<dimen name="dp_25">25dp</dimen>
+	<dimen name="dp_29">29dp</dimen>
 	<dimen name="dp_30">30dp</dimen>
 	<dimen name="dp_35">35dp</dimen>
 	<dimen name="dp_46">46dp</dimen>
@@ -33,6 +34,7 @@
 	<dimen name="dp_66">66dp</dimen>
 	<dimen name="dp_74">74dp</dimen>
 	<dimen name="dp_80">80dp</dimen>
+	<dimen name="dp_85">85dp</dimen>
 	<dimen name="dp_88">88dp</dimen>
 	<dimen name="dp_90">90dp</dimen>
 	<dimen name="dp_62">62dp</dimen>
