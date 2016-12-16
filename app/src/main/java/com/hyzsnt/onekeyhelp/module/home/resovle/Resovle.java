@@ -8,6 +8,7 @@ import com.hyzsnt.onekeyhelp.module.home.bean.Coordinateres;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.bean.MInfo;
 import com.hyzsnt.onekeyhelp.module.home.bean.MList;
+import com.hyzsnt.onekeyhelp.module.home.bean.MemberListByCommunityList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -246,4 +247,102 @@ public class Resovle {
         dates.add(mDate);
         return dates;
     }
+    public static ArrayList<MDate> getMemberListByCommunity(String str) {
+        ArrayList<MDate> dates = new ArrayList<>();
+        MDate mDate = new MDate();
+        try {
+            JSONObject jsonDate=new JSONObject(str);
+            if(jsonDate.has("res")){
+                String res=jsonDate.getString("res");
+                mDate.setRes(res);
+            }
+            if(jsonDate.has("restr")){
+                String  restr=jsonDate.getString("restr");
+                mDate.setRestr(restr);
+            }
+            //获取info
+            //数据结构基本和CommunityListInfo一样，所以用的是CommunityListInfo
+            if(jsonDate.has("info")) {
+                MInfo mInfo = new MInfo();
+                CommunityListInfo communityListInfo = new CommunityListInfo();
+                JSONObject jsonCommunityListInfo = jsonDate.getJSONObject("info");
+                if (jsonCommunityListInfo.has("curnum")) {
+                    communityListInfo.setCurnum(jsonCommunityListInfo.getString("curnum"));
+                }
+                if (jsonCommunityListInfo.has("curpage")) {
+                    communityListInfo.setCurpage(jsonCommunityListInfo.getString("curpage"));
+                }
+                if (jsonCommunityListInfo.has("perpage")) {
+                    communityListInfo.setPerpage(jsonCommunityListInfo.getString("perpage"));
+                }
+                if (jsonCommunityListInfo.has("totalnum")) {
+                    communityListInfo.setTotalnum(jsonCommunityListInfo.getString("totalnum"));
+                }
+                if (jsonCommunityListInfo.has("totalpage")) {
+                    communityListInfo.setTotalpage(jsonCommunityListInfo.getString("totalpage"));
+                }
+                mInfo.setCommunityListInfo(communityListInfo);
+                mDate.setmInfo(mInfo);
+            }
+            /**
+             * "uid":"",		//用户ID
+             "phoneno":"",		//手机号
+             "nickname":"",		//昵称
+             "headportraid":"",	//头像链接
+             "status":"",		//用户状态（待用）
+             "gender":"",		//性别 0保密1男2女
+             "hobbytags":"",		//喜好标签：多个用|分割
+             "lastonline":"",	//最后在线时间
+             "regtime":"",		//注册时间
+             */
+            //获取list
+            if(jsonDate.has("list")) {
+                MList mList = new MList();
+                ArrayList<MemberListByCommunityList> memberListByCommunityLists = new ArrayList<>();
+                JSONArray jsonmemberListByCommunityLists = jsonDate.getJSONArray("list");
+                for (int i = 0; i < jsonmemberListByCommunityLists.length(); i++) {
+                    JSONObject jsonmemberListByCommunityList = jsonmemberListByCommunityLists.getJSONObject(i);
+                    MemberListByCommunityList memberListByCommunityList=new MemberListByCommunityList();
+                    if (jsonmemberListByCommunityList.has("uid")) {
+                        memberListByCommunityList.setUid(jsonmemberListByCommunityList.getString("uid"));
+                    }
+                    if (jsonmemberListByCommunityList.has("phoneno")) {
+                        memberListByCommunityList.setPhoneno(jsonmemberListByCommunityList.getString("phoneno"));
+                    }
+                    if (jsonmemberListByCommunityList.has("nickname")) {
+                        memberListByCommunityList.setNickname(jsonmemberListByCommunityList.getString("nickname"));
+                    }
+                    if (jsonmemberListByCommunityList.has("headportraid")) {
+                        memberListByCommunityList.setHeadportraid(jsonmemberListByCommunityList.getString("headportraid"));
+                    }
+                    if (jsonmemberListByCommunityList.has("status")) {
+                        memberListByCommunityList.setStatus(jsonmemberListByCommunityList.getString("status"));
+                    }
+                    if (jsonmemberListByCommunityList.has("gender")) {
+                        memberListByCommunityList.setGender(jsonmemberListByCommunityList.getString("gender"));
+                    }
+                    if (jsonmemberListByCommunityList.has("hobbytags")) {
+                        memberListByCommunityList.setHobbytags(jsonmemberListByCommunityList.getString("hobbytags"));
+                    }
+                    if (jsonmemberListByCommunityList.has("lastonline")) {
+                        memberListByCommunityList.setLastonline(jsonmemberListByCommunityList.getString("lastonline"));
+                    }
+                    if (jsonmemberListByCommunityList.has("regtime")) {
+                        memberListByCommunityList.setRegtime(jsonmemberListByCommunityList.getString("regtime"));
+                    }
+                    memberListByCommunityLists.add(memberListByCommunityList);
+                }
+                mList.setMemberListByCommunityLists(memberListByCommunityLists);
+                mDate.setmList(mList);
+            }
+        }catch(Exception e){
+
+        }
+
+
+
+        dates.add(mDate);
+        return dates;
+    }
+
 }

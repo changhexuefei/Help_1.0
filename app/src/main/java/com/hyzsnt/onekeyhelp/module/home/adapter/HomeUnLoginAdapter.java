@@ -101,7 +101,6 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
 
                             @Override
                             public void onSuccess(String response, int id) {
-                                Log.e("+++++++++++",response+"");
                                 ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
                                 Bundle bundle=new Bundle();
                                 bundle.putSerializable("communityInfoList",communityInfoList);
