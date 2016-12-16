@@ -16,6 +16,7 @@ import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
 import com.hyzsnt.onekeyhelp.module.release.adapter.ChoosePhotoListAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,6 +131,7 @@ public class TalkActivity extends BaseActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString("mTitle", mTitle);
                         bundle.putString("mContent", mContent);
+                        bundle.putSerializable("icon", (Serializable) photoList);
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
@@ -144,17 +146,19 @@ public class TalkActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 FunctionConfig functionConfig = new FunctionConfig.Builder()
+//                        .setEnableCamera(true)
                         .setMutiSelectMaxSize(3)
                         .build();
 
                 int childCount = horizontalListView.getChildCount();
-                if ( childCount >= 1 && childCount < 3) {
+                if ( childCount >= 1 && 2 > childCount) {
                     mAddIcon.setVisibility(View.VISIBLE);
                 }
-                if(childCount == 3){
+                if(childCount == 2){
                     mAddIcon.setVisibility(View.GONE);
                 }
                 GalleryFinal.openGalleryMuti(REQUEST_CODE_GALLERY, functionConfig, mOnHanlderResultCallback);
+                GalleryFinal.openCamera(REQUEST_CODE_CAMERA, mOnHanlderResultCallback);
             }
         });
     }
