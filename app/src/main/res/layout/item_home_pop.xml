@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_100"
+    android:layout_height="@dimen/dp_50"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:id="@+id/pop_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="很爱很爱"
+        android:textColor="#828282"
+        android:textSize="@dimen/sp_16"
+        android:background="#FFFFFF"
+        android:gravity="center"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_1"
+        android:background="#E8E8E8"></View>
+
+</LinearLayout>

@@ -5,9 +5,9 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
-        android:layout_marginRight="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_5"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
         android:id="@+id/home_login_item_homehead_rlv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -82,6 +82,14 @@
             android:text="共34条动态筛选"
             android:textSize="@dimen/sp_12"
             android:layout_marginRight="@dimen/dp_18"/>
+        <ImageView
+            android:id="@+id/home_login_itemhead_iv_dynamicselect"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:src="@mipmap/down"
+            android:layout_gravity="center"
+            android:padding="@dimen/dp_10"/>
+
     </LinearLayout>
 
 </LinearLayout>

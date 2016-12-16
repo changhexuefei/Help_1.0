@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by hyzs on 2016/12/16.
  */
 
-public class MemberListByCommunityList implements Serializable {
+public class MemberListByCommunityList implements Serializable{
     private String uid;//用户ID
     private String phoneno;//手机号
     private String nickname;//昵称

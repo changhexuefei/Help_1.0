@@ -1,5 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.stroll.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
+import com.hyzsnt.onekeyhelp.module.stroll.activity.CircleMemberList;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CiecleDetailss;
 
 import java.util.List;
@@ -72,7 +74,7 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 
 	@Override
 	protected void initData(String content) {
-		CiecleDetailss.InfoEntry info = mDetailss.getInfo();
+		final CiecleDetailss.InfoEntry info = mDetailss.getInfo();
 		//设置背景图
 		Glide.with(mActivity).load(info.getCccover()).into(mImUnjoinCircleCover);
 		mTvUnjionCircleNikename.setText(info.getNickname());
@@ -82,7 +84,15 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 		if(info.getGender().equals("1")){
              mImUnjoinCirclegender.setImageResource(R.mipmap.man);
 		}
-
+        mTvUnjionCircleNum.setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(View v) {
+		        Intent intent = new Intent(mActivity, CircleMemberList.class);
+		        intent.putExtra("ishost",false);
+		        intent.putExtra("ccid", info.getCcid());
+		     startActivity(intent);
+	        }
+        });
 	}
 
 	@Override
