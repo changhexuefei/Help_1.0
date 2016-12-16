@@ -45,19 +45,16 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/search_box_shape"
         android:gravity="center"
-        android:hint="搜索"
-
-        />
+        android:hint="搜索"/>
 
 
-    <android.support.v7.widget.RecyclerView
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/my_neighbor_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/et_search"
-        android:layout_marginTop="8dp"
-        >
-    </android.support.v7.widget.RecyclerView>
+        android:layout_marginTop="8dp">
+    </com.github.jdsjlzx.recyclerview.LRecyclerView>
 
 
 </RelativeLayout>

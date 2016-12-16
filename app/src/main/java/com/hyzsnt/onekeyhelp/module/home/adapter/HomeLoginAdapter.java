@@ -23,13 +23,11 @@ import com.hyzsnt.onekeyhelp.module.home.activity.VoiceDetailActivity;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.inner.OnRecyclerViewItemClickListener;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
-import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 import com.hyzsnt.onekeyhelp.module.index.activity.MyNeighborListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import okhttp3.Call;
 
 /**
@@ -111,7 +109,7 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
                                 @Override
                                 public void onClick(View v) {
                                     Bundle bundle=new Bundle();
-                                    bundle.putSerializable("memberListByCommunity", MyNeighborListActivity.class);
+                                    bundle.putSerializable("memberListByCommunity", memberListByCommunity);
                                     Intent i = new Intent(mContext, MyNeighborListActivity.class);
                                     i.putExtras(bundle);
                                     mContext.startActivity(i);

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.app.App;
-import com.hyzsnt.onekeyhelp.module.index.bean.MyNeighborInfo;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 
 import java.util.List;
 
@@ -22,12 +22,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MyNeighborListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    private List<MyNeighborInfo.ListBean> mNeighborInfos;
+    private List<MDate> mNeighborInfos;
 //    private static final int TYPE_ITEM = 1;
 //    private static final int TYPE_FOOTER = 2;
 
 
-    public void setNeighborInfos(List<MyNeighborInfo.ListBean> neighborInfos) {
+    public void setNeighborInfos(List<MDate> neighborInfos) {
         mNeighborInfos = neighborInfos;
     }
 
@@ -54,11 +54,11 @@ public class MyNeighborListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-            Glide.with(App.getContext()).load(mNeighborInfos.get(position).getHeadportraid())
+            Glide.with(App.getContext()).load(mNeighborInfos.get(0).getmList().getMemberListByCommunityLists().get(position).getHeadportraid())
                     .into(itemViewHolder.iv_neighbor_icon);
-            itemViewHolder.tv_neighbor_name.setText(mNeighborInfos.get(position).getNickname());
-            itemViewHolder.tv_neighbor_age.setText(mNeighborInfos.get(position).getPhoneno());
-            if (mNeighborInfos.get(position).getGender().equals("0")) {
+            itemViewHolder.tv_neighbor_name.setText(mNeighborInfos.get(0).getmList().getMemberListByCommunityLists().get(position).getNickname());
+            itemViewHolder.tv_neighbor_age.setText(mNeighborInfos.get(0).getmList().getMemberListByCommunityLists().get(position).getPhoneno());
+            if (mNeighborInfos.get(0).getmList().getMemberListByCommunityLists().get(position).getGender().equals("0")) {
                 itemViewHolder.iv_neighbor_sex_icon.setImageResource(R.mipmap.man);
             } else {
                 itemViewHolder.iv_neighbor_sex_icon.setImageResource(R.mipmap.woman);
