@@ -196,7 +196,6 @@ public class Resovle {
                 if (jsonCommunityInfoInfo.has("summary")) {
                     communityInfoInfo.setSummary(jsonCommunityInfoInfo.getString("summary"));
                 }
-
                 mInfo.setCommunityInfoInfo(communityInfoInfo);
                 mDate.setmInfo(mInfo);
             }
@@ -284,18 +283,6 @@ public class Resovle {
                 mInfo.setCommunityListInfo(communityListInfo);
                 mDate.setmInfo(mInfo);
             }
-            /**
-             * "uid":"",		//用户ID
-             "phoneno":"",		//手机号
-             "nickname":"",		//昵称
-             "headportraid":"",	//头像链接
-             "status":"",		//用户状态（待用）
-             "gender":"",		//性别 0保密1男2女
-             "hobbytags":"",		//喜好标签：多个用|分割
-             "lastonline":"",	//最后在线时间
-             "regtime":"",		//注册时间
-             */
-            //获取list
             if(jsonDate.has("list")) {
                 MList mList = new MList();
                 ArrayList<MemberListByCommunityList> memberListByCommunityLists = new ArrayList<>();
@@ -338,9 +325,6 @@ public class Resovle {
         }catch(Exception e){
 
         }
-
-
-
         dates.add(mDate);
         return dates;
     }

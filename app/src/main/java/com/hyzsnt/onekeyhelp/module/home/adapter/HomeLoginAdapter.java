@@ -45,6 +45,7 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
     public HomeLoginAdapter(Context mContext) {
         this.mContext = mContext;
         activity = (MainActivity) mContext;
+
     }
 
     public ArrayList<MDate> getDates() {
@@ -99,19 +100,18 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
 
                     @Override
                     public void onSuccess(String response, int id) {
-                        Log.e("+++++++++++", response + "");
+
                         final ArrayList<MDate> memberListByCommunity = Resovle.getMemberListByCommunity(response);
                         Log.e("+++++Login++++++", memberListByCommunity + "");
                         if(memberListByCommunity.size()>0){
                             int sum=Integer.valueOf(memberListByCommunity.get(0).getmInfo().getCommunityListInfo().getTotalnum());
                             ((HomeLoginViewHolder0) holder).homeLoginItemHeadTvNeighbor.setText(sum+"人");
-
                             //进入邻居详情页
                             ((HomeLoginViewHolder0) holder).homeLoginItemHeadIvNeighbor.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     Bundle bundle=new Bundle();
-                                    bundle.putSerializable("memberListByCommunity", MyNeighborListActivity.class);
+                                    bundle.putSerializable("memberListByCommunity",memberListByCommunity);
                                     Intent i = new Intent(mContext, MyNeighborListActivity.class);
                                     i.putExtras(bundle);
                                     mContext.startActivity(i);
@@ -152,7 +152,12 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 20;
+        if(dates.size()>0){
+            if(dates.get(0).getmList().getCommunityListLists().size()>0){
+                return dates.get(0).getmList().getCommunityListLists().size();
+            }
+        }
+        return 10;
     }
 
     public int getItemViewType(int position) {

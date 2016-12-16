@@ -24,6 +24,7 @@ import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,12 +84,10 @@ public class HomeUnLoginFragment extends BaseFragment {
         HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYLIST, params, new ResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                Log.e("+++++++++++", "失败" + call + "----" + e + "@@@@@" + id);
             }
 
             @Override
             public void onSuccess(String response, int id) {
-                Log.e("+++++++++++", response);
                 str=response;
                 ArrayList<MDate> dates= Resovle.getCommunityList(response);
                 mHomeAdapter.setDates(dates);
@@ -97,10 +96,9 @@ public class HomeUnLoginFragment extends BaseFragment {
 
             @Override
             public void inProgress(float progress, long total, int id) {
-                Log.e("+++++++++++", progress + "过程中" + total + "很爱很爱" + id);
             }
         });
-        Log.e("+++++++++++", str);
+
     }
 
     @Override
