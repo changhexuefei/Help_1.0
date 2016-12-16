@@ -84,7 +84,10 @@
 		<!--圈子详情-->
 		<activity android:name=".module.stroll.activity.CircleDetailsActivity"/>
 		<!--发布说说-->
-		<activity android:name=".module.release.activity.TalkActivity"/>
+		<activity android:name=".module.release.activity.TalkActivity">
+
+
+		</activity>
 		<!--发布综合信息-->
 		<activity android:name=".module.release.activity.GeneralMessageActivity"/>
 		<activity android:name=".module.home.activity.StateActivity"/>
