@@ -16,7 +16,7 @@ public class AudioConfig {
 	public final static int AUDIO_INPUT = MediaRecorder.AudioSource.MIC;
 
 	//录音输出文件
-	private static String AUDIO_AAC_FILENAME = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()) + ".aac";
+	private static String AUDIO_AAC_FILENAME = new SimpleDateFormat("yyyy-MM-d HH:mm:ss").format(new Date()) + ".aac";
 
 	/**
 	 * 判断是否有外部存储设备sdcard
