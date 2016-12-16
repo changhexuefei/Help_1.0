@@ -84,10 +84,7 @@
 		<!--圈子详情-->
 		<activity android:name=".module.stroll.activity.CircleDetailsActivity"/>
 		<!--发布说说-->
-		<activity android:name=".module.release.activity.TalkActivity">
-
-
-		</activity>
+		<activity android:name=".module.release.activity.TalkActivity"/>
 		<!--发布综合信息-->
 		<activity android:name=".module.release.activity.GeneralMessageActivity"/>
 		<activity android:name=".module.home.activity.StateActivity"/>
@@ -97,6 +94,9 @@
 			android:name="com.baidu.location.f"
 			android:enabled="true"
 			android:process=":remote"/>
+
+		<activity android:name=".module.stroll.activity.CircleMemberList">
+		</activity>
 	</application>
 
 

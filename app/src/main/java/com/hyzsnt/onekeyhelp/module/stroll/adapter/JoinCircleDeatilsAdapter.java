@@ -1,6 +1,7 @@
 package com.hyzsnt.onekeyhelp.module.stroll.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.module.stroll.activity.CircleMemberList;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleDetails;
 
 import java.util.ArrayList;
@@ -49,6 +51,21 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
 
 			Glide.with(mContext).load(detals.getInfo().getCccover()).into(((DetailsViewHolerOne) holder).cccover);
 			((DetailsViewHolerOne) holder).topicnum.setText(detals.getInfo().getCurnum() + "人");
+			((DetailsViewHolerOne) holder).topicnum.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+
+						//判断是否是管理人
+						boolean ishost = false;
+						if (detals.getInfo().getUid().equals("23")&&Integer.parseInt(detals.getInfo().getApplynum())>0) {
+							ishost = true;
+						}
+					Intent intent = new Intent(mContext, CircleMemberList.class);
+					intent.putExtra("ishost",ishost);
+					intent.putExtra("ccid", detals.getInfo().getCcid());
+					mContext.startActivity(intent);
+				}
+			});
 
 		}
 		if (holder instanceof DetailsViewHolertwo) {
@@ -120,4 +137,6 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
 	public static interface OnRecyclerViewItemClickListener {
 		void onItemClick(View view, String data);
 	}
+
+
 }
