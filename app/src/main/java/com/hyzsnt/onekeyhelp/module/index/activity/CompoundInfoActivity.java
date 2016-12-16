@@ -1,5 +1,7 @@
 package com.hyzsnt.onekeyhelp.module.index.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -7,6 +9,11 @@ import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
+import com.hyzsnt.onekeyhelp.module.home.bean.CommunityInfoInfo;
+import com.hyzsnt.onekeyhelp.module.home.bean.CommunityInfoList;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -52,30 +59,50 @@ public class CompoundInfoActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        mCompoundName.setText("兴隆小区");
-        mCompoundInfo.setText("兴隆小区位于北京，为高层建筑住宅，占地面积达7593.93平方米。");
-        mCompoundIcon.setImageResource(R.drawable.img);
-        mCompoundPeopleNum.setText("1000人");
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            ArrayList<MDate> mDate = (ArrayList<MDate>) bundle.get("communityInfoList");
 
-        mSubdistrictName.setText("好哦哦你扭扭捏捏");
-        mSubdistrictAddress.setText("北京市");
-        mSubdistrictPhone.setText("12345678");
+            //小区的名字，简介，小区人数
+            CommunityInfoInfo Compound = mDate.get(0).getmInfo().getCommunityInfoInfo();
+            mCompoundName.setText(Compound.getCmname());
+            mCompoundInfo.setText(Compound.getSummary());
+            mCompoundIcon.setImageResource(R.drawable.img);
+            mCompoundPeopleNum.setText(Compound.getCurnum() + " 人");
 
-        mEstateAddress.setText("北京市");
+            if (mDate.get(0).getmList().getCommunityInfoLists().size() == 3) {
 
-        mEstateInfo.setText("高层建筑住宅，占地面积达7593.93平方米。高层建筑住宅，占地面积达7593.93平方米。" +
-                "高层建筑住宅，占地面积达7593.93平方米。高层建筑住宅，占地面积达7593.93平方米。高层建筑住宅，" +
-                "占地面积达7593.93平方米。");
-        mEstateName.setText("神舟物业");
-        mEstatePhone.setText("12345678");
+                //街道办信息
+                CommunityInfoList mSubdistrict = mDate.get(0).getmList().getCommunityInfoLists().get(0);
+                mSubdistrictName.setText(mSubdistrict.getName());
+                mSubdistrictAddress.setText(mSubdistrict.getAddress());
+                mSubdistrictPhone.setText(mSubdistrict.getTelno());
 
-        mOtherAddress.setText("qwqwqwqw");
-        mOtherName.setText("gagagaga");
-        mOtherPhone.setText("12345678");
-        mOtherInfo.setText("高层建筑住宅，占地面积达7593.93平方米。" +
-                "高层建筑住宅，占地面积达7593.93平方米。" +
-                "高层建筑住宅，占地面积达7593.93平方米。" +
-                "高层建筑住宅，占地面积达7593.93平方米。");
+                //物业公司信息
+                CommunityInfoList mEstate = mDate.get(0).getmList().getCommunityInfoLists().get(1);
+                mEstateAddress.setText(mEstate.getAddress());
+                mEstateInfo.setText(mEstate.getSummary());
+                mEstateName.setText(mEstate.getName());
+                mEstatePhone.setText(mEstate.getTelno());
+
+                //其他机构信息
+                CommunityInfoList mOther = mDate.get(0).getmList().getCommunityInfoLists().get(2);
+                mOtherAddress.setText(mOther.getAddress());
+                mOtherName.setText(mOther.getName());
+                mOtherPhone.setText(mOther.getTelno());
+                mOtherInfo.setText(mOther.getSummary());
+            } else {
+                //街道办信息
+                CommunityInfoList mSubdistrict = mDate.get(0).getmList().getCommunityInfoLists().get(0);
+                mSubdistrictName.setText(mSubdistrict.getName());
+                mSubdistrictAddress.setText(mSubdistrict.getAddress());
+                mSubdistrictPhone.setText(mSubdistrict.getTelno());
+
+            }
+        }
+
+
         mBtnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

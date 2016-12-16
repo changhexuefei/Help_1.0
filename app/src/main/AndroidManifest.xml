@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.hyzsnt.onekeyhelp">
-
-	<!-- 录音权限 -->
+	<!-- 录音权限-->
 	<uses-permission android:name="android.permission.RECORD_AUDIO"/>
-	<!-- 联网权限 -->
+	<!-- 联网权限-->
 	<uses-permission android:name="android.permission.INTERNET"/>
-	<!-- 打电话权限 -->
+	<!-- 打电话权限-->
 	<uses-permission android:name="android.permission.CALL_PHONE"/>
-	<!-- 网络定位 -->
+	<!-- 网络定位-->
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-	<!-- 这个权限用于访问GPS定位 -->
+	<!-- 这个权限用于访问GPS定位-->
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-	<!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+	<!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-	<!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+	<!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
 	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-	<!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+	<!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<!-- 用于读取手机当前的状态 -->
+	<!-- 用于读取手机当前的状态-->
 	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-	<!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+	<!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<!-- SD卡读取权限，用户写入离线定位数据 -->
+	<!-- SD卡读取权限，用户写入离线定位数据-->
 	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 	<uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -36,61 +35,61 @@
 		android:label="@string/app_name"
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
-
-		<!-- 百度地图相关配置 -->
+		<!--百度地图相关配置-->
 		<meta-data
 			android:name="com.baidu.lbsapi.API_KEY"
 			android:value="8YGxkZtWGuYqmm9Tsyw86lulSBCSIyiQ"/>
-		<!-- 主页面 -->
+		<!--主页面-->
 		<activity android:name=".MainActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
-
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
+
 		</activity>
-		<!-- 物品置换 -->
+		<!--物品置换-->
 		<activity android:name=".module.index.activity.GoodsReplaceActivity"/>
-		<!-- 一键求助页面 -->
+		<!-- 一键求助页面-->
 		<activity android:name=".module.help.activity.HelpActivity"/>
-		<!-- 搜索圈子 -->
+		<!--搜索圈子-->
 		<activity android:name=".module.stroll.activity.SeekCircleActivity"/>
-		<!-- 创建圈子 -->
-		<activity
-			android:name=".module.stroll.activity.CreateCircleActivity"
-			android:windowSoftInputMode="adjustPan|stateHidden"/>
+		<!--创建圈子-->
+		<activity android:name=".module.stroll.activity.CreateCircleActivity"
+		          android:windowSoftInputMode="adjustPan|stateHidden"/>
 
-		<!-- 我的邻居列表 -->
+		<!--我的邻居列表-->
 		<activity android:name=".module.index.activity.MyNeighborListActivity">
+
 		</activity>
 
-		<!-- 搜索小区 -->
+		<!--搜索小区-->
 		<activity android:name=".module.index.activity.SeekeStateActivity">
+
 		</activity>
-		<!-- 欢迎页 -->
+		<!--欢迎页-->
 		<activity android:name=".activity.SplashActivity"/>
-		<!-- 引导页 -->
+		<!--引导页-->
 		<activity android:name=".activity.GuideActivity">
 		</activity>
-		<!-- 登录页面 -->
+		<!--登录页面-->
 		<activity android:name=".module.login.activity.LoginActivity"/>
-		<!-- 重置密码页 -->
+		<!--重置密码页-->
 		<activity android:name=".module.login.activity.ResetPasswordActivity"/>
-		<!-- 注册页面 -->
+		<!--注册页面-->
 		<activity android:name=".module.login.activity.RegisterActivity"/>
-		<!-- 用户协议页 -->
+		<!--用户协议页-->
 		<activity android:name=".module.login.activity.AgreementActivity"/>
-		<!-- 小区简介 -->
+		<!--小区简介-->
 		<activity android:name=".module.index.activity.CompoundInfoActivity"/>
-		<!-- 圈子详情 -->
+		<!--圈子详情-->
 		<activity android:name=".module.stroll.activity.CircleDetailsActivity"/>
-		<!-- 发布说说 -->
+		<!--发布说说-->
 		<activity android:name=".module.release.activity.TalkActivity"/>
-		<!-- 发布综合信息 -->
+		<!--发布综合信息-->
 		<activity android:name=".module.release.activity.GeneralMessageActivity"/>
 		<activity android:name=".module.home.activity.StateActivity"/>
 		<activity android:name=".module.home.activity.VoiceDetailActivity"/>
-		<!-- 百度地图定位服务 -->
+		<!-- 百度地图定位服务-->
 		<service
 			android:name="com.baidu.location.f"
 			android:enabled="true"
@@ -99,5 +98,6 @@
 		<activity android:name=".module.stroll.activity.CircleMemberList">
 		</activity>
 	</application>
+
 
 </manifest>
