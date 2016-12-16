@@ -46,30 +46,6 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
     public HomeUnLoginAdapter(Context mContext) {
         this.mContext = mContext;
         activity = (MainActivity) mContext;
-
-        Log.e("LISTB++++++",  "失败1");
-        //我的邻居
-        List params = new ArrayList<String>();
-        params.add("2061");//2061  2803
-        params.add("4");
-        params.add("1");
-        //params.add("15551675396");//15551675396
-        HttpUtils.post(Api.COMMUNITY, Api.Community.GETDYNAMICLISTBYCOMMUNITY,params, new ResponseHandler() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                Log.e("LISTB++++++",  "失败");
-            }
-
-            @Override
-            public void onSuccess(String response, int id) {
-                Log.e("LISTB++++++", response + "");
-            }
-
-            @Override
-            public void inProgress(float progress, long total, int id) {
-                Log.e("LISTB++++++",  "失败");
-            }
-        });
     }
 
     public ArrayList<MDate> getDates() {

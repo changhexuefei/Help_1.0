@@ -5,6 +5,8 @@ import com.hyzsnt.onekeyhelp.module.home.bean.CommunityInfoList;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListInfo;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListList;
 import com.hyzsnt.onekeyhelp.module.home.bean.Coordinateres;
+import com.hyzsnt.onekeyhelp.module.home.bean.DynamicListByCommunityList;
+import com.hyzsnt.onekeyhelp.module.home.bean.HomeComment;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.bean.MInfo;
 import com.hyzsnt.onekeyhelp.module.home.bean.MList;
@@ -320,6 +322,168 @@ public class Resovle {
                     memberListByCommunityLists.add(memberListByCommunityList);
                 }
                 mList.setMemberListByCommunityLists(memberListByCommunityLists);
+                mDate.setmList(mList);
+            }
+        }catch(Exception e){
+
+        }
+        dates.add(mDate);
+        return dates;
+    }
+    public static ArrayList<MDate> getDynamicListByCommunity(String str) {
+        ArrayList<MDate> dates = new ArrayList<>();
+        MDate mDate = new MDate();
+        try {
+            JSONObject jsonDate=new JSONObject(str);
+            if(jsonDate.has("res")){
+                String res=jsonDate.getString("res");
+                mDate.setRes(res);
+            }
+            if(jsonDate.has("restr")){
+                String  restr=jsonDate.getString("restr");
+                mDate.setRestr(restr);
+            }
+            //获取info
+            //数据结构基本和CommunityListInfo一样，所以用的是CommunityListInfo
+            if(jsonDate.has("info")) {
+                MInfo mInfo = new MInfo();
+                CommunityListInfo communityListInfo = new CommunityListInfo();
+                JSONObject jsonCommunityListInfo = jsonDate.getJSONObject("info");
+                if (jsonCommunityListInfo.has("curnum")) {
+                    communityListInfo.setCurnum(jsonCommunityListInfo.getString("curnum"));
+                }
+                if (jsonCommunityListInfo.has("curpage")) {
+                    communityListInfo.setCurpage(jsonCommunityListInfo.getString("curpage"));
+                }
+                if (jsonCommunityListInfo.has("perpage")) {
+                    communityListInfo.setPerpage(jsonCommunityListInfo.getString("perpage"));
+                }
+                if (jsonCommunityListInfo.has("totalnum")) {
+                    communityListInfo.setTotalnum(jsonCommunityListInfo.getString("totalnum"));
+                }
+                if (jsonCommunityListInfo.has("totalpage")) {
+                    communityListInfo.setTotalpage(jsonCommunityListInfo.getString("totalpage"));
+                }
+                mInfo.setCommunityListInfo(communityListInfo);
+                mDate.setmInfo(mInfo);
+            }
+            //获取list
+            if(jsonDate.has("list")) {
+                MList mList = new MList();
+                ArrayList<DynamicListByCommunityList> dynamicListByCommunityLists = new ArrayList<>();
+                JSONArray jsondynamicListByCommunityLists = jsonDate.getJSONArray("list");
+                for (int i = 0; i < jsondynamicListByCommunityLists.length(); i++) {
+                    JSONObject jsondynamicListByCommunityList = jsondynamicListByCommunityLists.getJSONObject(i);
+                    DynamicListByCommunityList dynamicListByCommunityList=new DynamicListByCommunityList();
+                    if (jsondynamicListByCommunityList.has("mid")) {
+                        dynamicListByCommunityList.setMid(jsondynamicListByCommunityList.getString("mid"));
+                    }
+                    if (jsondynamicListByCommunityList.has("uid")) {
+                        dynamicListByCommunityList.setUid(jsondynamicListByCommunityList.getString("uid"));
+                    }
+                    if (jsondynamicListByCommunityList.has("nickname")) {
+                        dynamicListByCommunityList.setNickname(jsondynamicListByCommunityList.getString("nickname"));
+                    }
+                    if (jsondynamicListByCommunityList.has("headportraid")) {
+                        dynamicListByCommunityList.setHeadportraid(jsondynamicListByCommunityList.getString("headportraid"));
+                    }
+                    if (jsondynamicListByCommunityList.has("cmid")) {
+                        dynamicListByCommunityList.setCmid(jsondynamicListByCommunityList.getString("cmid"));
+                    }
+                    if (jsondynamicListByCommunityList.has("cmname")) {
+                        dynamicListByCommunityList.setCmname(jsondynamicListByCommunityList.getString("cmname"));
+                    }
+                    if (jsondynamicListByCommunityList.has("mtype")) {
+                        dynamicListByCommunityList.setMtype(jsondynamicListByCommunityList.getString("mtype"));
+                    }
+                    if (jsondynamicListByCommunityList.has("objectid")) {
+                        dynamicListByCommunityList.setObjectid(jsondynamicListByCommunityList.getString("objectid"));
+                    }
+                    if (jsondynamicListByCommunityList.has("posttime")) {
+                        dynamicListByCommunityList.setPosttime(jsondynamicListByCommunityList.getString("posttime"));
+                    }
+                    /**
+                     "":"",		//发布时发布人纬度
+                     "":"",		//发布时发布人经度
+                     "":"",		//发布时发布人距离小区距离
+                     "":""		//动态状态
+                     "":"",		//点赞数
+                     "":"",		//评论数
+                     "":"",		//内容，如为语音，则为音频地址链接
+                     "":"",	//内容类别 0文字 1文字+图片 2语音
+                     "":		//配图列表
+                     */
+                    if (jsondynamicListByCommunityList.has("lat")) {
+                        dynamicListByCommunityList.setLat(jsondynamicListByCommunityList.getString("lat"));
+                    }
+                    if (jsondynamicListByCommunityList.has("lng")) {
+                        dynamicListByCommunityList.setLng(jsondynamicListByCommunityList.getString("lng"));
+                    }
+                    if (jsondynamicListByCommunityList.has("distance")) {
+                        dynamicListByCommunityList.setDistance(jsondynamicListByCommunityList.getString("distance"));
+                    }
+                    if (jsondynamicListByCommunityList.has("status")) {
+                        dynamicListByCommunityList.setStatus(jsondynamicListByCommunityList.getString("status"));
+                    }
+                    if (jsondynamicListByCommunityList.has("goodnum")) {
+                        dynamicListByCommunityList.setGoodnum(jsondynamicListByCommunityList.getString("goodnum"));
+                    }
+                    if (jsondynamicListByCommunityList.has("replynum")) {
+                        dynamicListByCommunityList.setReplynum(jsondynamicListByCommunityList.getString("replynum"));
+                    }
+                    if (jsondynamicListByCommunityList.has("content")) {
+                        dynamicListByCommunityList.setContent(jsondynamicListByCommunityList.getString("content"));
+                    }
+                    if (jsondynamicListByCommunityList.has("contenttype")) {
+                        dynamicListByCommunityList.setContenttype(jsondynamicListByCommunityList.getString("contenttype"));
+                    }
+                    if (jsondynamicListByCommunityList.has("imgs")) {
+                        ArrayList<String > imags=new ArrayList<>();
+                        JSONArray jsondynamicListByCommunityListJSONArray = jsondynamicListByCommunityList.getJSONArray("imgs");
+                        for (int j = 0; j <jsondynamicListByCommunityListJSONArray.length() ; j++) {
+                            imags.add(jsondynamicListByCommunityListJSONArray.getString(j));
+                        }
+                        dynamicListByCommunityList.setImgs(imags);
+                    }
+
+                    if (jsondynamicListByCommunityList.has("comments")) {
+                        ArrayList<HomeComment> homeComments=new ArrayList<>();
+                        JSONArray jsonHomeComments = jsondynamicListByCommunityList.getJSONArray("comments");
+                        for (int j = 0; j < jsonHomeComments.length(); j++) {
+                            HomeComment homeComment=new HomeComment();
+                            JSONObject jsonHomeComment = jsonHomeComments.getJSONObject(j);
+                            if(jsonHomeComment.has("suid")){
+                                homeComment.setSuid(jsonHomeComment.getString("suid"));
+                            }
+                            if(jsonHomeComment.has("sunickname")){
+                                homeComment.setSunickname(jsonHomeComment.getString("sunickname"));
+                            }
+                            if(jsonHomeComment.has("sheadportraid")){
+                                homeComment.setSheadportraid(jsonHomeComment.getString("sheadportraid"));
+                            }
+                            if(jsonHomeComment.has("ruid")){
+                                homeComment.setRuid(jsonHomeComment.getString("ruid"));
+                            }
+                            if(jsonHomeComment.has("runickname")){
+                                homeComment.setRunickname(jsonHomeComment.getString("runickname"));
+                            }
+                            if(jsonHomeComment.has("rheadportraid")){
+                                homeComment.setRheadportraid(jsonHomeComment.getString("rheadportraid"));
+                            }
+                            if(jsonHomeComment.has("content")){
+                                homeComment.setContent(jsonHomeComment.getString("content"));
+                            }
+                            if(jsonHomeComment.has("posttime")){
+                                homeComment.setPosttime(jsonHomeComment.getString("posttime"));
+                            }
+                            homeComments.add(homeComment);
+                        }
+
+                        dynamicListByCommunityList.setHomeComments(homeComments);
+                    }
+                    dynamicListByCommunityLists.add(dynamicListByCommunityList);
+                }
+                mList.setDynamicListByCommunityLists(dynamicListByCommunityLists);
                 mDate.setmList(mList);
             }
         }catch(Exception e){

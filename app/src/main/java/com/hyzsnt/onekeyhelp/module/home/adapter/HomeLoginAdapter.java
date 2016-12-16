@@ -153,11 +153,11 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         if(dates.size()>0){
-            if(dates.get(0).getmList().getCommunityListLists().size()>0){
-                return dates.get(0).getmList().getCommunityListLists().size();
+            if(dates.get(0).getmList().getDynamicListByCommunityLists().size()>0){
+                return dates.get(0).getmList().getDynamicListByCommunityLists().size();
             }
         }
-        return 10;
+        return 1;
     }
 
     public int getItemViewType(int position) {
