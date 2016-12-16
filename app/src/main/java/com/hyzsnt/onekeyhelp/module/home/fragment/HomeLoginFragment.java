@@ -57,8 +57,6 @@ public class HomeLoginFragment extends BaseFragment {
             }
         });
 
-
-
     }
 
     @Override
