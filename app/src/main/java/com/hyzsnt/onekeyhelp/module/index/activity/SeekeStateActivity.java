@@ -65,6 +65,7 @@ public class SeekeStateActivity extends BaseActivity {
     private CommunityList mList = null;
     private CommunityListAdapter mAdapter;
     List<String> area;
+    List<String> province;
 
     //获取行政区信息的接口 a
     private static final String REGIONAL = "getRegional";
@@ -102,6 +103,7 @@ public class SeekeStateActivity extends BaseActivity {
         lon = Double.toString(App.getLocation().getLongitude());
         Log.d("lon", lon);
         area = new ArrayList<>();
+        province = new ArrayList<>();
 //        parms.add("0");
 //        parms.add("4");
 //        parms.add(lat);
@@ -182,12 +184,7 @@ public class SeekeStateActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-//                String areaName = s.toString();
-//                if ("".equals(areaName)) {
-//                    Toast.makeText(SeekeStateActivity.this, "请输入您要搜索的小区", Toast.LENGTH_SHORT).show();
-//                } else {
                 search();
-//                }
             }
         });
 
@@ -208,6 +205,30 @@ public class SeekeStateActivity extends BaseActivity {
                     public void onSuccess(String response, int id) {
                         Toast.makeText(SeekeStateActivity.this, "成功了", Toast.LENGTH_SHORT).show();
                         Log.d("0000000000",response);
+
+                        if (JsonUtils.isSuccess(response)) {
+                            try {
+                                JSONObject object = new JSONObject(response);
+                                JSONObject list = object.getJSONObject("list");
+
+                                Log.d("list", "" + list);
+                                Iterator<String> iterator = list.keys();
+                                while (iterator.hasNext()) {
+                                    String key = iterator.next();
+                                    Log.d("key+++++++", key);
+                                    String value = list.getString(key);
+                                    Log.d("value+++++", value);
+                                    province.add(value);
+                                    Log.d("============", "" + province.size());
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            String err = JsonUtils.getErrorMessage(response);
+                            LogUtils.e(err);
+                        }
                     }
                 });
             }
