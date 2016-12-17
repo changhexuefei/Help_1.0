@@ -51,10 +51,10 @@
             android:layout_marginRight="@dimen/dp_14"
             android:src="@drawable/home_image_search"/>
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:layout_below="@id/home_login_ll_title"
-        android:id="@+id/home_login_rv"
+        android:id="@+id/home_login_lrv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"></com.github.jdsjlzx.recyclerview.LRecyclerView>
 
 </RelativeLayout>

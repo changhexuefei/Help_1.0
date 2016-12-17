@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.http.Api;
@@ -24,7 +25,6 @@ import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
-import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +45,12 @@ public class HomeUnLoginFragment extends BaseFragment {
     ImageView homeimageSearch;
     @BindView(R.id.home_ll_title)
     LinearLayout homeLlTitle;
-    @BindView(R.id.home_lrv)
-    RecyclerView homeLrv;
     @BindView(R.id.home_image_location)
     ImageView homeImageLocation;
-    private String str="";
+    @BindView(R.id.home_lrv)
+    LRecyclerView homeLrv;
+    private String str = "";
+
     public HomeUnLoginFragment() {
         // Required empty public constructor
     }
@@ -63,12 +64,10 @@ public class HomeUnLoginFragment extends BaseFragment {
     protected void initData(String content) {
 
         final HomeUnLoginAdapter mHomeAdapter = new HomeUnLoginAdapter(getActivity());
-        //LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
-        //homeLrv.setAdapter(adapter);
         homeLrv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        homeLrv.setAdapter(mHomeAdapter);
+        final LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
         homeLrv.setItemAnimator(new DefaultItemAnimator());
-
+        homeLrv.setAdapter(adapter);
 
         List params = new ArrayList<String>();
         //params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
@@ -88,10 +87,11 @@ public class HomeUnLoginFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String response, int id) {
-                str=response;
-                ArrayList<MDate> dates= Resovle.getCommunityList(response);
+                str = response;
+                ArrayList<MDate> dates = Resovle.getCommunityList(response);
                 mHomeAdapter.setDates(dates);
                 mHomeAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -145,6 +145,24 @@ public class HomeUnLoginFragment extends BaseFragment {
 
     @OnClick(R.id.home_image_location)
     public void onClick() {
+        List params = new ArrayList<String>();
+        //params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
+        params.add("7");
+        params.add("2803");
+        HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY, params, new ResponseHandler() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+            }
 
+            @Override
+            public void onSuccess(String response, int id) {
+                str = response;
+                Log.e("8888888888888888888",response+"");
+            }
+
+            @Override
+            public void inProgress(float progress, long total, int id) {
+            }
+        });
     }
 }

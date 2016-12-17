@@ -132,6 +132,8 @@ public class Api {
 		public static final String SWITCHCOMMUNITY = "switchCommunity";
 		//获取用户信息
 		public static final String GETUSERINFO = "getUserInfo";
+		//joinCommunity
+		public static final String JOINCOMMUNITY = "joinCommunity";
 
 	}
 

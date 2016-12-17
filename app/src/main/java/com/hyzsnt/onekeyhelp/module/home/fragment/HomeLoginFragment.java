@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.http.Api;
@@ -43,10 +45,10 @@ import okhttp3.Call;
 public class HomeLoginFragment extends BaseFragment {
 
 
-    @BindView(R.id.home_login_rv)
-    RecyclerView homeLoginRv;
     @BindView(R.id.home_login_iv_swich)
     ImageView homeLoginIvSwich;
+    @BindView(R.id.home_login_lrv)
+    LRecyclerView homeLoginLrv;
 
     public HomeLoginFragment() {
         // Required empty public constructor
@@ -60,9 +62,10 @@ public class HomeLoginFragment extends BaseFragment {
     @Override
     protected void initData(String content) {
         final HomeLoginAdapter mHomeLoginAdapter = new HomeLoginAdapter(getActivity());
-        homeLoginRv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        homeLoginRv.setAdapter(mHomeLoginAdapter);
-        homeLoginRv.setItemAnimator(new DefaultItemAnimator());
+        homeLoginLrv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        final LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeLoginAdapter);
+        homeLoginLrv.setAdapter(adapter);
+        homeLoginLrv.setItemAnimator(new DefaultItemAnimator());
 
         mHomeLoginAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
             @Override
@@ -88,7 +91,7 @@ public class HomeLoginFragment extends BaseFragment {
                 ArrayList<MDate> dynamicListByCommunity = Resovle.getDynamicListByCommunity(response);
                 mHomeLoginAdapter.setDates(dynamicListByCommunity);
                 mHomeLoginAdapter.notifyDataSetChanged();
-                Log.e("LISTB++++++", dynamicListByCommunity + "");
+                //adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -131,17 +134,18 @@ public class HomeLoginFragment extends BaseFragment {
             public void onError(Call call, Exception e, int id) {
 
             }
+
             @Override
             public void onSuccess(String response, int id) {
-                Log.d("",response+"");
+                Log.d("", response + "");
                 View popupView = View.inflate(getActivity(), R.layout.item_item_home_login_head_pop, null);
-                PopupWindow mPopupWindow = new PopupWindow(popupView  , LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
                 mPopupWindow.setTouchable(true);
                 mPopupWindow.setOutsideTouchable(true);
                 mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
                 mPopupWindow.showAsDropDown(homeLoginIvSwich);
-                RecyclerView pop_rv= (RecyclerView) popupView.findViewById(R.id.item_item_head_pop_rlv);
-                final LoginCommunityAdapter loginCommunityAdapter=new LoginCommunityAdapter(getActivity());
+                RecyclerView pop_rv = (RecyclerView) popupView.findViewById(R.id.item_item_head_pop_rlv);
+                final LoginCommunityAdapter loginCommunityAdapter = new LoginCommunityAdapter(getActivity());
                 pop_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
                 pop_rv.setAdapter(loginCommunityAdapter);
                 pop_rv.setItemAnimator(new DefaultItemAnimator());
