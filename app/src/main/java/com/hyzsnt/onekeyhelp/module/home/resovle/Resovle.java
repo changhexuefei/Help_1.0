@@ -1,12 +1,16 @@
 package com.hyzsnt.onekeyhelp.module.home.resovle;
+import android.util.Log;
+
 import com.hyzsnt.onekeyhelp.module.home.bean.Circle;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityInfoInfo;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityInfoList;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListInfo;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListList;
 import com.hyzsnt.onekeyhelp.module.home.bean.Coordinateres;
+import com.hyzsnt.onekeyhelp.module.home.bean.DynamicKinds;
 import com.hyzsnt.onekeyhelp.module.home.bean.DynamicListByCommunityList;
 import com.hyzsnt.onekeyhelp.module.home.bean.HomeComment;
+import com.hyzsnt.onekeyhelp.module.home.bean.LoginCommunity;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.bean.MInfo;
 import com.hyzsnt.onekeyhelp.module.home.bean.MList;
@@ -16,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by hyzs on 2016/12/14.
@@ -402,17 +407,6 @@ public class Resovle {
                     if (jsondynamicListByCommunityList.has("posttime")) {
                         dynamicListByCommunityList.setPosttime(jsondynamicListByCommunityList.getString("posttime"));
                     }
-                    /**
-                     "":"",		//发布时发布人纬度
-                     "":"",		//发布时发布人经度
-                     "":"",		//发布时发布人距离小区距离
-                     "":""		//动态状态
-                     "":"",		//点赞数
-                     "":"",		//评论数
-                     "":"",		//内容，如为语音，则为音频地址链接
-                     "":"",	//内容类别 0文字 1文字+图片 2语音
-                     "":		//配图列表
-                     */
                     if (jsondynamicListByCommunityList.has("lat")) {
                         dynamicListByCommunityList.setLat(jsondynamicListByCommunityList.getString("lat"));
                     }
@@ -492,5 +486,91 @@ public class Resovle {
         dates.add(mDate);
         return dates;
     }
+    public static ArrayList<MDate> getDynamicKinds(String str) {
+        ArrayList<MDate> dates = new ArrayList<>();
+        MDate mDate = new MDate();
 
+        try {
+            JSONObject jsonDate=new JSONObject(str);
+            if(jsonDate.has("res")){
+                String res=jsonDate.getString("res");
+                mDate.setRes(res);
+            }
+            if(jsonDate.has("restr")){
+                String  restr=jsonDate.getString("restr");
+                mDate.setRestr(restr);
+            }
+            if(jsonDate.has("list")) {
+                MList mList = new MList();
+                ArrayList<DynamicKinds> dynamicKindses=new ArrayList<>();
+                JSONObject jsonDynamicKindses = jsonDate.getJSONObject("list");
+                Iterator<String> iterator=jsonDynamicKindses.keys();
+                while (iterator.hasNext()){
+                    DynamicKinds dynamicKind=new DynamicKinds();
+                    String jsonId = iterator.next();
+                    dynamicKind.setId(jsonId);
+                    String jsonKind = (String) jsonDynamicKindses.get(jsonId);
+                    dynamicKind.setKind(jsonKind);
+                    dynamicKindses.add(dynamicKind);
+                }
+                mList.setDynamicKindses(dynamicKindses);
+                mDate.setmList(mList);
+            }
+        }catch (Exception e){
+
+        }
+        dates.add(mDate);
+        return dates;
+    }
+    public static ArrayList<MDate> getUserInfo(String str) {
+        ArrayList<MDate> dates = new ArrayList<>();
+        MDate mDate = new MDate();
+        try {
+            JSONObject jsonDate=new JSONObject(str);
+            if(jsonDate.has("res")){
+                String res=jsonDate.getString("res");
+                mDate.setRes(res);
+            }
+            if(jsonDate.has("restr")){
+                String  restr=jsonDate.getString("restr");
+                mDate.setRestr(restr);
+            }
+            if(jsonDate.has("list")) {
+                MList mList = new MList();
+                ArrayList<LoginCommunity> loginCommunities=new ArrayList<>();
+                JSONObject jsonLoginCommunityList = jsonDate.getJSONObject("list");
+                if(jsonLoginCommunityList.has("communities")){
+                    JSONArray jsonCommunities = jsonLoginCommunityList.getJSONArray("communities");
+                    for (int i = 0; i < jsonCommunities.length(); i++) {
+                        JSONObject jsonoginCommunity= jsonCommunities.getJSONObject(i);
+                        LoginCommunity loginCommunity=new LoginCommunity();
+                        if(jsonoginCommunity.has("cmid")) {
+                            loginCommunity.setCmid(jsonoginCommunity.getString("cmid"));
+                        }
+                        if(jsonoginCommunity.has("cmname")) {
+                            loginCommunity.setCmname(jsonoginCommunity.getString("cmname"));
+                        }
+                        if(jsonoginCommunity.has("cmcover")) {
+                            loginCommunity.setCmcover(jsonoginCommunity.getString("cmcover"));
+                        }
+                        if(jsonoginCommunity.has("curnum")) {
+                            loginCommunity.setCurnum(jsonoginCommunity.getString("curnum"));
+                        }
+                        if(jsonoginCommunity.has("ifcur")) {
+                            loginCommunity.setIfcur(jsonoginCommunity.getString("ifcur"));
+                        }
+                        loginCommunities.add(loginCommunity);
+                    }
+                }
+                mList.setLoginCommunities(loginCommunities);
+                mDate.setmList(mList);
+            }
+
+
+        }catch (Exception e){
+
+        }
+        dates.add(mDate);
+        return dates;
+    }
 }

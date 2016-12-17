@@ -117,12 +117,23 @@ public class Api {
 		 * }
 		 */
 		public static final String LOGIN = "login";
+		/**
+		 * 获取动态类别
+		 */
+		public static final String GETDYNAMICKINDS = "getDynamicKinds";
+
 	}
 
 	/**
 	 * 用户类
 	 */
 	public static final class User {
+		//切换小区操作
+		public static final String SWITCHCOMMUNITY = "switchCommunity";
+		//获取用户信息
+		public static final String GETUSERINFO = "getUserInfo";
+		//joinCommunity
+		public static final String JOINCOMMUNITY = "joinCommunity";
 
 	}
 
