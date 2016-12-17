@@ -21,10 +21,10 @@ import static com.hyzsnt.onekeyhelp.R.id.tv_stroll_header_title;
  * Created by Administrator on 2016/12/10.
  */
 
-public class StrollHeaderAdapter extends RecyclerView.Adapter<StrollHeaderAdapter.HeaderViewHolder> {
+public class StrollHeaderAdapter extends RecyclerView.Adapter<StrollHeaderAdapter.HeaderViewHolder> implements View.OnClickListener{
 	private final List<CircleHotTag.ListEntry> list;
 	private Context mContext;
-
+	private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 	public StrollHeaderAdapter(Activity activity, List<CircleHotTag.ListEntry> list) {
 		this.list = list;
 		mContext = activity;
@@ -35,6 +35,8 @@ public class StrollHeaderAdapter extends RecyclerView.Adapter<StrollHeaderAdapte
 	public StrollHeaderAdapter.HeaderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		//引入视图
 		View view = LayoutInflater.from(mContext).inflate(R.layout.item_stroll_header, parent, false);
+		//将创建的View注册点击事件
+		view.setOnClickListener(this);
 		return new HeaderViewHolder(view);
 	}
 
@@ -45,11 +47,20 @@ public class StrollHeaderAdapter extends RecyclerView.Adapter<StrollHeaderAdapte
 		holder.circlenum.setText(entry.getCirclenum());
 		holder.tagname.setText(entry.getTagname());
 		Glide.with(mContext).load(entry.getTagpic()).into(holder.tagic);
+		holder.itemView.setTag(position);
 	}
 
 	@Override
 	public int getItemCount() {
 		return list == null ? 0 : list.size();
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (mOnItemClickListener != null) {
+			//注意这里使用getTag方法获取数据
+			mOnItemClickListener.onItemClick(v,(String)v.getTag());
+		}
 	}
 
 	//复用控件
@@ -64,5 +75,9 @@ public class StrollHeaderAdapter extends RecyclerView.Adapter<StrollHeaderAdapte
 			tagic = (ImageView) itemView.findViewById(R.id.im_stroll_header);
 			circlenum = (TextView) itemView.findViewById(R.id.tv_stroll_header_num);
 		}
+	}
+	//define interface
+	public static interface OnRecyclerViewItemClickListener {
+		void onItemClick(View view , String data);
 	}
 }
