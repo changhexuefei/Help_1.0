@@ -16,6 +16,7 @@ import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleDetails;
 import com.hyzsnt.onekeyhelp.module.stroll.fragment.JoinCircleDetailsFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.fragment.UnjoinCircleDetailsFragment;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,20 +66,24 @@ public class CircleDetailsActivity extends BaseActivity {
 			@Override
 			public void onSuccess(String response, int id) {
 				if(JsonUtils.isSuccess(response)){
-
+					//解析数据
 					Gson gson =new Gson();
+					LogUtils.e(response);
 					mDetailss = gson.fromJson(response, CiecleDetailss.class);
+					//获取是否加入圈子
 					isjoin =mDetailss.getInfo().getIfjoin();
-
+					//获取话题数
+					int totalnum = Integer.parseInt(mDetailss.getInfo().getListinfo().getTotalnum());
 					if(isjoin.equals("1")){
-
-						mDetails = gson.fromJson(response, CircleDetails.class);
+						if(totalnum>0){
+							mDetails = gson.fromJson(response, CircleDetails.class);
+						}
+						LogUtils.e(response);
 					}
 					hideFragments();
 					FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 					if(isjoin.equals("1")){
 						if (mJoinCircleDetailsFragment == null) {
-
 							mJoinCircleDetailsFragment = new JoinCircleDetailsFragment();
 							Bundle bundle = new Bundle();
 							bundle.putParcelable("details",mDetails);
@@ -94,6 +99,7 @@ public class CircleDetailsActivity extends BaseActivity {
 							mUnjoinCircleDetailsFragment = new UnjoinCircleDetailsFragment();
 							Bundle bundle = new Bundle();
 							bundle.putParcelable("details",mDetailss);
+
 							mUnjoinCircleDetailsFragment.setArguments(bundle);
 							transaction.add(R.id.frlayout_circle_dietails, mUnjoinCircleDetailsFragment);
 							transaction.show(mUnjoinCircleDetailsFragment);

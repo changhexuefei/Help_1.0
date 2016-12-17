@@ -72,7 +72,6 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 					}
 				}
 				CircleMember.ListEntry listEntry= mCircleMember.getList().get(position);
-
 				((MViewHolder) holder).nickname.setText(listEntry.getNickname());
 				Glide.with(context).load(listEntry.getHeadportraid()).into(((MViewHolder) holder).headportraid);
 			}
@@ -122,7 +121,6 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 		ImageView gender;
 		TextView agree;
 		TextView unagree;
-
 		TextView nickname;
 		TextView age;
 
@@ -133,10 +131,8 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 			gender = (ImageView) itemView.findViewById(R.id.im_member_host_gender);
 			agree = (TextView) itemView.findViewById(R.id.tv_member_host_agree);
 			unagree = (TextView) itemView.findViewById(R.id.tv_member_host_unagree);
-
 			nickname = (TextView) itemView.findViewById(R.id.tv_member_host_nickname);
 			age = (TextView) itemView.findViewById(R.id.tv_member_host_age);
-
 		}
 	}
 

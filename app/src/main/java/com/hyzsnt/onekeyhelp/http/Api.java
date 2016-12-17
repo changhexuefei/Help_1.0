@@ -176,6 +176,11 @@ public class Api {
 		 *
 		 */
 		public static final String CIRCLE_join ="getJoinApplyList";
+		/**
+		 * 闲逛创建圈子
+		 *
+		 */
+		public static final String CREATE_CIRCLE ="createCircle";
 	}
 
 

@@ -8,10 +8,8 @@ import android.os.Parcelable;
  */
 
 public class CiecleDetailss implements Parcelable {
-
-
 	/**
-	 * applynum : 0
+	 * applynum : 4
 	 * cccover : /circle/14/14/cover/cover.png
 	 * ccid : 14
 	 * ccname : ceshi2
@@ -23,6 +21,7 @@ public class CiecleDetailss implements Parcelable {
 	 * gender : 0
 	 * headportraid : http://192.168.1.188/uploadfile/defaultpic/user.gif
 	 * ifjoin : 1
+	 * listinfo : {"curnum":3,"curpage":1,"perpage":20,"totalnum":"3","totalpage":0}
 	 * nickname : 131****7888
 	 * status : 1
 	 * summary : ceshidejieshao
@@ -33,7 +32,7 @@ public class CiecleDetailss implements Parcelable {
 
 	private InfoEntry info;
 	/**
-	 * info : {"applynum":"0","cccover":"/circle/14/14/cover/cover.png","ccid":"14","ccname":"ceshi2","cmid":"2803","cmname":"绿岛苑西区","createtime":"1481766779","curnum":"4","flag":"1","gender":"0","headportraid":"http://192.168.1.188/uploadfile/defaultpic/user.gif","ifjoin":"1","nickname":"131****7888","status":"1","summary":"ceshidejieshao","tags":"3","topicnum":"3","uid":"23"}
+	 * info : {"applynum":"4","cccover":"/circle/14/14/cover/cover.png","ccid":"14","ccname":"ceshi2","cmid":"2803","cmname":"绿岛苑西区","createtime":"1481766779","curnum":"4","flag":"1","gender":"0","headportraid":"http://192.168.1.188/uploadfile/defaultpic/user.gif","ifjoin":"1","listinfo":{"curnum":3,"curpage":1,"perpage":20,"totalnum":"3","totalpage":0},"nickname":"131****7888","status":"1","summary":"ceshidejieshao","tags":"3","topicnum":"3","uid":"23"}
 	 * res : 1
 	 * restr :
 	 */
@@ -78,6 +77,15 @@ public class CiecleDetailss implements Parcelable {
 		private String gender;
 		private String headportraid;
 		private String ifjoin;
+		/**
+		 * curnum : 3
+		 * curpage : 1
+		 * perpage : 20
+		 * totalnum : 3
+		 * totalpage : 0
+		 */
+
+		private ListinfoEntry listinfo;
 		private String nickname;
 		private String status;
 		private String summary;
@@ -181,6 +189,14 @@ public class CiecleDetailss implements Parcelable {
 			this.ifjoin = ifjoin;
 		}
 
+		public ListinfoEntry getListinfo() {
+			return listinfo;
+		}
+
+		public void setListinfo(ListinfoEntry listinfo) {
+			this.listinfo = listinfo;
+		}
+
 		public String getNickname() {
 			return nickname;
 		}
@@ -229,6 +245,91 @@ public class CiecleDetailss implements Parcelable {
 			this.uid = uid;
 		}
 
+		public static class ListinfoEntry implements Parcelable {
+			private int curnum;
+			private int curpage;
+			private int perpage;
+			private String totalnum;
+			private int totalpage;
+
+			public int getCurnum() {
+				return curnum;
+			}
+
+			public void setCurnum(int curnum) {
+				this.curnum = curnum;
+			}
+
+			public int getCurpage() {
+				return curpage;
+			}
+
+			public void setCurpage(int curpage) {
+				this.curpage = curpage;
+			}
+
+			public int getPerpage() {
+				return perpage;
+			}
+
+			public void setPerpage(int perpage) {
+				this.perpage = perpage;
+			}
+
+			public String getTotalnum() {
+				return totalnum;
+			}
+
+			public void setTotalnum(String totalnum) {
+				this.totalnum = totalnum;
+			}
+
+			public int getTotalpage() {
+				return totalpage;
+			}
+
+			public void setTotalpage(int totalpage) {
+				this.totalpage = totalpage;
+			}
+
+			@Override
+			public int describeContents() {
+				return 0;
+			}
+
+			@Override
+			public void writeToParcel(Parcel dest, int flags) {
+				dest.writeInt(this.curnum);
+				dest.writeInt(this.curpage);
+				dest.writeInt(this.perpage);
+				dest.writeString(this.totalnum);
+				dest.writeInt(this.totalpage);
+			}
+
+			public ListinfoEntry() {
+			}
+
+			protected ListinfoEntry(Parcel in) {
+				this.curnum = in.readInt();
+				this.curpage = in.readInt();
+				this.perpage = in.readInt();
+				this.totalnum = in.readString();
+				this.totalpage = in.readInt();
+			}
+
+			public static final Creator<ListinfoEntry> CREATOR = new Creator<ListinfoEntry>() {
+				@Override
+				public ListinfoEntry createFromParcel(Parcel source) {
+					return new ListinfoEntry(source);
+				}
+
+				@Override
+				public ListinfoEntry[] newArray(int size) {
+					return new ListinfoEntry[size];
+				}
+			};
+		}
+
 		@Override
 		public int describeContents() {
 			return 0;
@@ -248,6 +349,7 @@ public class CiecleDetailss implements Parcelable {
 			dest.writeString(this.gender);
 			dest.writeString(this.headportraid);
 			dest.writeString(this.ifjoin);
+			dest.writeParcelable(this.listinfo, flags);
 			dest.writeString(this.nickname);
 			dest.writeString(this.status);
 			dest.writeString(this.summary);
@@ -272,6 +374,7 @@ public class CiecleDetailss implements Parcelable {
 			this.gender = in.readString();
 			this.headportraid = in.readString();
 			this.ifjoin = in.readString();
+			this.listinfo = in.readParcelable(ListinfoEntry.class.getClassLoader());
 			this.nickname = in.readString();
 			this.status = in.readString();
 			this.summary = in.readString();

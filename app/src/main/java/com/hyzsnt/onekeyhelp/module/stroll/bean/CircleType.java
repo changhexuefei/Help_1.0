@@ -8,11 +8,27 @@ public class CircleType {
 	private String name;
 	private int icon;
 	private int backgroundcolor;
+	private Boolean isselect;
+
+	public CircleType(String name, int icon, int backgroundcolor, Boolean isselect) {
+		this.name = name;
+		this.icon = icon;
+		this.backgroundcolor = backgroundcolor;
+		this.isselect = isselect;
+	}
 
 	public CircleType(String name, int icon, int backgroundcolor) {
 		this.name = name;
 		this.icon = icon;
 		this.backgroundcolor = backgroundcolor;
+	}
+
+	public Boolean getIsselect() {
+		return isselect;
+	}
+
+	public void setIsselect(Boolean isselect) {
+		this.isselect = isselect;
 	}
 
 	public String getName() {

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleRound;
-import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import java.util.List;
 
@@ -107,7 +106,7 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 		String flags =circles.getTags();
 		String[] flist = flags.split("\\|");
 		for(int j=0;j<flist.length;j++){
-			LogUtils.e(flist[j]);
+
            if(flist.length==3){
                childViewHolder.child_type_three.setText(flist[2]);
 	           childViewHolder.child_type_three.setVisibility(View.VISIBLE);

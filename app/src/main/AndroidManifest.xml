@@ -94,7 +94,7 @@
 			android:name="com.baidu.location.f"
 			android:enabled="true"
 			android:process=":remote"/>
-
+        <!--圈子成员列表-->
 		<activity android:name=".module.stroll.activity.CircleMemberList">
 		</activity>
 	</application>

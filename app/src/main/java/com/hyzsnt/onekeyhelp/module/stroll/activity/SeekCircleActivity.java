@@ -35,15 +35,15 @@ public class SeekCircleActivity extends BaseActivity {
 	@Override
 	protected void initData() {
 		mtypelist = new ArrayList<CircleType>();
-		mtypelist.add(new CircleType("美食",R.mipmap.circle_foods,R.drawable.circle_type_one));
-		mtypelist.add(new CircleType("亲自",R.mipmap.circle_by_oneself,R.drawable.circle_type_two));
-		mtypelist.add(new CircleType("健身",R.mipmap.circle_fitness,R.drawable.circle_type_three));
-		mtypelist.add(new CircleType("聚会",R.mipmap.circle_meeting,R.drawable.circle_type_four));
-		mtypelist.add(new CircleType("运动",R.mipmap.circle_sport,R.drawable.circle_type_five));
-		mtypelist.add(new CircleType("音乐",R.mipmap.circle_music,R.drawable.circle_type_six));
-		mtypelist.add(new CircleType("互助",R.mipmap.circle_help,R.drawable.circle_type_seven));
-		mtypelist.add(new CircleType("宠物",R.mipmap.circle_peg,R.drawable.circle_type_eight));
-		mtypelist.add(new CircleType("旅行",R.mipmap.circle_travel,R.drawable.circle_type_nine));
+		mtypelist.add(new CircleType("美食",R.mipmap.circle_foods,R.drawable.circle_type_one,false));
+		mtypelist.add(new CircleType("亲自",R.mipmap.circle_by_oneself,R.drawable.circle_type_two,false));
+		mtypelist.add(new CircleType("健身",R.mipmap.circle_fitness,R.drawable.circle_type_three,false));
+		mtypelist.add(new CircleType("聚会",R.mipmap.circle_meeting,R.drawable.circle_type_four,false));
+		mtypelist.add(new CircleType("运动",R.mipmap.circle_sport,R.drawable.circle_type_five,false));
+		mtypelist.add(new CircleType("音乐",R.mipmap.circle_music,R.drawable.circle_type_six,false));
+		mtypelist.add(new CircleType("互助",R.mipmap.circle_help,R.drawable.circle_type_seven,false));
+		mtypelist.add(new CircleType("宠物",R.mipmap.circle_peg,R.drawable.circle_type_eight,false));
+		mtypelist.add(new CircleType("旅行",R.mipmap.circle_travel,R.drawable.circle_type_nine,false));
 		mReSeekCircle.setLayoutManager(new GridLayoutManager(this,3));
 		mReSeekCircle.setAdapter(new CircleTypeAdapter(this,mtypelist));
 		int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.dp_13);

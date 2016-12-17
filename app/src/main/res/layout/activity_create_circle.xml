@@ -2,7 +2,7 @@
 <RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/activity_create_circle"
+
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context="com.hyzsnt.onekeyhelp.module.stroll.activity.CreateCircleActivity">
@@ -79,6 +79,7 @@
 				android:id="@+id/im_upload_picture"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/dp_100"
+				android:scaleType="centerCrop"
 				android:layout_margin="@dimen/dp_10"
 				android:visibility="gone"/>
 			>
@@ -208,10 +209,10 @@
 		android:gravity="center"
 	    android:background="#1CCD9A"
 	    android:textColor="#FFFFFF"
-
+		android:id="@+id/activity_create_circle"
 		android:textSize="15sp"
 		android:layout_alignParentBottom="true"
 		android:layout_centerHorizontal="true"
-		android:id="@+id/textView7"/>
+		/>
 
 </RelativeLayout>
