@@ -142,6 +142,7 @@
 
 					/>
 				<LinearLayout
+					android:id="@+id/ll_exchange_community"
 					android:background="@drawable/address_change_down"
 					android:layout_width="@dimen/dp_62"
 					android:layout_height="@dimen/dp_46"
