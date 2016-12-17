@@ -165,9 +165,7 @@ public class TalkActivity extends BaseActivity {
                         HttpUtils.post("publish", "publishDynamic", p, new JsonResponseHandler() {
                             @Override
                             public void onError(Call call, Exception e, int id) {
-
                             }
-
                             @Override
                             public void onSuccess(String response, int id) {
                                 Log.d("fabu", response);
