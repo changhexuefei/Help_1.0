@@ -160,7 +160,7 @@ public class TalkActivity extends BaseActivity {
                         p.add(lat);
                         p.add(lon);
                         p.add(mTitle);
-                        p.add("0");
+                        p.add("1");
                         p.add("");
                         HttpUtils.post("publish", "publishDynamic", p, new JsonResponseHandler() {
                             @Override
