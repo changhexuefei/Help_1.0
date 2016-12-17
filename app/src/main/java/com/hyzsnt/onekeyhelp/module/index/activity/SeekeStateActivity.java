@@ -3,7 +3,10 @@ package com.hyzsnt.onekeyhelp.module.index.activity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +23,7 @@ import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.module.index.adapter.CommunityListAdapter;
 import com.hyzsnt.onekeyhelp.module.index.bean.CommunityList;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,8 +53,14 @@ public class SeekeStateActivity extends BaseActivity {
 
     @BindView(R.id.classify)
     LinearLayout mLayout;
+    @BindView(R.id.city_name)
+    TextView tv_cityName;
+    @BindView(R.id.btn_change)
+    Button btn_change;
+    @BindView(R.id.city)
+    LinearLayout linCity;
 
-    //    private HotAreaInfo mHotAreaInfo;
+
     private List<CommunityList.ListBean> listBeen;
     private CommunityList mList = null;
     private CommunityListAdapter mAdapter;
@@ -65,15 +75,19 @@ public class SeekeStateActivity extends BaseActivity {
     //获取页数，初次检索默认1
     private static final String PAGENUM = "1";
     //定位检索
-    private static final String LOCATIONSEARCH = "0";
-    //区域检索
-    private static final String AREASEARCH = "1";
+    private String condition;
+
     //用户ID
     private String userid = "4";
     //上级行政区域ID
     private String regid = "110000";
+
+
+    private String str;
     //条件集合
     List<String> parms = new ArrayList<>();
+    private String lat;
+    private String lon;
 
 
     @Override
@@ -83,91 +97,57 @@ public class SeekeStateActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        area = new ArrayList<>();
-
-        String lat = Double.toString(App.getLocation().getLatitude());
+        lat = Double.toString(App.getLocation().getLatitude());
         Log.d("lat", lat);
-        String lon = Double.toString(App.getLocation().getLongitude());
+        lon = Double.toString(App.getLocation().getLongitude());
         Log.d("lon", lon);
-//        parms.add(LOCATIONSEARCH);
-//        parms.add("10");
-//        parms.add(PAGENUM);
-//        parms.add(userid);
+        area = new ArrayList<>();
+//        parms.add("0");
+//        parms.add("4");
 //        parms.add(lat);
 //        parms.add(lon);
-//        parms.add(regid);
-//        parms.add("");
-//        parms.add("");
-        parms.add("110000");
+        parms.add("100000");
 
-        HttpUtils.post(Api.PUBLIC, "getRegional", parms, new JsonResponseHandler() {
+        HttpUtils.post(Api.PUBLIC, "getHotArea", parms, new JsonResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                Toast.makeText(SeekeStateActivity.this, "你输入的有误", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onSuccess(String response, int id) {
-                Log.d("111111111", "response" + response);
-                Toast.makeText(SeekeStateActivity.this, "链接成功", Toast.LENGTH_SHORT).show();
+                Log.d("我的位置是：", response);
                 if (JsonUtils.isSuccess(response)) {
                     try {
                         JSONObject object = new JSONObject(response);
+                        JSONObject info = object.getJSONObject("info");
+                        String regname = info.getString("regname");
+
+                        Log.d("12345678", regname);
+                        tv_cityName.setText(regname);
                         JSONObject list = object.getJSONObject("list");
-                        Log.d("list",""+list);
+                        Log.d("list", "" + list);
                         Iterator<String> iterator = list.keys();
-                        while (iterator.hasNext()){
+                        while (iterator.hasNext()) {
                             String key = iterator.next();
                             Log.d("key+++++++", key);
                             String value = list.getString(key);
-                            Log.d("value+++++",value);
+                            Log.d("value+++++", value);
                             area.add(value);
+                            Log.d("============", "" + area.size());
                         }
-
+                        initAutoLL();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }else{
-
-
-
+                } else {
+                    String err = JsonUtils.getErrorMessage(response);
+                    LogUtils.e(err);
                 }
-//                mAdapter = new CommunityListAdapter();
-//                LinearLayoutManager manager = new LinearLayoutManager(SeekeStateActivity.this, LinearLayoutManager.VERTICAL, false);
-//                mCommunityListRec.setLayoutManager(manager);
-//                mCommunityListRec.setHasFixedSize(true);
-//                mCommunityListRec.setItemAnimator(new DefaultItemAnimator());
-//                listBeen = new ArrayList<CommunityList.ListBean>();
-//                if (JsonUtils.isSuccess(response)) {
-//                    Gson gson = new Gson();
-//                    mList = gson.fromJson(response, CommunityList.class);
-//                    listBeen = mList.getList();
-//                    mAdapter.setCommunityLists(listBeen);
-//                    LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mAdapter);
-//                    mCommunityListRec.setAdapter(adapter);
-//                } else {
-//                    String err = JsonUtils.getErrorMessage(response);
-//                    LogUtils.e(err);
-//
-//                }
             }
         });
     }
 
-
-//    public void click(View view) {
-//        switch (view.getId()) {
-//            case R.id.city:
-//                Toast.makeText(this, "你点击的是city", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.county:
-//                Toast.makeText(this, "你点击的是county", Toast.LENGTH_SHORT).show();
-//                break;
-//            case R.id.hot_pints:
-//                Toast.makeText(this, "你点击的是hot_pints", Toast.LENGTH_SHORT).show();
-//                break;
-//        }
-//    }
 
     @Override
     protected void initListener() {
@@ -184,10 +164,9 @@ public class SeekeStateActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 mSearchEstateBar.setText("");
-                mLayout.setVisibility(View.GONE);
+                mLayout.removeAllViews();
             }
         });
-
 
         //搜索框的监听事件
         mSearchEstateBar.addTextChangedListener(new TextWatcher() {
@@ -203,17 +182,161 @@ public class SeekeStateActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                for (int i = 0; i <area.size() ; i++) {
-                    TextView tv = new TextView(SeekeStateActivity.this);
-                    tv.setText(area.get(i));
-                    mLayout.addView(tv);
-                }
-
-
+//                String areaName = s.toString();
+//                if ("".equals(areaName)) {
+//                    Toast.makeText(SeekeStateActivity.this, "请输入您要搜索的小区", Toast.LENGTH_SHORT).show();
+//                } else {
+                search();
+//                }
             }
         });
 
+        btn_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linCity.setVisibility(View.GONE);
+                mLayout.setVisibility(View.GONE);
+                parms.removeAll(area);
+                parms.add("100000");
+                HttpUtils.post(Api.PUBLIC, "getRegional", parms, new JsonResponseHandler() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String response, int id) {
+                        Toast.makeText(SeekeStateActivity.this, "成功了", Toast.LENGTH_SHORT).show();
+                        Log.d("0000000000",response);
+                    }
+                });
+            }
+        });
 
     }
+
+
+    private void search() {
+
+        //获取行政区信息
+        parms.add("100000");
+        HttpUtils.post(Api.PUBLIC, "getRegional", parms, new JsonResponseHandler() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Toast.makeText(SeekeStateActivity.this, "你输入的有误", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(String response, int id) {
+                Log.d("111111111", "response" + response);
+                Toast.makeText(SeekeStateActivity.this, "链接成功", Toast.LENGTH_SHORT).show();
+                if (JsonUtils.isSuccess(response)) {
+                    try {
+                        JSONObject object = new JSONObject(response);
+                        Log.d("object", "" + object);
+                        JSONObject list = object.getJSONObject("list");
+                        Log.d("list", "" + list);
+                        Iterator<String> iterator = list.keys();
+                        while (iterator.hasNext()) {
+                            String key = iterator.next();
+                            Log.d("key+++++++", key);
+                            String value = list.getString(key);
+                            Log.d("value+++++", value);
+                            area.add(value);
+                            Log.d("============", "" + area.size());
+                        }
+                        initAutoLL();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+//    }
+
+
+    //    绘制自动换行的线性布局
+    private void initAutoLL() {
+//        每一行的布局，初始化第一行布局
+        LinearLayout rowLL = new LinearLayout(this);
+        LinearLayout.LayoutParams rowLP = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        float rowMargin = dipToPx(10);
+        rowLP.setMargins(0, (int) rowMargin, 0, 0);
+        rowLL.setLayoutParams(rowLP);
+        boolean isNewLayout = false;
+        float maxWidth = getScreenWidth() - dipToPx(30);
+//        剩下的宽度
+        float elseWidth = maxWidth;
+        LinearLayout.LayoutParams textViewLP = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        textViewLP.setMargins((int) dipToPx(8), 0, 0, 0);
+        for (int i = 0; i < area.size(); i++) {
+            Log.d("++++++++++++++++++++", "" + area.size());
+//            若当前为新起的一行，先添加旧的那行
+//            然后重新创建布局对象，设置参数，将isNewLayout判断重置为false
+            if (isNewLayout) {
+                mLayout.addView(rowLL);
+                rowLL = new LinearLayout(this);
+                rowLL.setLayoutParams(rowLP);
+                isNewLayout = false;
+            }
+//            计算是否需要换行
+            TextView textView = (TextView) getLayoutInflater().inflate(R.layout.item_textview, null);
+            textView.setText(area.get(i));
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(SeekeStateActivity.this, "" + v.getId(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            textView.measure(0, 0);
+//            若是一整行都放不下这个文本框，添加旧的那行，新起一行添加这个文本框
+            if (maxWidth < textView.getMeasuredWidth()) {
+                mLayout.addView(rowLL);
+                rowLL = new LinearLayout(this);
+                rowLL.setLayoutParams(rowLP);
+                rowLL.addView(textView);
+                isNewLayout = true;
+                continue;
+            }
+//            若是剩下的宽度小于文本框的宽度（放不下了）
+//            添加旧的那行，新起一行，但是i要-1，因为当前的文本框还未添加
+            if (elseWidth < textView.getMeasuredWidth()) {
+                isNewLayout = true;
+                i--;
+//                重置剩余宽度
+                elseWidth = maxWidth;
+                continue;
+            } else {
+//                剩余宽度减去文本框的宽度+间隔=新的剩余宽度
+                elseWidth -= textView.getMeasuredWidth() + dipToPx(8);
+                if (rowLL.getChildCount() == 0) {
+                    rowLL.addView(textView);
+                } else {
+                    textView.setLayoutParams(textViewLP);
+                    rowLL.addView(textView);
+                }
+            }
+        }
+//        添加最后一行，但要防止重复添加
+        mLayout.removeView(rowLL);
+        mLayout.addView(rowLL);
+    }
+
+    //    dp转px
+    private float dipToPx(int dipValue) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                dipValue,
+                this.getResources().getDisplayMetrics());
+    }
+
+    //  获得屏幕宽度
+    private float getScreenWidth() {
+        return this.getResources().getDisplayMetrics().widthPixels;
+    }
+
 
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.hyzsnt.onekeyhelp.R;
@@ -13,14 +12,14 @@ import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.module.release.activity.GeneralMessageActivity;
 import com.hyzsnt.onekeyhelp.module.release.activity.TalkActivity;
 
-
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.hyzsnt.onekeyhelp.utils.SPUtils.*;
+import static com.hyzsnt.onekeyhelp.utils.SPUtils.getAll;
+import static com.hyzsnt.onekeyhelp.utils.SPUtils.isLogin;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,8 +27,8 @@ import static com.hyzsnt.onekeyhelp.utils.SPUtils.*;
 public class ReleaseFragment extends BaseFragment {
 
 
-    @BindView(R.id.btn_cancel)
-    Button mBtnCancel;
+//    @BindView(R.id.btn_cancel)
+//    Button mBtnCancel;
     @BindView(R.id.iv_talk)
     LinearLayout mIvTalk;
     @BindView(R.id.iv_general_message)
@@ -93,9 +92,9 @@ public class ReleaseFragment extends BaseFragment {
                 break;
             case R.id.iv_house_lease:
                 break;
-            case R.id.btn_cancel:
-
-                break;
+//            case R.id.btn_cancel:
+//
+//                break;
             case R.id.iv_general_message:
                 Intent i1 = new Intent(mActivity, GeneralMessageActivity.class);
                 i1.putExtra("tag1", "iv_gener");

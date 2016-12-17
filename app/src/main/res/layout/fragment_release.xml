@@ -189,6 +189,7 @@
 
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_cancel"
         android:layout_width="300dp"
         android:layout_height="wrap_content"

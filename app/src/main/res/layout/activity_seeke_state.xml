@@ -54,6 +54,35 @@
 
 
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/city"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center"
+            android:padding="6dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/textview_border_shape"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/city_name"/>
+        <Button
+            android:background="@drawable/btn_border_shape"
+            android:textColor="#1ccc9b"
+            android:textSize="14sp"
+            android:layout_marginLeft="20dp"
+            android:text="切换城市"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/btn_change"
+            />
+
+    </LinearLayout>
+
+
 
     <FrameLayout
         android:id="@+id/action0"
@@ -87,12 +116,13 @@
 
     <!--分类按钮区域-->
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:id="@+id/classify"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/search"
-        android:layout_marginLeft="40dp"
+        android:layout_below="@+id/city"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"/>
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
