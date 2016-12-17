@@ -145,5 +145,6 @@ public class HomeUnLoginFragment extends BaseFragment {
 
     @OnClick(R.id.home_image_location)
     public void onClick() {
+
     }
 }

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/dp_100"
-    android:layout_height="@dimen/dp_50"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_marginTop="@dimen/dp_5"
+    android:layout_marginBottom="@dimen/dp_2"
+    android:layout_marginLeft="@dimen/dp_5"
+    android:layout_marginRight="@dimen/dp_5"
     >
     <TextView
         android:id="@+id/pop_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
         android:text="很爱很爱"
         android:textColor="#828282"
-        android:textSize="@dimen/sp_16"
-        android:background="#FFFFFF"
+        android:textSize="@dimen/sp_12"
+        android:background="#EDEDED"
         android:gravity="center"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px_1"
-        android:background="#E8E8E8"></View>
 
 </LinearLayout>

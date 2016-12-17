@@ -12,6 +12,9 @@ public class MList implements Serializable{
     private ArrayList<CommunityInfoList> communityInfoLists;
     private ArrayList<MemberListByCommunityList> memberListByCommunityLists;
     private ArrayList<DynamicListByCommunityList> dynamicListByCommunityLists;
+    private ArrayList<DynamicKinds> dynamicKindses;
+    private ArrayList<LoginCommunity> loginCommunities;
+
     public MList() {
     }
 
@@ -47,6 +50,22 @@ public class MList implements Serializable{
         this.dynamicListByCommunityLists = dynamicListByCommunityLists;
     }
 
+    public ArrayList<DynamicKinds> getDynamicKindses() {
+        return dynamicKindses;
+    }
+
+    public void setDynamicKindses(ArrayList<DynamicKinds> dynamicKindses) {
+        this.dynamicKindses = dynamicKindses;
+    }
+
+    public ArrayList<LoginCommunity> getLoginCommunities() {
+        return loginCommunities;
+    }
+
+    public void setLoginCommunities(ArrayList<LoginCommunity> loginCommunities) {
+        this.loginCommunities = loginCommunities;
+    }
+
     @Override
     public String toString() {
         return "MList{" +
@@ -54,6 +73,8 @@ public class MList implements Serializable{
                 ", communityInfoLists=" + communityInfoLists +
                 ", memberListByCommunityLists=" + memberListByCommunityLists +
                 ", dynamicListByCommunityLists=" + dynamicListByCommunityLists +
+                ", dynamicKindses=" + dynamicKindses +
+                ", loginCommunities=" + loginCommunities +
                 '}';
     }
 }
