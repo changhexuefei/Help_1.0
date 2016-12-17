@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
@@ -109,7 +110,6 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
                     public void onSuccess(String response, int id) {
 
                         final ArrayList<MDate> memberListByCommunity = Resovle.getMemberListByCommunity(response);
-                        Log.e("+++++Login++++++", memberListByCommunity + "");
                         if (memberListByCommunity.size() > 0) {
                             int sum = Integer.valueOf(memberListByCommunity.get(0).getmInfo().getCommunityListInfo().getTotalnum());
                             ((HomeLoginViewHolder0) holder).homeLoginItemHeadTvNeighbor.setText(sum + "人");
@@ -138,13 +138,36 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(View v) {
                         View popupView = View.inflate(mContext,R.layout.item_item_home_login_head_pop, null);
-                        PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                        PopupWindow mPopupWindow = new PopupWindow(popupView  , LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
                         mPopupWindow.setTouchable(true);
                         mPopupWindow.setOutsideTouchable(true);
                         mPopupWindow.setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), (Bitmap) null));
-                        int xView=((HomeLoginViewHolder0) holder).homeLoginItemheadIvDynamicselect.getHeight();
-                        int yView=((HomeLoginViewHolder0) holder).homeLoginItemheadIvDynamicselect.getWidth();
                         mPopupWindow.showAsDropDown(((HomeLoginViewHolder0) holder).homeLoginItemheadIvDynamicselect);
+                        RecyclerView pop_rv= (RecyclerView) popupView.findViewById(R.id.item_item_head_pop_rlv);
+                        final DynamicKindsAdapter dynamicKindsAdapter=new DynamicKindsAdapter(mContext);
+                        GridLayoutManager gridLayoutManager=new GridLayoutManager(mContext, 5);
+                        pop_rv.setLayoutManager(gridLayoutManager);
+                        pop_rv.setAdapter(dynamicKindsAdapter);
+                        pop_rv.setItemAnimator(new DefaultItemAnimator());
+                        HttpUtils.post(Api.PUBLIC, Api.Public.GETDYNAMICKINDS, new ResponseHandler() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+
+                            }
+                            @Override
+                            public void onSuccess(String response, int id) {
+                                ArrayList<MDate> dynamicKinds = Resovle.getDynamicKinds(response);
+                                dynamicKindsAdapter.setDates(dynamicKinds);
+                                dynamicKindsAdapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void inProgress(float progress, long total, int id) {
+
+                            }
+                        });
+
+
                     }
                 });
             }
