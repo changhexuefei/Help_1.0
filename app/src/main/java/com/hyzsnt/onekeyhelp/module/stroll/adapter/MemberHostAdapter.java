@@ -23,8 +23,10 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 	private CircleMember mCircleMember;
 	private CircleJoin circlejoin;
 
-	public MemberHostAdapter(Context activity) {
+	private Boolean ishost;
+	public MemberHostAdapter(Context activity, Boolean ishost) {
 		this.context = activity;
+		this.ishost = ishost;
 
 	}
 
@@ -51,10 +53,6 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 		if(circlejoin != null && !circlejoin.equals("")){
 			if(holder instanceof JoinViewHolder){
-
-				JoinViewHolder viewHolder = (JoinViewHolder) holder;
-				//这句话关掉IOS阻塞式交互效果 并依次打开左滑右滑
-				((SwipeMenuView) viewHolder.itemView).setIos(false).setLeftSwipe(true);
 				CircleJoin.ListEntry listEntry = circlejoin.getList().get(position);
 				((JoinViewHolder) holder).nickname.setText(listEntry.getNickname());
 				Glide.with(context).load(listEntry.getHeadportraid()).into(((JoinViewHolder) holder).headportraid);
@@ -62,14 +60,16 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 			}
 		}
 		if(mCircleMember != null && !mCircleMember.equals("")){
-
-
-
 			if(holder instanceof MViewHolder){
-
+				MViewHolder viewHolder = (MViewHolder) holder;
+				//这句话关掉IOS阻塞式交互效果 并依次打开左滑右滑
+				((SwipeMenuView) viewHolder.itemView).setIos(false).setLeftSwipe(true);
 
 				if(circlejoin != null && !circlejoin.equals("")){
 					position =position-circlejoin.getList().size();
+					if(!ishost){
+						((SwipeMenuView) viewHolder.itemView).setSwipeEnable(false);
+					}
 				}
 				CircleMember.ListEntry listEntry= mCircleMember.getList().get(position);
 
@@ -102,6 +102,7 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 		ImageView tagthree;
 		TextView nickname;
 		TextView age;
+		TextView delete;
 		public MViewHolder(View itemView) {
 			super(itemView);
 			headportraid = (ImageView) itemView.findViewById(R.id.im_member_host_headportraid);
@@ -111,6 +112,7 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 			tagthree = (ImageView) itemView.findViewById(R.id.im_member_tag_three);
 			nickname = (TextView) itemView.findViewById(R.id.tv_member_host_nickname);
 			age = (TextView) itemView.findViewById(R.id.tv_member_host_age);
+			delete = (TextView) itemView.findViewById(R.id.tv_delete_btn);
 		}
 	}
 
@@ -120,10 +122,10 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 		ImageView gender;
 		TextView agree;
 		TextView unagree;
-		TextView delete;
+
 		TextView nickname;
 		TextView age;
-		SwipeMenuView swip;
+
 
 		public JoinViewHolder(View itemView) {
 			super(itemView);
@@ -131,12 +133,10 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 			gender = (ImageView) itemView.findViewById(R.id.im_member_host_gender);
 			agree = (TextView) itemView.findViewById(R.id.tv_member_host_agree);
 			unagree = (TextView) itemView.findViewById(R.id.tv_member_host_unagree);
-			delete = (TextView) itemView.findViewById(R.id.tv_delete_btn);
+
 			nickname = (TextView) itemView.findViewById(R.id.tv_member_host_nickname);
 			age = (TextView) itemView.findViewById(R.id.tv_member_host_age);
-//			swip = (SwipeMenuView) itemView.findViewById(R.id.swipe_delete);
-//			swip.setSwipeEnable(true);
-//			swip.setLeftSwipe(false);
+
 		}
 	}
 

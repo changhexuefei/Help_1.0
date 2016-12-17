@@ -37,15 +37,16 @@ public class CircleMemberList extends BaseActivity {
 
 	@Override
 	protected void initData() {
-		//添加适配器
-		mReMemberHost.setLayoutManager(new LinearLayoutManager(CircleMemberList.this));
-		final MemberHostAdapter adapter = new MemberHostAdapter(CircleMemberList.this);
-		LRecyclerViewAdapter lRecyclerViewAdapter = new LRecyclerViewAdapter(adapter);
-		mReMemberHost.setAdapter(lRecyclerViewAdapter);
-		mReMemberHost.setPullRefreshEnabled(false);
 		//获取是否是管理员
 		Boolean ishost = getIntent().getBooleanExtra("ishost", true);
 		String ccid = getIntent().getStringExtra("ccid");
+		//添加适配器
+		mReMemberHost.setLayoutManager(new LinearLayoutManager(CircleMemberList.this));
+		final MemberHostAdapter adapter = new MemberHostAdapter(CircleMemberList.this,ishost);
+		LRecyclerViewAdapter lRecyclerViewAdapter = new LRecyclerViewAdapter(adapter);
+		mReMemberHost.setAdapter(lRecyclerViewAdapter);
+		mReMemberHost.setPullRefreshEnabled(false);
+
 		//获取成员数据
 		List<String> list = new ArrayList<>();
 		list.add("23");
