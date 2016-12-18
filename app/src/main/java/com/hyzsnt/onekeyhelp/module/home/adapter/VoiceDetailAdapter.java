@@ -23,13 +23,13 @@ public class VoiceDetailAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
             View v0 = LayoutInflater.from(mContext).inflate(R.layout.item_activity_home_voice_0, parent, false);
-            return new HomeUnLoginAdapter.HomeViewHolder1(v0);
+            return new VoiceDetailAdapter.VoiceDetailViewHolder0(v0);
         } else if(viewType == 1){
             View v1 = LayoutInflater.from(mContext).inflate(R.layout.item_activity_home_voice_1,parent, false);
-            return new HomeUnLoginAdapter.HomeViewHolder2(v1);
+            return new VoiceDetailAdapter.VoiceDetailViewHolder1(v1);
         }else{
             View v2 = LayoutInflater.from(mContext).inflate(R.layout.item_activity_home_voice_2, parent, false);
-            return new HomeUnLoginAdapter.HomeViewHolder2(v2);
+            return new VoiceDetailAdapter.VoiceDetailViewHolder2(v2);
         }
     }
 

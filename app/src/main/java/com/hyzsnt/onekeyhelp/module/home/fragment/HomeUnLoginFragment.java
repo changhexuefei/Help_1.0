@@ -35,6 +35,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 
 /**
@@ -52,8 +53,6 @@ public class HomeUnLoginFragment extends BaseFragment {
     ImageView homeImageLocation;
     @BindView(R.id.home_lrv)
     LRecyclerView homeLrv;
-    private String str = "";
-
     public HomeUnLoginFragment() {
         // Required empty public constructor
     }
@@ -102,7 +101,7 @@ public class HomeUnLoginFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String response, int id) {
-                str = response;
+                Log.e("0000000000","----"+response);
                 ArrayList<MDate> dates = Resovle.getCommunityList(response);
                 mHomeAdapter.setDates(dates);
                 mHomeAdapter.notifyDataSetChanged();
@@ -160,6 +159,7 @@ public class HomeUnLoginFragment extends BaseFragment {
 
     @OnClick(R.id.home_image_location)
     public void onClick() {
+        String registrationID = JPushInterface.getRegistrationID(getActivity());
         List params = new ArrayList<String>();
         //params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
         params.add("7");
@@ -171,7 +171,6 @@ public class HomeUnLoginFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String response, int id) {
-                str = response;
                 Log.e("8888888888888888888",response+"");
             }
 

@@ -114,7 +114,7 @@ public class Resovle {
                     if(jsoncommunityListList.has("distance")){
                         communityListList.setDistance(jsoncommunityListList.getString("distance"));
                     }
-                    if(jsoncommunityListList.has("circle  111111111")){
+                    if(jsoncommunityListList.has("circle")){
                         ArrayList<Circle> circleList=new ArrayList<>();
                         JSONArray jsonCircleList=jsoncommunityListList.getJSONArray("circle");
                         for (int j = 0; j <jsonCircleList.length() ; j++) {
@@ -565,10 +565,7 @@ public class Resovle {
                 mList.setLoginCommunities(loginCommunities);
                 mDate.setmList(mList);
             }
-
-
         }catch (Exception e){
-
         }
         dates.add(mDate);
         return dates;
