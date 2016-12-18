@@ -1,11 +1,14 @@
 package com.hyzsnt.onekeyhelp.module.index.activity;
 
+import android.net.Uri;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,22 +17,29 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
-import com.hyzsnt.onekeyhelp.module.index.adapter.CommunityListAdapter;
-import com.hyzsnt.onekeyhelp.module.index.bean.CommunityList;
+import com.hyzsnt.onekeyhelp.module.index.adapter.ProvinceListAdapter;
+import com.hyzsnt.onekeyhelp.module.index.bean.PinyinComparator;
+import com.hyzsnt.onekeyhelp.module.index.bean.SortCity;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.PinyinUtils;
+import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -60,11 +70,10 @@ public class SeekeStateActivity extends BaseActivity {
     Button btn_change;
     @BindView(R.id.city)
     LinearLayout linCity;
+    private PinyinComparator pinyinComparator;
 
-
-    private List<CommunityList.ListBean> listBeen;
-    private CommunityList mList = null;
-    private CommunityListAdapter mAdapter;
+    private List<SortCity> mSortCities;
+    private ProvinceListAdapter mAdapter;
     List<String> area;
     List<String> province;
 
@@ -88,6 +97,11 @@ public class SeekeStateActivity extends BaseActivity {
     List<String> parms = new ArrayList<>();
     private String lat;
     private String lon;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient mClient;
 
 
     @Override
@@ -97,6 +111,7 @@ public class SeekeStateActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        pinyinComparator = new PinyinComparator();
         lat = Double.toString(App.getLocation().getLatitude());
         Log.d("lat", lat);
         lon = Double.toString(App.getLocation().getLongitude());
@@ -192,7 +207,7 @@ public class SeekeStateActivity extends BaseActivity {
                 search();
             }
         });
-
+//显示省份列表
         btn_change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,22 +229,63 @@ public class SeekeStateActivity extends BaseActivity {
                         if (JsonUtils.isSuccess(response)) {
                             try {
                                 JSONObject object = new JSONObject(response);
-                                JSONObject list = object.getJSONObject("list");
+                                final JSONObject list = object.getJSONObject("list");
 
                                 Log.d("list", "" + list);
-                                Iterator<String> iterator = list.keys();
+                                final Iterator<String> iterator = list.keys();
+                                mSortCities = new ArrayList<SortCity>();
+                                SortCity city;
                                 while (iterator.hasNext()) {
                                     String key = iterator.next();
                                     Log.d("key+++++++", key);
                                     String value = list.getString(key);
                                     Log.d("value+++++", value);
+                                    city = new SortCity();
+                                    city.setName(value);
                                     province.add(value);
+                                    for (int i = 0; i < province.size(); i++) {
+                                        String firstSpell1 = PinyinUtils.getFirstSpell(province.get(i));
+                                        String sortString = firstSpell1.substring(0, 1).toUpperCase();
+                                        // 正则表达式，判断首字母是否是英文字母
+                                        if (sortString.matches("[A-Z]")) {
+                                            city.setSortLetters(sortString.toUpperCase());
+                                        } else {
+                                            city.setSortLetters("#");
+                                        }
+                                    }
                                     Log.d("999999", "" + province);
+                                    mSortCities.add(city);
                                 }
-                                for (int i = 0; i <province.size() ; i++) {
-                                    String firstSpell = PinyinUtils.getFirstSpell(province.get(i));
-                                    Log.e("首字母",firstSpell);
-                                }
+                                mProvinceListView.setVisibility(View.VISIBLE);
+                                Collections.sort(mSortCities, pinyinComparator);
+                                mAdapter = new ProvinceListAdapter(SeekeStateActivity.this);
+                                mAdapter.setList(mSortCities);
+                                mProvinceListView.setAdapter(mAdapter);
+
+                                //点击省份的每一行出现省份下辖市
+                                mProvinceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        String name = mSortCities.get(position).getName();
+                                        ToastUtils.showLong(SeekeStateActivity.this, name);
+
+                                        parms.clear();
+                                        parms.add("110000");
+                                        HttpUtils.post(Api.PUBLIC, REGIONAL, parms, new JsonResponseHandler() {
+                                            @Override
+                                            public void onError(Call call, Exception e, int id) {
+
+                                            }
+
+                                            @Override
+                                            public void onSuccess(String response, int id) {
+                                                Log.d("城市", response);
+
+                                            }
+                                        });
+                                    }
+                                });
+
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -369,4 +425,48 @@ public class SeekeStateActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        mClient = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("SeekeState Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        mClient.connect();
+        AppIndex.AppIndexApi.start(mClient, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(mClient, getIndexApiAction());
+        mClient.disconnect();
+    }
 }
