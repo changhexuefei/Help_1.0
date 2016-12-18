@@ -31,9 +31,6 @@ import static com.hyzsnt.onekeyhelp.utils.SPUtils.isLogin;
  */
 public class ReleaseFragment extends BaseFragment {
 
-
-    //    @BindView(R.id.btn_cancel)
-//    Button mBtnCancel;
     @BindView(R.id.iv_talk)
     LinearLayout mIvTalk;
     @BindView(R.id.iv_general_message)
@@ -93,39 +90,33 @@ public class ReleaseFragment extends BaseFragment {
                 strings.add("文字发布");
                 strings.add("语音发布");
 
-                StyledDialog.buildIosSingleChoose(mActivity, strings, new MyItemDialogListener() {
-
+                StyledDialog.buildBottomItemDialog(mActivity, strings, "取消", new MyItemDialogListener() {
 
                     @Override
                     public void onItemClick(CharSequence charSequence, int i) {
-                        ToastUtils.showShort(mActivity,charSequence);
-                        if (i == 0){
+                        ToastUtils.showShort(mActivity, charSequence);
+                        if (i == 0) {
                             Intent i2 = new Intent(mActivity, TalkActivity.class);
                             i2.putExtra("tag", "iv_talk");
                             startActivity(i2);
                         }
-                        if(i==1){
+                        if (i == 1) {
                             Intent i3 = new Intent(mActivity, VoiceReleaseActivity.class);
                             i3.putExtra("tag2", "iv_voice");
                             startActivity(i3);
-
                         }
+                    }
 
+                    @Override
+                    public void onBottomBtnClick() {
                     }
                 }).show();
-
-//
-//                Intent i = new Intent(mActivity, TalkActivity.class);
-//                i.putExtra("tag", "iv_talk");
-//                startActivity(i);
                 break;
             case R.id.iv_unuse_goods:
                 break;
             case R.id.iv_house_lease:
                 break;
-//            case R.id.btn_cancel:
-//
-//                break;
+
             case R.id.iv_general_message:
                 Intent i1 = new Intent(mActivity, GeneralMessageActivity.class);
                 i1.putExtra("tag1", "iv_gener");

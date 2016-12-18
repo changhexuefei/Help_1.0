@@ -10,10 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
@@ -24,6 +24,7 @@ import com.hyzsnt.onekeyhelp.module.index.adapter.CommunityListAdapter;
 import com.hyzsnt.onekeyhelp.module.index.bean.CommunityList;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
+import com.hyzsnt.onekeyhelp.utils.PinyinUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,8 +48,8 @@ public class SeekeStateActivity extends BaseActivity {
     ImageView btn_return;
     @BindView(R.id.search_estate_bar)
     EditText mSearchEstateBar;
-    @BindView(R.id.community_list_rec)
-    LRecyclerView mCommunityListRec;
+    @BindView(R.id.province_listView)
+    ListView mProvinceListView;
 
 
     @BindView(R.id.classify)
@@ -79,12 +80,10 @@ public class SeekeStateActivity extends BaseActivity {
     private String condition;
 
     //用户ID
-    private String userid = "4";
+    private String userid = "5";
     //上级行政区域ID
     private String regid = "110000";
 
-
-    private String str;
     //条件集合
     List<String> parms = new ArrayList<>();
     private String lat;
@@ -104,11 +103,11 @@ public class SeekeStateActivity extends BaseActivity {
         Log.d("lon", lon);
         area = new ArrayList<>();
         province = new ArrayList<>();
-//        parms.add("0");
-//        parms.add("4");
-//        parms.add(lat);
-//        parms.add(lon);
-        parms.add("100000");
+        parms.add("0");
+        parms.add(userid);
+        parms.add(lat);
+        parms.add(lon);
+        parms.add("110000");
 
         HttpUtils.post(Api.PUBLIC, "getHotArea", parms, new JsonResponseHandler() {
             @Override
@@ -124,9 +123,15 @@ public class SeekeStateActivity extends BaseActivity {
                         JSONObject object = new JSONObject(response);
                         JSONObject info = object.getJSONObject("info");
                         String regname = info.getString("regname");
-
                         Log.d("12345678", regname);
-                        tv_cityName.setText(regname);
+                        if ("".equals(regname)) {
+                            tv_cityName.setVisibility(View.GONE);
+
+                        } else {
+                            tv_cityName.setText(regname);
+                        }
+
+
                         JSONObject list = object.getJSONObject("list");
                         Log.d("list", "" + list);
                         Iterator<String> iterator = list.keys();
@@ -193,7 +198,7 @@ public class SeekeStateActivity extends BaseActivity {
             public void onClick(View v) {
                 linCity.setVisibility(View.GONE);
                 mLayout.setVisibility(View.GONE);
-                parms.removeAll(area);
+                parms.clear();
                 parms.add("100000");
                 HttpUtils.post(Api.PUBLIC, "getRegional", parms, new JsonResponseHandler() {
                     @Override
@@ -204,7 +209,7 @@ public class SeekeStateActivity extends BaseActivity {
                     @Override
                     public void onSuccess(String response, int id) {
                         Toast.makeText(SeekeStateActivity.this, "成功了", Toast.LENGTH_SHORT).show();
-                        Log.d("0000000000",response);
+                        Log.d("0000000000", response);
 
                         if (JsonUtils.isSuccess(response)) {
                             try {
@@ -219,7 +224,11 @@ public class SeekeStateActivity extends BaseActivity {
                                     String value = list.getString(key);
                                     Log.d("value+++++", value);
                                     province.add(value);
-                                    Log.d("============", "" + province.size());
+                                    Log.d("999999", "" + province);
+                                }
+                                for (int i = 0; i <province.size() ; i++) {
+                                    String firstSpell = PinyinUtils.getFirstSpell(province.get(i));
+                                    Log.e("首字母",firstSpell);
                                 }
 
                             } catch (JSONException e) {
