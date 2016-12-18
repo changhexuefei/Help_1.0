@@ -84,7 +84,6 @@ public class HomeUnLoginFragment extends BaseFragment {
         homeLrvHead.setAdapter(homeHeadAdapter);
         homeLrvHead.setItemAnimator(new DefaultItemAnimator());
 
-
         List params = new ArrayList<String>();
         //params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
         params.add("0");

@@ -79,21 +79,27 @@ public class HomeLoginFragment extends BaseFragment {
             public void onError(Call call, Exception e, int id) {}
             @Override
             public void onSuccess(String response, int id) {
-                Log.d("", response + "");
-                View popupView = View.inflate(getActivity(), R.layout.item_item_home_login_head_pop, null);
-                PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-                mPopupWindow.setTouchable(true);
-                mPopupWindow.setOutsideTouchable(true);
-                mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
-                mPopupWindow.showAsDropDown(homeLoginIvSwich);
-                RecyclerView pop_rv = (RecyclerView) popupView.findViewById(R.id.item_item_head_pop_rlv);
-                final LoginCommunityAdapter loginCommunityAdapter = new LoginCommunityAdapter(getActivity());
-                pop_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                pop_rv.setAdapter(loginCommunityAdapter);
-                pop_rv.setItemAnimator(new DefaultItemAnimator());
-                ArrayList<MDate> loginCommunities = Resovle.getUserInfo(response);
-                loginCommunityAdapter.setDates(loginCommunities);
-                loginCommunityAdapter.notifyDataSetChanged();
+                final ArrayList<MDate> loginCommunities = Resovle.getUserInfo(response);
+                homeLoginIvSwich.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View popupView = View.inflate(getActivity(), R.layout.item_item_home_login_head_pop, null);
+                        PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                        mPopupWindow.setTouchable(true);
+                        mPopupWindow.setOutsideTouchable(true);
+                        mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getActivity().getResources(), (Bitmap) null));
+                        mPopupWindow.showAsDropDown(homeLoginIvSwich);
+                        RecyclerView pop_rv = (RecyclerView) popupView.findViewById(R.id.item_item_head_pop_rlv);
+                        final LoginCommunityAdapter loginCommunityAdapter = new LoginCommunityAdapter(getActivity());
+                        pop_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        pop_rv.setAdapter(loginCommunityAdapter);
+                        pop_rv.setItemAnimator(new DefaultItemAnimator());
+
+                        loginCommunityAdapter.setDates(loginCommunities);
+                        loginCommunityAdapter.notifyDataSetChanged();
+                    }
+                });
+
             }
             @Override
             public void inProgress(float progress, long total, int id) {}
@@ -161,6 +167,7 @@ public class HomeLoginFragment extends BaseFragment {
             }
             @Override
             public void onSuccess(String response, int id) {
+
                 final ArrayList<MDate> dynamicKinds = Resovle.getDynamicKinds(response);
                 homeLoginItemheadIvDynamicselect.setOnClickListener(new View.OnClickListener() {
                     @Override
