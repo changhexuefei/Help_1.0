@@ -46,27 +46,17 @@ import okhttp3.Call;
 
 public class HomeLoginAdapter extends RecyclerView.Adapter {
     private Context mContext;
-    private MainActivity activity;
-    private OnRecyclerViewItemClickListener mOnItemClickListener;
     private ArrayList<MDate> dates = new ArrayList<>();
 
     public HomeLoginAdapter(Context mContext) {
         this.mContext = mContext;
-        activity = (MainActivity) mContext;
-
     }
-
     public ArrayList<MDate> getDates() {
         return dates;
     }
 
     public void setDates(ArrayList<MDate> dates) {
         this.dates = dates;
-    }
-
-    //条目电击事件
-    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
-        this.mOnItemClickListener = listener;
     }
 
     @Override
@@ -87,89 +77,7 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (position == 0) {
             if (holder instanceof HomeLoginViewHolder0) {
-                HomeLoginHeadAdapter homeHeadAdapter = new HomeLoginHeadAdapter(mContext);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-                layoutManager.setOrientation(LinearLayout.HORIZONTAL);
-                ((HomeLoginViewHolder0) holder).homeLoginItemHomeheadRlv.setLayoutManager(layoutManager);
-                ((HomeLoginViewHolder0) holder).homeLoginItemHomeheadRlv.setAdapter(homeHeadAdapter);
-                ((HomeLoginViewHolder0) holder).homeLoginItemHomeheadRlv.setItemAnimator(new DefaultItemAnimator());
 
-                //我的邻居
-                List params = new ArrayList<String>();
-                params.add("2803");//2061  2803
-                params.add("8");
-                params.add("1");
-                //params.add("15551675396");//15551675396
-                HttpUtils.post(Api.COMMUNITY, Api.Community.GETMEMBERLISTBYCOMMUNITY, params, new ResponseHandler() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(String response, int id) {
-
-                        final ArrayList<MDate> memberListByCommunity = Resovle.getMemberListByCommunity(response);
-                        if (memberListByCommunity.size() > 0) {
-                            int sum = Integer.valueOf(memberListByCommunity.get(0).getmInfo().getCommunityListInfo().getTotalnum());
-                            ((HomeLoginViewHolder0) holder).homeLoginItemHeadTvNeighbor.setText(sum + "人");
-                            //进入邻居详情页
-                            ((HomeLoginViewHolder0) holder).homeLoginItemHeadIvNeighbor.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putSerializable("memberListByCommunity", memberListByCommunity);
-                                    Intent i = new Intent(mContext, MyNeighborListActivity.class);
-                                    i.putExtras(bundle);
-                                    mContext.startActivity(i);
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void inProgress(float progress, long total, int id) {
-
-                    }
-                });
-
-                //动态筛选
-                ((HomeLoginViewHolder0) holder).homeLoginItemheadIvDynamicselect.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        View popupView = View.inflate(mContext,R.layout.item_item_home_login_head_pop, null);
-                        PopupWindow mPopupWindow = new PopupWindow(popupView  , LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-                        mPopupWindow.setTouchable(true);
-                        mPopupWindow.setOutsideTouchable(true);
-                        mPopupWindow.setBackgroundDrawable(new BitmapDrawable(mContext.getResources(), (Bitmap) null));
-                        mPopupWindow.showAsDropDown(((HomeLoginViewHolder0) holder).homeLoginItemheadIvDynamicselect);
-                        RecyclerView pop_rv= (RecyclerView) popupView.findViewById(R.id.item_item_head_pop_rlv);
-                        final DynamicKindsAdapter dynamicKindsAdapter=new DynamicKindsAdapter(mContext);
-                        GridLayoutManager gridLayoutManager=new GridLayoutManager(mContext, 5);
-                        pop_rv.setLayoutManager(gridLayoutManager);
-                        pop_rv.setAdapter(dynamicKindsAdapter);
-                        pop_rv.setItemAnimator(new DefaultItemAnimator());
-                        HttpUtils.post(Api.PUBLIC, Api.Public.GETDYNAMICKINDS, new ResponseHandler() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-
-                            }
-                            @Override
-                            public void onSuccess(String response, int id) {
-                                ArrayList<MDate> dynamicKinds = Resovle.getDynamicKinds(response);
-                                dynamicKindsAdapter.setDates(dynamicKinds);
-                                dynamicKindsAdapter.notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void inProgress(float progress, long total, int id) {
-
-                            }
-                        });
-
-
-                    }
-                });
             }
         } else if (position == 1) {
             if (holder instanceof HomeLoginViewHolder1) {
@@ -183,12 +91,7 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
             }
         } else if (position > 1) {
             if (holder instanceof HomeLoginViewHolder2) {
-                ((HomeLoginViewHolder2) holder).itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mOnItemClickListener.onItemClick(v, position);
-                    }
-                });
+
             }
         }
 
@@ -206,7 +109,7 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
 
     public int getItemViewType(int position) {
         if (position == 0) {
-            return 0;
+            return 1;
         } else if (position == 1) {
             return 1;
         } else {
@@ -215,17 +118,9 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
     }
 
     static class HomeLoginViewHolder0 extends RecyclerView.ViewHolder {
-        public RecyclerView homeLoginItemHomeheadRlv;
-        public ImageView homeLoginItemHeadIvNeighbor;
-        public TextView homeLoginItemHeadTvNeighbor;
-        public ImageView homeLoginItemheadIvDynamicselect;
         public HomeLoginViewHolder0(View itemView) {
             super(itemView);
-            homeLoginItemHomeheadRlv = (RecyclerView) itemView.findViewById(R.id.home_login_item_homehead_rlv);
-            homeLoginItemHeadIvNeighbor = (ImageView) itemView.findViewById(R.id.home_login_item_head_iv_neighbor);
-            homeLoginItemHeadTvNeighbor = (TextView) itemView.findViewById(R.id.home_login_item_head_tv_neighbor);
-            homeLoginItemheadIvDynamicselect= (ImageView) itemView.findViewById(R.id.home_login_itemhead_iv_dynamicselect);
-        }
+            }
     }
 
     static class HomeLoginViewHolder1 extends RecyclerView.ViewHolder {
