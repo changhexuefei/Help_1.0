@@ -48,9 +48,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
         <!-- 物品置换 -->
-        <activity android:name=".module.index.activity.GoodsReplaceActivity"/>
+
         <!-- 一键求助页面 -->
         <activity android:name=".module.help.activity.HelpActivity"/>
         <!-- 搜索圈子 -->
@@ -98,7 +99,9 @@
         <!-- 圈子成员列表 -->
         <activity android:name=".module.stroll.activity.CircleMemberList">
         </activity>
+        <!--随便说说-->
         <activity android:name=".module.release.activity.VoiceReleaseActivity">
+
         </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data

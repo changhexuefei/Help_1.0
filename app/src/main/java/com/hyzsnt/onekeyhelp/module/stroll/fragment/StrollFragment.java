@@ -26,6 +26,10 @@ import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleRound;
 import com.hyzsnt.onekeyhelp.module.stroll.widget.CustomExpandaleListView;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
+import com.hyzsnt.onekeyhelp.utils.ToastUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -174,15 +178,12 @@ public class StrollFragment extends BaseFragment {
 		list1.add("1");
 		list1.add("39.923263");
 		list1.add("116.539572");
-		list1.add("");
-		list1.add("");
 		//请求数据
 		HttpUtils.post(Api.CIRCLE, Api.Circle.MELIST, list1, new ResponseHandler() {
 			@Override
 			public void onError(Call call, Exception e, int id) {
 
 			}
-
 			@Override
 			public void onSuccess(String response, int id) {
 				getdata(response);
@@ -201,33 +202,54 @@ public class StrollFragment extends BaseFragment {
 	public void getdata(String response){
 		//解析数据
 		if (JsonUtils.isSuccess(response)) {
-			Gson gson = new Gson();
-			final CircleRound round = gson.fromJson(response, CircleRound.class);
-			//添加适配器
-			CircleFragmentAdapter mCircleFragmentAdapter = new CircleFragmentAdapter(mActivity, round.getList());
-			mExCircleFragment.setAdapter(mCircleFragmentAdapter);
-			//设置将ExpandableListView以展开的方式呈现
-			for (int i = 0; i < mCircleFragmentAdapter.getGroupCount(); i++) {
-				mExCircleFragment.expandGroup(i);
+			try {
+				//获取圈子对象
+				JSONObject circleround = new JSONObject(response);
+				//或去信息
+				JSONObject info = (JSONObject) circleround.get("info");
+				//获取圈子数
+				int circlenum =info.getInt("circlenum");
+				//获取小区数
+				int communitynum = info.getInt("communitynum");
+				//判断小区数和圈子数是否为空
+				if(circlenum>0){
+					//解析全部的数据
+					Gson gson = new Gson();
+					final CircleRound round = gson.fromJson(response, CircleRound.class);
+					//添加适配器
+					CircleFragmentAdapter mCircleFragmentAdapter = new CircleFragmentAdapter(mActivity, round.getList());
+					mExCircleFragment.setAdapter(mCircleFragmentAdapter);
+					//设置将ExpandableListView以展开的方式呈现
+					for (int i = 0; i < mCircleFragmentAdapter.getGroupCount(); i++) {
+						mExCircleFragment.expandGroup(i);
+					}
+					//设置group不能点击收缩
+					mExCircleFragment.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+						@Override
+						public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+							return true;
+						}
+					});
+					//子条目点击跳转
+					mExCircleFragment.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+						@Override
+						public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+							Intent intent = new Intent(mActivity, CircleDetailsActivity.class);
+							intent.putExtra("ccid",round.getList().get(groupPosition).getCircle().get(childPosition).getCcid());
+							startActivity(intent);
+							return false;
+						}
+					});
+				}else{
+					ToastUtils.showShort(mActivity,"暂时没有圈子");
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-			//设置group不能点击收缩
-			mExCircleFragment.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-				@Override
-				public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-					return true;
-				}
-			});
-			//子条目点击跳转
-			mExCircleFragment.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-				@Override
-				public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-					Intent intent = new Intent(mActivity, CircleDetailsActivity.class);
-					intent.putExtra("ccid",round.getList().get(groupPosition).getCircle().get(childPosition).getCcid());
-					startActivity(intent);
 
-					return false;
-				}
-			});
+
+		}else {
+			LogUtils.e("圈子列表请求数据失败");
 		}
 	}
 

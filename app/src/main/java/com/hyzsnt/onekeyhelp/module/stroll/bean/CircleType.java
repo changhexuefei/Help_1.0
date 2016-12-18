@@ -1,58 +1,114 @@
 package com.hyzsnt.onekeyhelp.module.stroll.bean;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/12/11.
  */
 
 public class CircleType {
-	private String name;
-	private int icon;
-	private int backgroundcolor;
-	private Boolean isselect;
 
-	public CircleType(String name, int icon, int backgroundcolor, Boolean isselect) {
-		this.name = name;
-		this.icon = icon;
-		this.backgroundcolor = backgroundcolor;
-		this.isselect = isselect;
+
+
+	/**
+	 * info : []
+	 * list : [{"tagdesc":"#dfa772","tagid":"1","tagname":"美食"},{"tagdesc":"#78abde","tagid":"2","tagname":"健身"},{"tagdesc":"#79dab9","tagid":"3","tagname":"爱宠"},{"tagdesc":"#ea7575","tagid":"4","tagname":"影视"},{"tagdesc":"#53d5d4","tagid":"5","tagname":"亲子"},{"tagdesc":"#dfd07c","tagid":"6","tagname":"聚会"},{"tagdesc":"#dd82a6","tagid":"7","tagname":"音乐"},{"tagdesc":"#ee91e2","tagid":"8","tagname":"互助"},{"tagdesc":"#d6dd82","tagid":"9","tagname":"旅行"},{"tagdesc":"#98e694","tagid":"10","tagname":"交友"},{"tagdesc":"#e7a37c","tagid":"11","tagname":"理财"}]
+	 * res : 1
+	 * restr :
+	 */
+
+	private int res;
+	private String restr;
+
+
+
+
+	/**
+	 * tagdesc : #dfa772
+
+	 * tagid : 1
+	 * tagname : 美食
+	 */
+
+	private List<ListEntry> list;
+
+	public int getRes() {
+		return res;
 	}
 
-	public CircleType(String name, int icon, int backgroundcolor) {
-		this.name = name;
-		this.icon = icon;
-		this.backgroundcolor = backgroundcolor;
+
+	public void setRes(int res) {
+		this.res = res;
 	}
 
-	public Boolean getIsselect() {
-		return isselect;
+	public String getRestr() {
+		return restr;
 	}
 
-	public void setIsselect(Boolean isselect) {
-		this.isselect = isselect;
+	public void setRestr(String restr) {
+		this.restr = restr;
 	}
 
-	public String getName() {
-		return name;
+
+
+	public List<ListEntry> getList() {
+		return list;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setList(List<ListEntry> list) {
+		this.list = list;
 	}
 
-	public int getIcon() {
-		return icon;
-	}
+	public static class ListEntry {
+		private String tagdesc;
+		private String tagid;
+		private String tagname;
+		private Boolean isselect;
 
-	public void setIcon(int icon) {
-		this.icon = icon;
-	}
+		public ListEntry(String tagdesc, String tagid, String tagname, Boolean isselect) {
+			this.tagdesc = tagdesc;
+			this.tagid = tagid;
+			this.tagname = tagname;
+			this.isselect = isselect;
+		}
 
-	public int getBackgroundcolor() {
-		return backgroundcolor;
-	}
+		public String getTagdesc() {
+			return tagdesc;
+		}
 
-	public void setBackgroundcolor(int backgroundcolor) {
-		this.backgroundcolor = backgroundcolor;
-	}
+		public ListEntry(String tagdesc, String tagid, String tagname) {
+			this.tagdesc = tagdesc;
+			this.tagid = tagid;
+			this.tagname = tagname;
+		}
 
+		public void setTagdesc(String tagdesc) {
+			this.tagdesc = tagdesc;
+		}
+
+		public Boolean getIsselect() {
+			return isselect;
+		}
+
+		public void setIsselect(Boolean isselect) {
+			this.isselect = isselect;
+		}
+
+		public String getTagid() {
+			return tagid;
+
+		}
+
+		public void setTagid(String tagid) {
+			this.tagid = tagid;
+		}
+
+		public String getTagname() {
+			return tagname;
+		}
+
+		public void setTagname(String tagname) {
+			this.tagname = tagname;
+		}
+	}
 }

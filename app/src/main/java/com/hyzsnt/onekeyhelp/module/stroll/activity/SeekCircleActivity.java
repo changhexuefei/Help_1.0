@@ -11,13 +11,14 @@ import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleTypeAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
+import com.hyzsnt.onekeyhelp.utils.DbUtils;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SeekCircleActivity extends BaseActivity {
+public class SeekCircleActivity extends BaseActivity{
 
 
 	@BindView(R.id.search_seek_cricle)
@@ -26,7 +27,7 @@ public class SeekCircleActivity extends BaseActivity {
 	RecyclerView mReSeekCircle;
 	@BindView(R.id.im_search_back)
 	ImageView mImSearchBack;
-	private ArrayList<CircleType> mtypelist;
+	private ArrayList<CircleType.ListEntry> mtypelist;
 	@Override
 	protected int getLayoutId() {
 		return R.layout.activity_seek_circle;
@@ -34,16 +35,15 @@ public class SeekCircleActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-		mtypelist = new ArrayList<CircleType>();
-		mtypelist.add(new CircleType("美食",R.mipmap.circle_foods,R.drawable.circle_type_one,false));
-		mtypelist.add(new CircleType("亲自",R.mipmap.circle_by_oneself,R.drawable.circle_type_two,false));
-		mtypelist.add(new CircleType("健身",R.mipmap.circle_fitness,R.drawable.circle_type_three,false));
-		mtypelist.add(new CircleType("聚会",R.mipmap.circle_meeting,R.drawable.circle_type_four,false));
-		mtypelist.add(new CircleType("运动",R.mipmap.circle_sport,R.drawable.circle_type_five,false));
-		mtypelist.add(new CircleType("音乐",R.mipmap.circle_music,R.drawable.circle_type_six,false));
-		mtypelist.add(new CircleType("互助",R.mipmap.circle_help,R.drawable.circle_type_seven,false));
-		mtypelist.add(new CircleType("宠物",R.mipmap.circle_peg,R.drawable.circle_type_eight,false));
-		mtypelist.add(new CircleType("旅行",R.mipmap.circle_travel,R.drawable.circle_type_nine,false));
+		mtypelist = new ArrayList<CircleType.ListEntry>();
+		//从数据库中取出数据
+		DbUtils dbUtils = new DbUtils(SeekCircleActivity.this);
+
+		ArrayList<CircleType.ListEntry> list = new ArrayList<CircleType.ListEntry>();
+		list = dbUtils.queryall();
+		for (int i=0;i<list.size();i++){
+			mtypelist.add(new CircleType.ListEntry(list.get(i).getTagdesc(),list.get(i).getTagid(),list.get(i).getTagname(),false));
+		}
 		mReSeekCircle.setLayoutManager(new GridLayoutManager(this,3));
 		mReSeekCircle.setAdapter(new CircleTypeAdapter(this,mtypelist));
 		int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.dp_13);
