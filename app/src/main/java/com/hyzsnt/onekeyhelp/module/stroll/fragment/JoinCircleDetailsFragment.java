@@ -9,6 +9,7 @@ import android.view.View;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.JoinCircleDeatilsAdapter;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.CiecleDetailss;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleDetails;
 
 import java.util.List;
@@ -22,7 +23,13 @@ import butterknife.BindView;
 public class JoinCircleDetailsFragment extends BaseFragment {
 	@BindView(R.id.re_circle_details)
 	RecyclerView mReCircleDetails;
+	//有话题
 	private CircleDetails mDetails;
+	//无话题
+	private CiecleDetailss mDetailss;
+	//判断是否有话题
+	private Boolean iftotal;
+
 
 	@Override
 	protected List<String> getParams() {
@@ -32,7 +39,12 @@ public class JoinCircleDetailsFragment extends BaseFragment {
 	@Override
 	protected void initData(String content) {
 		mReCircleDetails.setLayoutManager(new LinearLayoutManager(mActivity));
-		mReCircleDetails.setAdapter(new JoinCircleDeatilsAdapter(mActivity,mDetails));
+		//根据是否有话题添加不同的适配器
+		if(iftotal){
+			mReCircleDetails.setAdapter(new JoinCircleDeatilsAdapter(mActivity,mDetails,iftotal));
+		}else {
+			mReCircleDetails.setAdapter(new JoinCircleDeatilsAdapter(mActivity,mDetailss,iftotal));
+		}
 		int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.dp_13);
 		mReCircleDetails.addItemDecoration(new SpaceItemDecoration(spacingInPixels));
 	}
@@ -56,7 +68,13 @@ public class JoinCircleDetailsFragment extends BaseFragment {
 	@Override
 	public void getArgs(Bundle bundle) {
 		super.getArgs(bundle);
-		mDetails = bundle.getParcelable("details");
+		iftotal = bundle.getBoolean("iftotal");
+		if(iftotal){
+			mDetails = bundle.getParcelable("details");
+		}else{
+			mDetailss= bundle.getParcelable("details");
+		}
+
 	}
 	public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
 

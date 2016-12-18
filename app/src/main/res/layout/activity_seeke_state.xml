@@ -17,9 +17,6 @@
         android:layout_marginTop="8dp">
 
         <EditText
-            android:inputType="text"
-            android:singleLine="true"
-            android:imeOptions="actionSearch"
             android:id="@+id/search_estate_bar"
             android:layout_width="280dp"
             android:layout_height="40dp"
@@ -27,6 +24,9 @@
             android:background="@drawable/search_box_shape"
             android:gravity="center"
             android:hint="请输入你想搜索的小区"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:singleLine="true"
             android:textSize="14sp"/>
 
         <ImageView
@@ -40,7 +40,6 @@
             />
 
         <TextView
-            android:layout_toRightOf="@+id/search_estate_bar"
             android:id="@+id/tv_delete_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -52,36 +51,38 @@
             android:textColor="#1ccc9b"
             android:textSize="14sp"/>
 
-
     </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/city"
-        android:layout_marginTop="6dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal">
+
         <TextView
-            android:gravity="center"
-            android:padding="6dp"
+
+            android:id="@+id/city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginLeft="20dp"
             android:background="@drawable/textview_border_shape"
+            android:gravity="center"
+            android:padding="6dp"/>
+
+        <Button
+            android:id="@+id/btn_change"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:id="@+id/city_name"/>
-        <Button
+            android:layout_marginLeft="20dp"
             android:background="@drawable/btn_border_shape"
+            android:text="切换城市"
             android:textColor="#1ccc9b"
             android:textSize="14sp"
-            android:layout_marginLeft="20dp"
-            android:text="切换城市"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:id="@+id/btn_change"
             />
 
     </LinearLayout>
-
 
 
     <FrameLayout
@@ -116,24 +117,26 @@
 
     <!--分类按钮区域-->
     <LinearLayout
-        android:orientation="vertical"
         android:id="@+id/classify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/city"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"/>
 
-    <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:id="@+id/community_list_rec"
+    <!--用来显示中国省份和城市名的ListView-->
+
+    <ListView
+        android:id="@+id/province_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/classify"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="5dp"
+        android:visibility="gone">
 
-
-    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+    </ListView>
 
 
 </RelativeLayout>

@@ -1,15 +1,23 @@
 package com.hyzsnt.onekeyhelp.module.release.activity;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.base.BaseActivity;
 
-public class VoiceReleaseActivity extends AppCompatActivity {
+public class VoiceReleaseActivity extends BaseActivity {
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_voice_release);
+    protected int getLayoutId() {
+        return R.layout.activity_voice_release;
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
     }
 }

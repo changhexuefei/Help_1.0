@@ -50,7 +50,6 @@
             </intent-filter>
         </activity>
         <!-- 物品置换 -->
-        <activity android:name=".module.index.activity.GoodsReplaceActivity"/>
         <!-- 一键求助页面 -->
         <activity android:name=".module.help.activity.HelpActivity"/>
         <!-- 搜索圈子 -->
@@ -99,7 +98,11 @@
         <activity android:name=".module.stroll.activity.CircleMemberList">
         </activity>
         <activity android:name=".module.release.activity.VoiceReleaseActivity">
-        </activity>
+        </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
     </application>
 
 </manifest>

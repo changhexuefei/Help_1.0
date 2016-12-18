@@ -166,6 +166,7 @@ public class TalkActivity extends BaseActivity {
                             @Override
                             public void onError(Call call, Exception e, int id) {
                             }
+
                             @Override
                             public void onSuccess(String response, int id) {
                                 Log.d("fabu", response);

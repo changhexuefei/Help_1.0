@@ -121,7 +121,10 @@ public class Api {
 		 * 获取动态类别
 		 */
 		public static final String GETDYNAMICKINDS = "getDynamicKinds";
-
+		/**
+		 * 获取圈子标签
+		 */
+		public static final String GETCIRCLETAGS = "getCircleTags";
 	}
 
 	/**

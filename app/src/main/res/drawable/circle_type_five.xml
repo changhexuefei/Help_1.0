@@ -5,10 +5,7 @@
 
 	<size android:height="@dimen/dp_48"
 	      android:width="@dimen/dp_100"></size>
-	<stroke
-		android:width="@dimen/dp_4"
-		android:color="#82DF8B"
-		/>
+
 	<corners
 		android:bottomLeftRadius="@dimen/dp_4"
 		android:radius="@dimen/dp_4"></corners>
