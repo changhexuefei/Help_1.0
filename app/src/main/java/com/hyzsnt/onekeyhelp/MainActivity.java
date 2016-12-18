@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@BindView(R.id.btn_sos)
 	Button mBtnSos;
 
-	private boolean isLogin = true;
+	private boolean isLogin = false;
 
 	/**
 	 * 首页

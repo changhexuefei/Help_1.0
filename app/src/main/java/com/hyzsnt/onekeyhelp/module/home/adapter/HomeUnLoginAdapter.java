@@ -37,15 +37,13 @@ import okhttp3.Call;
  */
 
 public class HomeUnLoginAdapter extends RecyclerView.Adapter {
-    private RecyclerView homeLrvHead;
     private Context mContext;
-    private MainActivity activity;
     private View v1;
     private View v2;
     private ArrayList<MDate> dates=new ArrayList<>();
     public HomeUnLoginAdapter(Context mContext) {
         this.mContext = mContext;
-        activity = (MainActivity) mContext;
+
     }
 
     public ArrayList<MDate> getDates() {
@@ -54,6 +52,7 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
 
     public void setDates(ArrayList<MDate> dates) {
         this.dates = dates;
+        //Log.e("3333333333333", dates.toString());
     }
 
     @Override
@@ -72,13 +71,7 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CommunityListList communityListList = dates.get(0).getmList().getCommunityListLists().get(position);
         if (getItemViewType(position) == 0) {
-            homeLrvHead = (RecyclerView) v1.findViewById(R.id.home_lrv_head);
-            HomeUnLoginHeadAdapter homeHeadAdapter = new HomeUnLoginHeadAdapter(mContext);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-            layoutManager.setOrientation(LinearLayout.HORIZONTAL);
-            homeLrvHead.setLayoutManager(layoutManager);
-            homeLrvHead.setAdapter(homeHeadAdapter);
-            homeLrvHead.setItemAnimator(new DefaultItemAnimator());
+
         } else {
             if (holder instanceof HomeViewHolder2) {
                 ((HomeViewHolder2) holder).homeUnListTvCmanem.setText(communityListList.getCmname());
@@ -147,17 +140,15 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
         public TextView homeUnListTvCmanem;
         public HomeViewHolder2(View itemView) {
             super(itemView);
-
             homeIvDetail = (ImageView) itemView.findViewById(R.id.home_iv_detail);
             mHomeCurcumHeadportrait= (ImageView) itemView.findViewById(R.id.home_curcum_headportrait);
             homeUnListTvCmanem= (TextView) itemView.findViewById(R.id.home_un_list_tv_cmanem);
         }
     }
-
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-            return 0;
+            return 1;
         } else {
             return 1;
         }
