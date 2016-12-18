@@ -19,6 +19,7 @@ import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleTypeAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
+import com.hyzsnt.onekeyhelp.utils.DbUtils;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
@@ -34,7 +35,7 @@ import cn.finalteam.galleryfinal.GalleryFinal;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
 import okhttp3.Call;
 
-public class CreateCircleActivity extends BaseActivity {
+public class CreateCircleActivity extends BaseActivity{
 
 
 	@BindView(R.id.im_circle_back)
@@ -52,7 +53,7 @@ public class CreateCircleActivity extends BaseActivity {
 	@BindView(R.id.activity_create_circle)
 	TextView mActivityCreateCircle;
 	//圈子类型集合
-	private ArrayList<CircleType> mtypelist;
+	private ArrayList<CircleType.ListEntry> mtypelist;
 	private int count=0;
 	String result;
 
@@ -63,16 +64,14 @@ public class CreateCircleActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
-		mtypelist = new ArrayList<CircleType>();
-		mtypelist.add(new CircleType("美\n食",R.mipmap.circle_foods,R.drawable.circle_type_one,false));
-		mtypelist.add(new CircleType("亲\n自",R.mipmap.circle_by_oneself,R.drawable.circle_type_two,false));
-		mtypelist.add(new CircleType("健\n身",R.mipmap.circle_fitness,R.drawable.circle_type_three,false));
-		mtypelist.add(new CircleType("聚\n会",R.mipmap.circle_meeting,R.drawable.circle_type_four,false));
-		mtypelist.add(new CircleType("运\n动",R.mipmap.circle_sport,R.drawable.circle_type_five,false));
-		mtypelist.add(new CircleType("音\n乐",R.mipmap.circle_music,R.drawable.circle_type_six,false));
-		mtypelist.add(new CircleType("互\n助",R.mipmap.circle_help,R.drawable.circle_type_seven,false));
-		mtypelist.add(new CircleType("宠\n物",R.mipmap.circle_peg,R.drawable.circle_type_eight,false));
-		mtypelist.add(new CircleType("旅\n行",R.mipmap.circle_travel,R.drawable.circle_type_nine,false));
+		ArrayList<CircleType.ListEntry> list = new ArrayList<CircleType.ListEntry>();
+		mtypelist = new ArrayList<CircleType.ListEntry>();
+		//从数据库中取出数据
+		DbUtils dbUtils = new DbUtils(CreateCircleActivity.this);
+		list = dbUtils.queryall();
+		for (int i=0;i<list.size();i++){
+			mtypelist.add(new CircleType.ListEntry(list.get(i).getTagdesc(),list.get(i).getTagid(),list.get(i).getTagname(),false));
+		}
 		mReCreateCircleType.setLayoutManager(new GridLayoutManager(this,3));
 		final CircleTypeAdapter adapter = new CircleTypeAdapter(this,mtypelist);
 		mReCreateCircleType.setAdapter(adapter);
@@ -88,15 +87,14 @@ public class CreateCircleActivity extends BaseActivity {
 					}
 				}
 				if(count<3||mtypelist.get(data).getIsselect()){
-					LogUtils.e(mtypelist.get(data).getName().replace("\n",""));
 					if(mtypelist.get(data).getIsselect()){
 						mtypelist.get(data).setIsselect(false);
 					}else{
 						mtypelist.get(data).setIsselect(true);
 					}
-					adapter.notifyItemChanged(data);
+					  adapter.notifyItemChanged(data);
 				}else{
-				ToastUtils.showShort(CreateCircleActivity.this,"最多只能选中三个");
+				    ToastUtils.showShort(CreateCircleActivity.this,"最多只能选中三个");
 				}
 
 
@@ -114,7 +112,6 @@ public class CreateCircleActivity extends BaseActivity {
 				break;
 			case R.id.relayout_create_circle_two:
 			{
-
 
 				GalleryFinal.openGallerySingle(1,new GalleryFinal.OnHanlderResultCallback() {
 					@Override
@@ -143,11 +140,13 @@ public class CreateCircleActivity extends BaseActivity {
 				String str = "";
 				for (int i=0;i<mtypelist.size();i++){
 					if(mtypelist.get(i).getIsselect()){
-						str += mtypelist.get(i).getName().replace("\n","");
+						str+= mtypelist.get(i).getTagid();
+						if (i < mtypelist.size() - 1) {
+							str += "|";
+						}
 
 					}
 				}
-				str = appendSeprator(str,"|",2);
 				list.add(str);
 
 				list.add(mEtCreateCircleDes.getText().toString());
@@ -161,7 +160,7 @@ public class CreateCircleActivity extends BaseActivity {
 					@Override
 					public void onSuccess(String response, int id) {
 						if(JsonUtils.isSuccess(response)){
-							LogUtils.e("成功");
+
 							LogUtils.e(response);
 						}else {
 							LogUtils.e("失败");
@@ -208,10 +207,8 @@ public class CreateCircleActivity extends BaseActivity {
 			if (bitmap != null) {
 				baos = new ByteArrayOutputStream();
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-
 				baos.flush();
 				baos.close();
-
 				byte[] bitmapBytes = baos.toByteArray();
 				result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
 			}
@@ -228,20 +225,5 @@ public class CreateCircleActivity extends BaseActivity {
 			}
 		}
 		return result;
-	}
-	/** * 在字符串中添加分隔符
-	 *  @param srcStr 原字符串
-	 *  @param seprator 分隔符
-	 *  @param count 间隔几个字符加分隔符
-	 *  @return 处理后的字符串
-	 */
-	public static String appendSeprator(String srcStr, String seprator, int count) {
-		StringBuffer sb = new StringBuffer(srcStr);
-		int index = count;
-		while (sb.length() > count && index < sb.length() - 1) {
-			sb.insert(index, seprator);
-			index += count + 1;
-		}
-		return sb.toString();
 	}
 }

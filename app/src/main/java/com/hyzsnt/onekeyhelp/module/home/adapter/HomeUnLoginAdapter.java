@@ -37,15 +37,13 @@ import okhttp3.Call;
  */
 
 public class HomeUnLoginAdapter extends RecyclerView.Adapter {
-    private RecyclerView homeLrvHead;
     private Context mContext;
-    private MainActivity activity;
     private View v1;
     private View v2;
     private ArrayList<MDate> dates=new ArrayList<>();
     public HomeUnLoginAdapter(Context mContext) {
         this.mContext = mContext;
-        activity = (MainActivity) mContext;
+
     }
 
     public ArrayList<MDate> getDates() {
@@ -54,6 +52,7 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
 
     public void setDates(ArrayList<MDate> dates) {
         this.dates = dates;
+        //Log.e("3333333333333", dates.toString());
     }
 
     @Override
