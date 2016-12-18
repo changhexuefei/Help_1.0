@@ -1,9 +1,7 @@
 package com.hyzsnt.onekeyhelp.module.release.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +20,6 @@ import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
 import com.hyzsnt.onekeyhelp.module.release.adapter.ChoosePhotoListAdapter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -217,11 +214,4 @@ public class TalkActivity extends BaseActivity {
         mCbx.setChecked(isChecked);
     }
 
-    public String convertIconToString(Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();// outputstream
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] appicon = baos.toByteArray();// 转为byte数组
-        return Base64.encodeToString(appicon, Base64.DEFAULT);
-
-    }
 }
