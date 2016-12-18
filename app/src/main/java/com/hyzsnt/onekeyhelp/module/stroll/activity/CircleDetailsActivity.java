@@ -18,6 +18,10 @@ import com.hyzsnt.onekeyhelp.module.stroll.fragment.UnjoinCircleDetailsFragment;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +31,7 @@ import okhttp3.Call;
 
 public class CircleDetailsActivity extends BaseActivity {
 
-	public String isjoin ="";
+	public String isjoin = "";
 	private CiecleDetailss mDetailss;
 	@BindView(R.id.im_circle_details_back)
 	ImageView mImCircleDetailsBack;
@@ -56,8 +60,6 @@ public class CircleDetailsActivity extends BaseActivity {
 		HttpUtils.post(Api.CIRCLE, Api.Circle.CIRCLE_DETAILS, list, new ResponseHandler() {
 
 
-
-
 			@Override
 			public void onError(Call call, Exception e, int id) {
 
@@ -65,51 +67,74 @@ public class CircleDetailsActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess(String response, int id) {
-				if(JsonUtils.isSuccess(response)){
-					//解析数据
-					Gson gson =new Gson();
-					LogUtils.e(response);
-					mDetailss = gson.fromJson(response, CiecleDetailss.class);
-					//获取是否加入圈子
-					isjoin =mDetailss.getInfo().getIfjoin();
-					//获取话题数
-					int totalnum = Integer.parseInt(mDetailss.getInfo().getListinfo().getTotalnum());
-					if(isjoin.equals("1")){
-						if(totalnum>0){
-							mDetails = gson.fromJson(response, CircleDetails.class);
+				if (JsonUtils.isSuccess(response)) {
+					LogUtils.e("数据"+response);
+					try {
+						//获取圈子详情
+						JSONObject circleDetails = new JSONObject(response);
+						JSONObject info = circleDetails.getJSONObject("info");
+						//获取是否加入圈子
+					    String ifjoin = info.getString("ifjoin");
+						//获取话题集合
+						JSONArray totallist = circleDetails.getJSONArray("list");
+						//隐藏所有的fragment
+						hideFragments();
+						FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+						//判断是否加入圈子
+						if (ifjoin.equals("1")) {
+							//显示话题列表
+							if (mJoinCircleDetailsFragment == null) {
+								mJoinCircleDetailsFragment = new JoinCircleDetailsFragment();
+								//通过bundle传递数据
+								Bundle bundle = new Bundle();
+								//判断是否有话题
+								if ("".equals(totallist)) {
+									//没有话题完全解析
+									Gson gson = new Gson();
+									mDetailss = gson.fromJson(response, CiecleDetailss.class);
+									bundle.putParcelable("details", mDetailss);
+									bundle.putBoolean("iftotal",false);
+								} else {
+									//有话题完全解析
+									Gson gson = new Gson();
+									mDetails = gson.fromJson(response, CircleDetails.class);
+									bundle.putParcelable("details", mDetails);
+									bundle.putBoolean("iftotal",true);
+
+								}
+								mJoinCircleDetailsFragment.setArguments(bundle);
+								transaction.add(R.id.frlayout_circle_dietails, mJoinCircleDetailsFragment);
+								transaction.show(mJoinCircleDetailsFragment);
+							} else {
+								transaction.show(mJoinCircleDetailsFragment);
+							}
+
+						} else {
+							//显示圈子介绍
+							if (mUnjoinCircleDetailsFragment == null) {
+								mUnjoinCircleDetailsFragment = new UnjoinCircleDetailsFragment();
+								//没有话题完全解析
+								Gson gson = new Gson();
+								mDetailss = gson.fromJson(response, CiecleDetailss.class);
+								Bundle bundle = new Bundle();
+								LogUtils.e(mDetailss.toString());
+								bundle.putParcelable("details", mDetailss);
+								mUnjoinCircleDetailsFragment.setArguments(bundle);
+								transaction.add(R.id.frlayout_circle_dietails, mUnjoinCircleDetailsFragment);
+								transaction.show(mUnjoinCircleDetailsFragment);
+							} else {
+								transaction.show(mUnjoinCircleDetailsFragment);
+							}
+
 						}
-						LogUtils.e(response);
+
+						transaction.commit();
+
+
+					} catch (JSONException e) {
+						e.printStackTrace();
 					}
-					hideFragments();
-					FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-					if(isjoin.equals("1")){
-						if (mJoinCircleDetailsFragment == null) {
-							mJoinCircleDetailsFragment = new JoinCircleDetailsFragment();
-							Bundle bundle = new Bundle();
-							bundle.putParcelable("details",mDetails);
-							mJoinCircleDetailsFragment.setArguments(bundle);
-							transaction.add(R.id.frlayout_circle_dietails, mJoinCircleDetailsFragment);
-							transaction.show(mJoinCircleDetailsFragment);
-						}else{
-							transaction.show(mJoinCircleDetailsFragment);
-						}
 
-					}else{
-						if (mUnjoinCircleDetailsFragment == null) {
-							mUnjoinCircleDetailsFragment = new UnjoinCircleDetailsFragment();
-							Bundle bundle = new Bundle();
-							bundle.putParcelable("details",mDetailss);
-
-							mUnjoinCircleDetailsFragment.setArguments(bundle);
-							transaction.add(R.id.frlayout_circle_dietails, mUnjoinCircleDetailsFragment);
-							transaction.show(mUnjoinCircleDetailsFragment);
-						}else{
-							transaction.show(mUnjoinCircleDetailsFragment);
-						}
-
-					}
-
-					transaction.commit();
 
 				}
 			}
@@ -121,13 +146,13 @@ public class CircleDetailsActivity extends BaseActivity {
 		});
 
 
-
 	}
 
 	@OnClick(R.id.im_circle_details_back)
 	public void onClick() {
 		finish();
 	}
+
 	/**
 	 * 隐藏所有fragment
 	 */

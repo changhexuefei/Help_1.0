@@ -1,8 +1,10 @@
 package com.hyzsnt.onekeyhelp;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -14,26 +16,37 @@ import android.widget.RadioGroup;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
+import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
+import com.hyzsnt.onekeyhelp.http.Api;
+import com.hyzsnt.onekeyhelp.http.HttpUtils;
+import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.help.activity.HelpActivity;
 import com.hyzsnt.onekeyhelp.module.help.bean.LocationInfo;
 import com.hyzsnt.onekeyhelp.module.help.service.LocationService;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
 import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 import com.hyzsnt.onekeyhelp.module.stroll.fragment.StrollFragment;
 import com.hyzsnt.onekeyhelp.module.user.fragment.UserFragment;
+import com.hyzsnt.onekeyhelp.utils.DbUtils;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
+
 @RuntimePermissions
 public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener {
 
@@ -84,6 +97,48 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	protected void initData() {
 		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
 		initLocation();
+		SharedPreferences sp = getSharedPreferences("tags", Context.MODE_PRIVATE);
+		Boolean isfirst = sp.getBoolean("isfirst",true);
+		if(isfirst){
+			//请求标签数据
+			HttpUtils.post(Api.PUBLIC, Api.Public.GETCIRCLETAGS, new ResponseHandler() {
+				@Override
+				public void onError(Call call, Exception e, int id) {
+
+				}
+
+				@Override
+				public void onSuccess(String response, int id) {
+					if (JsonUtils.isSuccess(response)) {
+						Gson gson = new Gson();
+						CircleType circleType = gson.fromJson(response, CircleType.class);
+						List<CircleType.ListEntry> list = circleType.getList();
+						DbUtils db = new DbUtils(MainActivity.this);
+						for(int i=0;i<list.size();i++){
+							Boolean insert = db.insert(list.get(i));
+							ToastUtils.showShort(MainActivity.this,insert+"");
+						}
+
+
+
+					} else {
+
+					}
+
+				}
+
+				@Override
+				public void inProgress(float progress, long total, int id) {
+
+				}
+			});
+			SharedPreferences sps = getSharedPreferences("tags", Context.MODE_PRIVATE);
+			SharedPreferences.Editor edit = sp.edit();
+			edit.putBoolean("isfirst",false);
+			edit.commit();
+
+		}
+
 	}
 
 	@NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})

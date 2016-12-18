@@ -1,12 +1,15 @@
+
 package com.hyzsnt.onekeyhelp.module.stroll.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
@@ -14,16 +17,18 @@ import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 
 import java.util.ArrayList;
 
+
 /**
  * Created by Administrator on 2016/12/11.
  */
 
+
 public class CircleTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
 	private Context context;
-	private ArrayList<CircleType> list;
+	private ArrayList<CircleType.ListEntry> list;
 	private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
-	public CircleTypeAdapter(Context context, ArrayList<CircleType> list) {
+	public CircleTypeAdapter(Context context, ArrayList<CircleType.ListEntry> list) {
 		this.context = context;
 		this.list = list;
 	}
@@ -39,9 +44,11 @@ public class CircleTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 		if(holder instanceof CircleTypeViewHolder){
 
-		   ((CircleTypeViewHolder) holder).ic_type.setImageResource(list.get(position).getIcon());
-			((CircleTypeViewHolder) holder).typename.setText(list.get(position).getName());
-			((CircleTypeViewHolder) holder).mLinearLayout.setBackgroundResource(list.get(position).getBackgroundcolor());
+
+			((CircleTypeViewHolder) holder).typename.setText(list.get(position).getTagname());
+			//设置shape颜色
+			GradientDrawable myGrad = (GradientDrawable)((CircleTypeViewHolder) holder).mRelativeLayout.getBackground();
+			myGrad.setColor(Color.parseColor(list.get(position).getTagdesc()));
 			if(list.get(position).getIsselect()){
 				((CircleTypeViewHolder) holder).mselect.setVisibility(View.VISIBLE);
 			}else{
@@ -70,15 +77,13 @@ public class CircleTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 	class CircleTypeViewHolder extends RecyclerView.ViewHolder {
 		TextView typename;
-		ImageView ic_type;
-		LinearLayout mLinearLayout;
+		RelativeLayout mRelativeLayout;
 		ImageView mselect;
 
 		public CircleTypeViewHolder(View itemView) {
 			super(itemView);
 			typename = (TextView) itemView.findViewById(R.id.tv_circle_type_name);
-			ic_type= (ImageView) itemView.findViewById(R.id.im_circle_type);
-			mLinearLayout= (LinearLayout) itemView.findViewById(R.id.llayout_circle_type);
+			mRelativeLayout = (RelativeLayout) itemView.findViewById(R.id.relayout_circle_type);
 			mselect = (ImageView) itemView.findViewById(R.id.im_circle_select);
 
 		}
@@ -92,3 +97,4 @@ public class CircleTypeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 	}
 
 }
+
