@@ -50,7 +50,7 @@
             </intent-filter>
         </activity>
         <!-- 物品置换 -->
-        <activity android:name=".module.index.activity.GoodsReplaceActivity"/>
+        
         <!-- 一键求助页面 -->
         <activity android:name=".module.help.activity.HelpActivity"/>
         <!-- 搜索圈子 -->
