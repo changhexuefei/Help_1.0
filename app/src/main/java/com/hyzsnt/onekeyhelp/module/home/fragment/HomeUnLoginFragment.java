@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +17,14 @@ import android.widget.TextView;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.github.jdsjlzx.view.CommonHeader;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
+import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginHeadAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
@@ -68,6 +71,19 @@ public class HomeUnLoginFragment extends BaseFragment {
         final LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
         homeLrv.setItemAnimator(new DefaultItemAnimator());
         homeLrv.setAdapter(adapter);
+
+        //加入头布局
+        CommonHeader header=new CommonHeader(getActivity(),R.layout.item_home_lrv_head);
+        adapter.addHeaderView(header);
+
+        RecyclerView homeLrvHead = (RecyclerView) header.findViewById(R.id.home_lrv_head);
+        HomeUnLoginHeadAdapter homeHeadAdapter = new HomeUnLoginHeadAdapter(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayout.HORIZONTAL);
+        homeLrvHead.setLayoutManager(layoutManager);
+        homeLrvHead.setAdapter(homeHeadAdapter);
+        homeLrvHead.setItemAnimator(new DefaultItemAnimator());
+
 
         List params = new ArrayList<String>();
         //params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995

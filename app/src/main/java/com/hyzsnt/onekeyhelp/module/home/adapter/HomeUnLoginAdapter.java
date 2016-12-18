@@ -72,13 +72,7 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CommunityListList communityListList = dates.get(0).getmList().getCommunityListLists().get(position);
         if (getItemViewType(position) == 0) {
-            homeLrvHead = (RecyclerView) v1.findViewById(R.id.home_lrv_head);
-            HomeUnLoginHeadAdapter homeHeadAdapter = new HomeUnLoginHeadAdapter(mContext);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-            layoutManager.setOrientation(LinearLayout.HORIZONTAL);
-            homeLrvHead.setLayoutManager(layoutManager);
-            homeLrvHead.setAdapter(homeHeadAdapter);
-            homeLrvHead.setItemAnimator(new DefaultItemAnimator());
+
         } else {
             if (holder instanceof HomeViewHolder2) {
                 ((HomeViewHolder2) holder).homeUnListTvCmanem.setText(communityListList.getCmname());
@@ -147,17 +141,15 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
         public TextView homeUnListTvCmanem;
         public HomeViewHolder2(View itemView) {
             super(itemView);
-
             homeIvDetail = (ImageView) itemView.findViewById(R.id.home_iv_detail);
             mHomeCurcumHeadportrait= (ImageView) itemView.findViewById(R.id.home_curcum_headportrait);
             homeUnListTvCmanem= (TextView) itemView.findViewById(R.id.home_un_list_tv_cmanem);
         }
     }
-
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
-            return 0;
+            return 1;
         } else {
             return 1;
         }
