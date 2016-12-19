@@ -5,40 +5,42 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import com.google.gson.Gson;
 import com.hss01248.dialog.StyledDialog;
 import com.hss01248.dialog.interfaces.MyItemDialogListener;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
+import com.hyzsnt.onekeyhelp.http.Api;
+import com.hyzsnt.onekeyhelp.http.HttpUtils;
+import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.module.release.activity.GeneralMessageActivity;
 import com.hyzsnt.onekeyhelp.module.release.activity.TalkActivity;
 import com.hyzsnt.onekeyhelp.module.release.activity.VoiceReleaseActivity;
+import com.hyzsnt.onekeyhelp.module.release.adapter.ReleaseListAdapter;
+import com.hyzsnt.onekeyhelp.module.release.bean.Release;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.OnClick;
-
-import static com.hyzsnt.onekeyhelp.utils.SPUtils.getAll;
-import static com.hyzsnt.onekeyhelp.utils.SPUtils.isLogin;
+import okhttp3.Call;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ReleaseFragment extends BaseFragment {
 
-    @BindView(R.id.iv_talk)
-    LinearLayout mIvTalk;
-    @BindView(R.id.iv_general_message)
-    LinearLayout mIvGeneralMessage;
-    @BindView(R.id.iv_unuse_goods)
-    LinearLayout mIvUnuseGoods;
-    @BindView(R.id.iv_house_lease)
-    LinearLayout mIvHouseLease;
+    List<String> parms;
+    private static final String MTYPE = "getMTypeDynamic";
+    @BindView(R.id.release_list)
+    ListView mReleaseList;
+    private ReleaseListAdapter mAdapter;
+    List<Release.ListBean> releaseList;
 
 
     public ReleaseFragment() {
@@ -53,16 +55,8 @@ public class ReleaseFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
-        Map<String, ?> map = getAll(getContext());
+        getReleaseListInfo();
 
-
-        Log.d("登录", isLogin() + "");
-        //登录状态下，可以看到综合信息一栏，未登录状态，不能看到综合信息
-        if (isLogin()) {
-            mIvGeneralMessage.setVisibility(View.GONE);
-        } else {
-            mIvGeneralMessage.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -80,16 +74,64 @@ public class ReleaseFragment extends BaseFragment {
         return null;
     }
 
+    /**
+     * 进入发布页面，首先获得动态的信息列表，动态显示
+     */
+    public void getReleaseListInfo() {
+        parms = new ArrayList<>();
+        parms.add("");
+        HttpUtils.post(Api.PUBLISH, MTYPE, parms, new JsonResponseHandler() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
 
-    @OnClick({R.id.iv_talk, R.id.iv_unuse_goods, R.id.iv_house_lease, R.id.btn_cancel, R.id.iv_general_message})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            //点击随便说说页面，跳转到发表说说页面
-            case R.id.iv_talk:
-                final List<String> strings = new ArrayList<>();
+            }
+
+            @Override
+            public void onSuccess(String response, int id) {
+                if (JsonUtils.isSuccess(response)) {
+                     releaseList = new ArrayList<Release.ListBean>();
+                    Log.d("发布动态", response);
+                    Gson gson = new Gson();
+                    Release release = gson.fromJson(response, Release.class);
+                    Log.d("release", release + "");
+                    releaseList = release.getList();
+                    mAdapter = new ReleaseListAdapter(mActivity);
+                    mAdapter.setListBeen(releaseList);
+                    mReleaseList.setAdapter(mAdapter);
+                    mReleaseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if(releaseList.get(position).getPkey()!=null){
+                                if(releaseList.get(position).getPkey().equals("3")){
+                                    popupDialog();
+                                }else if(releaseList.get(position).getPkey().equals("2")){
+                                    Intent i1 = new Intent(mActivity, GeneralMessageActivity.class);
+                                    i1.putExtra("tag1", "iv_gener");
+                                    startActivity(i1);
+                                }
+//                                else if(){
+//                                         房屋出租
+//
+//                                }else if(){
+//                                          闲置物品
+//
+//                                }
+                            }
+                        }
+                    });
+
+                } else {
+                    JsonUtils.getErrorMessage(response);
+                }
+
+            }
+        });
+    }
+
+    public void popupDialog(){
+        final List<String> strings = new ArrayList<>();
                 strings.add("文字发布");
                 strings.add("语音发布");
-
                 StyledDialog.buildBottomItemDialog(mActivity, strings, "取消", new MyItemDialogListener() {
 
                     @Override
@@ -106,24 +148,15 @@ public class ReleaseFragment extends BaseFragment {
                             startActivity(i3);
                         }
                     }
-
                     @Override
                     public void onBottomBtnClick() {
                     }
                 }).show();
-                break;
-            case R.id.iv_unuse_goods:
-                break;
-            case R.id.iv_house_lease:
-                break;
 
-            case R.id.iv_general_message:
-                Intent i1 = new Intent(mActivity, GeneralMessageActivity.class);
-                i1.putExtra("tag1", "iv_gener");
-                startActivity(i1);
-                break;
 
-        }
+
+
     }
+
 
 }
