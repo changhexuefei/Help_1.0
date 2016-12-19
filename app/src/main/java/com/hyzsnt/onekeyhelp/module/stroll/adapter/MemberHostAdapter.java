@@ -10,9 +10,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.http.Api;
+import com.hyzsnt.onekeyhelp.http.HttpUtils;
+import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleJoin;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleMember;
 import com.hyzsnt.onekeyhelp.module.stroll.widget.SwipeMenuView;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.ToastUtils;
+
+import java.util.ArrayList;
+
+import okhttp3.Call;
 
 /**
  * Created by Administrator on 2016/12/16.
@@ -22,8 +31,8 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 	private Context context;
 	private CircleMember mCircleMember;
 	private CircleJoin circlejoin;
-
 	private Boolean ishost;
+
 	public MemberHostAdapter(Context activity, Boolean ishost) {
 		this.context = activity;
 		this.ishost = ishost;
@@ -51,29 +60,92 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
 	@Override
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-		if(circlejoin != null && !circlejoin.equals("")){
-			if(holder instanceof JoinViewHolder){
-				CircleJoin.ListEntry listEntry = circlejoin.getList().get(position);
+		if (circlejoin != null && !circlejoin.equals("")) {
+			if (holder instanceof JoinViewHolder) {
+				final CircleJoin.ListEntry listEntry = circlejoin.getList().get(position);
+				//昵称
 				((JoinViewHolder) holder).nickname.setText(listEntry.getNickname());
+				//头像
 				Glide.with(context).load(listEntry.getHeadportraid()).into(((JoinViewHolder) holder).headportraid);
-
+				//性别
+				String gender = listEntry.getGender();
+				if("0".equals(gender)){
+					((JoinViewHolder) holder).gender.setVisibility(View.GONE);
+				}else if("1".equals(gender)){
+					((JoinViewHolder) holder).gender.setImageResource(R.mipmap.man);
+				}else if("2".equals(gender)){
+					((JoinViewHolder) holder).gender.setImageResource(R.mipmap.female);
+				}
+				//同意监听
+				final int finalPosition = position;
+				((JoinViewHolder) holder).agree.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						applyJoin("1", finalPosition,listEntry.getId());
+					}
+				});
+				//拒绝监听
+				((JoinViewHolder) holder).unagree.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						applyJoin("0",finalPosition,listEntry.getId());
+					}
+				});
 			}
 		}
-		if(mCircleMember != null && !mCircleMember.equals("")){
-			if(holder instanceof MViewHolder){
+		if (mCircleMember != null && !mCircleMember.equals("")) {
+			if (holder instanceof MViewHolder) {
 				MViewHolder viewHolder = (MViewHolder) holder;
 				//这句话关掉IOS阻塞式交互效果 并依次打开左滑右滑
-				((SwipeMenuView) viewHolder.itemView).setIos(false).setLeftSwipe(true);
-
-				if(circlejoin != null && !circlejoin.equals("")){
-					position =position-circlejoin.getList().size();
-					if(!ishost){
+					((SwipeMenuView) viewHolder.itemView).setIos(false).setLeftSwipe(true);
+				if (circlejoin != null && !circlejoin.equals("")) {
+					position = position - circlejoin.getList().size();
+					if (!ishost) {
 						((SwipeMenuView) viewHolder.itemView).setSwipeEnable(false);
 					}
 				}
-				CircleMember.ListEntry listEntry= mCircleMember.getList().get(position);
+				CircleMember.ListEntry listEntry = mCircleMember.getList().get(position);
+				//昵称
 				((MViewHolder) holder).nickname.setText(listEntry.getNickname());
+				//头像
 				Glide.with(context).load(listEntry.getHeadportraid()).into(((MViewHolder) holder).headportraid);
+				//性别
+				String gender = listEntry.getGender();
+				if("0".equals(gender)){
+					((MViewHolder) holder).gender.setVisibility(View.GONE);
+				}else if("1".equals(gender)){
+					((MViewHolder) holder).gender.setImageResource(R.mipmap.man);
+				}else if("2".equals(gender)){
+					((MViewHolder) holder).gender.setImageResource(R.mipmap.female);
+				}
+				/*String flags =listEntry.getHobbytags();
+				String[] flist = flags.split("\\|");
+				DbUtils db = new DbUtils(context);
+
+				for(int j=0;j<flist.length;j++){
+
+					if(flist.length==3){
+						CircleType.ListEntry query = db.query(flist[2]);
+						((MViewHolder) holder).tagthree.setText(query.getTagname());
+						GradientDrawable myGrad = (GradientDrawable) ((MViewHolder) holder).tagthree.getBackground();
+						myGrad.setColor(Color.parseColor(query.getTagdesc()));
+						((MViewHolder) holder).tagthree.setVisibility(View.VISIBLE);
+					}
+					if(flist.length>=2){
+						CircleType.ListEntry query = db.query(flist[1]);
+						((MViewHolder) holder).tagtwo.setText(query.getTagname());
+						GradientDrawable myGrad = (GradientDrawable)((MViewHolder) holder).tagtwo.getBackground();
+						myGrad.setColor(Color.parseColor(query.getTagdesc()));
+						((MViewHolder) holder).tagtwo.setVisibility(View.VISIBLE);
+					} if(flist.length>=1){
+						CircleType.ListEntry query = db.query(flist[0]);
+						((MViewHolder) holder).tagone.setText(query.getTagname());
+						GradientDrawable myGrad = (GradientDrawable) ((MViewHolder) holder).tagone.getBackground();
+						myGrad.setColor(Color.parseColor(query.getTagdesc()));
+						((MViewHolder) holder).tagone.setVisibility(View.VISIBLE);
+					}
+				}*/
+
 			}
 		}
 
@@ -96,19 +168,20 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 	class MViewHolder extends RecyclerView.ViewHolder {
 		ImageView headportraid;
 		ImageView gender;
-		ImageView tagone;
-		ImageView tagtwo;
-		ImageView tagthree;
+		TextView tagone;
+		TextView tagtwo;
+		TextView tagthree;
 		TextView nickname;
 		TextView age;
 		TextView delete;
+
 		public MViewHolder(View itemView) {
 			super(itemView);
 			headportraid = (ImageView) itemView.findViewById(R.id.im_member_host_headportraid);
 			gender = (ImageView) itemView.findViewById(R.id.im_member_host_gender);
-			tagone = (ImageView) itemView.findViewById(R.id.im_member_tag_one);
-			tagtwo = (ImageView) itemView.findViewById(R.id.im_member_tag_two);
-			tagthree = (ImageView) itemView.findViewById(R.id.im_member_tag_three);
+			tagone = (TextView) itemView.findViewById(R.id.im_member_tag_one);
+			tagtwo = (TextView) itemView.findViewById(R.id.im_member_tag_two);
+			tagthree = (TextView) itemView.findViewById(R.id.im_member_tag_three);
 			nickname = (TextView) itemView.findViewById(R.id.tv_member_host_nickname);
 			age = (TextView) itemView.findViewById(R.id.tv_member_host_age);
 			delete = (TextView) itemView.findViewById(R.id.tv_delete_btn);
@@ -133,6 +206,7 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 			unagree = (TextView) itemView.findViewById(R.id.tv_member_host_unagree);
 			nickname = (TextView) itemView.findViewById(R.id.tv_member_host_nickname);
 			age = (TextView) itemView.findViewById(R.id.tv_member_host_age);
+
 		}
 	}
 
@@ -145,5 +219,33 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 			}
 		}
 		return 1;
+	}
+	//申请事件处理
+	public void applyJoin(String resultcode, final int position,String id){
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("23");
+		list.add(id);
+		list.add(resultcode);
+		HttpUtils.post(Api.CIRCLE, Api.Circle.DOWITHJOINAPPLY, list, new ResponseHandler() {
+			@Override
+			public void onError(Call call, Exception e, int id) {
+
+			}
+
+			@Override
+			public void onSuccess(String response, int id) {
+				if(JsonUtils.isSuccess(response)){
+					ToastUtils.showShort(context,"处理成功");
+					circlejoin.getList().remove(position);
+					notifyItemRemoved(position);
+					notifyItemRangeChanged(position,circlejoin.getList().size());
+				}
+			}
+
+			@Override
+			public void inProgress(float progress, long total, int id) {
+
+			}
+		});
 	}
 }

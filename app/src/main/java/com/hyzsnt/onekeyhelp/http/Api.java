@@ -195,6 +195,16 @@ public class Api {
 		 *
 		 */
 		public static final String CREATE_CIRCLE ="createCircle";
+		/**
+		 * 闲逛申请加入圈子
+		 *
+		 */
+		public static final String APPLYJOINCIRCLE ="applyJoinCircle";
+		/**
+		 * 闲逛加入圈子申请处理
+		 *
+		 */
+		public static final String DOWITHJOINAPPLY ="dowithJoinApply";
 	}
 
 

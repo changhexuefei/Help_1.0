@@ -175,7 +175,7 @@ public class StrollFragment extends BaseFragment {
 	public void  CircleMe(){
 		//参数p
 		ArrayList<String> list1 = new ArrayList<>();
-		list1.add("1");
+		list1.add("23");
 		list1.add("39.923263");
 		list1.add("116.539572");
 		//请求数据
@@ -186,6 +186,7 @@ public class StrollFragment extends BaseFragment {
 			}
 			@Override
 			public void onSuccess(String response, int id) {
+				LogUtils.e(response);
 				getdata(response);
 			}
 

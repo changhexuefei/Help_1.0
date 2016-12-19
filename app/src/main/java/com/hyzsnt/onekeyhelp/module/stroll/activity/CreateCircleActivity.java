@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,12 +22,12 @@ import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleTypeAdapter;
+import com.hyzsnt.onekeyhelp.module.stroll.adapter.CommunityAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 import com.hyzsnt.onekeyhelp.utils.DbUtils;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class CreateCircleActivity extends BaseActivity {
 	LinearLayout mLlExchangeCommunity;
 	//圈子类型集合
 	private ArrayList<CircleType.ListEntry> mtypelist;
+	//标识选中的标签数
 	private int count = 0;
 	String result;
 
@@ -138,6 +140,7 @@ public class CreateCircleActivity extends BaseActivity {
 
 			break;
 			case R.id.activity_create_circle: {
+				//添加p参数
 				List<String> list = new ArrayList<>();
 				list.add("23");
 				list.add("2803");
@@ -179,6 +182,8 @@ public class CreateCircleActivity extends BaseActivity {
 			break;
 			case R.id.ll_exchange_community: {
 				View popupView = View.inflate(CreateCircleActivity.this, R.layout.pop_create_circle_community, null);
+				ListView lv = (ListView) popupView.findViewById(R.id.ll_create_circle_community);
+				lv.setAdapter(new CommunityAdapter(CreateCircleActivity.this));
 				PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
 				mPopupWindow.setTouchable(true);
 				mPopupWindow.setOutsideTouchable(true);

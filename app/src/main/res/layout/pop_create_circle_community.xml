@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-<ListView
-	android:id="@+id/ll_create_circle_community"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+              android:layout_width="80dp"
+              android:layout_height="match_parent"
+              android:gravity="center">
 
-</ListView>
+	<ListView
+		android:dividerHeight="@dimen/dp_1"
+		android:id="@+id/ll_create_circle_community"
+		android:layout_width="62dp"
+		android:layout_height="match_parent">
+
+	</ListView>
 </LinearLayout>
