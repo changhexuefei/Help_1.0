@@ -5,9 +5,9 @@
     android:orientation="vertical"
     android:background="#F7F7F7"
     android:paddingBottom="@dimen/dp_5">
-    <android.support.v7.widget.RecyclerView
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/item_item_head_pop_rlv"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
+    </com.github.jdsjlzx.recyclerview.LRecyclerView>
 </LinearLayout>

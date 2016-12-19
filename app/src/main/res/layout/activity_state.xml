@@ -12,6 +12,7 @@
         android:background="#1CCD9A"
         android:orientation="horizontal">
         <ImageView
+            android:id="@+id/state_goback"
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
             android:src="@drawable/home_goback"
@@ -44,10 +45,16 @@
             android:src="@drawable/home_transpond"/>
 
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/sate_activity_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-    </android.support.v7.widget.RecyclerView>
+    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+    <EditText
+        android:id="@+id/state_et_replay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="#F00"/>
 </LinearLayout>

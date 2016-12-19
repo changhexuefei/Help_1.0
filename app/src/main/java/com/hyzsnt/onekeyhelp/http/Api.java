@@ -30,6 +30,11 @@ public class Api {
 	 * 闲逛类字段
 	 */
 	public static final String CIRCLE = "circle";
+	/**
+	 *发布类字段
+	 */
+	public static  final String PUBLISH ="publish";
+
 
 	/**
 	 * 公共类
@@ -137,6 +142,7 @@ public class Api {
 		public static final String GETUSERINFO = "getUserInfo";
 		//joinCommunity
 		public static final String JOINCOMMUNITY = "joinCommunity";
+
 
 	}
 

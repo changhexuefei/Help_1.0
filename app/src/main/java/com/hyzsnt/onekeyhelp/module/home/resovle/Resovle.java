@@ -9,11 +9,13 @@ import com.hyzsnt.onekeyhelp.module.home.bean.Coordinateres;
 import com.hyzsnt.onekeyhelp.module.home.bean.DynamicKinds;
 import com.hyzsnt.onekeyhelp.module.home.bean.DynamicListByCommunityList;
 import com.hyzsnt.onekeyhelp.module.home.bean.HomeComment;
+import com.hyzsnt.onekeyhelp.module.home.bean.LoginCircle;
 import com.hyzsnt.onekeyhelp.module.home.bean.LoginCommunity;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.bean.MInfo;
 import com.hyzsnt.onekeyhelp.module.home.bean.MList;
 import com.hyzsnt.onekeyhelp.module.home.bean.MemberListByCommunityList;
+import com.hyzsnt.onekeyhelp.module.home.bean.UserInfoInfo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -140,7 +142,7 @@ public class Resovle {
                             if(jsonCircleListJSONObject.has("cmid")){
                                 homeCircle.setCmid(jsonCircleListJSONObject.getString("cmid"));
                             }
-
+                            homeCircleList.add(homeCircle);
                         }
 
                         communityListList.setHomeCircleList(homeCircleList);
@@ -157,6 +159,28 @@ public class Resovle {
         dates.add(mDate);
         return dates;
     }
+    //加入小区
+    public static ArrayList<MDate> getJoinCommunity(String str) {
+        ArrayList<MDate> dates = new ArrayList<>();
+        MDate mDate = new MDate();
+
+        try {
+            JSONObject jsonDate=new JSONObject(str);
+            if(jsonDate.has("res")){
+                String res=jsonDate.getString("res");
+                mDate.setRes(res);
+            }
+            if(jsonDate.has("restr")){
+                String  restr=jsonDate.getString("restr");
+                mDate.setRestr(restr);
+            }
+        }catch (Exception e){
+
+        }
+        dates.add(mDate);
+        return  dates;
+    }
+    //获取单个小区信息
     public static ArrayList<MDate> getCommunityInfo(String str) {
         ArrayList<MDate> dates = new ArrayList<>();
         MDate mDate = new MDate();
@@ -252,6 +276,7 @@ public class Resovle {
         dates.add(mDate);
         return dates;
     }
+    //获取小区成员列表
     public static ArrayList<MDate> getMemberListByCommunity(String str) {
         ArrayList<MDate> dates = new ArrayList<>();
         MDate mDate = new MDate();
@@ -334,6 +359,7 @@ public class Resovle {
         dates.add(mDate);
         return dates;
     }
+    //获取动态信息列表
     public static ArrayList<MDate> getDynamicListByCommunity(String str) {
         ArrayList<MDate> dates = new ArrayList<>();
         MDate mDate = new MDate();
@@ -399,6 +425,9 @@ public class Resovle {
                     }
                     if (jsondynamicListByCommunityList.has("mtype")) {
                         dynamicListByCommunityList.setMtype(jsondynamicListByCommunityList.getString("mtype"));
+                    }
+                    if (jsondynamicListByCommunityList.has("mtypename")) {
+                        dynamicListByCommunityList.setMtypeName(jsondynamicListByCommunityList.getString("mtypename"));
                     }
                     if (jsondynamicListByCommunityList.has("objectid")) {
                         dynamicListByCommunityList.setObjectid(jsondynamicListByCommunityList.getString("objectid"));
@@ -485,6 +514,7 @@ public class Resovle {
         dates.add(mDate);
         return dates;
     }
+    //获取动态类别
     public static ArrayList<MDate> getDynamicKinds(String str) {
         ArrayList<MDate> dates = new ArrayList<>();
         MDate mDate = new MDate();
@@ -521,6 +551,7 @@ public class Resovle {
         dates.add(mDate);
         return dates;
     }
+    //获取用户信息
     public static ArrayList<MDate> getUserInfo(String str) {
         ArrayList<MDate> dates = new ArrayList<>();
         MDate mDate = new MDate();
@@ -534,6 +565,52 @@ public class Resovle {
                 String  restr=jsonDate.getString("restr");
                 mDate.setRestr(restr);
             }
+            //获取info
+            //数据结构基本和CommunityListInfo一样，所以用的是CommunityListInfo
+            if(jsonDate.has("info")) {
+                MInfo mInfo = new MInfo();
+                UserInfoInfo userInfoInfo = new UserInfoInfo();
+                JSONObject jsonUserInfoInfo = jsonDate.getJSONObject("info");
+                if (jsonUserInfoInfo.has("uid")) {
+                    userInfoInfo.setUid(jsonUserInfoInfo.getString("uid"));
+                }
+                if (jsonUserInfoInfo.has("phoneno")) {
+                    userInfoInfo.setPhoneno(jsonUserInfoInfo.getString("phoneno"));
+                }
+                if (jsonUserInfoInfo.has("nickname")) {
+                    userInfoInfo.setNickname(jsonUserInfoInfo.getString("nickname"));
+                }
+                if (jsonUserInfoInfo.has("headportraid")) {
+                    userInfoInfo.setHeadportraid(jsonUserInfoInfo.getString("headportraid"));
+                }
+                if (jsonUserInfoInfo.has("incommunity")) {
+                    userInfoInfo.setIncommunity(jsonUserInfoInfo.getString("incommunity"));
+                }
+                if (jsonUserInfoInfo.has("incommunitynum")) {
+                    userInfoInfo.setIncommunitynum(jsonUserInfoInfo.getString("incommunitynum"));
+                }
+                if (jsonUserInfoInfo.has("incirclenum")) {
+                    userInfoInfo.setIncirclenum(jsonUserInfoInfo.getString("incirclenum"));
+                }
+                if (jsonUserInfoInfo.has("status")) {
+                    userInfoInfo.setStatus(jsonUserInfoInfo.getString("status"));
+                }
+                if (jsonUserInfoInfo.has("gender")) {
+                    userInfoInfo.setGender(jsonUserInfoInfo.getString("gender"));
+                }
+                if (jsonUserInfoInfo.has("hobbytags")) {
+                    userInfoInfo.setHobbytags(jsonUserInfoInfo.getString("hobbytags"));
+                }
+                if (jsonUserInfoInfo.has("lastonline")) {
+                    userInfoInfo.setLastonline(jsonUserInfoInfo.getString("lastonline"));
+                }
+                if (jsonUserInfoInfo.has("regtime")) {
+                    userInfoInfo.setRegtime(jsonUserInfoInfo.getString("regtime"));
+                }
+                mInfo.setUserInfoInfo(userInfoInfo);
+                mDate.setmInfo(mInfo);
+            }
+            //获取list
             if(jsonDate.has("list")) {
                 MList mList = new MList();
                 ArrayList<LoginCommunity> loginCommunities=new ArrayList<>();
@@ -561,7 +638,33 @@ public class Resovle {
                         loginCommunities.add(loginCommunity);
                     }
                 }
+                //已加入圈子解析
+                ArrayList<LoginCircle> loginCircles=new ArrayList<>();
+                if(jsonLoginCommunityList.has("circles")){
+                    JSONArray jsonCommunities = jsonLoginCommunityList.getJSONArray("circles");
+                    for (int i = 0; i < jsonCommunities.length(); i++) {
+                        JSONObject jsonLoginCommunity= jsonCommunities.getJSONObject(i);
+                        LoginCircle loginCircle=new LoginCircle();
+                        if(jsonLoginCommunity.has("ccid")) {
+                            loginCircle.setCcid(jsonLoginCommunity.getString("ccid"));
+                        }
+                        if(jsonLoginCommunity.has("ccname")) {
+                            loginCircle.setCcname(jsonLoginCommunity.getString("ccname"));
+                        }
+                        if(jsonLoginCommunity.has("cccover")) {
+                            loginCircle.setCccover(jsonLoginCommunity.getString("cccover"));
+                        }
+                        if(jsonLoginCommunity.has("curnum")) {
+                            loginCircle.setCurnum(jsonLoginCommunity.getString("curnum"));
+                        }
+                        if(jsonLoginCommunity.has("cmid")) {
+                            loginCircle.setCmid(jsonLoginCommunity.getString("cmid"));
+                        }
+                        loginCircles.add(loginCircle);
+                    }
+                }
                 mList.setLoginCommunities(loginCommunities);
+                mList.setLoginCircles(loginCircles);
                 mDate.setmList(mList);
             }
         }catch (Exception e){

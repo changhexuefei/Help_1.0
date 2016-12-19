@@ -51,7 +51,6 @@ public class MyNeighborListActivity extends BaseActivity implements TextWatcher 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         mInfoList = (ArrayList<MDate>) bundle.get("memberListByCommunity");
-
         mNeighborListAdapter = new MyNeighborListAdapter();
         final LinearLayoutManager manager = new LinearLayoutManager(MyNeighborListActivity.this, LinearLayoutManager.VERTICAL, false);
         mMyNeighborList.setLayoutManager(manager);
