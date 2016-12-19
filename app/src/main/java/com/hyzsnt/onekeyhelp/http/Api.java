@@ -177,7 +177,7 @@ public class Api {
 		/**
 	     * 闲逛周边圈子列表
 		 */
-		public static final String ROUNDLIST ="getHomeCircleList";
+		public static final String ROUNDLIST ="getCircleList";
 		/**
 		 * 闲逛我的列表
 		 */
@@ -201,6 +201,16 @@ public class Api {
 		 *
 		 */
 		public static final String CREATE_CIRCLE ="createCircle";
+		/**
+		 * 闲逛申请加入圈子
+		 *
+		 */
+		public static final String APPLYJOINCIRCLE ="applyJoinCircle";
+		/**
+		 * 闲逛加入圈子申请处理
+		 *
+		 */
+		public static final String DOWITHJOINAPPLY ="dowithJoinApply";
 	}
 
 

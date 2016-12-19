@@ -17,6 +17,9 @@
 			android:layout_centerVertical="true"
 			android:paddingLeft="@dimen/dp_18"
 			android:paddingRight="@dimen/dp_6"
+
+			android:paddingBottom="@dimen/dp_10"
+			android:paddingTop="@dimen/dp_10"
 			android:src="@mipmap/stroll_create"
 			/>
 
@@ -50,8 +53,10 @@
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
-			android:paddingLeft="@dimen/dp_6"
 			android:paddingRight="@dimen/dp_18"
+			android:paddingLeft="@dimen/dp_18"
+			android:paddingBottom="@dimen/dp_10"
+			android:paddingTop="@dimen/dp_10"
 			android:src="@drawable/home_image_search"/>
 
 	</RelativeLayout>
