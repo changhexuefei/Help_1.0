@@ -304,6 +304,8 @@ public class SeekeStateActivity extends BaseActivity {
                                                             phci.setcName(value);
                                                             phCitys.add(phci);
                                                         }
+//                                                            initAutoLL();
+
 //                                                        Intent intent = new Intent(SeekeStateActivity.this,)
 //                                                        startActivityForResult();
 
