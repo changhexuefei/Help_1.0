@@ -17,6 +17,12 @@ import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +56,8 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
     private String lon;
 
     private AudioManager mAudioManager;
+    private String mPath;
+
 
     @Override
     protected int getLayoutId() {
@@ -81,14 +89,57 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
             case R.id.delete_voice:
                 break;
             case R.id.release_voice:
+                String mVoice1="";
                 String nickName = mTalkerNickname.getText().toString();
+                File file = new File(mPath);
+                if (file.exists()) {
+                    BufferedInputStream bis = null;
+                    ByteArrayOutputStream baos = null;
+                    try {
+                        baos = new ByteArrayOutputStream();
+                        bis = new BufferedInputStream(new FileInputStream(file));
+                        int len = 0;
+                        byte[] bytes = new byte[1024 * 4];
+                        while ((len = bis.read(bytes)) != -1) {
+                            baos.write(bytes, 0, len);
+                            Log.d("33333", baos + "");
+                            baos.flush();
+                        }
+                        mVoice1 = baos.toString();
+                        byte[] data = baos.toByteArray();
+                        String str = new String(data);
+                        Log.d("2222222", str);
+                        Log.d("1111111111", mVoice1);
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (baos != null) {
+                            try {
+                                baos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (bis != null) {
+                                try {
+                                    bis.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                }
+
                 p = new ArrayList<>();
                 p.add("4");
                 p.add(lat);
                 p.add(lon);
                 p.add(nickName);
                 p.add("-1");
-                p.add("");
+                p.add(mVoice1);
                 HttpUtils.post(PUBLISH, PUBLISHDYNAMIC, p, new JsonResponseHandler() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
@@ -122,10 +173,10 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
 
     private void stopRecord() {
         mAudioManager.stopRecordAndFile();
-        String path = mAudioManager.getRecordFilePath();
-        Log.d("录制完成", path);
-        Toast.makeText(VoiceReleaseActivity.this, "录制完成" + path, Toast.LENGTH_SHORT).show();
-//        File file = new File(path);
+        mPath = mAudioManager.getRecordFilePath();
+        Log.d("录制完成", mPath);
+        Toast.makeText(VoiceReleaseActivity.this, "录制完成" + mPath, Toast.LENGTH_SHORT).show();
+
 
     }
 
