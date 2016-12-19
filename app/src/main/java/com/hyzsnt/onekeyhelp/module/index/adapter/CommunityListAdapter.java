@@ -16,8 +16,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.R.attr.format;
-
 /**
  * Created by gao on 2016/12/14.
  */
@@ -47,7 +45,6 @@ public class CommunityListAdapter extends RecyclerView.Adapter<RecyclerView.View
             DecimalFormat df = new DecimalFormat("######0"); //四色五入转换成整数
             String distance = df.format(dis);
             itemViewHolder.tv_community_distance.setText(distance+" 米");
-
             itemViewHolder.tv_community_name.setText(mCommunityLists.get(position).getCmname());
 //            itemViewHolder.homeIvDetail.setImageResource(mCommunityLists.get(position).getNeighborSexIcon());
         }
