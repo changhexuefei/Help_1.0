@@ -111,7 +111,6 @@ public class SeekeStateActivity extends BaseActivity {
         getCurrentLocation();
         area = new ArrayList<>();
         province = new ArrayList<>();
-
         pinyinComparator = new PinyinComparator();
 
     }
@@ -125,7 +124,7 @@ public class SeekeStateActivity extends BaseActivity {
         lon = Double.toString(getLocation().getLongitude());
         Log.d("lon", lon);
 
-        parms.add("0");
+        parms.add("1");
         parms.add(userid);
         parms.add(lat);
         parms.add(lon);
@@ -274,7 +273,6 @@ public class SeekeStateActivity extends BaseActivity {
                                 mProvinceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                     @Override
                                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                        String name = mSortCities.get(position).getName();
                                         String cityID = mSortCities.get(position).getId();
                                         ToastUtils.showLong(SeekeStateActivity.this, cityID);
                                         parms.clear();
@@ -306,7 +304,8 @@ public class SeekeStateActivity extends BaseActivity {
                                                             phci.setcName(value);
                                                             phCitys.add(phci);
                                                         }
-
+//                                                        Intent intent = new Intent(SeekeStateActivity.this,)
+//                                                        startActivityForResult();
 
                                                     } catch (JSONException e) {
                                                         e.printStackTrace();

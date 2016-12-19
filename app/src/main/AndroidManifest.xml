@@ -95,7 +95,12 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"/>
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v4.1" >
+                </action>
+            </intent-filter>
+        </service>
         <!-- 圈子成员列表 -->
         <activity android:name=".module.stroll.activity.CircleMemberList">
         </activity>

@@ -153,9 +153,6 @@ public class ReleaseFragment extends BaseFragment {
                     }
                 }).show();
 
-
-
-
     }
 
 

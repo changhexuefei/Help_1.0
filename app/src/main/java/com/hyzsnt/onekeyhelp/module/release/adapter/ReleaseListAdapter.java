@@ -64,7 +64,6 @@ public class ReleaseListAdapter extends BaseAdapter {
             convertView.setTag(itemViewHolder);
         } else {
             itemViewHolder = (ItemViewHolder) convertView.getTag();
-
         }
         if (mListBeen.get(position).getPkey() != null) {
 
@@ -73,11 +72,11 @@ public class ReleaseListAdapter extends BaseAdapter {
             } else if (GENERAL.equals(mListBeen.get(position).getPkey())) {
                 itemViewHolder.iv_release_icon.setImageResource(R.mipmap.general_message);
             }
-//            else if (UNUSE.equals(mListBeen.get(position).getPval())) {
+//            else if (UNUSE.equals(mListBeen.get(position).getPkey())) {
 //
 //                itemViewHolder.iv_release_icon.setImageResource(R.mipmap.unuse_goods);
 //
-//            } else if (RENT.equals(mListBeen.get(position).getPval())) {
+//            } else if (RENT.equals(mListBeen.get(position).getPkey())) {
 //
 //                itemViewHolder.iv_release_icon.setImageResource(R.mipmap.house_lease);
 //            }
