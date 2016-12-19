@@ -46,6 +46,7 @@
                 android:gravity="bottom"/>
         </LinearLayout>
         <Button
+            android:id="@+id/home_un_bt_join"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_16"

@@ -1,5 +1,6 @@
 package com.hyzsnt.onekeyhelp.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 		initData();
 		initListener();
 	}
-
 	protected void initListener() {
 	}
 

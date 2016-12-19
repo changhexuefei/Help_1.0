@@ -98,10 +98,8 @@ public class HomeUnLoginFragment extends BaseFragment {
             @Override
             public void onError(Call call, Exception e, int id) {
             }
-
             @Override
             public void onSuccess(String response, int id) {
-                Log.e("0000000000","----"+response);
                 ArrayList<MDate> dates = Resovle.getCommunityList(response);
                 mHomeAdapter.setDates(dates);
                 mHomeAdapter.notifyDataSetChanged();
@@ -146,7 +144,6 @@ public class HomeUnLoginFragment extends BaseFragment {
     @Override
     protected void initView(View contentView) {
         super.initView(contentView);
-        Log.e("----------", "");
     }
 
     @Override
@@ -162,8 +159,9 @@ public class HomeUnLoginFragment extends BaseFragment {
         String registrationID = JPushInterface.getRegistrationID(getActivity());
         List params = new ArrayList<String>();
         //params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
-        params.add("7");
+
         params.add("2803");
+        params.add("7");
         HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY, params, new ResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
