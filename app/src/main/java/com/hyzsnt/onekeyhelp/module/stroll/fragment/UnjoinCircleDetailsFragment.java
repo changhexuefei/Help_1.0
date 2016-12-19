@@ -26,16 +26,22 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class UnjoinCircleDetailsFragment extends BaseFragment {
+	//背景图
 	@BindView(R.id.im_unjoin_circle_cover)
 	ImageView mImUnjoinCircleCover;
+	//加入的成员数
 	@BindView(R.id.tv_unjion_circle_num)
 	TextView mTvUnjionCircleNum;
+	//圈主头像
 	@BindView(R.id.im_unjoin_circle_headportraid)
 	CircleImageView mImUnjoinCircleHeadportraid;
+	//性别
 	@BindView(R.id.im_unjoin_circle_gender)
 	ImageView mImUnjoinCirclegender;
+	//昵称
 	@BindView(R.id.tv_unjion_circle_nikename)
 	TextView mTvUnjionCircleNikename;
+
 	@BindView(R.id.tv_unjoin_circle_status)
 	TextView mTvUnjoinCircleStatus;
 	@BindView(R.id.tv_unjoin_circle_tag1)
