@@ -94,7 +94,6 @@ public class HomeLoginFragment extends BaseFragment {
                         pop_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
                         pop_rv.setAdapter(loginCommunityAdapter);
                         pop_rv.setItemAnimator(new DefaultItemAnimator());
-
                         loginCommunityAdapter.setDates(loginCommunities);
                         loginCommunityAdapter.notifyDataSetChanged();
                     }
