@@ -19,10 +19,8 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
-			android:paddingRight="@dimen/dp_18"
 			android:paddingLeft="@dimen/dp_18"
-			android:paddingBottom="@dimen/dp_10"
-			android:paddingTop="@dimen/dp_10"
+			android:paddingRight="@dimen/dp_6"
 			android:src="@mipmap/circle_back"
 			/>
 		<TextView
@@ -41,16 +39,31 @@
 	android:layout_height="match_parent"
 
 	android:background="#F0F0F0">
-<android.support.v7.widget.SearchView
+<LinearLayout
 	    android:id="@+id/search_seek_cricle"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="50dp"
 		android:background="#FFF"
 	    android:layout_marginRight="@dimen/dp_10"
 	    android:layout_marginLeft="@dimen/dp_10"
 	    android:layout_marginTop="@dimen/dp_12"
-	     android:queryHint="请输入你要搜索的圈子">
-    </android.support.v7.widget.SearchView>
+	    android:orientation="horizontal"
+        android:gravity="center_vertical"
+	  >
+	<ImageView
+		android:layout_width="60dp"
+		android:layout_height="20dp"
+		android:src="@mipmap/seek_circle"
+		android:layout_weight="1"
+		android:layout_marginLeft="@dimen/dp_4"/>
+	<EditText
+		android:id="@+id/et_seek_circle"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_weight="1"
+		android:hint="请输入你要搜素的圈子"
+		android:textSize="@dimen/sp_12"/>
+    </LinearLayout>
 	<android.support.v7.widget.RecyclerView
 		android:layout_below="@id/search_seek_cricle"
 		android:id="@+id/re_seek_circle"

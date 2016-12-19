@@ -171,7 +171,7 @@ public class Api {
 		/**
 	     * 闲逛周边圈子列表
 		 */
-		public static final String ROUNDLIST ="getHomeCircleList";
+		public static final String ROUNDLIST ="getCircleList";
 		/**
 		 * 闲逛我的列表
 		 */
