@@ -33,8 +33,10 @@ import com.hyzsnt.onekeyhelp.module.home.adapter.DynamicKindsAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeLoginHeadAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.LoginCommunityAdapter;
+import com.hyzsnt.onekeyhelp.module.home.bean.DynamicListByCommunityList;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
+import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 import com.hyzsnt.onekeyhelp.module.index.activity.MyNeighborListActivity;
 
 import java.util.ArrayList;
@@ -42,7 +44,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import okhttp3.Call;
 
 /**
@@ -58,7 +59,7 @@ public class HomeLoginFragment extends BaseFragment {
     private ImageView homeLoginItemHeadIvNeighbor;
     private TextView homeLoginItemHeadTvNeighbor;
     private ImageView homeLoginItemheadIvDynamicselect;
-
+    private ArrayList<MDate> dynamicListByCommunitys;
     public HomeLoginFragment() {
         // Required empty public constructor
     }
@@ -76,7 +77,9 @@ public class HomeLoginFragment extends BaseFragment {
         //params.add("2061");//2061  2803
         HttpUtils.post(Api.USER, Api.User.GETUSERINFO, params0, new ResponseHandler() {
             @Override
-            public void onError(Call call, Exception e, int id) {}
+            public void onError(Call call, Exception e, int id) {
+            }
+
             @Override
             public void onSuccess(String response, int id) {
                 final ArrayList<MDate> loginCommunities = Resovle.getUserInfo(response);
@@ -101,7 +104,8 @@ public class HomeLoginFragment extends BaseFragment {
 
             }
             @Override
-            public void inProgress(float progress, long total, int id) {}
+            public void inProgress(float progress, long total, int id) {
+            }
         });
 
 
@@ -114,11 +118,43 @@ public class HomeLoginFragment extends BaseFragment {
         //加入头布局
         CommonHeader header = new CommonHeader(getActivity(), R.layout.item_home_login_head);
         adapter.addHeaderView(header);
+        final ImageView homeLoginCommunityDetail= (ImageView) header.findViewById(R.id.home_login_community_detail);
+        List paramshead = new ArrayList<String>();
+        paramshead.add(2061 + "");//2061  2803
+        paramshead.add(5 + "");
+        HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, paramshead, new ResponseHandler() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+            }
+
+            @Override
+            public void onSuccess(String response, int id) {
+                ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
+                final Bundle bundle = new Bundle();
+                bundle.putSerializable("communityInfoList", communityInfoList);
+                homeLoginCommunityDetail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getActivity(), CompoundInfoActivity.class);
+                        i.putExtras(bundle);
+                        startActivity(i);
+                    }
+                });
+
+            }
+
+            @Override
+            public void inProgress(float progress, long total, int id) {
+            }
+        });
+
+
+
         //初始化控件
         homeLoginItemHomeheadRlv = (RecyclerView) header.findViewById(R.id.home_login_item_homehead_rlv);
         homeLoginItemHeadIvNeighbor = (ImageView) header.findViewById(R.id.home_login_item_head_iv_neighbor);
         homeLoginItemHeadTvNeighbor = (TextView) header.findViewById(R.id.home_login_item_head_tv_neighbor);
-        homeLoginItemheadIvDynamicselect= (ImageView) header.findViewById(R.id.home_login_itemhead_iv_dynamicselect);
+        homeLoginItemheadIvDynamicselect = (ImageView) header.findViewById(R.id.home_login_itemhead_iv_dynamicselect);
         //动态title
         HomeLoginHeadAdapter homeHeadAdapter = new HomeLoginHeadAdapter(getActivity());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -135,7 +171,8 @@ public class HomeLoginFragment extends BaseFragment {
         //params.add("15551675396");//15551675396
         HttpUtils.post(Api.COMMUNITY, Api.Community.GETMEMBERLISTBYCOMMUNITY, params, new ResponseHandler() {
             @Override
-            public void onError(Call call, Exception e, int id) {}
+            public void onError(Call call, Exception e, int id) {
+            }
             @Override
             public void onSuccess(String response, int id) {
                 final ArrayList<MDate> memberListByCommunity = Resovle.getMemberListByCommunity(response);
@@ -155,8 +192,10 @@ public class HomeLoginFragment extends BaseFragment {
                     });
                 }
             }
+
             @Override
-            public void inProgress(float progress, long total, int id) {}
+            public void inProgress(float progress, long total, int id) {
+            }
         });
 
         //动态筛选
@@ -164,6 +203,7 @@ public class HomeLoginFragment extends BaseFragment {
             @Override
             public void onError(Call call, Exception e, int id) {
             }
+
             @Override
             public void onSuccess(String response, int id) {
 
@@ -172,14 +212,14 @@ public class HomeLoginFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         View popupView = View.inflate(getActivity(), R.layout.item_item_home_login_head_pop, null);
-                        PopupWindow mPopupWindow = new PopupWindow(popupView  , LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                        PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
                         mPopupWindow.setTouchable(true);
                         mPopupWindow.setOutsideTouchable(true);
                         mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
                         mPopupWindow.showAsDropDown(homeLoginItemheadIvDynamicselect);
-                        RecyclerView pop_rv= (RecyclerView) popupView.findViewById(R.id.item_item_head_pop_rlv);
-                        final DynamicKindsAdapter dynamicKindsAdapter=new DynamicKindsAdapter(getActivity());
-                        GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(), 5);
+                        RecyclerView pop_rv = (RecyclerView) popupView.findViewById(R.id.item_item_head_pop_rlv);
+                        final DynamicKindsAdapter dynamicKindsAdapter = new DynamicKindsAdapter(getActivity());
+                        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 5);
                         pop_rv.setLayoutManager(gridLayoutManager);
                         pop_rv.setAdapter(dynamicKindsAdapter);
                         pop_rv.setItemAnimator(new DefaultItemAnimator());
@@ -188,17 +228,22 @@ public class HomeLoginFragment extends BaseFragment {
                     }
                 });
             }
-            @Override
-            public void inProgress(float progress, long total, int id) {}
-        });
 
+            @Override
+            public void inProgress(float progress, long total, int id) {
+            }
+        });
 
 
         //条目点击事件
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                DynamicListByCommunityList dynamicListByCommunity = dynamicListByCommunitys.get(0).getmList().getDynamicListByCommunityLists().get(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("dynamicListByCommunity", dynamicListByCommunity);
                 Intent i = new Intent(getActivity(), StateActivity.class);
+                i.putExtras(bundle);
                 startActivity(i);
             }
         });
@@ -212,16 +257,21 @@ public class HomeLoginFragment extends BaseFragment {
             @Override
             public void onError(Call call, Exception e, int id) {
             }
+
             @Override
             public void onSuccess(String response, int id) {
-                ArrayList<MDate> dynamicListByCommunity = Resovle.getDynamicListByCommunity(response);
-                mHomeLoginAdapter.setDates(dynamicListByCommunity);
+                Log.e("8888888888888----", response);
+                dynamicListByCommunitys = Resovle.getDynamicListByCommunity(response);
+                mHomeLoginAdapter.setDates(dynamicListByCommunitys);
                 mHomeLoginAdapter.notifyDataSetChanged();
             }
+
             @Override
-            public void inProgress(float progress, long total, int id) {}
+            public void inProgress(float progress, long total, int id) {
+            }
         });
     }
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home_login;

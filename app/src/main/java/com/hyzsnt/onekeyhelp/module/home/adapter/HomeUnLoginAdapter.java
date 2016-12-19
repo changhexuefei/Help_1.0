@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,18 +19,18 @@ import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
-import com.hyzsnt.onekeyhelp.module.home.bean.Circle;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListList;
+import com.hyzsnt.onekeyhelp.module.home.bean.HomeCircle;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 import com.hyzsnt.onekeyhelp.utils.BitmapUtils;
+import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 
 /**
@@ -51,7 +52,6 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
 
     public void setDates(ArrayList<MDate> dates) {
         this.dates = dates;
-        Log.e("3333333333333", dates.toString());
     }
 
     @Override
@@ -60,6 +60,7 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
             View v0 = LayoutInflater.from(mContext).inflate(R.layout.item_home_circum, parent, false);
             return new HomeViewHolder1(v0);
         } else {
+
             return null;
         }
 
@@ -72,44 +73,103 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
             if (holder instanceof HomeViewHolder1) {
                 ((HomeViewHolder1) holder).homeUnListTvCmanem.setText(communityListList.getCmname());
 
+                //加入小区
+                ((HomeViewHolder1) holder).homeUnBtJoin.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        List params = new ArrayList<String>();
+                        params.add(5 + "");
+                        params.add(2061 + "");//2061  2803
+                        HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY, new ResponseHandler() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+
+                            }
+
+                            @Override
+                            public void onSuccess(String response, int id) {
+                                ArrayList<MDate> joinCommunity = Resovle.getJoinCommunity(response);
+                                String res = joinCommunity.get(0).getRes();
+                                if("0".equals(res)){
+                                    ToastUtils.showLong(mContext,"加入失败" );
+                                }else if("1".equals(res)){
+                                    //查询小区信息
+                                    List paramsDetail = new ArrayList<String>();
+                                    paramsDetail.add(2061 + "");//2061  2803
+                                    paramsDetail.add(5 + "");
+                                    HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, paramsDetail, new ResponseHandler() {
+                                        @Override
+                                        public void onError(Call call, Exception e, int id) {
+                                        }
+
+                                        @Override
+                                        public void onSuccess(String response, int id) {
+                                            ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putSerializable("communityInfoList", communityInfoList);
+                                            Intent i = new Intent(mContext, CompoundInfoActivity.class);
+                                            i.putExtras(bundle);
+                                            mContext.startActivity(i);
+                                        }
+
+                                        @Override
+                                        public void inProgress(float progress, long total, int id) {
+                                        }
+                                    });
+                                }
+
+                            }
+
+                            @Override
+                            public void inProgress(float progress, long total, int id) {
+
+                            }
+                        });
+                    }
+                });
                 Bitmap bit = BitmapDescriptorFactory.fromResource(R.drawable.img).getBitmap();
                 Bitmap bitmap1 = BitmapUtils.toRoundBitmap(bit);
                 ((HomeViewHolder1) holder).mHomeCurcumHeadportrait.setImageBitmap(bitmap1);
                 ((HomeViewHolder1) holder).homeUnListTvCurnum.setText(communityListList.getCurnum() + "人");
                 //热门圈子
-                ArrayList<Circle> circleList = communityListList.getCircleList();
-                if(circleList!=null){
-                    for(int i=0;i<circleList.size();i++){
-                        Circle circle = circleList.get(i);
-                    if(circleList.size()==0){
+                ArrayList<HomeCircle> homeCircleList = communityListList.getHomeCircleList();
+                if (homeCircleList != null) {
+                    if (homeCircleList.size() == 0) {
                         ((HomeViewHolder1) holder).rl0.setVisibility(View.GONE);
                         ((HomeViewHolder1) holder).rl1.setVisibility(View.GONE);
                         ((HomeViewHolder1) holder).rl2.setVisibility(View.GONE);
-                    }else if(circleList.size()==1){
+                    } else if (homeCircleList.size() == 1) {
                         ((HomeViewHolder1) holder).rl1.setVisibility(View.GONE);
                         ((HomeViewHolder1) holder).rl2.setVisibility(View.GONE);
-                    }else if(circleList.size()==2){
+                    } else if (homeCircleList.size() == 2) {
                         ((HomeViewHolder1) holder).rl2.setVisibility(View.GONE);
-                    }else {
+                    } else {
 
                     }
-                        if(i==0){
-                            ((HomeViewHolder1) holder).homeCircleTvCcname0.setText(circle.getCcname()+"");
-                            ((HomeViewHolder1) holder).homeCircleTvCurnum0.setText(circle.getCurnum()+"人");
-                        }else if(i==1){
-                            ((HomeViewHolder1) holder).homeCircleTvCcname1.setText(circle.getCcname()+"");
-                            ((HomeViewHolder1) holder).homeCircleTvCurnum1.setText(circle.getCurnum()+"人");
-                        }else if(i==2){
-                            ((HomeViewHolder1) holder).homeCircleTvCcname2.setText(circle.getCcname()+"");
-                            ((HomeViewHolder1) holder).homeCircleTvCurnum2.setText(circle.getCurnum()+"人");
+                    for (int i = 0; i < homeCircleList.size(); i++) {
+                        HomeCircle homeCircle = homeCircleList.get(i);
+                        if (i == 0) {
+                            ((HomeViewHolder1) holder).homeCircleTvCcname0.setText(homeCircle.getCcname() + "");
+                            ((HomeViewHolder1) holder).homeCircleTvCurnum0.setText(homeCircle.getCurnum() + "人");
+                        } else if (i == 1) {
+                            ((HomeViewHolder1) holder).homeCircleTvCcname1.setText(homeCircle.getCcname() + "");
+                            ((HomeViewHolder1) holder).homeCircleTvCurnum1.setText(homeCircle.getCurnum() + "人");
+                        } else if (i == 2) {
+                            ((HomeViewHolder1) holder).homeCircleTvCcname2.setText(homeCircle.getCcname() + "");
+                            ((HomeViewHolder1) holder).homeCircleTvCurnum2.setText(homeCircle.getCurnum() + "人");
                         }
                     }
+                } else {
+                    ((HomeViewHolder1) holder).rl0.setVisibility(View.GONE);
+                    ((HomeViewHolder1) holder).rl1.setVisibility(View.GONE);
+                    ((HomeViewHolder1) holder).rl2.setVisibility(View.GONE);
                 }
 
 
                 ((HomeViewHolder1) holder).homeIvDetail.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //查询小区信息
                         List params = new ArrayList<String>();
                         params.add(2061 + "");//2061  2803
                         params.add(5 + "");
@@ -168,13 +228,14 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
         RelativeLayout rl0;
         RelativeLayout rl1;
         RelativeLayout rl2;
-
+        Button homeUnBtJoin;
         public HomeViewHolder1(View itemView) {
             super(itemView);
             homeIvDetail = (ImageView) itemView.findViewById(R.id.home_iv_detail);
             mHomeCurcumHeadportrait = (ImageView) itemView.findViewById(R.id.home_un_list_iv_cmcover);
             homeUnListTvCmanem = (TextView) itemView.findViewById(R.id.home_un_list_tv_cmanem);
             homeUnListTvCurnum = (TextView) itemView.findViewById(R.id.home_un_list_tv_curnum);
+            homeUnBtJoin= (Button) itemView.findViewById(R.id.home_un_bt_join);
 
             homeCircleIvCccover0 = (ImageView) itemView.findViewById(R.id.home_circle_iv_cccover0);
             homeCircleTvCcname0 = (TextView) itemView.findViewById(R.id.home_circle_tv_ccname0);
@@ -188,9 +249,9 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
             homeCircleTvCcname2 = (TextView) itemView.findViewById(R.id.home_circle_tv_ccname2);
             homeCircleTvCurnum2 = (TextView) itemView.findViewById(R.id.home_circle_tv_curnum2);
 
-            rl0= (RelativeLayout) itemView.findViewById(R.id.rl0);
-            rl1= (RelativeLayout) itemView.findViewById(R.id.rl1);
-            rl2= (RelativeLayout) itemView.findViewById(R.id.rl2);
+            rl0 = (RelativeLayout) itemView.findViewById(R.id.rl0);
+            rl1 = (RelativeLayout) itemView.findViewById(R.id.rl1);
+            rl2 = (RelativeLayout) itemView.findViewById(R.id.rl2);
         }
     }
 

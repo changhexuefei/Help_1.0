@@ -1,44 +1,22 @@
 package com.hyzsnt.onekeyhelp.module.home.adapter;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.hyzsnt.onekeyhelp.MainActivity;
 import com.hyzsnt.onekeyhelp.R;
-import com.hyzsnt.onekeyhelp.http.Api;
-import com.hyzsnt.onekeyhelp.http.HttpUtils;
-import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.activity.VoiceDetailActivity;
+import com.hyzsnt.onekeyhelp.module.home.bean.DynamicListByCommunityList;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
-import com.hyzsnt.onekeyhelp.module.home.inner.OnRecyclerViewItemClickListener;
-import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
-import com.hyzsnt.onekeyhelp.module.index.activity.MyNeighborListActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.Call;
 
 /**
  * Created by hyzs on 2016/12/11.
@@ -51,6 +29,7 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
     public HomeLoginAdapter(Context mContext) {
         this.mContext = mContext;
     }
+
     public ArrayList<MDate> getDates() {
         return dates;
     }
@@ -75,6 +54,7 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+        DynamicListByCommunityList dynamicListByCommunityList = dates.get(0).getmList().getDynamicListByCommunityLists().get(position);
         if (position == 0) {
             if (holder instanceof HomeLoginViewHolder0) {
 
@@ -89,9 +69,13 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
                     }
                 });
             }
-        } else if (position > 1) {
+        } else if (getItemViewType(position)==2) {
             if (holder instanceof HomeLoginViewHolder2) {
-
+                ((HomeLoginViewHolder2) holder).homeLoginDynamicTvNickname.setText(dynamicListByCommunityList.getNickname());
+                ((HomeLoginViewHolder2) holder).homeLoginDynamicTvDistance.setText("一分钟前"+dynamicListByCommunityList.getDistance()+"千米");
+                ((HomeLoginViewHolder2) holder).homeLoginDynamicTvContent.setText("    "+dynamicListByCommunityList.getContent());
+                ((HomeLoginViewHolder2) holder).homeLoginDynamicTvGoodnum.setText(dynamicListByCommunityList.getGoodnum());
+                ((HomeLoginViewHolder2) holder).homeLoginDynamicTvReplynum.setText(dynamicListByCommunityList.getReplynum());
             }
         }
 
@@ -120,7 +104,7 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
     static class HomeLoginViewHolder0 extends RecyclerView.ViewHolder {
         public HomeLoginViewHolder0(View itemView) {
             super(itemView);
-            }
+        }
     }
 
     static class HomeLoginViewHolder1 extends RecyclerView.ViewHolder {
@@ -134,8 +118,18 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
     }
 
     static class HomeLoginViewHolder2 extends RecyclerView.ViewHolder {
+        TextView homeLoginDynamicTvNickname;
+        TextView homeLoginDynamicTvDistance;
+        TextView homeLoginDynamicTvContent;
+        TextView homeLoginDynamicTvGoodnum;
+        TextView homeLoginDynamicTvReplynum;
         public HomeLoginViewHolder2(View itemView) {
             super(itemView);
+            homeLoginDynamicTvNickname= (TextView) itemView.findViewById(R.id.home_login_dynamic_tv_nickname);
+            homeLoginDynamicTvDistance= (TextView) itemView.findViewById(R.id.home_login_dynamic_tv_distance);
+            homeLoginDynamicTvContent= (TextView) itemView.findViewById(R.id.home_login_dynamic_tv_content);
+            homeLoginDynamicTvGoodnum= (TextView) itemView.findViewById(R.id.home_login_dynamic_tv_goodnum);
+            homeLoginDynamicTvReplynum= (TextView) itemView.findViewById(R.id.home_login_dynamic_tv_replynum);
         }
     }
 }

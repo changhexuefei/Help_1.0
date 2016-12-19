@@ -37,6 +37,7 @@
             android:orientation="vertical"
             android:layout_gravity="center">
             <TextView
+                android:id="@+id/state_detail_tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="林明"
@@ -59,6 +60,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:id="@+id/state_detail_tv_distance"
                 android:layout_marginLeft="@dimen/dp_6"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -97,7 +99,7 @@
         android:textColor="#565656"
         android:ellipsize="end"
         android:text="打款发货的萨芬健康好的撒大家看法的砂浆款发放的沙发的奖励卡萨回复大家快来撒点恢复健康的拉萨和丰富的接口来说"
-        android:id="@+id/textView4" />
+        android:id="@+id/state_detail_tv_content" />
     <LinearLayout
         android:layout_marginTop="@dimen/dp_13"
         android:layout_width="match_parent"
@@ -111,6 +113,7 @@
             android:layout_gravity="center_vertical"
             />
         <TextView
+            android:id="@+id/state_detail_tv_goodnum"
             android:layout_marginLeft="@dimen/dp_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -125,6 +128,7 @@
             android:layout_gravity="center_vertical"
             />
         <TextView
+            android:id="@+id/state_detail_tv_replynum"
             android:layout_marginLeft="@dimen/dp_6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
