@@ -108,10 +108,12 @@ public class SeekeStateActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        getCurrentLocation();
+
         area = new ArrayList<>();
         province = new ArrayList<>();
         pinyinComparator = new PinyinComparator();
+        getCurrentLocation();
+
 
     }
 
