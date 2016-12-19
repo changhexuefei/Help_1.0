@@ -1,7 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.home.resovle;
-import android.util.Log;
 
-import com.hyzsnt.onekeyhelp.module.home.bean.Circle;
+import com.hyzsnt.onekeyhelp.module.home.bean.HomeCircle;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityInfoInfo;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityInfoList;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListInfo;
@@ -115,36 +114,36 @@ public class Resovle {
                         communityListList.setDistance(jsoncommunityListList.getString("distance"));
                     }
                     if(jsoncommunityListList.has("circle")){
-                        ArrayList<Circle> circleList=new ArrayList<>();
+                        ArrayList<HomeCircle> homeCircleList =new ArrayList<>();
                         JSONArray jsonCircleList=jsoncommunityListList.getJSONArray("circle");
                         for (int j = 0; j <jsonCircleList.length() ; j++) {
-                            Circle circle=new Circle();
+                            HomeCircle homeCircle =new HomeCircle();
                             JSONObject jsonCircleListJSONObject = jsonCircleList.getJSONObject(j);
                             if(jsonCircleListJSONObject.has("ccid")){
-                                circle.setCcid(jsonCircleListJSONObject.getString("ccid"));
+                                homeCircle.setCcid(jsonCircleListJSONObject.getString("ccid"));
                             }
                             if(jsonCircleListJSONObject.has("ccname")){
-                                circle.setCcname(jsonCircleListJSONObject.getString("ccname"));
+                                homeCircle.setCcname(jsonCircleListJSONObject.getString("ccname"));
                             }
                             if(jsonCircleListJSONObject.has("cccover")){
-                                circle.setCccover(jsonCircleListJSONObject.getString("cccover"));
+                                homeCircle.setCccover(jsonCircleListJSONObject.getString("cccover"));
                             }
                             if(jsonCircleListJSONObject.has("tags")){
-                                circle.setTags(jsonCircleListJSONObject.getString("tags"));
+                                homeCircle.setTags(jsonCircleListJSONObject.getString("tags"));
                             }
                             if(jsonCircleListJSONObject.has("curnum")){
-                                circle.setCurnum(jsonCircleListJSONObject.getString("curnum"));
+                                homeCircle.setCurnum(jsonCircleListJSONObject.getString("curnum"));
                             }
                             if(jsonCircleListJSONObject.has("ifjoin")){
-                                circle.setIfjoin(jsonCircleListJSONObject.getString("ifjoin"));
+                                homeCircle.setIfjoin(jsonCircleListJSONObject.getString("ifjoin"));
                             }
                             if(jsonCircleListJSONObject.has("cmid")){
-                                circle.setCmid(jsonCircleListJSONObject.getString("cmid"));
+                                homeCircle.setCmid(jsonCircleListJSONObject.getString("cmid"));
                             }
 
                         }
 
-                        communityListList.setCircleList(circleList);
+                        communityListList.setHomeCircleList(homeCircleList);
                     }
                     communityListLists.add(communityListList);
                 }

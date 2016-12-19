@@ -18,7 +18,7 @@ import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
-import com.hyzsnt.onekeyhelp.module.home.bean.Circle;
+import com.hyzsnt.onekeyhelp.module.home.bean.HomeCircle;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListList;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
@@ -28,8 +28,6 @@ import com.hyzsnt.onekeyhelp.utils.BitmapUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 
 /**
@@ -60,6 +58,7 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
             View v0 = LayoutInflater.from(mContext).inflate(R.layout.item_home_circum, parent, false);
             return new HomeViewHolder1(v0);
         } else {
+
             return null;
         }
 
@@ -77,31 +76,31 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
                 ((HomeViewHolder1) holder).mHomeCurcumHeadportrait.setImageBitmap(bitmap1);
                 ((HomeViewHolder1) holder).homeUnListTvCurnum.setText(communityListList.getCurnum() + "人");
                 //热门圈子
-                ArrayList<Circle> circleList = communityListList.getCircleList();
-                if(circleList!=null){
-                    for(int i=0;i<circleList.size();i++){
-                        Circle circle = circleList.get(i);
-                    if(circleList.size()==0){
+                ArrayList<HomeCircle> homeCircleList = communityListList.getHomeCircleList();
+                if(homeCircleList !=null){
+                    if(homeCircleList.size()==0){
                         ((HomeViewHolder1) holder).rl0.setVisibility(View.GONE);
                         ((HomeViewHolder1) holder).rl1.setVisibility(View.GONE);
                         ((HomeViewHolder1) holder).rl2.setVisibility(View.GONE);
-                    }else if(circleList.size()==1){
+                    }else if(homeCircleList.size()==1){
                         ((HomeViewHolder1) holder).rl1.setVisibility(View.GONE);
                         ((HomeViewHolder1) holder).rl2.setVisibility(View.GONE);
-                    }else if(circleList.size()==2){
+                    }else if(homeCircleList.size()==2){
                         ((HomeViewHolder1) holder).rl2.setVisibility(View.GONE);
                     }else {
 
                     }
+                    for(int i = 0; i< homeCircleList.size(); i++){
+                        HomeCircle homeCircle = homeCircleList.get(i);
                         if(i==0){
-                            ((HomeViewHolder1) holder).homeCircleTvCcname0.setText(circle.getCcname()+"");
-                            ((HomeViewHolder1) holder).homeCircleTvCurnum0.setText(circle.getCurnum()+"人");
+                            ((HomeViewHolder1) holder).homeCircleTvCcname0.setText(homeCircle.getCcname()+"");
+                            ((HomeViewHolder1) holder).homeCircleTvCurnum0.setText(homeCircle.getCurnum()+"人");
                         }else if(i==1){
-                            ((HomeViewHolder1) holder).homeCircleTvCcname1.setText(circle.getCcname()+"");
-                            ((HomeViewHolder1) holder).homeCircleTvCurnum1.setText(circle.getCurnum()+"人");
+                            ((HomeViewHolder1) holder).homeCircleTvCcname1.setText(homeCircle.getCcname()+"");
+                            ((HomeViewHolder1) holder).homeCircleTvCurnum1.setText(homeCircle.getCurnum()+"人");
                         }else if(i==2){
-                            ((HomeViewHolder1) holder).homeCircleTvCcname2.setText(circle.getCcname()+"");
-                            ((HomeViewHolder1) holder).homeCircleTvCurnum2.setText(circle.getCurnum()+"人");
+                            ((HomeViewHolder1) holder).homeCircleTvCcname2.setText(homeCircle.getCcname()+"");
+                            ((HomeViewHolder1) holder).homeCircleTvCurnum2.setText(homeCircle.getCurnum()+"人");
                         }
                     }
                 }

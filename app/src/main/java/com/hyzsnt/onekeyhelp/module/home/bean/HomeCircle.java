@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by hyzs on 2016/12/14.
  */
 
-public class Circle implements Serializable{
+public class HomeCircle implements Serializable{
     private String ccid;//圈子ID
     private String ccname;//圈子名称
     private String cccover;//圈子封面图链接
@@ -15,7 +15,7 @@ public class Circle implements Serializable{
     private String ifjoin;//是否已加入 0否1是
     private String cmid;//归属小区ID
 
-    public Circle() {
+    public HomeCircle() {
     }
 
     public String getCcid() {
@@ -76,7 +76,7 @@ public class Circle implements Serializable{
 
     @Override
     public String toString() {
-        return "Circle{" +
+        return "HomeCircle{" +
                 "ccid='" + ccid + '\'' +
                 ", ccname='" + ccname + '\'' +
                 ", cccover='" + cccover + '\'' +
