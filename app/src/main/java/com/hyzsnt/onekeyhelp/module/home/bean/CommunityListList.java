@@ -17,7 +17,7 @@ public class CommunityListList implements Serializable{
     private String lat;//纬度
     private String lng;//坐标Y
     private String distance;//当前距离
-    private ArrayList<Circle> circleList;//圈子集合
+    private ArrayList<HomeCircle> homeCircleList;//圈子集合
 
     public CommunityListList() {
     }
@@ -94,12 +94,12 @@ public class CommunityListList implements Serializable{
         this.distance = distance;
     }
 
-    public ArrayList<Circle> getCircleList() {
-        return circleList;
+    public ArrayList<HomeCircle> getHomeCircleList() {
+        return homeCircleList;
     }
 
-    public void setCircleList(ArrayList<Circle> circleList) {
-        this.circleList = circleList;
+    public void setHomeCircleList(ArrayList<HomeCircle> homeCircleList) {
+        this.homeCircleList = homeCircleList;
     }
 
 }

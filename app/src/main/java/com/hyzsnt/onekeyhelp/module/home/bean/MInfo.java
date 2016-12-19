@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class MInfo implements Serializable {
     private CommunityListInfo communityListInfo;
     private CommunityInfoInfo communityInfoInfo;
+    private UserInfoInfo userInfoInfo;
     public MInfo() {
     }
 
@@ -28,11 +29,20 @@ public class MInfo implements Serializable {
         this.communityInfoInfo = communityInfoInfo;
     }
 
+    public UserInfoInfo getUserInfoInfo() {
+        return userInfoInfo;
+    }
+
+    public void setUserInfoInfo(UserInfoInfo userInfoInfo) {
+        this.userInfoInfo = userInfoInfo;
+    }
+
     @Override
     public String toString() {
         return "MInfo{" +
                 "communityListInfo=" + communityListInfo +
                 ", communityInfoInfo=" + communityInfoInfo +
+                ", userInfoInfo=" + userInfoInfo +
                 '}';
     }
 }

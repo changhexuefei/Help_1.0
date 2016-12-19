@@ -1,5 +1,7 @@
 package com.hyzsnt.onekeyhelp.module.release.activity;
 
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,7 +18,16 @@ import com.hyzsnt.onekeyhelp.audio.ErrorCode;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
+import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
+import com.hyzsnt.onekeyhelp.module.release.media.MediaManager;
+import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +47,8 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
     TextView mTalkerNickname;
     @BindView(R.id.release_time)
     TextView mReleaseTime;
-    @BindView(R.id.voice)
-    ImageView mVoice;
+    @BindView(R.id.play_voice)
+    ImageView play_voice;
     @BindView(R.id.delete_voice)
     TextView mDeleteVoice;
     @BindView(R.id.release_voice)
@@ -46,10 +57,15 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
     ImageButton ivbtn_press;
     @BindView(R.id.cancel_release_voice)
     TextView tv_cancel_release;
+    @BindView(R.id.tv_voice)
+    TextView tv_voice;
+
     private String lat;
     private String lon;
 
     private AudioManager mAudioManager;
+    private String mPath;
+
 
     @Override
     protected int getLayoutId() {
@@ -72,7 +88,7 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
     }
 
 
-    @OnClick({R.id.cancel_release_voice, R.id.delete_voice, R.id.release_voice})
+    @OnClick({R.id.play_voice,R.id.cancel_release_voice, R.id.delete_voice, R.id.release_voice})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cancel_release_voice:
@@ -80,15 +96,69 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
                 break;
             case R.id.delete_voice:
                 break;
+            case R.id.play_voice:
+                Toast.makeText(this, "点我了", Toast.LENGTH_SHORT).show();
+                MediaManager.playSound(mPath, new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        ToastUtils.showLong(VoiceReleaseActivity.this,"播放完成了！");
+//                        mp.stop();
+                        mp.release();
+                    }
+                });
+                break;
             case R.id.release_voice:
+                String mVoice = "";
                 String nickName = mTalkerNickname.getText().toString();
+                File file = new File(mPath);
+                if (file.exists()) {
+                    BufferedInputStream bis = null;
+                    ByteArrayOutputStream baos = null;
+                    try {
+                        baos = new ByteArrayOutputStream();
+                        bis = new BufferedInputStream(new FileInputStream(file));
+                        int len = 0;
+                        byte[] bytes = new byte[1024 * 4];
+                        while ((len = bis.read(bytes)) != -1) {
+                            baos.write(bytes, 0, len);
+                            Log.d("33333", baos + "");
+                            baos.flush();
+                        }
+                        mVoice = baos.toString();
+//                        byte[] data = baos.toByteArray();
+//                        String str = new String(data);
+//                        Log.d("2222222", str);
+                        Log.d("1111111111", mVoice);
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (baos != null) {
+                            try {
+                                baos.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            if (bis != null) {
+                                try {
+                                    bis.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                }
+
                 p = new ArrayList<>();
                 p.add("4");
                 p.add(lat);
                 p.add(lon);
                 p.add(nickName);
                 p.add("-1");
-                p.add("");
+                p.add(mVoice);
                 HttpUtils.post(PUBLISH, PUBLISHDYNAMIC, p, new JsonResponseHandler() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
@@ -98,8 +168,11 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
                     @Override
                     public void onSuccess(String response, int id) {
                         Log.d("语音", response);
+                        Toast.makeText(VoiceReleaseActivity.this,"发布语音成功",Toast.LENGTH_LONG).show();
                     }
                 });
+                Intent i = new Intent(VoiceReleaseActivity.this, StateActivity.class);
+                startActivity(i);
                 break;
         }
     }
@@ -108,10 +181,11 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                Log.d("1111111", "11111111");
+                tv_voice.setText("松开结束");
                 startRecord();
                 break;
             case MotionEvent.ACTION_UP:
+                tv_voice.setText("按住说话");//
                 stopRecord();
                 break;
             default:
@@ -122,10 +196,10 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
 
     private void stopRecord() {
         mAudioManager.stopRecordAndFile();
-        String path = mAudioManager.getRecordFilePath();
-        Log.d("录制完成", path);
-        Toast.makeText(VoiceReleaseActivity.this, "录制完成" + path, Toast.LENGTH_SHORT).show();
-//        File file = new File(path);
+        mPath = mAudioManager.getRecordFilePath();
+        Log.d("录制完成", mPath);
+        Toast.makeText(VoiceReleaseActivity.this, "录制完成" + mPath, Toast.LENGTH_SHORT).show();
+
 
     }
 

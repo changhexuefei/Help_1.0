@@ -30,6 +30,11 @@ public class Api {
 	 * 闲逛类字段
 	 */
 	public static final String CIRCLE = "circle";
+	/**
+	 *发布类字段
+	 */
+	public static  final String PUBLISH ="publish";
+
 
 	/**
 	 * 公共类
@@ -138,6 +143,7 @@ public class Api {
 		//joinCommunity
 		public static final String JOINCOMMUNITY = "joinCommunity";
 
+
 	}
 
 	/**
@@ -171,7 +177,7 @@ public class Api {
 		/**
 	     * 闲逛周边圈子列表
 		 */
-		public static final String ROUNDLIST ="getCircleList";
+		public static final String ROUNDLIST ="getHomeCircleList";
 		/**
 		 * 闲逛我的列表
 		 */
