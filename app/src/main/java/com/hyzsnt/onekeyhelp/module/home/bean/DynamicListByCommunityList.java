@@ -21,6 +21,7 @@ public class DynamicListByCommunityList implements Serializable{
     private String cmid;//发布人归属小区ID
     private String cmname;//发布人归属小区名称
     private String mtype;//动态类别 public:getDynamicKinds
+    private String mtypeName;
     private String objectid;//该动态类别下数据id
     private String posttime;//时间戳
     private String lat;//发布时发布人纬度
@@ -189,6 +190,14 @@ public class DynamicListByCommunityList implements Serializable{
         this.homeComments = homeComments;
     }
 
+    public String getMtypeName() {
+        return mtypeName;
+    }
+
+    public void setMtypeName(String mtypeName) {
+        this.mtypeName = mtypeName;
+    }
+
     @Override
     public String toString() {
         return "DynamicListByCommunityList{" +
@@ -199,6 +208,7 @@ public class DynamicListByCommunityList implements Serializable{
                 ", cmid='" + cmid + '\'' +
                 ", cmname='" + cmname + '\'' +
                 ", mtype='" + mtype + '\'' +
+                ", mtypeName='" + mtypeName + '\'' +
                 ", objectid='" + objectid + '\'' +
                 ", posttime='" + posttime + '\'' +
                 ", lat='" + lat + '\'' +

@@ -124,7 +124,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 			@Override
 			public void onSuccess(String response, int id) {
 				//LogUtils.e("onSuccess:" + response);
-				Log.e("Login11111111",response);
 				Intent i=new Intent();
 				i.putExtra("response",response);
 				setResult(200,i);

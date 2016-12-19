@@ -29,6 +29,7 @@ import com.hyzsnt.onekeyhelp.module.help.bean.LocationInfo;
 import com.hyzsnt.onekeyhelp.module.help.service.LocationService;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
+import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.login.activity.LoginActivity;
 import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
@@ -306,13 +307,12 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		//储存用户信息
-
+		//储存用户信息(登录储存一次)
 		String response = data.getStringExtra("response");
-		Log.e("Login00000000000000000",response);
 		SharedPreferences sp = getSharedPreferences("userSP", Context.MODE_PRIVATE);
 		SharedPreferences.Editor edit = sp.edit();
 		String userDetail = sp.getString("userDetail", "").trim();
+		//Resovle.getUserInfo(userDetail);
 		if(userDetail==null||userDetail==""){
 			edit.putString(response,"userDetail");
 		}else{
