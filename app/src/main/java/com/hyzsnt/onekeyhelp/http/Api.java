@@ -138,6 +138,7 @@ public class Api {
 		//joinCommunity
 		public static final String JOINCOMMUNITY = "joinCommunity";
 
+
 	}
 
 	/**

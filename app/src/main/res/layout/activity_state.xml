@@ -48,7 +48,13 @@
     <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/sate_activity_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
     </com.github.jdsjlzx.recyclerview.LRecyclerView>
+    <EditText
+        android:id="@+id/state_et_replay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="#F00"/>
 </LinearLayout>

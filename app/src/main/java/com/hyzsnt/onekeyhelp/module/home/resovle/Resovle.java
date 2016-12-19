@@ -426,6 +426,9 @@ public class Resovle {
                     if (jsondynamicListByCommunityList.has("mtype")) {
                         dynamicListByCommunityList.setMtype(jsondynamicListByCommunityList.getString("mtype"));
                     }
+                    if (jsondynamicListByCommunityList.has("mtypename")) {
+                        dynamicListByCommunityList.setMtypeName(jsondynamicListByCommunityList.getString("mtypename"));
+                    }
                     if (jsondynamicListByCommunityList.has("objectid")) {
                         dynamicListByCommunityList.setObjectid(jsondynamicListByCommunityList.getString("objectid"));
                     }
