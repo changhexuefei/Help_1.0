@@ -74,72 +74,7 @@ public class HomeLoginFragment extends BaseFragment {
     @Override
     protected void initData(String content) {
         //切换小区
-        List params0 = new ArrayList<String>();
-        params0.add("8");
-        //params.add("2061");//2061  2803
-        HttpUtils.post(Api.USER, Api.User.GETUSERINFO, params0, new ResponseHandler() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-            }
-
-            @Override
-            public void onSuccess(String response, int id) {
-                final ArrayList<MDate> loginCommunities = Resovle.getUserInfo(response);
-                homeLoginIvSwich.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        View popupView = View.inflate(getActivity(), R.layout.item_item_home_login_head_pop, null);
-                        final PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-                        mPopupWindow.setTouchable(true);
-                        mPopupWindow.setOutsideTouchable(true);
-                        mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getActivity().getResources(), (Bitmap) null));
-                        mPopupWindow.showAsDropDown(homeLoginIvSwich);
-                        LRecyclerView pop_rv = (LRecyclerView) popupView.findViewById(R.id.item_item_head_pop_rlv);
-                        final LoginCommunityAdapter loginCommunityAdapter = new LoginCommunityAdapter(getActivity());
-                        pop_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        LRecyclerViewAdapter adapter=new LRecyclerViewAdapter(loginCommunityAdapter);
-                        pop_rv.setAdapter(adapter);
-                        pop_rv.setItemAnimator(new DefaultItemAnimator());
-                        loginCommunityAdapter.setDates(loginCommunities);
-                        loginCommunityAdapter.notifyDataSetChanged();
-                        adapter.setOnItemClickListener(new OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position) {
-                                List paramsSwich = new ArrayList<String>();
-                                paramsSwich.add("8");
-                                String cmid = loginCommunities.get(0).getmList().getLoginCommunities().get(position).getCmid();
-                                paramsSwich.add(cmid);//2061  2803
-                                HttpUtils.post(Api.USER, Api.User.SWITCHCOMMUNITY, paramsSwich, new ResponseHandler() {
-                                    @Override
-                                    public void onError(Call call, Exception e, int id) {
-
-                                    }
-
-                                    @Override
-                                    public void onSuccess(String response, int id) {
-                                        ToastUtils.showShort(getActivity(),response);
-                                        dynamicListByCommunitys = Resovle.getDynamicListByCommunity(response);
-                                        mHomeLoginAdapter.setDates(dynamicListByCommunitys);
-                                        mHomeLoginAdapter.notifyDataSetChanged();
-                                        mPopupWindow.dismiss();
-                                    }
-
-                                    @Override
-                                    public void inProgress(float progress, long total, int id) {
-
-                                    }
-                                });
-                            }
-                        });
-
-                    }
-                });
-
-            }
-            @Override
-            public void inProgress(float progress, long total, int id) {
-            }
-        });
+        switchCommunity();
 
 
         //加入小区后
@@ -293,6 +228,75 @@ public class HomeLoginFragment extends BaseFragment {
                 mHomeLoginAdapter.notifyDataSetChanged();
             }
 
+            @Override
+            public void inProgress(float progress, long total, int id) {
+            }
+        });
+    }
+
+    private void switchCommunity() {
+        List params0 = new ArrayList<String>();
+        params0.add("8");
+        //params.add("2061");//2061  2803
+        HttpUtils.post(Api.USER, Api.User.GETUSERINFO, params0, new ResponseHandler() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+            }
+
+            @Override
+            public void onSuccess(String response, int id) {
+                final ArrayList<MDate> loginCommunities = Resovle.getUserInfo(response);
+                homeLoginIvSwich.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View popupView = View.inflate(getActivity(), R.layout.item_item_home_login_head_pop, null);
+                        final PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                        mPopupWindow.setTouchable(true);
+                        mPopupWindow.setOutsideTouchable(true);
+                        mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getActivity().getResources(), (Bitmap) null));
+                        mPopupWindow.showAsDropDown(homeLoginIvSwich);
+                        LRecyclerView pop_rv = (LRecyclerView) popupView.findViewById(R.id.item_item_head_pop_rlv);
+                        final LoginCommunityAdapter loginCommunityAdapter = new LoginCommunityAdapter(getActivity());
+                        pop_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        LRecyclerViewAdapter adapter=new LRecyclerViewAdapter(loginCommunityAdapter);
+                        pop_rv.setAdapter(adapter);
+                        pop_rv.setItemAnimator(new DefaultItemAnimator());
+                        loginCommunityAdapter.setDates(loginCommunities);
+                        loginCommunityAdapter.notifyDataSetChanged();
+                        adapter.setOnItemClickListener(new OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                List paramsSwich = new ArrayList<String>();
+                                paramsSwich.add("8");
+                                String cmid = loginCommunities.get(0).getmList().getLoginCommunities().get(position).getCmid();
+                                paramsSwich.add(cmid);//2061  2803
+                                HttpUtils.post(Api.USER, Api.User.SWITCHCOMMUNITY, paramsSwich, new ResponseHandler() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+
+                                    }
+
+                                    @Override
+                                    public void onSuccess(String response, int id) {
+                                        ToastUtils.showShort(getActivity(),response);
+                                        dynamicListByCommunitys = Resovle.getDynamicListByCommunity(response);
+                                        mHomeLoginAdapter.setDates(dynamicListByCommunitys);
+                                        mHomeLoginAdapter.notifyDataSetChanged();
+                                        mPopupWindow.dismiss();
+                                    }
+
+                                    @Override
+                                    public void inProgress(float progress, long total, int id) {
+
+                                    }
+                                });
+                            }
+                        });
+
+                    }
+                });
+
+            }
             @Override
             public void inProgress(float progress, long total, int id) {
             }
