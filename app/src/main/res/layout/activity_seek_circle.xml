@@ -57,10 +57,12 @@
 		android:layout_weight="1"
 		android:layout_marginLeft="@dimen/dp_4"/>
 	<EditText
+		android:imeOptions="actionSearch"
 		android:id="@+id/et_seek_circle"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_weight="1"
+		android:background="@null"
 		android:hint="请输入你要搜素的圈子"
 		android:textSize="@dimen/sp_12"/>
     </LinearLayout>
@@ -73,5 +75,18 @@
 	    android:layout_marginLeft="@dimen/dp_10"
 	    android:layout_marginRight="@dimen/dp_10"
 		></android.support.v7.widget.RecyclerView>
+		<ExpandableListView
+			android:background="#FFFFFF"
+			android:layout_below="@id/search_seek_cricle"
+			android:id="@+id/ex_seek_circle"
+			android:layout_marginTop="@dimen/dp_22"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginLeft="@dimen/dp_10"
+			android:layout_marginRight="@dimen/dp_10"
+			android:visibility="gone">
+
+
+		</ExpandableListView>
 </RelativeLayout>
 </LinearLayout>

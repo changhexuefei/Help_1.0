@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 
 public class MInfo implements Serializable {
-    private CommunityListInfo communityListInfo;
+    private CommunityListInfo communityListInfo;//通用类型
     private CommunityInfoInfo communityInfoInfo;
     private UserInfoInfo userInfoInfo;
     public MInfo() {

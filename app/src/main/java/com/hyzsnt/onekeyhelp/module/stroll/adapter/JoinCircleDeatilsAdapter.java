@@ -15,6 +15,7 @@ import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CircleMemberList;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CiecleDetailss;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleDetails;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.JoinSuccess;
 
 import java.util.ArrayList;
 
@@ -32,6 +33,7 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
 	CircleDetails detals;
 	CiecleDetailss mDetailss;
 	Boolean mBoolean;
+	JoinSuccess joinSuccess;
 
 	public JoinCircleDeatilsAdapter(Context context, CircleDetails mdetails, Boolean iftotal) {
 		mContext = context;
@@ -46,8 +48,15 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
 		mBoolean = iftotal;
 	}
 
+	public JoinCircleDeatilsAdapter(Context context, JoinSuccess joinSuccess) {
+		mContext = context;
+	    this.joinSuccess = joinSuccess;
+
+	}
+
 	@Override
 	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		mLayoutInflater = LayoutInflater.from(mContext);
 		//判断添加的样式
 		if (viewType == ITEM_TYPE_ONE) {
 			return new DetailsViewHolerOne(mLayoutInflater.inflate(R.layout.item_circle_details_header, parent, false));
@@ -58,6 +67,22 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
 
 	@Override
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+		if(joinSuccess!=null&&!"".equals(joinSuccess)){
+			if (holder instanceof DetailsViewHolerOne) {
+				Glide.with(mContext).load(joinSuccess.getInfo().getCccover()).into(((DetailsViewHolerOne) holder).cccover);
+				((DetailsViewHolerOne) holder).topicnum.setText(joinSuccess.getInfo().getTopicnum() + "人");
+				((DetailsViewHolerOne) holder).topicnum.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(mContext, CircleMemberList.class);
+						intent.putExtra("ishost",true);
+						intent.putExtra("ccid", joinSuccess.getInfo().getCcid());
+						mContext.startActivity(intent);
+					}
+				});
+			}
+			return;
+		}
 		if(mBoolean){
 			if (holder instanceof DetailsViewHolerOne) {
 				Glide.with(mContext).load(detals.getInfo().getCccover()).into(((DetailsViewHolerOne) holder).cccover);
@@ -119,8 +144,6 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
 
 		TextView topicnum;
 		ImageView cccover;
-
-
 		//获取条目中的控件
 		public DetailsViewHolerOne(View itemView) {
 			super(itemView);
@@ -153,7 +176,12 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
 
 	@Override
 	public int getItemCount() {
-		return detals.getList().size() + 1;
+		if(joinSuccess!=null&&!"".equals(joinSuccess)){
+			return 1;
+		}else {
+			return detals.getList().size() + 1;
+		}
+
 	}
 
 	@Override

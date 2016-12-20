@@ -42,10 +42,15 @@ public class StateDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 20;
+        if(dates.size()>0){
+            if(dates.get(0).getmList().getCommentListByTopics().size()>0){
+                return dates.get(0).getmList().getCommentListByTopics().size();
+            }
+        }
+        return 0;
     }
     public int getItemViewType(int position) {
-        if(position == 0){
+        if(position >=0){
             return 1;
         }else{
             return 2;

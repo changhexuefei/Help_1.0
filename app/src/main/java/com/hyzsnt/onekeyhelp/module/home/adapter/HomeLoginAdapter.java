@@ -24,14 +24,11 @@ import butterknife.BindView;
 
 public class HomeLoginAdapter extends RecyclerView.Adapter {
     private Context mContext;
-    private ArrayList<MDate> dates = new ArrayList<>();
+    private ArrayList<MDate> dates;
 
-    public HomeLoginAdapter(Context mContext) {
+    public HomeLoginAdapter(Context mContext, ArrayList<MDate> dates) {
         this.mContext = mContext;
-    }
-
-    public ArrayList<MDate> getDates() {
-        return dates;
+        this.dates = dates;
     }
 
     public void setDates(ArrayList<MDate> dates) {
@@ -41,41 +38,45 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
-            View v0 = LayoutInflater.from(mContext).inflate(R.layout.item_home_login_head, parent, false);
-            return new HomeLoginViewHolder0(v0);
-        } else if (viewType == 1) {
             View v1 = LayoutInflater.from(mContext).inflate(R.layout.item_home_login_1, parent, false);
-            return new HomeLoginViewHolder1(v1);
+            return new HomeLoginViewHolder0(v1);
         } else {
             View v2 = LayoutInflater.from(mContext).inflate(R.layout.item_home_login_2, parent, false);
-            return new HomeLoginViewHolder2(v2);
+            return new HomeLoginViewHolder1(v2);
         }
     }
-
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        DynamicListByCommunityList dynamicListByCommunityList = dates.get(0).getmList().getDynamicListByCommunityLists().get(position);
+        DynamicListByCommunityList dynamicListByCommunityList=null;
+        if(dates.size() > 0){
+            if(dates.get(0).getmList().getDynamicListByCommunityLists().size()>0){
+                dynamicListByCommunityList = dates.get(0).getmList().getDynamicListByCommunityLists().get(position);
+            }
+        }
         if (position == 0) {
             if (holder instanceof HomeLoginViewHolder0) {
 
             }
         } else if (position == 1) {
-            if (holder instanceof HomeLoginViewHolder1) {
-                ((HomeLoginViewHolder1) holder).ivVoice.setOnClickListener(new View.OnClickListener() {
+            if (holder instanceof HomeLoginViewHolder0) {
+                ((HomeLoginViewHolder0) holder).ivVoice.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent i = new Intent(mContext, VoiceDetailActivity.class);
-                        mContext.startActivity(i);
+                        //语音
+                        //Intent i = new Intent(mContext, VoiceDetailActivity.class);
+                        //mContext.startActivity(i);
                     }
                 });
             }
         } else if (getItemViewType(position)==2) {
-            if (holder instanceof HomeLoginViewHolder2) {
-                ((HomeLoginViewHolder2) holder).homeLoginDynamicTvNickname.setText(dynamicListByCommunityList.getNickname());
-                ((HomeLoginViewHolder2) holder).homeLoginDynamicTvDistance.setText("一分钟前"+dynamicListByCommunityList.getDistance()+"千米");
-                ((HomeLoginViewHolder2) holder).homeLoginDynamicTvContent.setText("    "+dynamicListByCommunityList.getContent());
-                ((HomeLoginViewHolder2) holder).homeLoginDynamicTvGoodnum.setText(dynamicListByCommunityList.getGoodnum());
-                ((HomeLoginViewHolder2) holder).homeLoginDynamicTvReplynum.setText(dynamicListByCommunityList.getReplynum());
+            if (holder instanceof HomeLoginViewHolder1) {
+                if(dynamicListByCommunityList!=null){
+                    ((HomeLoginViewHolder1) holder).homeLoginDynamicTvNickname.setText(dynamicListByCommunityList.getNickname());
+                    ((HomeLoginViewHolder1) holder).homeLoginDynamicTvDistance.setText("一分钟前"+dynamicListByCommunityList.getDistance()+"千米");
+                    ((HomeLoginViewHolder1) holder).homeLoginDynamicTvContent.setText("    "+dynamicListByCommunityList.getContent());
+                    ((HomeLoginViewHolder1) holder).homeLoginDynamicTvGoodnum.setText(dynamicListByCommunityList.getGoodnum());
+                    ((HomeLoginViewHolder1) holder).homeLoginDynamicTvReplynum.setText(dynamicListByCommunityList.getReplynum());
+                }
             }
         }
 
@@ -88,42 +89,33 @@ public class HomeLoginAdapter extends RecyclerView.Adapter {
                 return dates.get(0).getmList().getDynamicListByCommunityLists().size();
             }
         }
-        return 1;
+        return 0;
     }
-
     public int getItemViewType(int position) {
         if (position == 0) {
-            return 1;
-        } else if (position == 1) {
-            return 1;
+            return 0;
         } else {
-            return 2;
+            return 1;
         }
     }
+
 
     static class HomeLoginViewHolder0 extends RecyclerView.ViewHolder {
-        public HomeLoginViewHolder0(View itemView) {
-            super(itemView);
-        }
-    }
-
-    static class HomeLoginViewHolder1 extends RecyclerView.ViewHolder {
         public ImageView ivVoice;
-
-        public HomeLoginViewHolder1(View itemView) {
+        public HomeLoginViewHolder0(View itemView) {
             super(itemView);
             ivVoice = (ImageView) itemView.findViewById(R.id.home_login_iv_voice);
 
         }
     }
 
-    static class HomeLoginViewHolder2 extends RecyclerView.ViewHolder {
+    static class HomeLoginViewHolder1 extends RecyclerView.ViewHolder {
         TextView homeLoginDynamicTvNickname;
         TextView homeLoginDynamicTvDistance;
         TextView homeLoginDynamicTvContent;
         TextView homeLoginDynamicTvGoodnum;
         TextView homeLoginDynamicTvReplynum;
-        public HomeLoginViewHolder2(View itemView) {
+        public HomeLoginViewHolder1(View itemView) {
             super(itemView);
             homeLoginDynamicTvNickname= (TextView) itemView.findViewById(R.id.home_login_dynamic_tv_nickname);
             homeLoginDynamicTvDistance= (TextView) itemView.findViewById(R.id.home_login_dynamic_tv_distance);

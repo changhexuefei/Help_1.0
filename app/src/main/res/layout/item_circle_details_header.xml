@@ -6,7 +6,8 @@
 		android:id="@+id/im_circle_details_header"
 		android:layout_width="match_parent"
 		android:layout_height="104dp"
-		android:src="@mipmap/ic_error"/>
+		android:src="@mipmap/ic_error"
+		android:scaleType="centerCrop"/>
 	<TextView
 		android:id="@+id/tv_circle_details_num"
 		android:layout_width="60dp"

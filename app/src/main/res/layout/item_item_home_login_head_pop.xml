@@ -5,9 +5,13 @@
     android:orientation="vertical"
     android:background="#F7F7F7"
     android:paddingBottom="@dimen/dp_5">
-    <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:id="@+id/item_item_head_pop_rlv"
+    <GridView
+        android:gravity="center"
+        android:layout_margin="@dimen/dp_5"
+        android:id="@+id/item_item_head_pop_gv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+        android:layout_height="wrap_content"
+        android:verticalSpacing="@dimen/dp_5"
+        >
+    </GridView>
 </LinearLayout>

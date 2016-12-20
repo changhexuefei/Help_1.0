@@ -6,13 +6,6 @@ import java.io.Serializable;
  * Created by hxw on 2016/12/19.
  */
 
-/**
- * "ccid":"",	//圈子ID
- "ccname":"",	//圈子名称
- "cccover":"",	//圈子封面图链接
- "curnum":"",	//成员人数
- "cmid":"",	//归属小区ID
- */
 public class LoginCircle implements Serializable{
     private String ccid;//圈子ID
     private String ccname;//圈子名称
