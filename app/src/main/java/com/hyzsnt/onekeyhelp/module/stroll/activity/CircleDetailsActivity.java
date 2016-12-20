@@ -15,6 +15,7 @@ import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CiecleDetailss;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleDetails;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.JoinSuccess;
 import com.hyzsnt.onekeyhelp.module.stroll.fragment.JoinCircleDetailsFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.fragment.UnjoinCircleDetailsFragment;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
@@ -57,6 +58,28 @@ public class CircleDetailsActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
+
+		String response = getIntent().getStringExtra("response");
+
+		if(response!=null&&!"".equals(response)){
+			mTvCircleDetailsTitile.setText(getIntent().getStringExtra("title"));
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+				if (mJoinCircleDetailsFragment == null) {
+					mJoinCircleDetailsFragment = new JoinCircleDetailsFragment();
+					Gson gson = new Gson();
+					JoinSuccess joinSuccess = gson.fromJson(response, JoinSuccess.class);
+					//通过bundle传递数据
+					Bundle bundle = new Bundle();
+					bundle.putParcelable("joinsuccess",joinSuccess);
+					mJoinCircleDetailsFragment.setArguments(bundle);
+					transaction.add(R.id.frlayout_circle_dietails, mJoinCircleDetailsFragment);
+					transaction.show(mJoinCircleDetailsFragment);
+				} else {
+					transaction.show(mJoinCircleDetailsFragment);
+				}
+			transaction.commit();
+			return;
+		}
 		//获取圈子id
 		String ccid = getIntent().getStringExtra("ccid");
 		//获取数据

@@ -22,14 +22,16 @@ import static com.hyzsnt.onekeyhelp.R.id.tv_stroll_header_title;
  */
 
 public class StrollHeaderAdapter extends RecyclerView.Adapter<StrollHeaderAdapter.HeaderViewHolder> implements View.OnClickListener{
-	private final List<CircleHotTag.ListEntry> list;
+	private  List<CircleHotTag.ListEntry> list;
 	private Context mContext;
 	private OnRecyclerViewItemClickListener mOnItemClickListener = null;
-	public StrollHeaderAdapter(Activity activity, List<CircleHotTag.ListEntry> list) {
-		this.list = list;
+	public StrollHeaderAdapter(Activity activity) {
+
 		mContext = activity;
 	}
-
+   public void setdata( List<CircleHotTag.ListEntry> list){
+	   this.list = list;
+   }
 
 	@Override
 	public StrollHeaderAdapter.HeaderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -59,7 +61,7 @@ public class StrollHeaderAdapter extends RecyclerView.Adapter<StrollHeaderAdapte
 	public void onClick(View v) {
 		if (mOnItemClickListener != null) {
 			//注意这里使用getTag方法获取数据
-			mOnItemClickListener.onItemClick(v,(String)v.getTag());
+			mOnItemClickListener.onItemClick(v,(Integer)v.getTag());
 		}
 	}
 
@@ -78,6 +80,10 @@ public class StrollHeaderAdapter extends RecyclerView.Adapter<StrollHeaderAdapte
 	}
 	//define interface
 	public static interface OnRecyclerViewItemClickListener {
-		void onItemClick(View view , String data);
+		void onItemClick(View view , int data);
 	}
+	public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+		this.mOnItemClickListener = listener;
+	}
+
 }

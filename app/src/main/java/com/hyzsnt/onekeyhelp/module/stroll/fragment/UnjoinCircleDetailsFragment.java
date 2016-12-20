@@ -142,7 +142,7 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 	@OnClick(R.id.llayout_unjoin_circle_join)
 	public void onClick() {
 		ArrayList<String> list =  new ArrayList<>();
-		list.add("1");
+		list.add("");
 		list.add(mDetailss.getInfo().getCcid());
 		HttpUtils.post(Api.CIRCLE, Api.Circle.APPLYJOINCIRCLE, new ResponseHandler() {
 			@Override
