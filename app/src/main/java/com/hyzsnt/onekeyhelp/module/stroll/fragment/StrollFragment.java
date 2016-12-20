@@ -146,7 +146,7 @@ public class StrollFragment extends BaseFragment {
 	public void CircleRound() {
 		//参数p
 		ArrayList<String> list1 = new ArrayList<>();
-		list1.add("1");
+		list1.add("23");
 		list1.add("39.923263");
 		list1.add("116.539572");
 		list1.add("");
@@ -160,7 +160,10 @@ public class StrollFragment extends BaseFragment {
 
 			@Override
 			public void onSuccess(String response, int id) {
+
+              LogUtils.e(response);
 				getdata(response);
+
 			}
 
 			@Override
@@ -169,13 +172,14 @@ public class StrollFragment extends BaseFragment {
 			}
 		});
 	}
+
 	/**
-	 *获取已加入圈子信息
+	 * 获取已加入圈子信息
 	 */
-	public void  CircleMe(){
+	public void CircleMe() {
 		//参数p
 		ArrayList<String> list1 = new ArrayList<>();
-		list1.add("1");
+		list1.add("23");
 		list1.add("39.923263");
 		list1.add("116.539572");
 		//请求数据
@@ -184,9 +188,14 @@ public class StrollFragment extends BaseFragment {
 			public void onError(Call call, Exception e, int id) {
 
 			}
+
 			@Override
 			public void onSuccess(String response, int id) {
+
+
 				getdata(response);
+
+
 			}
 
 			@Override
@@ -195,11 +204,11 @@ public class StrollFragment extends BaseFragment {
 			}
 		});
 	}
+
 	/**
 	 * 解析json数据
-	 *
 	 */
-	public void getdata(String response){
+	public void getdata(String response) {
 		//解析数据
 		if (JsonUtils.isSuccess(response)) {
 			try {
@@ -208,11 +217,11 @@ public class StrollFragment extends BaseFragment {
 				//或去信息
 				JSONObject info = (JSONObject) circleround.get("info");
 				//获取圈子数
-				int circlenum =info.getInt("circlenum");
+				int circlenum = info.getInt("circlenum");
 				//获取小区数
 				int communitynum = info.getInt("communitynum");
 				//判断小区数和圈子数是否为空
-				if(circlenum>0){
+				if (circlenum > 0) {
 					//解析全部的数据
 					Gson gson = new Gson();
 					final CircleRound round = gson.fromJson(response, CircleRound.class);
@@ -235,20 +244,20 @@ public class StrollFragment extends BaseFragment {
 						@Override
 						public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 							Intent intent = new Intent(mActivity, CircleDetailsActivity.class);
-							intent.putExtra("ccid",round.getList().get(groupPosition).getCircle().get(childPosition).getCcid());
+							intent.putExtra("ccid", round.getList().get(groupPosition).getCircle().get(childPosition).getCcid());
 							startActivity(intent);
 							return false;
 						}
 					});
-				}else{
-					ToastUtils.showShort(mActivity,"暂时没有圈子");
+				} else {
+					ToastUtils.showShort(mActivity, "暂时没有圈子");
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 
 
-		}else {
+		} else {
 			LogUtils.e("圈子列表请求数据失败");
 		}
 	}

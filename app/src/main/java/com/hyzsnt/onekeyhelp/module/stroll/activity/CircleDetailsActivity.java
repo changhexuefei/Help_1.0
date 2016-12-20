@@ -2,8 +2,10 @@ package com.hyzsnt.onekeyhelp.module.stroll.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.R;
@@ -26,15 +28,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
 public class CircleDetailsActivity extends BaseActivity {
 
 	public String isjoin = "";
-	private CiecleDetailss mDetailss;
+	@BindView(R.id.tv_circle_details_titile)
+	TextView mTvCircleDetailsTitile;
 	@BindView(R.id.im_circle_details_back)
 	ImageView mImCircleDetailsBack;
+	@BindView(R.id.tv_publish_topic)
+	TextView mTvPublishTopic;
+
+	private CiecleDetailss mDetailss;
+
 	@BindView(R.id.frlayout_circle_dietails)
 	FrameLayout mFrlayoutCircleDietails;
 	private JoinCircleDetailsFragment mJoinCircleDetailsFragment;
@@ -68,13 +77,15 @@ public class CircleDetailsActivity extends BaseActivity {
 			@Override
 			public void onSuccess(String response, int id) {
 				if (JsonUtils.isSuccess(response)) {
-					LogUtils.e("数据"+response);
+					LogUtils.e("数据" + response);
 					try {
 						//获取圈子详情
 						JSONObject circleDetails = new JSONObject(response);
 						JSONObject info = circleDetails.getJSONObject("info");
+						//设置圈主标题
+						mTvCircleDetailsTitile.setText(info.getString("ccname"));
 						//获取是否加入圈子
-					    String ifjoin = info.getString("ifjoin");
+						String ifjoin = info.getString("ifjoin");
 						//获取话题集合
 						JSONArray totallist = circleDetails.getJSONArray("list");
 						//隐藏所有的fragment
@@ -93,13 +104,13 @@ public class CircleDetailsActivity extends BaseActivity {
 									Gson gson = new Gson();
 									mDetailss = gson.fromJson(response, CiecleDetailss.class);
 									bundle.putParcelable("details", mDetailss);
-									bundle.putBoolean("iftotal",false);
+									bundle.putBoolean("iftotal", false);
 								} else {
 									//有话题完全解析
 									Gson gson = new Gson();
 									mDetails = gson.fromJson(response, CircleDetails.class);
 									bundle.putParcelable("details", mDetails);
-									bundle.putBoolean("iftotal",true);
+									bundle.putBoolean("iftotal", true);
 
 								}
 								mJoinCircleDetailsFragment.setArguments(bundle);
@@ -148,10 +159,6 @@ public class CircleDetailsActivity extends BaseActivity {
 
 	}
 
-	@OnClick(R.id.im_circle_details_back)
-	public void onClick() {
-		finish();
-	}
 
 	/**
 	 * 隐藏所有fragment
@@ -167,5 +174,25 @@ public class CircleDetailsActivity extends BaseActivity {
 		}
 
 		transaction.commit();
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// TODO: add setContentView(...) invocation
+		ButterKnife.bind(this);
+	}
+
+
+	@OnClick({R.id.im_circle_details_back, R.id.tv_publish_topic})
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.im_circle_details_back:
+				finish();
+				break;
+			case R.id.tv_publish_topic:
+
+				break;
+		}
 	}
 }

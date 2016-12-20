@@ -1,6 +1,8 @@
 package com.hyzsnt.onekeyhelp.module.stroll.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleRound;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
+import com.hyzsnt.onekeyhelp.utils.DbUtils;
 
 import java.util.List;
 
@@ -102,20 +106,34 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 		//Glide.with(mactivity).load(circles.getCccover()).into(childViewHolder.child_icon);
 		childViewHolder.child_num.setText(circles.getCurnum()+"人");
 		childViewHolder.child_name.setText(circles.getCcname());
-        childViewHolder.child_topic.setText(circles.getFlag()+"条话题");
+		if(circles.getTopicnum()!=null){
+			childViewHolder.child_topic.setText(circles.getTopicnum()+"条话题");
+		}
+
 		String flags =circles.getTags();
 		String[] flist = flags.split("\\|");
+		DbUtils db = new DbUtils(mactivity);
+
 		for(int j=0;j<flist.length;j++){
 
            if(flist.length==3){
-               childViewHolder.child_type_three.setText(flist[2]);
+	           CircleType.ListEntry query = db.query(flist[2]);
+	           childViewHolder.child_type_three.setText(query.getTagname());
+	           GradientDrawable myGrad = (GradientDrawable) childViewHolder.child_type_three.getBackground();
+	           myGrad.setColor(Color.parseColor(query.getTagdesc()));
 	           childViewHolder.child_type_three.setVisibility(View.VISIBLE);
            }
 			if(flist.length>=2){
-				childViewHolder.child_type_two.setText(flist[1]);
+				CircleType.ListEntry query = db.query(flist[1]);
+				childViewHolder.child_type_two.setText(query.getTagname());
+				GradientDrawable myGrad = (GradientDrawable) childViewHolder.child_type_two.getBackground();
+				myGrad.setColor(Color.parseColor(query.getTagdesc()));
 				childViewHolder.child_type_two.setVisibility(View.VISIBLE);
 			} if(flist.length>=1){
-				childViewHolder.child_type_one.setText(flist[0]);
+				CircleType.ListEntry query = db.query(flist[0]);
+				childViewHolder.child_type_one.setText(query.getTagname());
+				GradientDrawable myGrad = (GradientDrawable) childViewHolder.child_type_one.getBackground();
+				myGrad.setColor(Color.parseColor(query.getTagdesc()));
 				childViewHolder.child_type_one.setVisibility(View.VISIBLE);
 			}
 		}

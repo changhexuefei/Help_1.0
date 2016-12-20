@@ -60,6 +60,7 @@ public class DbUtils extends SQLiteOpenHelper {
 		while (c.moveToNext()){
 			list = new CircleType.ListEntry(c.getString(c.getColumnIndex("tagdes")),c.getString(c.getColumnIndex("tagid")),c.getString(c.getColumnIndex("tagname")));
 		}
+		c.close();
 		return list;
 
 	}
@@ -72,6 +73,7 @@ public class DbUtils extends SQLiteOpenHelper {
 		while (c.moveToNext()){
 			list.add(new CircleType.ListEntry(c.getString(c.getColumnIndex("tagdes")),c.getString(c.getColumnIndex("tagid")),c.getString(c.getColumnIndex("tagname"))));
 		}
+		c.close();
 		return list;
 
 	}

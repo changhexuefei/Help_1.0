@@ -56,26 +56,33 @@
 			android:textSize="10sp"
 			/>
 
-		<ImageView
+		<TextView
 			android:id="@+id/im_member_tag_one"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
 			android:layout_marginRight="@dimen/dp_6"
 			android:layout_marginTop="@dimen/dp_24"
-			android:src="@mipmap/tag_baby"/>
+			android:background="@drawable/stroll_type_three"
+			android:text="亲子"
+			android:textSize="@dimen/sp_10"
+			android:gravity="center"
+			android:textColor="#FFFFFF"/>
 
-		<ImageView
+		<TextView
 			android:id="@+id/im_member_tag_two"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginRight="@dimen/dp_6"
 			android:layout_marginTop="@dimen/dp_24"
-
 			android:layout_toLeftOf="@id/im_member_tag_one"
-			android:src="@mipmap/tag_baby"/>
+			android:background="@drawable/stroll_type_three"
+			android:text="亲子"
+			android:textSize="@dimen/sp_10"
+			android:gravity="center"
+			android:textColor="#FFFFFF"/>
 
-		<ImageView
+		<TextView
 			android:id="@+id/im_member_tag_three"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -83,7 +90,11 @@
 			android:layout_marginTop="@dimen/dp_24"
 			android:layout_toLeftOf="@id/im_member_tag_two"
 
-			android:src="@mipmap/tag_baby"></ImageView>
+			android:background="@drawable/stroll_type_three"
+			android:text="亲子"
+			android:textSize="@dimen/sp_10"
+			android:gravity="center"
+			android:textColor="#FFFFFF"></TextView>
 		<View
 			android:layout_alignParentBottom="true"
 			android:id="@+id/view1"

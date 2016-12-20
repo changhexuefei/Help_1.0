@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,12 +22,14 @@ import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleTypeAdapter;
+import com.hyzsnt.onekeyhelp.module.stroll.adapter.CommunityAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 import com.hyzsnt.onekeyhelp.utils.DbUtils;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,6 +64,7 @@ public class CreateCircleActivity extends BaseActivity {
 	LinearLayout mLlExchangeCommunity;
 	//圈子类型集合
 	private ArrayList<CircleType.ListEntry> mtypelist;
+	//标识选中的标签数
 	private int count = 0;
 	String result;
 
@@ -123,10 +127,12 @@ public class CreateCircleActivity extends BaseActivity {
 					@Override
 					public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
 						String img_path = resultList.get(0).getPhotoPath();
-						Bitmap bmp = BitmapFactory.decodeFile(img_path);
+
+						Bitmap getimage = getimage(img_path);
+						Bitmap bitmap = compressImage(getimage);
 						mImUploadPicture.setVisibility(View.VISIBLE);
-						mImUploadPicture.setImageBitmap(bmp);
-						result = bitmapToBase64(bmp);
+						mImUploadPicture.setImageBitmap(bitmap);
+						result = bitmapToBase64(bitmap);
 					}
 
 					@Override
@@ -138,6 +144,7 @@ public class CreateCircleActivity extends BaseActivity {
 
 			break;
 			case R.id.activity_create_circle: {
+				//添加p参数
 				List<String> list = new ArrayList<>();
 				list.add("23");
 				list.add("2803");
@@ -163,8 +170,9 @@ public class CreateCircleActivity extends BaseActivity {
 					@Override
 					public void onSuccess(String response, int id) {
 						if (JsonUtils.isSuccess(response)) {
-							LogUtils.e("成功");
+
 							LogUtils.e(response);
+							ToastUtils.showShort(CreateCircleActivity.this,"创建成功");
 						} else {
 							LogUtils.e("失败" + JsonUtils.getErrorMessage(response));
 						}
@@ -179,6 +187,8 @@ public class CreateCircleActivity extends BaseActivity {
 			break;
 			case R.id.ll_exchange_community: {
 				View popupView = View.inflate(CreateCircleActivity.this, R.layout.pop_create_circle_community, null);
+				ListView lv = (ListView) popupView.findViewById(R.id.ll_create_circle_community);
+				lv.setAdapter(new CommunityAdapter(CreateCircleActivity.this));
 				PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
 				mPopupWindow.setTouchable(true);
 				mPopupWindow.setOutsideTouchable(true);
@@ -242,5 +252,51 @@ public class CreateCircleActivity extends BaseActivity {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * 压缩
+	 * @param image
+	 * @return
+	 */
+	private Bitmap compressImage(Bitmap image) {
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+		int options = 100;
+		while ( baos.toByteArray().length / 1024>100) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+			baos.reset();//重置baos即清空baos
+			image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+			options -= 10;//每次都减少10
+		}
+		ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
+		Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
+		return bitmap;
+	}
+	private Bitmap getimage(String srcPath) {
+		BitmapFactory.Options newOpts = new BitmapFactory.Options();
+		//开始读入图片，此时把options.inJustDecodeBounds 设回true了
+		newOpts.inJustDecodeBounds = true;
+		Bitmap bitmap = BitmapFactory.decodeFile(srcPath,newOpts);//此时返回bm为空
+
+		newOpts.inJustDecodeBounds = false;
+		int w = newOpts.outWidth;
+		int h = newOpts.outHeight;
+		//现在主流手机比较多是800*480分辨率，所以高和宽我们设置为
+		float hh = 800f;//这里设置高度为800f
+		float ww = 480f;//这里设置宽度为480f
+		//缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
+		int be = 1;//be=1表示不缩放
+		if (w > h && w > ww) {//如果宽度大的话根据宽度固定大小缩放
+			be = (int) (newOpts.outWidth / ww);
+		} else if (w < h && h > hh) {//如果高度高的话根据宽度固定大小缩放
+			be = (int) (newOpts.outHeight / hh);
+		}
+		if (be <= 0)
+			be = 1;
+		newOpts.inSampleSize = be;//设置缩放比例
+		//重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
+		bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
+		return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
 	}
 }

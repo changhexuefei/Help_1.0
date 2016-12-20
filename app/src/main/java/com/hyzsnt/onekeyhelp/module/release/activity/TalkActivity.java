@@ -103,9 +103,10 @@ public class TalkActivity extends BaseActivity {
     protected void initData() {
         //用户的经纬度
         lat = Double.toString(App.getLocation().getLatitude());
-        Log.d("lat", lat);
+        Log.d("333333",""+App.getLocation().getLatitude());
+        Log.d("lat111111", lat);
         lon = Double.toString(App.getLocation().getLongitude());
-        Log.d("lon", lon);
+        Log.d("lon222222", lon);
 
         //用户输入的标题信息
         mTitle = mEtTitle.getText().toString();

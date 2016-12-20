@@ -4,7 +4,11 @@
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
               android:orientation="vertical">
-
+<LinearLayout
+    android:id="@+id/showArea"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/tv_catalog"
         android:layout_width="match_parent"
@@ -29,4 +33,19 @@
         android:paddingTop="10dip"
         android:text="hhhh"
         android:textColor="#336598"/>
+
+
+</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/hideArea"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+    </LinearLayout>
+
+
 </LinearLayout>
