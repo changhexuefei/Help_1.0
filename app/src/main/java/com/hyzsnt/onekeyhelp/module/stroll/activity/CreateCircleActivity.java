@@ -1,5 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.stroll.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -129,10 +130,9 @@ public class CreateCircleActivity extends BaseActivity {
 						String img_path = resultList.get(0).getPhotoPath();
 
 						Bitmap getimage = getimage(img_path);
-						Bitmap bitmap = compressImage(getimage);
 						mImUploadPicture.setVisibility(View.VISIBLE);
-						mImUploadPicture.setImageBitmap(bitmap);
-						result = bitmapToBase64(bitmap);
+						mImUploadPicture.setImageBitmap(getimage);
+						result = bitmapToBase64(getimage);
 					}
 
 					@Override
@@ -170,9 +170,12 @@ public class CreateCircleActivity extends BaseActivity {
 					@Override
 					public void onSuccess(String response, int id) {
 						if (JsonUtils.isSuccess(response)) {
-
-							LogUtils.e(response);
+							Intent intent = new Intent(CreateCircleActivity.this, CircleDetailsActivity.class);
+							intent.putExtra("response",response);
+							intent.putExtra("title",mEtCreateCircleName.getText().toString());
+							startActivity(intent);
 							ToastUtils.showShort(CreateCircleActivity.this,"创建成功");
+							finish();
 						} else {
 							LogUtils.e("失败" + JsonUtils.getErrorMessage(response));
 						}

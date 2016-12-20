@@ -1,13 +1,19 @@
 package com.hyzsnt.onekeyhelp.module.stroll.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -16,6 +22,8 @@ import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CircleDetailsActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CreateCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.SeekCircleActivity;
@@ -35,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
@@ -58,7 +67,14 @@ public class StrollFragment extends BaseFragment {
 	TextView mTvStrollFragmentMe;
 	@BindView(R.id.ex_circle_fragment)
 	CustomExpandaleListView mExCircleFragment;
-
+	@BindView(R.id.scrollView)
+	ScrollView mScrollView;
+	//实例化热门圈子类
+	CircleHotTag hotTagData = null;
+	private StrollHeaderAdapter mAdapter;
+	private CircleFragmentAdapter mMCircleFragmentAdapter;
+	private CircleRound mRound;
+	private ArrayList<MDate> mUserInfo;
 
 	@Nullable
 
@@ -70,10 +86,17 @@ public class StrollFragment extends BaseFragment {
 
 	@Override
 	protected void initData(String content) {
+		//获取用户信息
+		SharedPreferences sp = mActivity.getSharedPreferences("userSP", Context.MODE_PRIVATE);
+		String userDetail = sp.getString("userDetail", "").trim();
+		mUserInfo = Resovle.getUserInfo(userDetail);
+
+
 		//热门圈子
 		HotTags(content);
 		//获取周边信息
 		CircleRound();
+		mScrollView.smoothScrollTo(0,20);
 
 	}
 
@@ -121,8 +144,6 @@ public class StrollFragment extends BaseFragment {
 	 * 添加数据到热门标签
 	 */
 	public void HotTags(String content) {
-		//实例化热门圈子类
-		CircleHotTag hotTagData = null;
 		//设置Recycleview横向排布
 		LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
 		layoutManager.setOrientation(LinearLayout.HORIZONTAL);
@@ -131,13 +152,15 @@ public class StrollFragment extends BaseFragment {
 		if (isSuccess(content)) {
 			Gson gson = new Gson();
 			hotTagData = gson.fromJson(content, CircleHotTag.class);
-			hotTagData.getList();
-			//添加适配器到Recycleview
-			mReStrollHeaderList.setAdapter(new StrollHeaderAdapter(mActivity, hotTagData.getList()));
+			mAdapter.setdata(hotTagData.getList());
+			mReStrollHeaderList.setAdapter(mAdapter);
+
 		} else {
 			String err = JsonUtils.getErrorMessage(content);
 			LogUtils.e(err);
 		}
+		//设置点击监听
+
 	}
 
 	/**
@@ -161,7 +184,8 @@ public class StrollFragment extends BaseFragment {
 			@Override
 			public void onSuccess(String response, int id) {
 
-              LogUtils.e(response);
+				LogUtils.e("圈子"+response);
+
 				getdata(response);
 
 			}
@@ -179,6 +203,7 @@ public class StrollFragment extends BaseFragment {
 	public void CircleMe() {
 		//参数p
 		ArrayList<String> list1 = new ArrayList<>();
+
 		list1.add("23");
 		list1.add("39.923263");
 		list1.add("116.539572");
@@ -192,7 +217,7 @@ public class StrollFragment extends BaseFragment {
 			@Override
 			public void onSuccess(String response, int id) {
 
-
+                LogUtils.e("我的"+response);
 				getdata(response);
 
 
@@ -224,31 +249,13 @@ public class StrollFragment extends BaseFragment {
 				if (circlenum > 0) {
 					//解析全部的数据
 					Gson gson = new Gson();
-					final CircleRound round = gson.fromJson(response, CircleRound.class);
-					//添加适配器
-					CircleFragmentAdapter mCircleFragmentAdapter = new CircleFragmentAdapter(mActivity, round.getList());
-					mExCircleFragment.setAdapter(mCircleFragmentAdapter);
+					mRound = gson.fromJson(response, CircleRound.class);
+					mMCircleFragmentAdapter.setdata(mRound.getList());
+					mExCircleFragment.setAdapter(mMCircleFragmentAdapter);
 					//设置将ExpandableListView以展开的方式呈现
-					for (int i = 0; i < mCircleFragmentAdapter.getGroupCount(); i++) {
+					for (int i = 0; i < mMCircleFragmentAdapter.getGroupCount(); i++) {
 						mExCircleFragment.expandGroup(i);
 					}
-					//设置group不能点击收缩
-					mExCircleFragment.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-						@Override
-						public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-							return true;
-						}
-					});
-					//子条目点击跳转
-					mExCircleFragment.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-						@Override
-						public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-							Intent intent = new Intent(mActivity, CircleDetailsActivity.class);
-							intent.putExtra("ccid", round.getList().get(groupPosition).getCircle().get(childPosition).getCcid());
-							startActivity(intent);
-							return false;
-						}
-					});
 				} else {
 					ToastUtils.showShort(mActivity, "暂时没有圈子");
 				}
@@ -262,4 +269,47 @@ public class StrollFragment extends BaseFragment {
 		}
 	}
 
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		// TODO: inflate a fragment view
+		View rootView = super.onCreateView(inflater, container, savedInstanceState);
+		ButterKnife.bind(this, rootView);
+		return rootView;
+	}
+
+	@Override
+	protected void initView(View contentView) {
+		super.initView(contentView);
+		//添加适配器到Recycleview
+		mAdapter = new StrollHeaderAdapter(mActivity);
+
+		mAdapter.setOnItemClickListener(new StrollHeaderAdapter.OnRecyclerViewItemClickListener() {
+			@Override
+			public void onItemClick(View view, int data) {
+				Intent intent = new Intent(mActivity, SeekCircleActivity.class);
+				intent.putExtra("tag", hotTagData.getList().get(data).getTagname());
+				startActivity(intent);
+			}
+		});
+		//添加适配器
+		mMCircleFragmentAdapter = new CircleFragmentAdapter(mActivity);
+
+		//设置group不能点击收缩
+		mExCircleFragment.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+			@Override
+			public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+				return true;
+			}
+		});
+		//子条目点击跳转
+		mExCircleFragment.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+				Intent intent = new Intent(mActivity, CircleDetailsActivity.class);
+				intent.putExtra("ccid", mRound.getList().get(groupPosition).getCircle().get(childPosition).getCcid());
+				startActivity(intent);
+				return false;
+			}
+		});
+	}
 }

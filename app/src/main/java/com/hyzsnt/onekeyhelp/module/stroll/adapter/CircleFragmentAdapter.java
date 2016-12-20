@@ -15,6 +15,7 @@ import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleRound;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 import com.hyzsnt.onekeyhelp.utils.DbUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,12 +26,17 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 
 	Context mactivity;
 	List<CircleRound.ListEntry> list;
+	ArrayList<CircleType.ListEntry> queryall;
 
-	public CircleFragmentAdapter(Context mactivity, List<CircleRound.ListEntry> list) {
+	public CircleFragmentAdapter(Context mactivity) {
 		this.mactivity = mactivity;
-		this.list = list;
-	}
+		DbUtils db = new DbUtils(mactivity);
+        queryall =  db.queryall();
 
+	}
+    public void setdata(List<CircleRound.ListEntry> list){
+	    this.list = list;
+    }
 	@Override
 	public int getGroupCount() {
 		return list.size();
@@ -112,31 +118,45 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 
 		String flags =circles.getTags();
 		String[] flist = flags.split("\\|");
-		DbUtils db = new DbUtils(mactivity);
 
-		for(int j=0;j<flist.length;j++){
+
 
            if(flist.length==3){
-	           CircleType.ListEntry query = db.query(flist[2]);
+	           CircleType.ListEntry query = null;
+	           for(int j=0;j<queryall.size();j++){
+		           if(queryall.get(j).getTagid().equals(flist[2])){
+			           query= queryall.get(j);
+		           }
+	           }
 	           childViewHolder.child_type_three.setText(query.getTagname());
 	           GradientDrawable myGrad = (GradientDrawable) childViewHolder.child_type_three.getBackground();
 	           myGrad.setColor(Color.parseColor(query.getTagdesc()));
 	           childViewHolder.child_type_three.setVisibility(View.VISIBLE);
            }
 			if(flist.length>=2){
-				CircleType.ListEntry query = db.query(flist[1]);
+				CircleType.ListEntry query = null;
+				for(int j=0;j<queryall.size();j++){
+					if(queryall.get(j).getTagid().equals(flist[1])){
+						query= queryall.get(j);
+					}
+				}
 				childViewHolder.child_type_two.setText(query.getTagname());
 				GradientDrawable myGrad = (GradientDrawable) childViewHolder.child_type_two.getBackground();
 				myGrad.setColor(Color.parseColor(query.getTagdesc()));
 				childViewHolder.child_type_two.setVisibility(View.VISIBLE);
 			} if(flist.length>=1){
-				CircleType.ListEntry query = db.query(flist[0]);
+			CircleType.ListEntry query = null;
+			for(int j=0;j<queryall.size();j++){
+				if(queryall.get(j).getTagid().equals(flist[0])){
+					query= queryall.get(j);
+				}
+			}
 				childViewHolder.child_type_one.setText(query.getTagname());
 				GradientDrawable myGrad = (GradientDrawable) childViewHolder.child_type_one.getBackground();
 				myGrad.setColor(Color.parseColor(query.getTagdesc()));
 				childViewHolder.child_type_one.setVisibility(View.VISIBLE);
 			}
-		}
+
 
 
 

@@ -62,7 +62,18 @@ public class DbUtils extends SQLiteOpenHelper {
 		}
 		c.close();
 		return list;
-
+	}
+	//查询方法
+	public CircleType.ListEntry querybyname(String tagname){
+		SQLiteDatabase db = getReadableDatabase();
+		//获取Cursor
+		Cursor c = db.query("circletags",null,"tagname=?",new String[]{tagname},null,null,null,null);
+		CircleType.ListEntry list = null;
+		while (c.moveToNext()){
+			list = new CircleType.ListEntry(c.getString(c.getColumnIndex("tagdes")),c.getString(c.getColumnIndex("tagid")),c.getString(c.getColumnIndex("tagname")));
+		}
+		c.close();
+		return list;
 	}
 	//查询方法
 	public ArrayList<CircleType.ListEntry> queryall(){
