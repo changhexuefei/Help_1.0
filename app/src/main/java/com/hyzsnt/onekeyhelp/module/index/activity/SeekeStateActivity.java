@@ -1,40 +1,39 @@
 package com.hyzsnt.onekeyhelp.module.index.activity;
 
+import android.content.Intent;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
-import com.hyzsnt.onekeyhelp.module.index.adapter.ProvinceListAdapter;
-import com.hyzsnt.onekeyhelp.module.index.bean.PinyinComparator;
-import com.hyzsnt.onekeyhelp.module.index.bean.ProvinceHasCityInfo;
-import com.hyzsnt.onekeyhelp.module.index.bean.SortCity;
+import com.hyzsnt.onekeyhelp.module.index.adapter.CommunityListAdapter;
+import com.hyzsnt.onekeyhelp.module.index.bean.CommunityList;
+import com.hyzsnt.onekeyhelp.module.index.bean.HotAreaInfo;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
-import com.hyzsnt.onekeyhelp.utils.PinyinUtils;
-import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -55,9 +54,6 @@ public class SeekeStateActivity extends BaseActivity {
     ImageView btn_return;
     @BindView(R.id.search_estate_bar)
     EditText mSearchEstateBar;
-    @BindView(R.id.province_listView)
-    ListView mProvinceListView;
-
 
     @BindView(R.id.classify)
     LinearLayout mLayout;
@@ -67,14 +63,15 @@ public class SeekeStateActivity extends BaseActivity {
     Button btn_change;
     @BindView(R.id.city)
     LinearLayout linCity;
-    private PinyinComparator pinyinComparator;
-
-    private List<SortCity> mSortCities;
-    private ProvinceListAdapter mAdapter;
+    @BindView(R.id.hotArea)
+    TextView tv_hotArea;
+    @BindView(R.id.com_list)
+    LRecyclerView comList;
+    List<HotAreaInfo> mHotAreaInfos;
     List<String> area;
-    List<String> province;
-    List<ProvinceHasCityInfo> phCitys;
-    ProvinceHasCityInfo phci;
+    List<CommunityList.ListBean> mCommunityLists;
+    private CommunityListAdapter mAdapter;
+
 
     //获取行政区信息的接口 a
     private static final String REGIONAL = "getRegional";
@@ -84,22 +81,21 @@ public class SeekeStateActivity extends BaseActivity {
     private static final String NUM = "1";
     //获取页数，初次检索默认1
     private static final String PAGENUM = "1";
+    //检索条件
+    private String searchCondition = "";
+
     //定位检索
-    private String condition;
+    private static final String ORIENTATION = "0";
+    //区域检索
+    private static final String AREA = "1";
     //用户ID
-    private String userid = "5";
+    private String userid = "4";
     //上级行政区域ID
-    private String regid = "110000";
+    private String regid = "100000";
     //条件集合
     List<String> parms = new ArrayList<>();
     private String lat;
     private String lon;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient mClient;
-
 
     @Override
     protected int getLayoutId() {
@@ -108,13 +104,9 @@ public class SeekeStateActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
         area = new ArrayList<>();
-        province = new ArrayList<>();
-        pinyinComparator = new PinyinComparator();
+        mAdapter = new CommunityListAdapter();
         getCurrentLocation();
-
-
     }
 
     /**
@@ -126,13 +118,14 @@ public class SeekeStateActivity extends BaseActivity {
         lon = Double.toString(getLocation().getLongitude());
         Log.d("lon", lon);
 
-        parms.add("1");
+//        parms.add("");
+        parms.add("0");
         parms.add(userid);
         parms.add(lat);
         parms.add(lon);
         parms.add("110000");
 
-        HttpUtils.post(Api.PUBLIC, "getHotArea", parms, new JsonResponseHandler() {
+        HttpUtils.post(Api.PUBLIC, HOTAREA, parms, new JsonResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
 
@@ -155,14 +148,20 @@ public class SeekeStateActivity extends BaseActivity {
                         JSONObject list = object.getJSONObject("list");
                         Log.d("list", "" + list);
                         Iterator<String> iterator = list.keys();
+                        mHotAreaInfos = new ArrayList<HotAreaInfo>();
                         while (iterator.hasNext()) {
                             String key = iterator.next();
                             Log.d("key+++++++", key);
+                            HotAreaInfo hotAreaInfo = new HotAreaInfo();
+                            hotAreaInfo.setComID(key);
                             String value = list.getString(key);
                             Log.d("value+++++", value);
+                            hotAreaInfo.setComName(value);
                             area.add(value);
                             Log.d("============", "" + area.size());
+                            mHotAreaInfos.add(hotAreaInfo);
                         }
+
                         initAutoLL();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -173,11 +172,7 @@ public class SeekeStateActivity extends BaseActivity {
                 }
             }
         });
-
-
-
     }
-
 
     @Override
     protected void initListener() {
@@ -212,174 +207,20 @@ public class SeekeStateActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                search();
+//                search();
             }
         });
-//显示省份列表
+        //显示省份列表
         btn_change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                linCity.setVisibility(View.GONE);
-                mLayout.setVisibility(View.GONE);
-                parms.clear();
-                parms.add("100000");
-                HttpUtils.post(Api.PUBLIC, "getRegional", parms, new JsonResponseHandler() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
 
-                    }
-
-                    @Override
-                    public void onSuccess(String response, int id) {
-                        Toast.makeText(SeekeStateActivity.this, "成功了", Toast.LENGTH_SHORT).show();
-                        Log.d("0000000000", response);
-
-                        if (JsonUtils.isSuccess(response)) {
-                            try {
-                                JSONObject object = new JSONObject(response);
-                                final JSONObject list = object.getJSONObject("list");
-
-                                Log.d("list", "" + list);
-                                final Iterator<String> iterator = list.keys();
-                                mSortCities = new ArrayList<SortCity>();
-                                SortCity city;
-                                while (iterator.hasNext()) {
-                                    String key = iterator.next();
-                                    Log.d("key+++++++", key);
-                                    String value = list.getString(key);
-                                    Log.d("value+++++", value);
-                                    city = new SortCity();
-                                    city.setId(key);
-                                    city.setName(value);
-                                    province.add(value);
-                                    for (int i = 0; i < province.size(); i++) {
-                                        String firstSpell1 = PinyinUtils.getFirstSpell(province.get(i));
-                                        String sortString = firstSpell1.substring(0, 1).toUpperCase();
-                                        // 正则表达式，判断首字母是否是英文字母
-                                        if (sortString.matches("[A-Z]")) {
-                                            city.setSortLetters(sortString.toUpperCase());
-                                        } else {
-                                            city.setSortLetters("#");
-                                        }
-                                    }
-                                    Log.d("999999", "" + province);
-                                    mSortCities.add(city);
-                                }
-                                mProvinceListView.setVisibility(View.VISIBLE);
-                                Collections.sort(mSortCities, pinyinComparator);
-                                mAdapter = new ProvinceListAdapter(SeekeStateActivity.this);
-                                mAdapter.setList(mSortCities);
-                                mProvinceListView.setAdapter(mAdapter);
-
-                                //点击省份的每一行出现省份下辖市
-                                mProvinceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        String cityID = mSortCities.get(position).getId();
-                                        ToastUtils.showLong(SeekeStateActivity.this, cityID);
-                                        parms.clear();
-                                        parms.add(cityID);
-                                        HttpUtils.post(Api.PUBLIC, REGIONAL, parms, new JsonResponseHandler() {
-                                            @Override
-                                            public void onError(Call call, Exception e, int id) {
-                                                Log.d("出错了", e.toString());
-                                            }
-
-                                            @Override
-                                            public void onSuccess(String response, int id) {
-                                                Log.d("城市", response);
-                                                if (JsonUtils.isSuccess(response)) {
-                                                    try {
-                                                        JSONObject ct = new JSONObject(response);
-                                                        JSONObject list = ct.getJSONObject("list");
-                                                        Log.d("list", "" + list);
-                                                        Iterator<String> iterator = list.keys();
-                                                        phCitys = new ArrayList<ProvinceHasCityInfo>();
-
-                                                        while (iterator.hasNext()) {
-                                                            String key = iterator.next();
-                                                            Log.d("&&&&&&&", key);
-                                                            String value = list.getString(key);
-                                                            Log.d("*********", value);
-                                                            phci = new ProvinceHasCityInfo();
-                                                            phci.setcID(key);
-                                                            phci.setcName(value);
-                                                            phCitys.add(phci);
-                                                        }
-//                                                            initAutoLL();
-
-//                                                        Intent intent = new Intent(SeekeStateActivity.this,)
-//                                                        startActivityForResult();
-
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-
-                                                } else {
-                                                    String err = JsonUtils.getErrorMessage(response);
-                                                    LogUtils.e(err);
-                                                }
-                                            }
-                                        });
-                                    }
-                                });
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            String err = JsonUtils.getErrorMessage(response);
-                            LogUtils.e(err);
-                        }
-                    }
-                });
-            }
-        });
-
-    }
-
-
-    private void search() {
-
-        //获取行政区信息
-        parms.add("100000");
-        HttpUtils.post(Api.PUBLIC, "getRegional", parms, new JsonResponseHandler() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                Toast.makeText(SeekeStateActivity.this, "你输入的有误", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onSuccess(String response, int id) {
-                Log.d("111111111", "response" + response);
-                Toast.makeText(SeekeStateActivity.this, "链接成功", Toast.LENGTH_SHORT).show();
-                if (JsonUtils.isSuccess(response)) {
-                    try {
-                        JSONObject object = new JSONObject(response);
-                        Log.d("object", "" + object);
-                        JSONObject list = object.getJSONObject("list");
-                        Log.d("list", "" + list);
-                        Iterator<String> iterator = list.keys();
-                        while (iterator.hasNext()) {
-                            String key = iterator.next();
-                            Log.d("key+++++++", key);
-                            String value = list.getString(key);
-                            Log.d("value+++++", value);
-                            area.add(value);
-                            Log.d("============", "" + area.size());
-                        }
-                        initAutoLL();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                Intent intent = new Intent(SeekeStateActivity.this, ProvinceListActivity.class);
+                intent.putExtra("regid", regid);
+                startActivity(intent);
             }
         });
     }
-//    }
-
 
     //    绘制自动换行的线性布局
     private void initAutoLL() {
@@ -408,11 +249,14 @@ public class SeekeStateActivity extends BaseActivity {
                 isNewLayout = false;
             }
 //            计算是否需要换行
-            TextView textView = (TextView) getLayoutInflater().inflate(R.layout.item_textview, null);
+            final TextView textView = (TextView) getLayoutInflater().inflate(R.layout.item_textview, null);
             textView.setText(area.get(i));
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    CharSequence hrtext = textView.getText();
+                    getCommunityInfo(hrtext);
+//
                     Toast.makeText(SeekeStateActivity.this, "" + v.getId(), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -450,6 +294,7 @@ public class SeekeStateActivity extends BaseActivity {
         mLayout.addView(rowLL);
     }
 
+
     //    dp转px
     private float dipToPx(int dipValue) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
@@ -461,5 +306,62 @@ public class SeekeStateActivity extends BaseActivity {
     private float getScreenWidth() {
         return this.getResources().getDisplayMetrics().widthPixels;
     }
+
+    private void getCommunityInfo(CharSequence hrtext) {
+        if (hrtext != null) {
+            tv_hotArea.setVisibility(View.VISIBLE);
+            tv_hotArea.setText(hrtext);
+            hrtext.toString();
+            btn_change.setVisibility(View.GONE);
+            mLayout.removeAllViews();
+//            parms.clear();
+            parms.add("1");
+            parms.add("10");
+            parms.add("1");
+            parms.add("4");
+            parms.add(lat);
+            parms.add(lon);
+            parms.add("");
+            parms.add("");
+            parms.add(hrtext.toString());
+
+            HttpUtils.post(Api.COMMUNITY, "getCommunityList", parms, new JsonResponseHandler() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public void onSuccess(String response, int id) {
+                    Log.d("小区", response);
+                    if (JsonUtils.isSuccess(response)) {
+                        mCommunityLists = new ArrayList<CommunityList.ListBean>();
+                        Gson gson = new Gson();
+                        CommunityList communityList = gson.fromJson(response, CommunityList.class);
+
+                        mCommunityLists = communityList.getList();
+                        mAdapter.setCommunityLists(mCommunityLists);
+                        LinearLayoutManager manager = new LinearLayoutManager(SeekeStateActivity.this, LinearLayoutManager.VERTICAL, false);
+                        comList.setLayoutManager(manager);
+                        comList.setHasFixedSize(true);
+                        comList.setItemAnimator(new DefaultItemAnimator());
+                        LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mAdapter);
+                        comList.setAdapter(adapter);
+                        //行点击事件
+
+                    } else {
+
+
+                    }
+                }
+            });
+
+        } else {
+            tv_hotArea.setVisibility(View.GONE);
+        }
+
+
+    }
+
 
 }

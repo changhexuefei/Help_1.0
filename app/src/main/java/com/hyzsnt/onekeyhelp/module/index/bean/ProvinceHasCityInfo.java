@@ -1,10 +1,12 @@
 package com.hyzsnt.onekeyhelp.module.index.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by gao on 2016/12/19.
  */
 
-public class ProvinceHasCityInfo {
+public class ProvinceHasCityInfo implements Serializable {
     private String cName;
     private String cID;
 

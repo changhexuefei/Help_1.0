@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/item_province"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
               android:orientation="vertical">
 <LinearLayout
-    android:id="@+id/showArea"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
         android:id="@+id/tv_catalog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,6 +24,7 @@
         android:textColor="#454545"/>
 
     <TextView
+        android:layout_marginRight="6dp"
         android:id="@+id/province_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,16 +39,6 @@
 
 
 </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/hideArea"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-
-    </LinearLayout>
 
 
 </LinearLayout>

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
+import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
@@ -35,13 +36,11 @@ import okhttp3.Call;
 
 public class TalkActivity extends BaseActivity {
 
-    private static final String PUBLISH = "publishDynamic";
+    private static final String PUBLISHDYNAMIC = "publishDynamic";
 
     List<String> p = new ArrayList<>();
-
     private final int REQUEST_CODE_GALLERY = 1001;
     private final int REQUEST_CODE_CAMERA = 1000;
-
     @BindView(R.id.btn_return)
     ImageButton mBtnReturn;
     @BindView(R.id.tv_msg)
@@ -160,7 +159,7 @@ public class TalkActivity extends BaseActivity {
                         p.add(mTitle);
                         p.add("1");
                         p.add("");
-                        HttpUtils.post("publish", "publishDynamic", p, new JsonResponseHandler() {
+                        HttpUtils.post(Api.PUBLISH, PUBLISHDYNAMIC, p, new JsonResponseHandler() {
                             @Override
                             public void onError(Call call, Exception e, int id) {
                             }

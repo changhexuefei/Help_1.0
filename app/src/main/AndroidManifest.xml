@@ -48,9 +48,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
         </activity>
         <!-- 物品置换 -->
+
 
         <!-- 一键求助页面 -->
         <activity android:name=".module.help.activity.HelpActivity"/>
@@ -67,8 +67,6 @@
 
         <!-- 搜索小区 -->
         <activity android:name=".module.index.activity.SeekeStateActivity">
-
-
         </activity>
         <!-- 欢迎页 -->
         <activity android:name=".activity.SplashActivity"/>
@@ -99,21 +97,28 @@
             android:enabled="true"
             android:process=":remote">
             <intent-filter>
-                <action android:name="com.baidu.location.service_v4.1" >
+                <action android:name="com.baidu.location.service_v4.1">
                 </action>
             </intent-filter>
         </service>
         <!-- 圈子成员列表 -->
         <activity android:name=".module.stroll.activity.CircleMemberList">
         </activity>
-        <!--随便说说-->
+        <!-- 随便说说 -->
         <activity android:name=".module.release.activity.VoiceReleaseActivity">
-
-        </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        </activity>
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
+
+        <activity android:name=".module.index.activity.SelectCityActivity">
+        </activity>
+        <activity android:name=".module.index.activity.ProvinceListActivity">
+        </activity>
     </application>
 
 </manifest>
