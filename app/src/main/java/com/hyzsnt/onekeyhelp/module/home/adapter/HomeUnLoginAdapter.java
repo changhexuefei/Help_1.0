@@ -56,14 +56,8 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == 0) {
             View v0 = LayoutInflater.from(mContext).inflate(R.layout.item_home_circum, parent, false);
             return new HomeViewHolder1(v0);
-        } else {
-
-            return null;
-        }
-
     }
 
     @Override

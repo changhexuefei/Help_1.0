@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
@@ -17,34 +18,17 @@ import java.util.ArrayList;
  * Created by hyzs on 2016/12/17.
  */
 
-public class DynamicKindsAdapter extends RecyclerView.Adapter{
+public class DynamicKindsAdapter extends BaseAdapter{
     private Context mContext;
     private ArrayList<MDate> dates = new ArrayList<>();
 
-    public DynamicKindsAdapter(Context mContext) {
+    public DynamicKindsAdapter(Context mContext, ArrayList<MDate> dates) {
         this.mContext = mContext;
-    }
-
-    public void setDates(ArrayList<MDate> dates) {
         this.dates = dates;
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v0 = LayoutInflater.from(mContext).inflate(R.layout.item_home_pop, parent, false);
-        return new DynamicKindsViewHolder(v0);
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ArrayList<DynamicKinds> kindses = dates.get(0).getmList().getDynamicKindses();
-        if(holder instanceof DynamicKindsViewHolder){
-            ((DynamicKindsViewHolder) holder).home_pop_tv.setText(kindses.get(position).getKind());
-        }
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         if (dates.size() > 0) {
             if (dates.get(0).getmList().getDynamicKindses().size() > 0) {
                 return dates.get(0).getmList().getDynamicKindses().size();
@@ -52,11 +36,24 @@ public class DynamicKindsAdapter extends RecyclerView.Adapter{
         }
         return 0;
     }
-    static class DynamicKindsViewHolder extends RecyclerView.ViewHolder {
-        public TextView home_pop_tv;
-        public DynamicKindsViewHolder(View itemView) {
-            super(itemView);
-            home_pop_tv= (TextView) itemView.findViewById(R.id.pop_tv);
-        }
+
+    @Override
+    public Object getItem(int position) {
+        return dates.get(0).getmList().getDynamicKindses().get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View v0 = LayoutInflater.from(mContext).inflate(R.layout.item_home_pop, parent, false);
+
+        ArrayList<DynamicKinds> kindses = dates.get(0).getmList().getDynamicKindses();
+        TextView home_pop_tv= (TextView) v0.findViewById(R.id.pop_tv);
+        home_pop_tv.setText(kindses.get(position).getKind());
+        return v0;
     }
 }

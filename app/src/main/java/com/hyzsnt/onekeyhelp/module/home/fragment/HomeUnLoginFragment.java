@@ -70,7 +70,7 @@ public class HomeUnLoginFragment extends BaseFragment {
         final LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
         homeLrv.setItemAnimator(new DefaultItemAnimator());
         homeLrv.setAdapter(adapter);
-
+        homeLrv.setPullRefreshEnabled(false);
         //加入头布局
         CommonHeader header=new CommonHeader(getActivity(),R.layout.item_home_lrv_head);
         adapter.addHeaderView(header);

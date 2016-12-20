@@ -1,5 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.home.resovle;
 
+import com.hyzsnt.onekeyhelp.module.home.bean.CommentListByTopic;
 import com.hyzsnt.onekeyhelp.module.home.bean.HomeCircle;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityInfoInfo;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityInfoList;
@@ -665,6 +666,107 @@ public class Resovle {
                 }
                 mList.setLoginCommunities(loginCommunities);
                 mList.setLoginCircles(loginCircles);
+                mDate.setmList(mList);
+            }
+        }catch (Exception e){
+        }
+        dates.add(mDate);
+        return dates;
+    }
+    //
+    public static ArrayList<MDate> getCommentListByTopic(String str) {
+        ArrayList<MDate> dates = new ArrayList<>();
+        MDate mDate = new MDate();
+        try {
+            JSONObject jsonDate=new JSONObject(str);
+            if(jsonDate.has("res")){
+                String res=jsonDate.getString("res");
+                mDate.setRes(res);
+            }
+            if(jsonDate.has("restr")){
+                String  restr=jsonDate.getString("restr");
+                mDate.setRestr(restr);
+            }
+            //获取info
+            //数据结构基本和CommunityListInfo一样，所以用的是CommunityListInfo
+            if(jsonDate.has("info")) {
+                MInfo mInfo = new MInfo();
+                CommunityListInfo communityListInfo = new CommunityListInfo();
+                JSONObject jsonCommunityListInfo = jsonDate.getJSONObject("info");
+                if (jsonCommunityListInfo.has("curnum")) {
+                    communityListInfo.setCurnum(jsonCommunityListInfo.getString("curnum"));
+                }
+                if (jsonCommunityListInfo.has("curpage")) {
+                    communityListInfo.setCurpage(jsonCommunityListInfo.getString("curpage"));
+                }
+                if (jsonCommunityListInfo.has("perpage")) {
+                    communityListInfo.setPerpage(jsonCommunityListInfo.getString("perpage"));
+                }
+                if (jsonCommunityListInfo.has("totalnum")) {
+                    communityListInfo.setTotalnum(jsonCommunityListInfo.getString("totalnum"));
+                }
+                if (jsonCommunityListInfo.has("totalpage")) {
+                    communityListInfo.setTotalpage(jsonCommunityListInfo.getString("totalpage"));
+                }
+                mInfo.setCommunityListInfo(communityListInfo);
+                mDate.setmInfo(mInfo);
+            }
+            //获取list
+            if(jsonDate.has("list")) {
+                MList mList = new MList();
+                ArrayList<CommentListByTopic> commentListByTopics = new ArrayList<>();
+                JSONArray jsonCommentListByTopics = jsonDate.getJSONArray("list");
+                for (int i = 0; i < jsonCommentListByTopics.length(); i++) {
+                    JSONObject jsonCommentListByTopic = jsonCommentListByTopics.getJSONObject(i);
+                    CommentListByTopic commentListByTopic=new CommentListByTopic();
+
+                    if(jsonCommentListByTopic.has("cid")){
+                        commentListByTopic.setCid(jsonCommentListByTopic.getString("cid"));
+                    }
+                    if(jsonCommentListByTopic.has("tid")){
+                        commentListByTopic.setTid(jsonCommentListByTopic.getString("tid"));
+                    }if(jsonCommentListByTopic.has("uid")){
+                        commentListByTopic.setUid(jsonCommentListByTopic.getString("uid"));
+                    }if(jsonCommentListByTopic.has("nickname")){
+                        commentListByTopic.setNickname(jsonCommentListByTopic.getString("nickname"));
+                    }if(jsonCommentListByTopic.has("headportraid")){
+                        commentListByTopic.setHeadportraid(jsonCommentListByTopic.getString("headportraid"));
+                    }if(jsonCommentListByTopic.has("gender")){
+                        commentListByTopic.setGender(jsonCommentListByTopic.getString("gender"));
+                    }if(jsonCommentListByTopic.has("hobbytags")){
+                        commentListByTopic.setHobbytags(jsonCommentListByTopic.getString("hobbytags"));
+                    }if(jsonCommentListByTopic.has("lastonline")){
+                        commentListByTopic.setLastonline(jsonCommentListByTopic.getString("lastonline"));
+                    }if(jsonCommentListByTopic.has("regtime")){
+                        commentListByTopic.setRegtime(jsonCommentListByTopic.getString("regtime"));
+                    }if(jsonCommentListByTopic.has("posttime")){
+                        commentListByTopic.setPosttime(jsonCommentListByTopic.getString("posttime"));
+                    }if(jsonCommentListByTopic.has("lat")){
+                        commentListByTopic.setLat(jsonCommentListByTopic.getString("lat"));
+                    }if(jsonCommentListByTopic.has("lng")){
+                        commentListByTopic.setLng(jsonCommentListByTopic.getString("lng"));
+                    }if(jsonCommentListByTopic.has("status")){
+                        commentListByTopic.setStatus(jsonCommentListByTopic.getString("status"));
+                    }if(jsonCommentListByTopic.has("content")){
+                        commentListByTopic.setContent(jsonCommentListByTopic.getString("content"));
+                    }if(jsonCommentListByTopic.has("contenttype")){
+                        commentListByTopic.setContenttype(jsonCommentListByTopic.getString("contenttype"));
+                    }if(jsonCommentListByTopic.has("cmid")){
+                        commentListByTopic.setCmid(jsonCommentListByTopic.getString("cmid"));
+                    }if(jsonCommentListByTopic.has("cmname")){
+                        commentListByTopic.setCmname(jsonCommentListByTopic.getString("cmname"));
+                    }if(jsonCommentListByTopic.has("imgs")){
+                        JSONArray jsonImags=jsonCommentListByTopic.getJSONArray("imgs");
+                        ArrayList<String> imgs=new ArrayList<>();
+                        for (int j = 0; j <jsonImags.length(); j++) {
+                            String img = jsonImags.getString(j);
+                            imgs.add(img);
+                        }
+                        commentListByTopic.setImgs(imgs);
+                    }
+                    commentListByTopics.add(commentListByTopic);
+                }
+                mList.setCommentListByTopics(commentListByTopics);
                 mDate.setmList(mList);
             }
         }catch (Exception e){

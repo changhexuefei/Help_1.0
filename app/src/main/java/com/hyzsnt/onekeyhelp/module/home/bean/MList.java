@@ -15,6 +15,7 @@ public class MList implements Serializable{
     private ArrayList<DynamicKinds> dynamicKindses;
     private ArrayList<LoginCommunity> loginCommunities;
     private ArrayList<LoginCircle> loginCircles;
+    private ArrayList<CommentListByTopic> commentListByTopics;
     public MList() {
     }
 
@@ -74,6 +75,14 @@ public class MList implements Serializable{
         this.loginCircles = loginCircles;
     }
 
+    public ArrayList<CommentListByTopic> getCommentListByTopics() {
+        return commentListByTopics;
+    }
+
+    public void setCommentListByTopics(ArrayList<CommentListByTopic> commentListByTopics) {
+        this.commentListByTopics = commentListByTopics;
+    }
+
     @Override
     public String toString() {
         return "MList{" +
@@ -84,6 +93,7 @@ public class MList implements Serializable{
                 ", dynamicKindses=" + dynamicKindses +
                 ", loginCommunities=" + loginCommunities +
                 ", loginCircles=" + loginCircles +
+                ", commentListByTopics=" + commentListByTopics +
                 '}';
     }
 }

@@ -211,6 +211,16 @@ public class Api {
 		 *
 		 */
 		public static final String DOWITHJOINAPPLY ="dowithJoinApply";
+		/**
+		 * 发布话题回复
+		 *
+		 */
+		public static final String PUBLISHTOPICREPLY ="publishTopicReply";
+		/**
+		 * 获取话题回复列表
+		 *
+		 */
+		public static final String GETCOMMENTLISTBYTOPIC="getCommentListByTopic";
 	}
 
 
