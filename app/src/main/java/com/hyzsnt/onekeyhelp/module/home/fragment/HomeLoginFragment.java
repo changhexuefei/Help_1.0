@@ -73,10 +73,15 @@ public class HomeLoginFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
+        //初始化数据
+        initCommunity();
         //切换小区
         switchCommunity();
 
 
+    }
+
+    private void initCommunity() {
         //加入小区后
         mHomeLoginAdapter = new HomeLoginAdapter(getActivity());
         homeLoginLrv.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -86,6 +91,11 @@ public class HomeLoginFragment extends BaseFragment {
         //加入头布局
         CommonHeader header = new CommonHeader(getActivity(), R.layout.item_home_login_head);
         adapter.addHeaderView(header);
+        //初始化控件
+        homeLoginItemHomeheadRlv = (RecyclerView) header.findViewById(R.id.home_login_item_homehead_rlv);
+        homeLoginItemHeadIvNeighbor = (ImageView) header.findViewById(R.id.home_login_item_head_iv_neighbor);
+        homeLoginItemHeadTvNeighbor = (TextView) header.findViewById(R.id.home_login_item_head_tv_neighbor);
+        homeLoginItemheadIvDynamicselect = (ImageView) header.findViewById(R.id.home_login_itemhead_iv_dynamicselect);
         final ImageView homeLoginCommunityDetail= (ImageView) header.findViewById(R.id.home_login_community_detail);
         List paramshead = new ArrayList<String>();
         paramshead.add(2061 + "");//2061  2803
@@ -94,7 +104,6 @@ public class HomeLoginFragment extends BaseFragment {
             @Override
             public void onError(Call call, Exception e, int id) {
             }
-
             @Override
             public void onSuccess(String response, int id) {
                 ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
@@ -108,19 +117,12 @@ public class HomeLoginFragment extends BaseFragment {
                         startActivity(i);
                     }
                 });
-
             }
-
             @Override
             public void inProgress(float progress, long total, int id) {
             }
         });
 
-        //初始化控件
-        homeLoginItemHomeheadRlv = (RecyclerView) header.findViewById(R.id.home_login_item_homehead_rlv);
-        homeLoginItemHeadIvNeighbor = (ImageView) header.findViewById(R.id.home_login_item_head_iv_neighbor);
-        homeLoginItemHeadTvNeighbor = (TextView) header.findViewById(R.id.home_login_item_head_tv_neighbor);
-        homeLoginItemheadIvDynamicselect = (ImageView) header.findViewById(R.id.home_login_itemhead_iv_dynamicselect);
         //动态title
         HomeLoginHeadAdapter homeHeadAdapter = new HomeLoginHeadAdapter(getActivity());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
