@@ -5,11 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -29,7 +27,6 @@ import com.hyzsnt.onekeyhelp.module.help.bean.LocationInfo;
 import com.hyzsnt.onekeyhelp.module.help.service.LocationService;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
-import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.login.activity.LoginActivity;
 import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
@@ -104,8 +101,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
 		initLocation();
 		SharedPreferences sp = getSharedPreferences("tags", Context.MODE_PRIVATE);
-		Boolean isfirst = sp.getBoolean("isfirst",true);
-		if(isfirst){
+		Boolean isfirst = sp.getBoolean("isfirst", true);
+		if (isfirst) {
 			//请求标签数据
 			HttpUtils.post(Api.PUBLIC, Api.Public.GETCIRCLETAGS, new ResponseHandler() {
 				@Override
@@ -120,11 +117,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 						CircleType circleType = gson.fromJson(response, CircleType.class);
 						List<CircleType.ListEntry> list = circleType.getList();
 						DbUtils db = new DbUtils(MainActivity.this);
-						for(int i=0;i<list.size();i++){
+						for (int i = 0; i < list.size(); i++) {
 							Boolean insert = db.insert(list.get(i));
-							ToastUtils.showShort(MainActivity.this,insert+"");
+							ToastUtils.showShort(MainActivity.this, insert + "");
 						}
-
 
 
 					} else {
@@ -140,7 +136,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 			});
 			SharedPreferences sps = getSharedPreferences("tags", Context.MODE_PRIVATE);
 			SharedPreferences.Editor edit = sp.edit();
-			edit.putBoolean("isfirst",false);
+			edit.putBoolean("isfirst", false);
 			edit.commit();
 
 		}
@@ -148,8 +144,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	}
 
 	private void setLogin() {
-		Intent i=new Intent(this, LoginActivity.class);
-		startActivityForResult(i,200);
+		Intent i = new Intent(this, LoginActivity.class);
+		startActivityForResult(i, 200);
 	}
 
 	@NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
@@ -313,11 +309,11 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		SharedPreferences.Editor edit = sp.edit();
 		String userDetail = sp.getString("userDetail", "").trim();
 		//Resovle.getUserInfo(userDetail);
-		if(userDetail==null||userDetail==""){
-			edit.putString(response,"userDetail");
-		}else{
+		if (userDetail == null || userDetail == "") {
+			edit.putString(response, "userDetail");
+		} else {
 			edit.remove("userDetail");
-			edit.putString(response,"userDetail");
+			edit.putString(response, "userDetail");
 		}
 
 		if (requestCode == MainActivity.START_HELP && resultCode == RESULT_OK) {
@@ -350,8 +346,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		} else {
 			location = new LocationInfo();
 		}
-		location.setLatitude(bdLocation.getLatitude());
-		location.setLongitude(bdLocation.getLongitude());
+		double latitude = bdLocation.getLatitude();
+		double longitude = bdLocation.getLongitude();
+		if ((latitude + "").contains("E") || (latitude + "").contains("E")) {
+			return;
+		}
+		location.setLatitude(latitude);
+		location.setLongitude(longitude);
 		location.setLocType(bdLocation.getLocType());
 		location.setTime(bdLocation.getTime());
 		location.setAddrStr(bdLocation.getAddrStr());
