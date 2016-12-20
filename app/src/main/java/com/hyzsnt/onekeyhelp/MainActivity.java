@@ -348,7 +348,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		}
 		double latitude = bdLocation.getLatitude();
 		double longitude = bdLocation.getLongitude();
-		if (!(latitude >= -90 || latitude <= 90 || longitude >= -180 || longitude <= 180)) {
+		if ((latitude + "").contains("E") || (latitude + "").contains("E")) {
 			return;
 		}
 		location.setLatitude(latitude);
