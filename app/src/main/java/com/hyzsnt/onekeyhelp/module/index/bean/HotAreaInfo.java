@@ -1,29 +1,47 @@
 package com.hyzsnt.onekeyhelp.module.index.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by gao on 2016/12/13.
  */
 
-public class HotAreaInfo {
-    private String comID;
+public class HotAreaInfo implements Serializable {
+    private String restr;
+    private int res;
+    private MyHotAreaInfo mInfo;
+    private MyHotAreaList mList;
 
-    public String getComName() {
-        return comName;
+    public String getRestr() {
+        return restr;
     }
 
-    public void setComName(String comName) {
-        this.comName = comName;
+    public void setRestr(String restr) {
+        this.restr = restr;
     }
 
-    public String getComID() {
-        return comID;
+    public int getRes() {
+        return res;
     }
 
-    public void setComID(String comID) {
-        this.comID = comID;
+    public void setRes(int res) {
+        this.res = res;
     }
 
-    private String comName;
+    public MyHotAreaInfo getInfo() {
+        return mInfo;
+    }
 
+    public void setInfo(MyHotAreaInfo info) {
+        mInfo = info;
+    }
+
+    public MyHotAreaList getList() {
+        return mList;
+    }
+
+    public void setList(MyHotAreaList list) {
+        mList = list;
+    }
 }
 

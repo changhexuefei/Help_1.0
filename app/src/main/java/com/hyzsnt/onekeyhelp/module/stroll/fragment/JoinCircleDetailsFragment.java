@@ -5,7 +5,6 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -139,7 +138,6 @@ public class JoinCircleDetailsFragment extends BaseFragment {
 			public void onError(Call call, Exception e, int id) {
 
 			}
-
 			@Override
 			public void onSuccess(String response, int id) {
 				if(JsonUtils.isSuccess(response)) {
@@ -160,13 +158,13 @@ public class JoinCircleDetailsFragment extends BaseFragment {
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-					Log.e("6666666666666",""+topicinfo1.toString());
 					bundle.putParcelable("topicinfo",topicinfo1.getInfo());
 					bundle.putStringArrayList("imgs",imags);
 					bundle.putString("tag", Api.CIRCLE);
 					intent.putExtras(bundle);
 					mActivity.startActivity(intent);
 					result[0] = response;
+
 				}else {
 					LogUtils.e(JsonUtils.getErrorMessage(response));
 				}

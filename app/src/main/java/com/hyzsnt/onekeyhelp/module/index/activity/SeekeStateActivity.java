@@ -1,20 +1,21 @@
 package com.hyzsnt.onekeyhelp.module.index.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
@@ -27,6 +28,10 @@ import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.module.index.adapter.CommunityListAdapter;
 import com.hyzsnt.onekeyhelp.module.index.bean.CommunityList;
 import com.hyzsnt.onekeyhelp.module.index.bean.HotAreaInfo;
+import com.hyzsnt.onekeyhelp.module.index.bean.MyHotAreaInfo;
+import com.hyzsnt.onekeyhelp.module.index.bean.MyHotAreaList;
+import com.hyzsnt.onekeyhelp.module.index.fragment.SearchCommunityListFragment;
+import com.hyzsnt.onekeyhelp.module.index.fragment.SearchHotAreaFragment;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
@@ -46,7 +51,7 @@ import static com.hyzsnt.onekeyhelp.app.App.getLocation;
  * 在主页面点击搜索图标进入到搜索页面
  */
 
-public class SeekeStateActivity extends BaseActivity {
+public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFragment.CallBackValue {
 
     @BindView(R.id.tv_delete_text)
     TextView tv_delete_text;
@@ -55,8 +60,6 @@ public class SeekeStateActivity extends BaseActivity {
     @BindView(R.id.search_estate_bar)
     EditText mSearchEstateBar;
 
-    @BindView(R.id.classify)
-    LinearLayout mLayout;
     @BindView(R.id.city_name)
     TextView tv_cityName;
     @BindView(R.id.btn_change)
@@ -65,12 +68,16 @@ public class SeekeStateActivity extends BaseActivity {
     LinearLayout linCity;
     @BindView(R.id.hotArea)
     TextView tv_hotArea;
-    @BindView(R.id.com_list)
-    LRecyclerView comList;
-    List<HotAreaInfo> mHotAreaInfos;
-    List<String> area;
+    @BindView(R.id.fuzzyList)
+    LRecyclerView mComList;
     List<CommunityList.ListBean> mCommunityLists;
-    private CommunityListAdapter mAdapter;
+    CommunityListAdapter mAdapter;
+    ArrayList<HotAreaInfo> mHotAreaInfos;
+    HotAreaInfo mHotAreaInfo;
+    MyHotAreaInfo mMyHotAreaInfo;
+    MyHotAreaList mMyHotAreaList;
+    private FragmentManager manager;
+
 
 
     //获取行政区信息的接口 a
@@ -81,8 +88,7 @@ public class SeekeStateActivity extends BaseActivity {
     private static final String NUM = "1";
     //获取页数，初次检索默认1
     private static final String PAGENUM = "1";
-    //检索条件
-    private String searchCondition = "";
+
 
     //定位检索
     private static final String ORIENTATION = "0";
@@ -96,6 +102,8 @@ public class SeekeStateActivity extends BaseActivity {
     List<String> parms = new ArrayList<>();
     private String lat;
     private String lon;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter;
+
 
     @Override
     protected int getLayoutId() {
@@ -104,9 +112,14 @@ public class SeekeStateActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        area = new ArrayList<>();
-        mAdapter = new CommunityListAdapter();
+        mAdapter=new CommunityListAdapter();
+        mHotAreaInfos = new ArrayList<HotAreaInfo>();
+        manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.myFragment, new SearchHotAreaFragment()).commit();
+
         getCurrentLocation();
+
+
     }
 
     /**
@@ -117,13 +130,12 @@ public class SeekeStateActivity extends BaseActivity {
         Log.d("lat", lat);
         lon = Double.toString(getLocation().getLongitude());
         Log.d("lon", lon);
-
-//        parms.add("");
+        parms.add("");
         parms.add("0");
         parms.add(userid);
         parms.add(lat);
         parms.add(lon);
-        parms.add("110105");
+        parms.add("110000");
 
         HttpUtils.post(Api.PUBLIC, HOTAREA, parms, new JsonResponseHandler() {
             @Override
@@ -136,33 +148,41 @@ public class SeekeStateActivity extends BaseActivity {
                 Log.d("我的位置是：", response);
                 if (JsonUtils.isSuccess(response)) {
                     try {
+                        mMyHotAreaInfo = new MyHotAreaInfo();
                         JSONObject object = new JSONObject(response);
                         JSONObject info = object.getJSONObject("info");
                         String regname = info.getString("regname");
+                        mMyHotAreaInfo.setRegname(regname);
+                        String regid = info.getString("regid");
+                        mMyHotAreaInfo.setRegid(regid);
+                        String position = info.getString("position");
+                        mMyHotAreaInfo.setPosition(position);
+
                         Log.d("12345678", regname);
-                        if ("".equals(regname)) {
+                        if ("".equals(mMyHotAreaInfo.getRegname())) {
                             tv_cityName.setVisibility(View.GONE);
                         } else {
-                            tv_cityName.setText(regname);
+                            tv_cityName.setText(mMyHotAreaInfo.getRegname());
                         }
                         JSONObject list = object.getJSONObject("list");
                         Log.d("list", "" + list);
                         Iterator<String> iterator = list.keys();
-                        mHotAreaInfos = new ArrayList<HotAreaInfo>();
+
+
                         while (iterator.hasNext()) {
+                            mHotAreaInfo = new HotAreaInfo();
+                            mMyHotAreaList = new MyHotAreaList();
                             String key = iterator.next();
                             Log.d("key+++++++", key);
-                            HotAreaInfo hotAreaInfo = new HotAreaInfo();
-                            hotAreaInfo.setComID(key);
+                            mMyHotAreaList.setHotID(key);
                             String value = list.getString(key);
                             Log.d("value+++++", value);
-                            hotAreaInfo.setComName(value);
-                            area.add(value);
-                            Log.d("============", "" + area.size());
-                            mHotAreaInfos.add(hotAreaInfo);
+                            mMyHotAreaList.setHotName(value);
+                            mHotAreaInfo.setList(mMyHotAreaList);
+
+                            mHotAreaInfos.add(mHotAreaInfo);
                         }
 
-                        initAutoLL();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -173,6 +193,7 @@ public class SeekeStateActivity extends BaseActivity {
             }
         });
     }
+
 
     @Override
     protected void initListener() {
@@ -189,7 +210,7 @@ public class SeekeStateActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 mSearchEstateBar.setText("");
-                mLayout.removeAllViews();
+
             }
         });
 
@@ -207,14 +228,57 @@ public class SeekeStateActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-//                search();
+                if (TextUtils.isEmpty(s.toString())){
+                    mComList.setVisibility(View.GONE);
+                    return;
+                }
+                parms.clear();
+                parms.add("1");
+                parms.add("10");
+                parms.add("1");
+                parms.add("4");
+                parms.add(lat);
+                parms.add(lon);
+                parms.add("110105");
+                parms.add("");
+                parms.add(s.toString());
+
+                HttpUtils.post(Api.COMMUNITY, "getCommunityList", parms, new JsonResponseHandler() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String response, int id) {
+                        Log.d("xxxxxxx", response);
+                        if (JsonUtils.isSuccess(response)) {
+
+                            mCommunityLists = new ArrayList<CommunityList.ListBean>();
+                            Gson gson = new Gson();
+                            CommunityList communityList = gson.fromJson(response, CommunityList.class);
+                            mComList.setVisibility(View.VISIBLE);
+                            mCommunityLists = communityList.getList();
+                            mAdapter.setCommunityLists(mCommunityLists);
+                            LinearLayoutManager manager = new LinearLayoutManager(SeekeStateActivity.this, LinearLayoutManager.VERTICAL, false);
+                            mComList.setLayoutManager(manager);
+                            mComList.setHasFixedSize(true);
+                            mComList.setItemAnimator(new DefaultItemAnimator());
+                            mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
+                            mComList.setAdapter(mLRecyclerViewAdapter);
+                            //行点击事件
+                        } else {
+
+                        }
+                    }
+                });
             }
+
         });
         //显示省份列表
         btn_change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(SeekeStateActivity.this, ProvinceListActivity.class);
                 intent.putExtra("regid", regid);
                 startActivity(intent);
@@ -222,137 +286,30 @@ public class SeekeStateActivity extends BaseActivity {
         });
     }
 
-    //    绘制自动换行的线性布局
-    private void initAutoLL() {
-//        每一行的布局，初始化第一行布局
-        LinearLayout rowLL = new LinearLayout(this);
-        LinearLayout.LayoutParams rowLP = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        float rowMargin = dipToPx(10);
-        rowLP.setMargins(0, (int) rowMargin, 0, 0);
-        rowLL.setLayoutParams(rowLP);
-        boolean isNewLayout = false;
-        float maxWidth = getScreenWidth() - dipToPx(30);
-//        剩下的宽度
-        float elseWidth = maxWidth;
-        LinearLayout.LayoutParams textViewLP = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        textViewLP.setMargins((int) dipToPx(8), 0, 0, 0);
-        for (int i = 0; i < area.size(); i++) {
-            Log.d("++++++++++++++++++++", "" + area.size());
-//            若当前为新起的一行，先添加旧的那行
-//            然后重新创建布局对象，设置参数，将isNewLayout判断重置为false
-            if (isNewLayout) {
-                mLayout.addView(rowLL);
-                rowLL = new LinearLayout(this);
-                rowLL.setLayoutParams(rowLP);
-                isNewLayout = false;
-            }
-//            计算是否需要换行
-            final TextView textView = (TextView) getLayoutInflater().inflate(R.layout.item_textview, null);
-            textView.setText(area.get(i));
-            textView.setOnClickListener(new View.OnClickListener() {
+
+    @Override
+    public void SendMessageValue(final String comID, String comName) {
+
+        if (comName != null) {
+            tv_hotArea.setVisibility(View.VISIBLE);
+            tv_hotArea.setText(comName);
+
+            final FragmentTransaction ft = manager.beginTransaction();
+            SearchCommunityListFragment searchCommunityListFragment = new SearchCommunityListFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("comID", comID);
+            searchCommunityListFragment.setArguments(bundle);
+            ft.replace(R.id.myFragment, searchCommunityListFragment);
+            ft.commit();
+
+            tv_hotArea.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CharSequence hrtext = textView.getText();
-                    getCommunityInfo(hrtext);
-//
-                    Toast.makeText(SeekeStateActivity.this, "" + v.getId(), Toast.LENGTH_SHORT).show();
-                }
-            });
-            textView.measure(0, 0);
-//            若是一整行都放不下这个文本框，添加旧的那行，新起一行添加这个文本框
-            if (maxWidth < textView.getMeasuredWidth()) {
-                mLayout.addView(rowLL);
-                rowLL = new LinearLayout(this);
-                rowLL.setLayoutParams(rowLP);
-                rowLL.addView(textView);
-                isNewLayout = true;
-                continue;
-            }
-//            若是剩下的宽度小于文本框的宽度（放不下了）
-//            添加旧的那行，新起一行，但是i要-1，因为当前的文本框还未添加
-            if (elseWidth < textView.getMeasuredWidth()) {
-                isNewLayout = true;
-                i--;
-//                重置剩余宽度
-                elseWidth = maxWidth;
-                continue;
-            } else {
-//                剩余宽度减去文本框的宽度+间隔=新的剩余宽度
-                elseWidth -= textView.getMeasuredWidth() + dipToPx(8);
-                if (rowLL.getChildCount() == 0) {
-                    rowLL.addView(textView);
-                } else {
-                    textView.setLayoutParams(textViewLP);
-                    rowLL.addView(textView);
-                }
-            }
-        }
-//        添加最后一行，但要防止重复添加
-        mLayout.removeView(rowLL);
-        mLayout.addView(rowLL);
-    }
-
-
-    //    dp转px
-    private float dipToPx(int dipValue) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                dipValue,
-                this.getResources().getDisplayMetrics());
-    }
-
-    //  获得屏幕宽度
-    private float getScreenWidth() {
-        return this.getResources().getDisplayMetrics().widthPixels;
-    }
-
-    private void getCommunityInfo(CharSequence hrtext) {
-        if (hrtext != null) {
-            tv_hotArea.setVisibility(View.VISIBLE);
-            tv_hotArea.setText(hrtext);
-            hrtext.toString();
-            btn_change.setVisibility(View.GONE);
-            mLayout.removeAllViews();
-//            parms.clear();
-            parms.add("1");
-            parms.add("10");
-            parms.add("1");
-            parms.add("4");
-            parms.add(lat);
-            parms.add(lon);
-            parms.add("");
-            parms.add("");
-            parms.add("");
-
-            HttpUtils.post(Api.COMMUNITY, "getCommunityList", parms, new JsonResponseHandler() {
-                @Override
-                public void onError(Call call, Exception e, int id) {
-
-                }
-
-                @Override
-                public void onSuccess(String response, int id) {
-                    Log.d("小区", response);
-                    if (JsonUtils.isSuccess(response)) {
-                        mCommunityLists = new ArrayList<CommunityList.ListBean>();
-                        Gson gson = new Gson();
-                        CommunityList communityList = gson.fromJson(response, CommunityList.class);
-
-                        mCommunityLists = communityList.getList();
-                        mAdapter.setCommunityLists(mCommunityLists);
-                        LinearLayoutManager manager = new LinearLayoutManager(SeekeStateActivity.this, LinearLayoutManager.VERTICAL, false);
-                        comList.setLayoutManager(manager);
-                        comList.setHasFixedSize(true);
-                        comList.setItemAnimator(new DefaultItemAnimator());
-                        LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mAdapter);
-                        comList.setAdapter(adapter);
-                        //行点击事件
-
-                    } else {
-
-
-                    }
+                    tv_hotArea.setText("");
+                    tv_hotArea.setVisibility(View.GONE);
+                    SearchHotAreaFragment hotAreaFragment = new SearchHotAreaFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.myFragment, hotAreaFragment).commit();
                 }
             });
 
@@ -360,8 +317,5 @@ public class SeekeStateActivity extends BaseActivity {
             tv_hotArea.setVisibility(View.GONE);
         }
 
-
     }
-
-
 }

@@ -112,6 +112,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				public void onError(Call call, Exception e, int id) {
 
 				}
+
 				@Override
 				public void onSuccess(String response, int id) {
 					if (JsonUtils.isSuccess(response)) {
@@ -294,6 +295,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		Intent intent = new Intent(this, HelpActivity.class);
 		startActivityForResult(intent, START_HELP);
 		overridePendingTransition(0, 0);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (App.code == 1) {
+			mRgMainBottom.check(R.id.rb_main_home);
+			App.code = 0;
+		}
 	}
 
 	@Override

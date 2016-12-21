@@ -1,0 +1,13 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.hyzsnt.onekeyhelp.module.index.fragment.SearchCommunityListFragment">
+
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
+        android:id="@+id/com_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+
+</FrameLayout>

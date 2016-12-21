@@ -15,10 +15,13 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleFragmentAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleTypeAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleRound;
@@ -26,6 +29,7 @@ import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 import com.hyzsnt.onekeyhelp.utils.DbUtils;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import org.json.JSONException;
@@ -54,6 +58,12 @@ public class SeekCircleActivity extends BaseActivity {
 	private CircleRound mRound;
 	private CircleFragmentAdapter mMCircleFragmentAdapter;
 	private DbUtils mDb;
+	private String mIncommunitynum;
+	private String mUid;
+	private String mCid;
+	private ArrayList<MDate> mUserInfo;
+	private String mLat;
+	private String mLon;
 
 	@Override
 	protected int getLayoutId() {
@@ -62,6 +72,7 @@ public class SeekCircleActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
+		getUserInfo();
 		initview();
 		String tag = getIntent().getStringExtra("tag");
 		mDb = new DbUtils(SeekCircleActivity.this);
@@ -136,9 +147,9 @@ public class SeekCircleActivity extends BaseActivity {
 		mEtSeekCircle.setText(tag);
 		//参数p
 		ArrayList<String> list1 = new ArrayList<>();
-		list1.add("23");
-		list1.add("39.923263");
-		list1.add("116.539572");
+		list1.add(mUid);
+		list1.add(mLat);
+		list1.add(mLon);
 		if (id == 1) {
 			list1.add(mDb.querybyname(tag).getTagid());
 			list1.add("");
@@ -244,6 +255,17 @@ public class SeekCircleActivity extends BaseActivity {
 				return false;
 			}
 		});
+	}
+	public void getUserInfo(){
+		String userDetail = (String) SPUtils.get(this, "userDetail", "");
+		//解析用户信息
+		mUserInfo = Resovle.getUserInfo(userDetail);
+		//获取已加入的小区数
+		mIncommunitynum = mUserInfo.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
+		//获取用户id
+		mUid = mUserInfo.get(0).getmInfo().getUserInfoInfo().getUid();
+		mLat = String.valueOf(App.getLocation().getLatitude());
+		mLon = String.valueOf(App.getLocation().getLongitude());
 	}
 
 }

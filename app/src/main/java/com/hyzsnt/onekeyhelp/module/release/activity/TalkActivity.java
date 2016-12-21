@@ -126,9 +126,12 @@ public class TalkActivity extends BaseActivity {
         });
 
         Intent intent = getIntent();
+        String ccid = intent.getStringExtra("ccid");
         String tag = intent.getStringExtra("tag");
         if (tag.equals("iv_talk")) {
             mTvMsg.setText("发表说说");
+        }else if(tag.equals("发布话题")){
+            mTvMsg.setText("发布话题");
         }
     }
 
