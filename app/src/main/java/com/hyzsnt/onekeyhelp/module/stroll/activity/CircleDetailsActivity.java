@@ -1,5 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.stroll.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
+import com.hyzsnt.onekeyhelp.module.release.activity.TalkActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CiecleDetailss;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleDetails;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.JoinSuccess;
@@ -29,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
@@ -42,14 +43,13 @@ public class CircleDetailsActivity extends BaseActivity {
 	ImageView mImCircleDetailsBack;
 	@BindView(R.id.tv_publish_topic)
 	TextView mTvPublishTopic;
-
 	private CiecleDetailss mDetailss;
-
 	@BindView(R.id.frlayout_circle_dietails)
 	FrameLayout mFrlayoutCircleDietails;
 	private JoinCircleDetailsFragment mJoinCircleDetailsFragment;
 	private UnjoinCircleDetailsFragment mUnjoinCircleDetailsFragment;
 	private CircleDetails mDetails;
+	private String mCcid;
 
 	@Override
 	protected int getLayoutId() {
@@ -62,12 +62,16 @@ public class CircleDetailsActivity extends BaseActivity {
 		String response = getIntent().getStringExtra("response");
 
 		if(response!=null&&!"".equals(response)){
+			//显示发布话题按钮
+			mTvPublishTopic.setVisibility(View.VISIBLE);
 			mTvCircleDetailsTitile.setText(getIntent().getStringExtra("title"));
 			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 				if (mJoinCircleDetailsFragment == null) {
 					mJoinCircleDetailsFragment = new JoinCircleDetailsFragment();
 					Gson gson = new Gson();
 					JoinSuccess joinSuccess = gson.fromJson(response, JoinSuccess.class);
+					//获取圈子id
+					mCcid = String.valueOf(joinSuccess.getInfo().getCcid());
 					//通过bundle传递数据
 					Bundle bundle = new Bundle();
 					bundle.putParcelable("joinsuccess",joinSuccess);
@@ -81,16 +85,15 @@ public class CircleDetailsActivity extends BaseActivity {
 			return;
 		}
 		//获取圈子id
-		String ccid = getIntent().getStringExtra("ccid");
+		mCcid = getIntent().getStringExtra("ccid");
 		//获取数据
 		List<String> list = new ArrayList<>();
 		list.add("23");
-		list.add(ccid);
+		list.add(mCcid);
 		list.add("39.923263");
 		list.add("116.539572");
 
 		HttpUtils.post(Api.CIRCLE, Api.Circle.CIRCLE_DETAILS, list, new ResponseHandler() {
-
 
 			@Override
 			public void onError(Call call, Exception e, int id) {
@@ -102,6 +105,7 @@ public class CircleDetailsActivity extends BaseActivity {
 				if (JsonUtils.isSuccess(response)) {
 					LogUtils.e("数据" + response);
 					try {
+
 						//获取圈子详情
 						JSONObject circleDetails = new JSONObject(response);
 						JSONObject info = circleDetails.getJSONObject("info");
@@ -116,6 +120,8 @@ public class CircleDetailsActivity extends BaseActivity {
 						FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 						//判断是否加入圈子
 						if (ifjoin.equals("1")) {
+							//显示发布话题按钮
+							mTvPublishTopic.setVisibility(View.VISIBLE);
 							//显示话题列表
 							if (mJoinCircleDetailsFragment == null) {
 								mJoinCircleDetailsFragment = new JoinCircleDetailsFragment();
@@ -198,15 +204,6 @@ public class CircleDetailsActivity extends BaseActivity {
 
 		transaction.commit();
 	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// TODO: add setContentView(...) invocation
-		ButterKnife.bind(this);
-	}
-
-
 	@OnClick({R.id.im_circle_details_back, R.id.tv_publish_topic})
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -214,7 +211,10 @@ public class CircleDetailsActivity extends BaseActivity {
 				finish();
 				break;
 			case R.id.tv_publish_topic:
-
+				Intent intent = new Intent(CircleDetailsActivity.this, TalkActivity.class);
+				intent.putExtra("ccid",mCcid);
+				intent.putExtra("tag","发布话题");
+				startActivity(intent);
 				break;
 		}
 	}

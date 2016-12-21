@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
-import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListList;
 
 import java.util.ArrayList;
 
@@ -18,12 +17,12 @@ import java.util.ArrayList;
 
 public class CommunityAdapter  extends BaseAdapter{
 	private Context mContext;
-	private ArrayList<CommunityListList> mCommunityListLists;
+	private ArrayList<String> mCommunityListLists;
 
 	public CommunityAdapter(Context context) {
 		mContext = context;
 	}
-    public void setdata(ArrayList<CommunityListList> mCommunityListLists){
+    public void setdata(ArrayList<String> mCommunityListLists){
 	    this.mCommunityListLists = mCommunityListLists;
     }
 	@Override
@@ -45,7 +44,7 @@ public class CommunityAdapter  extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup parent) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_create_circle_pop,null);
 		TextView textView = (TextView) view.findViewById(R.id.tv_create_circle_community);
-		textView.setText(mCommunityListLists.get(position).getCmname());
+		textView.setText(mCommunityListLists.get(position));
 		return view;
 	}
 }

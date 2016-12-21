@@ -1,6 +1,8 @@
 package com.hyzsnt.onekeyhelp.module.stroll.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,8 @@ import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CircleMemberList;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CiecleDetailss;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
+import com.hyzsnt.onekeyhelp.utils.DbUtils;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
@@ -54,22 +58,15 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 	TextView mTvUnjoinCircleStatus;
 	@BindView(R.id.tv_unjoin_circle_tag1)
 	TextView mTvUnjoinCircleTag1;
-	@BindView(R.id.im_unjoin_circle_tag1)
-	ImageView mImUnjoinCircleTag1;
-	@BindView(R.id.llayout_unjoin_circle_tag1)
-	LinearLayout mLlayoutUnjoinCircleTag1;
+
+
 	@BindView(R.id.tv_unjoin_circle_tag2)
 	TextView mTvUnjoinCircleTag2;
-	@BindView(R.id.im_unjoin_circle_tag2)
-	ImageView mImUnjoinCircleTag2;
-	@BindView(R.id.llayout_unjoin_circle_tag2)
-	LinearLayout mLlayoutUnjoinCircleTag2;
+
+
 	@BindView(R.id.tv_unjoin_circle_tag3)
 	TextView mTvUnjoinCircleTag3;
-	@BindView(R.id.im_unjoin_circle_tag3)
-	ImageView mImUnjoinCircleTag3;
-	@BindView(R.id.llayout_unjoin_circle_tag3)
-	LinearLayout mLlayoutUnjoinCircleTag3;
+
 	@BindView(R.id.linearLayout)
 	LinearLayout mLinearLayout;
 	@BindView(R.id.tv_unjoin_circle_summary)
@@ -80,7 +77,7 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 	LinearLayout mLlayoutUnjoinCircleJoin;
 
 	private CiecleDetailss mDetailss;
-
+	ArrayList<CircleType.ListEntry> queryall;
 	@Override
 	protected List<String> getParams() {
 
@@ -89,6 +86,8 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 
 	@Override
 	protected void initData(String content) {
+		DbUtils db = new DbUtils(mActivity);
+		queryall =  db.queryall();
 		final CiecleDetailss.InfoEntry info = mDetailss.getInfo();
 		//设置背景图
 		Glide.with(mActivity).load(info.getCccover()).into(mImUnjoinCircleCover);
@@ -96,6 +95,44 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 		mTvUnjionCircleNum.setText(info.getCurnum() + "人");
 		mTvUnjoinCircleSummary.setText(info.getSummary());
 		Glide.with(mActivity).load(info.getHeadportraid()).into(mImUnjoinCircleHeadportraid);
+		String flags =info.getTags();
+		String[] flist = flags.split("\\|");
+		if(flist.length==3){
+			CircleType.ListEntry query = null;
+			for(int j=0;j<queryall.size();j++){
+				if(queryall.get(j).getTagid().equals(flist[2])){
+					query= queryall.get(j);
+				}
+			}
+		mTvUnjoinCircleTag3.setText(query.getTagname());
+			GradientDrawable myGrad = (GradientDrawable)mTvUnjoinCircleTag3.getBackground();
+			myGrad.setColor(Color.parseColor(query.getTagdesc()));
+			mTvUnjoinCircleTag3.setVisibility(View.VISIBLE);
+		}
+		if(flist.length>=2){
+			CircleType.ListEntry query = null;
+			for(int j=0;j<queryall.size();j++){
+				if(queryall.get(j).getTagid().equals(flist[1])){
+					query= queryall.get(j);
+				}
+			}
+			mTvUnjoinCircleTag2.setText(query.getTagname());
+			GradientDrawable myGrad = (GradientDrawable) mTvUnjoinCircleTag2.getBackground();
+			myGrad.setColor(Color.parseColor(query.getTagdesc()));
+			mTvUnjoinCircleTag2.setVisibility(View.VISIBLE);
+		} if(flist.length>=1){
+			CircleType.ListEntry query = null;
+			for(int j=0;j<queryall.size();j++){
+				if(queryall.get(j).getTagid().equals(flist[0])){
+					query= queryall.get(j);
+				}
+			}
+			mTvUnjoinCircleTag1.setText(query.getTagname());
+			GradientDrawable myGrad = (GradientDrawable) mTvUnjoinCircleTag1.getBackground();
+
+			myGrad.setColor(Color.parseColor(query.getTagdesc()));
+			mTvUnjoinCircleTag1.setVisibility(View.VISIBLE);
+		}
 		if (info.getGender().equals("1")) {
 			mImUnjoinCirclegender.setImageResource(R.mipmap.man);
 		}
@@ -137,6 +174,7 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 	public void getArgs(Bundle bundle) {
 		super.getArgs(bundle);
 		mDetailss = bundle.getParcelable("details");
+
 	}
 
 	@OnClick(R.id.llayout_unjoin_circle_join)

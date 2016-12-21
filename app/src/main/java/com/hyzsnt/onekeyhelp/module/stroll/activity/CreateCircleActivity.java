@@ -202,20 +202,25 @@ public class CreateCircleActivity extends BaseActivity {
 			case R.id.ll_exchange_community: {
 				View popupView = View.inflate(CreateCircleActivity.this, R.layout.pop_create_circle_community, null);
 				ListView lv = (ListView) popupView.findViewById(R.id.ll_create_circle_community);
-				lv.setAdapter(new CommunityAdapter(CreateCircleActivity.this));
+
 				PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
 				mPopupWindow.setTouchable(true);
 				mPopupWindow.setOutsideTouchable(true);
 				mPopupWindow.setBackgroundDrawable(new BitmapDrawable(CreateCircleActivity.this.getResources(), (Bitmap) null));
 				mPopupWindow.showAsDropDown(mLlExchangeCommunity);
-
+				CommunityAdapter communityAdapter = new CommunityAdapter(CreateCircleActivity.this);
+				lv.setAdapter(communityAdapter);
 				if(Integer.parseInt(mIncommunitynum)>=2){
 					ArrayList<CommunityListList> communityListLists = mUserInfo.get(0).getmList().getCommunityListLists();
 					ArrayList<String> alist = new ArrayList<>();
 					for (int i=0;i<alist.size();i++){
-						communityListLists.get(i).getCmname();
+						alist.add(communityListLists.get(i).getCmname());
 					}
+					communityAdapter.setdata(alist);
 				}
+
+
+
 
 			}
 			break;
@@ -298,7 +303,6 @@ public class CreateCircleActivity extends BaseActivity {
 		//开始读入图片，此时把options.inJustDecodeBounds 设回true了
 		newOpts.inJustDecodeBounds = true;
 		Bitmap bitmap = BitmapFactory.decodeFile(srcPath,newOpts);//此时返回bm为空
-
 		newOpts.inJustDecodeBounds = false;
 		int w = newOpts.outWidth;
 		int h = newOpts.outHeight;

@@ -7,6 +7,7 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical"
 	tools:context="com.hyzsnt.onekeyhelp.module.stroll.activity.CircleDetailsActivity">
+
 	<RelativeLayout
 		android:id="@+id/relayout_create_circle_one"
 		android:layout_width="match_parent"
@@ -19,9 +20,9 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
-			android:paddingRight="@dimen/dp_18"
-			android:paddingLeft="@dimen/dp_18"
 			android:paddingBottom="@dimen/dp_10"
+			android:paddingLeft="@dimen/dp_18"
+			android:paddingRight="@dimen/dp_18"
 			android:paddingTop="@dimen/dp_10"
 			android:src="@mipmap/circle_back"
 			/>
@@ -38,21 +39,24 @@
 			android:textSize="@dimen/sp_16"
 
 			/>
+
 		<TextView
 			android:id="@+id/tv_publish_topic"
-			android:layout_alignParentRight="true"
-			android:textSize="@dimen/sp_14"
-			android:layout_centerVertical="true"
-			android:textColor="@color/color_ff"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:paddingRight="@dimen/dp_18"
-			android:paddingLeft="@dimen/dp_18"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
 			android:paddingBottom="@dimen/dp_10"
+			android:paddingLeft="@dimen/dp_18"
+			android:paddingRight="@dimen/dp_18"
 			android:paddingTop="@dimen/dp_10"
 			android:text="发布"
+			android:textColor="@color/color_ff"
+			android:textSize="@dimen/sp_14"
+			android:visibility="gone"
 			/>
 	</RelativeLayout>
+
 	<FrameLayout
 		android:id="@+id/frlayout_circle_dietails"
 		android:layout_width="match_parent"

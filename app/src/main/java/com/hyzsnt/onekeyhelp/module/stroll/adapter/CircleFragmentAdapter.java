@@ -118,9 +118,6 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 
 		String flags =circles.getTags();
 		String[] flist = flags.split("\\|");
-
-
-
            if(flist.length==3){
 	           CircleType.ListEntry query = null;
 	           for(int j=0;j<queryall.size();j++){
