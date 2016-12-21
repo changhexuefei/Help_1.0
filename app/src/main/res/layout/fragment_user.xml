@@ -1,13 +1,176 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.hyzsnt.onekeyhelp.module.user.fragment.UserFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.hyzsnt.onekeyhelp.module.user.fragment.UserFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:background="#1CCD9a">
 
-</FrameLayout>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="我的"
+			android:textColor="#FFFFFF"
+			android:textSize="18sp"/>
+
+	</RelativeLayout>
+
+	<com.hyzsnt.onekeyhelp.widget.overscroll.OverScrollLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="160dp"
+				android:background="@drawable/user_top_bac"
+				android:orientation="vertical">
+
+				<de.hdodenhof.circleimageview.CircleImageView
+					android:id="@+id/iv_user_icon"
+					android:layout_width="65dp"
+					android:layout_height="65dp"
+					android:layout_centerInParent="true"
+					android:src="@drawable/test"/>
+
+				<TextView
+					android:id="@+id/tv_user_name"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_below="@id/iv_user_icon"
+					android:layout_centerHorizontal="true"
+					android:layout_marginTop="8dp"
+					android:text="昵称"
+					android:textColor="#FFF"
+					android:textSize="16sp"/>
+			</RelativeLayout>
+
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="30dp"
+				android:background="#EFEFF4"
+				android:gravity="center_vertical"
+				android:paddingLeft="8dp"
+				android:text="我的服务"
+				android:textColor="#716F76"/>
+
+			<LinearLayout
+				style="@style/user_item_group">
+
+				<TextView
+					android:id="@+id/tv_user_used"
+					style="@style/user_item"
+					android:drawableTop="@drawable/user_item_used"
+					android:text="我的闲置"/>
+
+				<View
+					android:layout_width="1dp"
+					android:layout_height="match_parent"
+					android:background="#E5E5E5"/>
+
+				<TextView
+					android:id="@+id/tv_user_my_help"
+					style="@style/user_item"
+					android:drawableTop="@drawable/user_item_my_help"
+					android:text="我的求助"/>
+
+				<View
+					android:layout_width="1dp"
+					android:layout_height="match_parent"
+					android:background="#E5E5E5"/>
+
+				<TextView
+					android:id="@+id/tv_user_lease"
+					style="@style/user_item"
+					android:drawableTop="@drawable/user_item_lease"
+					android:text="我的租赁"/>
+
+			</LinearLayout>
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="#E5E5E5"/>
+
+			<LinearLayout
+				style="@style/user_item_group">
+
+				<TextView
+					android:id="@+id/tv_user_circle"
+					style="@style/user_item"
+					android:drawableTop="@drawable/user_item_circle"
+					android:text="我的圈子"/>
+
+				<View
+					android:layout_width="1dp"
+					android:layout_height="match_parent"
+					android:background="#E5E5E5"/>
+
+				<TextView
+					android:id="@+id/tv_user_purse"
+					style="@style/user_item"
+					android:drawableTop="@drawable/user_item_purse"
+					android:text="我的钱包"/>
+
+				<View
+					android:layout_width="1dp"
+					android:layout_height="match_parent"
+					android:background="#E5E5E5"/>
+
+				<TextView
+					android:id="@+id/tv_user_release"
+					style="@style/user_item"
+					android:drawableTop="@drawable/user_item_release"
+					android:text="我的发布"/>
+
+			</LinearLayout>
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="#E5E5E5"/>
+
+			<LinearLayout
+				style="@style/user_item_group">
+
+				<TextView
+					android:id="@+id/tv_user_help"
+					style="@style/user_item"
+					android:drawableTop="@drawable/user_item_help"
+					android:text="我的求助"/>
+
+				<View
+					android:layout_width="1dp"
+					android:layout_height="match_parent"
+					android:background="#E5E5E5"/>
+
+				<TextView
+					android:id="@+id/tv_user_msg"
+					style="@style/user_item"
+					android:drawableTop="@drawable/user_item_msg"
+					android:text="系统消息"/>
+
+				<View
+					android:layout_width="1dp"
+					android:layout_height="match_parent"
+					android:background="#E5E5E5"/>
+
+				<TextView
+					android:id="@+id/tv_user_contacts"
+					style="@style/user_item"
+					android:drawableTop="@drawable/user_item_contacts"
+					android:text="紧急联系人"/>
+			</LinearLayout>
+		</LinearLayout>
+	</com.hyzsnt.onekeyhelp.widget.overscroll.OverScrollLayout>
+</LinearLayout>

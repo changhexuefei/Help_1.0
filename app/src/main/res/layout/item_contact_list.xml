@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hyzsnt.onekeyhelp.module.stroll.widget.SwipeMenuView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="72dp"
+	android:paddingBottom="1dp">
+
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@drawable/setting_item"
+		android:gravity="center_vertical"
+		android:orientation="horizontal">
+
+
+		<de.hdodenhof.circleimageview.CircleImageView
+			android:id="@+id/iv_item_contact_icon"
+			android:layout_width="56dp"
+			android:layout_height="56dp"
+			android:layout_marginLeft="15dp"
+			android:src="@drawable/test"/>
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="10dp"
+			android:layout_toRightOf="@id/iv_item_contact_icon"
+			android:orientation="vertical">
+
+			<TextView
+				android:id="@+id/tv_item_contact_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/iv_item_contact_icon"
+				android:text="张燕燕(妹妹)"
+				android:textSize="14sp"/>
+
+			<TextView
+				android:id="@+id/tv_item_contact_phone"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/tv_item_contact_name"
+				android:layout_marginTop="6dp"
+				android:layout_toRightOf="@id/iv_item_contact_icon"
+				android:text="170****2056"
+				android:textSize="12sp"/>
+
+		</LinearLayout>
+	</RelativeLayout>
+
+	<TextView
+		android:id="@+id/tv_item_contact_alter"
+		android:layout_width="90dp"
+		android:layout_height="match_parent"
+		android:background="#C7C7CD"
+		android:gravity="center"
+		android:text="修改"
+		android:textColor="#FFFFFF"
+		android:textSize="14sp"/>
+
+	<TextView
+		android:id="@+id/tv_item_contact_delete"
+		android:layout_width="90dp"
+		android:layout_height="match_parent"
+		android:background="#FF3A30"
+		android:gravity="center"
+		android:text="删除"
+		android:textColor="#FFFFFF"
+		android:textSize="14sp"/>
+</com.hyzsnt.onekeyhelp.module.stroll.widget.SwipeMenuView>

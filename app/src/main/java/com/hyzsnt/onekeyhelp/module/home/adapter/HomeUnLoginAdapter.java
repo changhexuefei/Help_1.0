@@ -95,7 +95,6 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
                                         @Override
                                         public void onError(Call call, Exception e, int id) {
                                         }
-
                                         @Override
                                         public void onSuccess(String response, int id) {
                                             ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);

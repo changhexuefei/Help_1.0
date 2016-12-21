@@ -81,7 +81,6 @@ public class JoinCircleDetailsFragment extends BaseFragment {
 									imags.add(list.getString(i));
 								}
 							}
-
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}

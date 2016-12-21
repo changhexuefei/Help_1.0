@@ -1,11 +1,20 @@
 package com.hyzsnt.onekeyhelp.module.user.fragment;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
+import com.hyzsnt.onekeyhelp.module.user.activity.EmergencyContactActivity;
+import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -13,8 +22,12 @@ import java.util.List;
 public class UserFragment extends BaseFragment {
 
 
+	@BindView(R.id.iv_user_icon)
+	CircleImageView mIvUserIcon;
+	@BindView(R.id.tv_user_name)
+	TextView mTvUserName;
+
 	public UserFragment() {
-		// Required empty public constructor
 	}
 
 	@Override
@@ -40,5 +53,49 @@ public class UserFragment extends BaseFragment {
 	@Override
 	public String getA() {
 		return null;
+	}
+
+	@OnClick({
+			R.id.tv_user_used,
+			R.id.tv_user_my_help,
+			R.id.tv_user_lease,
+			R.id.tv_user_circle,
+			R.id.tv_user_purse,
+			R.id.tv_user_release,
+			R.id.tv_user_help,
+			R.id.tv_user_msg,
+			R.id.tv_user_contacts,
+	})
+	public void onClick(View view) {
+		switch (view.getId()) {
+			case R.id.tv_user_used:
+				ToastUtils.showShort(mActivity, "我的闲置");
+				break;
+			case R.id.tv_user_my_help:
+				ToastUtils.showShort(mActivity, "我的求助");
+				break;
+			case R.id.tv_user_lease:
+				ToastUtils.showShort(mActivity, "我的租赁");
+				break;
+			case R.id.tv_user_circle:
+				ToastUtils.showShort(mActivity, "我的圈子");
+				break;
+			case R.id.tv_user_purse:
+				ToastUtils.showShort(mActivity, "我的钱包");
+				break;
+			case R.id.tv_user_release:
+				ToastUtils.showShort(mActivity, "我的发布");
+				break;
+			case R.id.tv_user_help:
+				ToastUtils.showShort(mActivity, "我的求助");
+				break;
+			case R.id.tv_user_msg:
+				ToastUtils.showShort(mActivity, "系统消息");
+				break;
+			case R.id.tv_user_contacts:
+				Intent intent = new Intent(mActivity, EmergencyContactActivity.class);
+				startActivity(intent);
+				break;
+		}
 	}
 }

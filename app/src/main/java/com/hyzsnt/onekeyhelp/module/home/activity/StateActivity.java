@@ -48,6 +48,13 @@ public class StateActivity extends BaseActivity {
     LinearLayout sateLl;
     private InputMethodManager imm;
     private StateDetailAdapter mStateDetailAdapter;
+    private Bundle bundle;
+    private TextView stateDetailTvNickname;
+    private TextView stateDetailTvDistance;
+    private TextView stateDetailTvContent;
+    private TextView stateDetailTvGoodnum;
+    private TextView stateDetailTvReplynum;
+    private LinearLayout stateDetailLlReplay;
 
     @Override
     protected int getLayoutId() {
@@ -57,12 +64,10 @@ public class StateActivity extends BaseActivity {
     @Override
     protected void initData() {
         //得到InputMethodManager的实例
-        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-
+        //imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         Intent i = getIntent();
-         Bundle bundle = i.getExtras();
-        DynamicListByCommunityList dynamicListByCommunity = (DynamicListByCommunityList) bundle.getSerializable("dynamicListByCommunity");
-
+        bundle = i.getExtras();
+        String tag = bundle.getString("tag");
         mStateDetailAdapter = new StateDetailAdapter(this);
         final LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mStateDetailAdapter);
         stateRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -73,19 +78,18 @@ public class StateActivity extends BaseActivity {
         CommonHeader header = new CommonHeader(this, R.layout.item_activity_state_detail_head);
         adapter.addHeaderView(header);
 
-        TextView stateDetailTvNickname = (TextView) header.findViewById(R.id.state_detail_tv_nickname);
-        TextView stateDetailTvDistance = (TextView) header.findViewById(R.id.state_detail_tv_distance);
-        TextView stateDetailTvContent = (TextView) header.findViewById(R.id.state_detail_tv_content);
-        TextView stateDetailTvGoodnum = (TextView) header.findViewById(R.id.state_detail_tv_goodnum);
-        TextView stateDetailTvReplynum = (TextView) header.findViewById(R.id.state_detail_tv_replynum);
-        LinearLayout stateDetailLlReplay = (LinearLayout) header.findViewById(R.id.state_detail_ll_replay);
-
-        stateDetailTvNickname.setText(dynamicListByCommunity.getNickname());
-        stateDetailTvDistance.setText(dynamicListByCommunity.getDistance());
-        stateDetailTvContent.setText(dynamicListByCommunity.getContent());
-        stateDetailTvGoodnum.setText(dynamicListByCommunity.getGoodnum());
-        stateDetailTvReplynum.setText(dynamicListByCommunity.getReplynum());
-
+        stateDetailTvNickname = (TextView) header.findViewById(R.id.state_detail_tv_nickname);
+        stateDetailTvDistance = (TextView) header.findViewById(R.id.state_detail_tv_distance);
+        stateDetailTvContent = (TextView) header.findViewById(R.id.state_detail_tv_content);
+        stateDetailTvGoodnum = (TextView) header.findViewById(R.id.state_detail_tv_goodnum);
+        stateDetailTvReplynum = (TextView) header.findViewById(R.id.state_detail_tv_replynum);
+        stateDetailLlReplay = (LinearLayout) header.findViewById(R.id.state_detail_ll_replay);
+        //初始化数据
+        if(tag.equals(Api.COMMUNITY)){
+            initCommunity();
+        }else if(tag.equals(Api.CIRCLE)){
+            initCircle();
+        }
         //回复调出软件盘
         stateDetailLlReplay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +98,20 @@ public class StateActivity extends BaseActivity {
                 KeyBoardUtils.openKeybord(stateEtReplay, StateActivity.this);
             }
         });
+    }
+
+    private void initCircle() {
+        bundle.getSerializable("");
+    }
+
+    private void initCommunity() {
+        DynamicListByCommunityList dynamicListByCommunity = (DynamicListByCommunityList) bundle.getSerializable("dynamicListByCommunity");
+        stateDetailTvNickname.setText(dynamicListByCommunity.getNickname());
+        stateDetailTvDistance.setText(dynamicListByCommunity.getDistance());
+        stateDetailTvContent.setText(dynamicListByCommunity.getContent());
+        stateDetailTvGoodnum.setText(dynamicListByCommunity.getGoodnum());
+        stateDetailTvReplynum.setText(dynamicListByCommunity.getReplynum());
+
     }
 
     @Override
@@ -144,9 +162,7 @@ public class StateActivity extends BaseActivity {
             }
         });
     }
-
     private void replay() {
-
         List params = new ArrayList<String>();
         params.add("7");
         params.add("14");
@@ -163,6 +179,7 @@ public class StateActivity extends BaseActivity {
             @Override
             public void onSuccess(String response, int id) {
                 Log.e("444444444444444444",response+"");
+                getreplay();
             }
             @Override
             public void inProgress(float progress, long total, int id) {

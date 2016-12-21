@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:background="#1CCD9a">
+
+		<ImageView
+			android:id="@+id/iv_add_contact_back"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="15dp"
+			android:src="@mipmap/circle_back"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="添加紧急联系人"
+			android:textColor="#FFFFFF"
+			android:textSize="18sp"/>
+
+		<TextView
+			android:id="@+id/iv_add_contact_finish"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:padding="15dp"
+			android:text="完成"
+			android:textColor="#FFF"
+			android:textSize="16sp"/>
+
+	</RelativeLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_horizontal">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:layout_marginTop="30dp"
+				android:text="遇到危险使用"
+				android:textColor="#666666"
+				android:textSize="11sp"/>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:layout_marginTop="30dp"
+				android:text="“求助”"
+				android:textColor="#1CCD9A"
+				android:textSize="11sp"/>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:layout_marginTop="30dp"
+				android:text="功能时"
+				android:textColor="#666666"
+				android:textSize="11sp"/>
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="19dp"
+			android:gravity="center_horizontal">
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="我们将第一时间通知您的紧急联系人,"
+				android:textColor="#666666"
+				android:textSize="11sp"/>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="请您填写真实信息"
+				android:textColor="#1CCd9A"
+				android:textSize="11sp"/>
+		</LinearLayout>
+	</LinearLayout>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="#efefef"/>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+
+		<EditText
+			android:id="@+id/et_add_contact_name"
+			style="@style/et_add_contacts"
+			android:drawableLeft="@drawable/add_contact"
+			android:hint="联系人姓名..."/>
+
+		<TextView
+			android:id="@+id/tv_add_contact_address"
+			android:layout_width="wrap_content"
+			android:layout_height="35dp"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="15dp"
+			android:drawablePadding="3dp"
+			android:drawableRight="@drawable/right"
+			android:gravity="center"
+			android:onClick="chooseContact"
+			android:text="通讯录"
+			android:textColor="#999999"/>
+	</RelativeLayout>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="#efefef"/>
+
+	<EditText
+		android:id="@+id/et_add_contact_phone"
+		style="@style/et_add_contacts"
+		android:drawableLeft="@drawable/add_phone"
+		android:hint="联系人手机号码..."/>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="#efefef"/>
+
+	<EditText
+		android:id="@+id/et_add_contact_note"
+		style="@style/et_add_contacts"
+		android:drawableLeft="@drawable/add_note"
+		android:hint="联系人备注..."/>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="#efefef"/>
+</LinearLayout>

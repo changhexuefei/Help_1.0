@@ -1,6 +1,7 @@
 package com.hyzsnt.onekeyhelp.module.login.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -100,7 +101,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 			}
 		}
 	}
-	
 	/**
 	 * 登录
 	 *
@@ -108,7 +108,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 	 * @param user_pass
 	 */
 	private void login(String user_phone, String user_pass) {
-		List<String> params = new ArrayList<>();
+		final List<String> params = new ArrayList<>();
 		params.add(user_phone);
 		params.add("39.923594");
 		params.add("116.539995");
@@ -123,11 +123,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 			@Override
 			public void onSuccess(String response, int id) {
+				//储存用户信息(登录储存一次)
+				SPUtils.put(LoginActivity.this,"userDetail",response);
 				//LogUtils.e("onSuccess:" + response);
-				Intent i=new Intent();
-				i.putExtra("response",response);
-				setResult(200,i);
-				finish();
 //				if (JsonUtils.isSuccess(response)) {
 //					try {
 //						JSONObject jsonObject = new JSONObject(response);

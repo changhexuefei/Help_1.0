@@ -223,6 +223,7 @@ public class HomeLoginFragment extends BaseFragment {
             public void onItemClick(View view, int position) {
                 DynamicListByCommunityList dynamicListByCommunity = dynamicListByCommunitys.get(0).getmList().getDynamicListByCommunityLists().get(position);
                 Bundle bundle = new Bundle();
+                bundle.putString("tag",Api.COMMUNITY);
                 bundle.putSerializable("dynamicListByCommunity", dynamicListByCommunity);
                 Intent i = new Intent(getActivity(), StateActivity.class);
                 i.putExtras(bundle);
@@ -296,7 +297,6 @@ public class HomeLoginFragment extends BaseFragment {
                         mPopupWindow.setOutsideTouchable(true);
                         mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getActivity().getResources(), (Bitmap) null));
                         mPopupWindow.showAsDropDown(homeLoginIvSwich);
-
                         GridView gv = (GridView) popupView.findViewById(R.id.item_item_head_pop_gv);
                         gv.setNumColumns(1);
                         final LoginCommunityAdapter loginCommunityAdapter = new LoginCommunityAdapter(getActivity(), loginCommunities);
@@ -313,7 +313,6 @@ public class HomeLoginFragment extends BaseFragment {
                                     public void onError(Call call, Exception e, int id) {
 
                                     }
-
                                     @Override
                                     public void onSuccess(String response, int id) {
                                         dynamicListByCommunitys = Resovle.getDynamicListByCommunity(response);
