@@ -5,13 +5,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -26,9 +33,11 @@ import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.help.activity.HelpActivity;
 import com.hyzsnt.onekeyhelp.module.help.bean.LocationInfo;
 import com.hyzsnt.onekeyhelp.module.help.service.LocationService;
+import com.hyzsnt.onekeyhelp.module.home.adapter.LoginCommunityAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
+import com.hyzsnt.onekeyhelp.module.home.inner.IjoinCommunnity;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.login.activity.LoginActivity;
 import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
@@ -53,9 +62,7 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener {
-
-
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener ,IjoinCommunnity{
 	public static final int START_HELP = 1;
 	@BindView(R.id.rb_main_home)
 	RadioButton mRbMainHome;
@@ -72,7 +79,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@BindView(R.id.btn_sos)
 	Button mBtnSos;
 
-	private boolean isLogin = true;
+	private boolean isLogin = false;
+	private boolean isJoinCommunity = false;
 
 	/**
 	 * 首页
@@ -101,7 +109,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@Override
 	protected void initData() {
 		//登录(不要改变顺序)
-		setLogin();
+		if(!isLogin){
+			setLogin();
+		}
 		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
 		initLocation();
 		SharedPreferences sp = getSharedPreferences("tags", Context.MODE_PRIVATE);
@@ -212,7 +222,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		 * 首页
 		 */
 		mRgMainBottom.setOnCheckedChangeListener(this);
-		mRgMainBottom.check(R.id.rb_main_home);
+		//mRgMainBottom.check(R.id.rb_main_home);
 	}
 
 	@Override
@@ -221,15 +231,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		switch (checkedId) {
 			case R.id.rb_main_home:
-
-				if (isLogin) {
+				if (isJoinCommunity) {
 					if (mHomeLoginFragment == null) {
 						mHomeLoginFragment = new HomeLoginFragment();
 						transaction.add(R.id.fl_main_content, mHomeLoginFragment);
 						transaction.show(mHomeLoginFragment);
 					}
 					transaction.show(mHomeLoginFragment);
-					isLogin = false;
 				} else {
 					if (mHomeUnLoginFragment == null) {
 						mHomeUnLoginFragment = new HomeUnLoginFragment();
@@ -237,7 +245,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 						transaction.show(mHomeUnLoginFragment);
 					}
 					transaction.show(mHomeUnLoginFragment);
-					isLogin = true;
 				}
 				break;
 			case R.id.rb_main_stroll:
@@ -291,7 +298,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		}
 		transaction.commit();
 	}
-
 	/**
 	 * 开始求救
 	 *
@@ -303,12 +309,31 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		startActivityForResult(intent, START_HELP);
 		overridePendingTransition(0, 0);
 	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		//储存用户信息(登录储存一次)
+		//核对用户信息
 		String response = data.getStringExtra("response");
+		if(response!=null){
+			ArrayList<MDate> userInfo = Resovle.getUserInfo(response);
+			String res = userInfo.get(0).getRes();
+			if(res=="1"){
+				isLogin=true;
+			}else{
+				isLogin=false;
+			}
+			String incommunitystr = userInfo.get(0).getmInfo().getUserInfoInfo().getIncommunity();
+			String incommunitynumstr = userInfo.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
+			int incommunitynum=Integer.valueOf(incommunitynumstr);
+			//核对是否加入小区
+			if(incommunitystr!=null&&incommunitynum>0){
+				isJoinCommunity=true;
+			}else{
+				isJoinCommunity=false;
+			}
+			mRgMainBottom.check(R.id.rb_main_home);
+		}
+		//储存用户信息(登录储存一次)
 		SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
 		SharedPreferences.Editor edit = sp.edit();
 		edit.putString("userDetail",response);
@@ -333,13 +358,11 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 			mRgMainBottom.check(i);
 		}
 	}
-
 	@Override
 	public void onReceiveLocation(BDLocation bdLocation) {
 		LocationInfo location;
 		if (App.getLocation() != null) {
 			location = App.getLocation();
-
 		} else {
 			location = new LocationInfo();
 		}
@@ -354,5 +377,59 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		location.setTime(bdLocation.getTime());
 		location.setAddrStr(bdLocation.getAddrStr());
 		App.setLocation(location);
+	}
+	/**
+	 * 查询用户信息，核对是否加入小区
+	 */
+	@Override
+	public void checkJoinComunnity() {
+		SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
+		String userDetail = sp.getString("userDetail", "");
+		ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+		String uid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
+
+
+		List params0 = new ArrayList<String>();
+		params0.add(uid);
+		HttpUtils.post(Api.USER, Api.User.GETUSERINFO, params0, new ResponseHandler() {
+			@Override
+			public void onError(Call call, Exception e, int id) {
+			}
+			@Override
+			public void onSuccess(String response, int id) {
+				final ArrayList<MDate> loginCommunities = Resovle.getUserInfo(response);
+				String incommunitystr = loginCommunities.get(0).getmInfo().getUserInfoInfo().getIncommunity();
+				String incommunitynumstr = loginCommunities.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
+				int incommunitynum=Integer.valueOf(incommunitynumstr);
+				//核对是否加入小区
+				if(incommunitystr!=null&&incommunitynum>0){
+					isJoinCommunity=true;
+				}else{
+					isJoinCommunity=false;
+				}
+				hideFragments();
+				FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+				if (isJoinCommunity) {
+					if (mHomeLoginFragment == null) {
+						mHomeLoginFragment = new HomeLoginFragment();
+						transaction.add(R.id.fl_main_content, mHomeLoginFragment);
+						transaction.show(mHomeLoginFragment);
+					}
+					transaction.show(mHomeLoginFragment);
+				} else {
+					if (mHomeUnLoginFragment == null) {
+						mHomeUnLoginFragment = new HomeUnLoginFragment();
+						transaction.add(R.id.fl_main_content, mHomeUnLoginFragment);
+						transaction.show(mHomeUnLoginFragment);
+					}
+					transaction.show(mHomeUnLoginFragment);
+				}
+				transaction.commit();
+			}
+			@Override
+			public void inProgress(float progress, long total, int id) {
+			}
+		});
+
 	}
 }
