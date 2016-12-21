@@ -9,25 +9,35 @@ import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
 
+import java.util.ArrayList;
+
 /**
  * Created by Administrator on 2016/12/18.
  */
 
 public class CommunityAdapter  extends BaseAdapter{
 	private Context mContext;
+	private ArrayList<String> mCommunityListLists = new ArrayList<>();
 
 	public CommunityAdapter(Context context) {
 		mContext = context;
 	}
-
+    public void setdata(ArrayList<String> mCommunityListLists){
+	    this.mCommunityListLists = mCommunityListLists;
+    }
 	@Override
 	public int getCount() {
-		return 3;
+		 if(mCommunityListLists.size()>0&&!"".equals(mCommunityListLists)){
+			 return mCommunityListLists.size();
+		 }else {
+			 return 0;
+		 }
+
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return null;
+		return mCommunityListLists.get(position);
 	}
 
 	@Override
@@ -39,7 +49,7 @@ public class CommunityAdapter  extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup parent) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_create_circle_pop,null);
 		TextView textView = (TextView) view.findViewById(R.id.tv_create_circle_community);
-		textView.setText("西颐小区");
+		textView.setText(mCommunityListLists.get(position));
 		return view;
 	}
 }

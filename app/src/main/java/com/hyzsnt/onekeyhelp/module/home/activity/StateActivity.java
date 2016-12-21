@@ -60,7 +60,7 @@ public class StateActivity extends BaseActivity {
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         Intent i = getIntent();
-        Bundle bundle = i.getExtras();
+         Bundle bundle = i.getExtras();
         DynamicListByCommunityList dynamicListByCommunity = (DynamicListByCommunityList) bundle.getSerializable("dynamicListByCommunity");
 
         mStateDetailAdapter = new StateDetailAdapter(this);

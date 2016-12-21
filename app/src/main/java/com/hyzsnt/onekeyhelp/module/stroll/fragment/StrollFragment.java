@@ -1,8 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.stroll.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,12 +16,12 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
-import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CircleDetailsActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CreateCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.SeekCircleActivity;
@@ -75,6 +73,8 @@ public class StrollFragment extends BaseFragment {
 	private CircleFragmentAdapter mMCircleFragmentAdapter;
 	private CircleRound mRound;
 	private ArrayList<MDate> mUserInfo;
+	private String mLat;
+	private String mLon;
 
 	@Nullable
 
@@ -87,10 +87,7 @@ public class StrollFragment extends BaseFragment {
 	@Override
 	protected void initData(String content) {
 		//获取用户信息
-		SharedPreferences sp = mActivity.getSharedPreferences("userSP", Context.MODE_PRIVATE);
-		String userDetail = sp.getString("userDetail", "").trim();
-		mUserInfo = Resovle.getUserInfo(userDetail);
-
+		getUserinfo();
 
 		//热门圈子
 		HotTags(content);
@@ -203,10 +200,9 @@ public class StrollFragment extends BaseFragment {
 	public void CircleMe() {
 		//参数p
 		ArrayList<String> list1 = new ArrayList<>();
-
 		list1.add("23");
-		list1.add("39.923263");
-		list1.add("116.539572");
+		list1.add(mLat);
+		list1.add(mLon);
 		//请求数据
 		HttpUtils.post(Api.CIRCLE, Api.Circle.MELIST, list1, new ResponseHandler() {
 			@Override
@@ -311,5 +307,19 @@ public class StrollFragment extends BaseFragment {
 				return false;
 			}
 		});
+	}
+
+	/**
+	 * 获取用户信息
+	 */
+
+	public void getUserinfo(){
+		/*SharedPreferences sp = mActivity.getSharedPreferences("userSP", Context.MODE_PRIVATE);
+		String userDetail = sp.getString("userDetail", "").trim();
+		mUserInfo = Resovle.getUserInfo(userDetail);*/
+		//获取经度
+		mLat = String.valueOf(App.getLocation().getLatitude());
+		//获取维度
+		mLon = String.valueOf(App.getLocation().getLongitude());
 	}
 }

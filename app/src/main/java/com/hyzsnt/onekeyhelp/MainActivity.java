@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -25,8 +26,10 @@ import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.help.activity.HelpActivity;
 import com.hyzsnt.onekeyhelp.module.help.bean.LocationInfo;
 import com.hyzsnt.onekeyhelp.module.help.service.LocationService;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
+import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.login.activity.LoginActivity;
 import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
@@ -36,6 +39,7 @@ import com.hyzsnt.onekeyhelp.utils.DbUtils;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -305,17 +309,10 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		super.onActivityResult(requestCode, resultCode, data);
 		//储存用户信息(登录储存一次)
 		String response = data.getStringExtra("response");
-		SharedPreferences sp = getSharedPreferences("userSP", Context.MODE_PRIVATE);
+		SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
 		SharedPreferences.Editor edit = sp.edit();
-		String userDetail = sp.getString("userDetail", "").trim();
-		//Resovle.getUserInfo(userDetail);
-		if (userDetail == null || userDetail == "") {
-			edit.putString(response, "userDetail");
-		} else {
-			edit.remove("userDetail");
-			edit.putString(response, "userDetail");
-		}
-
+		edit.putString("userDetail",response);
+		edit.commit();
 		if (requestCode == MainActivity.START_HELP && resultCode == RESULT_OK) {
 			String inx = data.getStringExtra("data");
 			int i = R.id.rb_main_home;
