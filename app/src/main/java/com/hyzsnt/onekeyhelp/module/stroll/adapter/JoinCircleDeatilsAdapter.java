@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * Created by Administrator on 2016/12/12.
  */
 
-public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
+public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter implements View.OnClickListener{
 	//类型
 	private final int ITEM_TYPE_ONE = 1;
 	private final int ITEM_TYPE_TWO = 2;
@@ -34,6 +34,7 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
 	CiecleDetailss mDetailss;
 	Boolean mBoolean;
 	JoinSuccess joinSuccess;
+	private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
 	public JoinCircleDeatilsAdapter(Context context, CircleDetails mdetails, Boolean iftotal) {
 		mContext = context;
@@ -61,7 +62,9 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
 		if (viewType == ITEM_TYPE_ONE) {
 			return new DetailsViewHolerOne(mLayoutInflater.inflate(R.layout.item_circle_details_header, parent, false));
 		} else {
-			return new DetailsViewHolertwo(mLayoutInflater.inflate(R.layout.item_circle_details, parent, false));
+			View view =mLayoutInflater.inflate(R.layout.item_circle_details, parent, false);
+			view.setOnClickListener(this);
+			return new DetailsViewHolertwo(view);
 		}
 	}
 
@@ -136,6 +139,17 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
 			}
 
 		}
+		//将数据保存在itemView的Tag中，以便点击时进行获取
+		holder.itemView.setTag(position);
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (mOnItemClickListener != null) {
+			//注意这里使用getTag方法获取数据
+			mOnItemClickListener.onItemClick(v,(Integer)v.getTag());
+		}
 
 	}
 
@@ -196,8 +210,10 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter {
 
 	//define interface
 	public static interface OnRecyclerViewItemClickListener {
-		void onItemClick(View view, String data);
+		void onItemClick(View view, int data);
 	}
-
+	public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+		this.mOnItemClickListener = listener;
+	}
 
 }
