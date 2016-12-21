@@ -31,6 +31,7 @@ import okhttp3.OkHttpClient;
 public class App extends Application {
 	private static Context mContext;
 	private static LocationInfo mLocationInfo;
+	public static int code = 0;
 
 	@Override
 	public void onCreate() {
@@ -105,6 +106,7 @@ public class App extends Application {
 	public static void setLocation(LocationInfo locationInfo) {
 		mLocationInfo = locationInfo;
 	}
+
 	private void initImageLoader(Context context) {
 		// This configuration tuning is custom. You can tune every option, you may tune some of them,
 		// or you can create default configuration by

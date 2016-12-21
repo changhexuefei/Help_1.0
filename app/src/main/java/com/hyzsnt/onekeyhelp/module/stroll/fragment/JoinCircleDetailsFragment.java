@@ -67,28 +67,9 @@ public class JoinCircleDetailsFragment extends BaseFragment {
 				@Override
 				public void onItemClick(View view, int data) {
 					if(data>0){
-						Intent intent = new Intent(mActivity, StateActivity.class);
-						Bundle bundle = new Bundle();
+
 						String topicinfo = getTopicinfo(mDetails.getList().get(data - 1).getTid(), mDetails.getInfo().getCcid());
-						Gson gson = new Gson();
-						Topicinfo topicinfo1 = gson.fromJson(topicinfo, Topicinfo.class);
-						ArrayList<String> imags = new ArrayList<String>();
-						try {
-							JSONObject jsonObject = new JSONObject(topicinfo);
-							JSONArray list = jsonObject.getJSONArray("list");
-							if(!"".equals(list)&&list.length()>0){
-								for(int i=0;i<list.length();i++){
-									imags.add(list.getString(i));
-								}
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-						bundle.putParcelable("topicinfo",topicinfo1.getInfo());
-						bundle.putStringArrayList("imgs",imags);
-						bundle.putString("tag", Api.CIRCLE);
-						intent.putExtras(bundle);
-						mActivity.startActivity(intent);
+
 					}
 
 				}
@@ -157,12 +138,33 @@ public class JoinCircleDetailsFragment extends BaseFragment {
 			public void onError(Call call, Exception e, int id) {
 
 			}
-
 			@Override
 			public void onSuccess(String response, int id) {
 				if(JsonUtils.isSuccess(response)) {
 					LogUtils.e(response);
+					Intent intent = new Intent(mActivity, StateActivity.class);
+					Bundle bundle = new Bundle();
+					Gson gson = new Gson();
+					Topicinfo topicinfo1 = gson.fromJson(response, Topicinfo.class);
+					ArrayList<String> imags = new ArrayList<String>();
+					try {
+						JSONObject jsonObject = new JSONObject(response);
+						JSONArray list = jsonObject.getJSONArray("list");
+						if(!"".equals(list)&&list.length()>0){
+							for(int i=0;i<list.length();i++){
+								imags.add(list.getString(i));
+							}
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					bundle.putParcelable("topicinfo",topicinfo1.getInfo());
+					bundle.putStringArrayList("imgs",imags);
+					bundle.putString("tag", Api.CIRCLE);
+					intent.putExtras(bundle);
+					mActivity.startActivity(intent);
 					result[0] = response;
+
 				}else {
 					LogUtils.e(JsonUtils.getErrorMessage(response));
 				}

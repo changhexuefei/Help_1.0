@@ -43,7 +43,8 @@
 			android:name="com.baidu.lbsapi.API_KEY"
 			android:value="8YGxkZtWGuYqmm9Tsyw86lulSBCSIyiQ"/>
 		<!-- 主页面 -->
-		<activity android:name=".MainActivity"/>
+		<activity android:name=".MainActivity"
+		          android:launchMode="singleTask"/>
 		<!-- 物品置换 -->
 		<!-- 一键求助页面 -->
 		<activity android:name=".module.help.activity.HelpActivity"/>

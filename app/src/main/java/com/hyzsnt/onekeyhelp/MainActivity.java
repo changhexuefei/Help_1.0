@@ -99,6 +99,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
+
+
 		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
 		initLocation();
 		SharedPreferences sp = getSharedPreferences("tags", Context.MODE_PRIVATE);
@@ -203,12 +205,14 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@Override
 	protected void initListener() {
 		super.initListener();
+		int selectID = getIntent().getIntExtra("selectID", R.id.rb_main_home);
 		/**
 		 * 首页
 		 */
 		mRgMainBottom.setOnCheckedChangeListener(this);
-		mRgMainBottom.check(R.id.rb_main_home);
+		mRgMainBottom.check(selectID);
 	}
+
 
 	@Override
 	public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
@@ -294,6 +298,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		Intent intent = new Intent(this, HelpActivity.class);
 		startActivityForResult(intent, START_HELP);
 		overridePendingTransition(0, 0);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (App.code == 1) {
+			mRgMainBottom.check(R.id.rb_main_home);
+			App.code = 0;
+		}
 	}
 
 	@Override

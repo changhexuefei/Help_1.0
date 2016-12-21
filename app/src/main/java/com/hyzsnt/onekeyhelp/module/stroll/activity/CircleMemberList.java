@@ -7,13 +7,18 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.MemberHostAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleJoin;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleMember;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,14 @@ public class CircleMemberList extends BaseActivity {
 	LRecyclerView mReMemberHost;
 	@BindView(R.id.im_circle_back)
 	ImageView mImCircleBack;
+	private String mIncommunitynum;
+	private String mUid;
+	private String mCid;
+	private ArrayList<MDate> mUserInfo;
+	private String mLat;
+	private String mLon;
+	private String mMnickname;
+
 	@Override
 	protected int getLayoutId() {
 		return R.layout.activity_circle_member_list;
@@ -36,6 +49,7 @@ public class CircleMemberList extends BaseActivity {
 
 	@Override
 	protected void initData() {
+		getUserInfo();
 		//获取是否是管理员
 		Boolean ishost = getIntent().getBooleanExtra("ishost", true);
 		String ccid = getIntent().getStringExtra("ccid");
@@ -48,11 +62,11 @@ public class CircleMemberList extends BaseActivity {
 
 		//获取成员数据
 		List<String> list = new ArrayList<>();
-		list.add("23");
+		list.add(mUid);
 		list.add(ccid);
-		list.add("39.923263");
-		list.add("116.539572");
-		list.add("131****7888");
+		list.add(mLat);
+		list.add(mLon);
+		list.add(mMnickname);
 		HttpUtils.post(Api.CIRCLE, Api.Circle.CIRCLE_MEMBER, list, new ResponseHandler() {
 			@Override
 			public void onError(Call call, Exception e, int id) {
@@ -61,13 +75,12 @@ public class CircleMemberList extends BaseActivity {
 
 			@Override
 			public void onSuccess(String response, int id) {
-
 				Gson gson = new Gson();
 				CircleMember circleMember = gson.fromJson(response, CircleMember.class);
               if(circleMember.getInfo().getTotalnum()>0){
 	              adapter.setCircleMember(circleMember);
               }
-
+				LogUtils.e(response);
 			}
 
 			@Override
@@ -103,7 +116,18 @@ public class CircleMemberList extends BaseActivity {
 
 
 	}
-
+	public void getUserInfo(){
+		String userDetail = (String) SPUtils.get(this, "userDetail", "");
+		//解析用户信息
+		mUserInfo = Resovle.getUserInfo(userDetail);
+		//获取已加入的小区数
+		mIncommunitynum = mUserInfo.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
+		mMnickname = mUserInfo.get(0).getmInfo().getUserInfoInfo().getNickname();
+		//获取用户id
+		mUid = mUserInfo.get(0).getmInfo().getUserInfoInfo().getUid();
+		mLat = String.valueOf(App.getLocation().getLatitude());
+		mLon = String.valueOf(App.getLocation().getLongitude());
+	}
 
 	@OnClick(R.id.im_circle_back)
 	public void onClick() {
