@@ -89,6 +89,32 @@ public class Topicinfo implements Parcelable {
 		private String title;
 		private String uid;
 
+		@Override
+		public String toString() {
+			return "InfoEntry{" +
+					"ccid='" + ccid + '\'' +
+					", cmid='" + cmid + '\'' +
+					", cmname='" + cmname + '\'' +
+					", content='" + content + '\'' +
+					", contenttype='" + contenttype + '\'' +
+					", gender='" + gender + '\'' +
+					", goodnum='" + goodnum + '\'' +
+					", headportraid='" + headportraid + '\'' +
+					", hobbytags='" + hobbytags + '\'' +
+					", lastonline='" + lastonline + '\'' +
+					", lat='" + lat + '\'' +
+					", lng='" + lng + '\'' +
+					", nickname='" + nickname + '\'' +
+					", posttime='" + posttime + '\'' +
+					", regtime='" + regtime + '\'' +
+					", replynum='" + replynum + '\'' +
+					", status='" + status + '\'' +
+					", tid='" + tid + '\'' +
+					", title='" + title + '\'' +
+					", uid='" + uid + '\'' +
+					'}';
+		}
+
 		public String getCcid() {
 			return ccid;
 		}

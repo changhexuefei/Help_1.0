@@ -41,6 +41,7 @@ import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +56,7 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener, IjoinCommunnity {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener, IjoinCommunnity ,Serializable{
 	public static final int START_HELP = 1;
 	@BindView(R.id.rb_main_home)
 	RadioButton mRbMainHome;
@@ -99,8 +100,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
-
-
+		checkJoinComunnity();
 		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
 		initLocation();
 		SharedPreferences sp = getSharedPreferences("tags", Context.MODE_PRIVATE);
@@ -173,7 +173,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				})
 				.show();
 	}
-
 	@OnPermissionDenied({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
 	public void showDeniedForLocation() {
 		ToastUtils.showShort(this, "您已经拒绝一键帮助获取定位权限，部分功能将无法正常使用！");
@@ -205,14 +204,12 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@Override
 	protected void initListener() {
 		super.initListener();
-		int selectID = getIntent().getIntExtra("selectID", R.id.rb_main_home);
 		/**
 		 * 首页
 		 */
 		mRgMainBottom.setOnCheckedChangeListener(this);
-		mRgMainBottom.check(selectID);
+		mRgMainBottom.check(R.id.rb_main_home);
 	}
-
 
 	@Override
 	public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
@@ -312,21 +309,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		//核对用户信息
-		String response = data.getStringExtra("response");
-		if (response != null) {
-			ArrayList<MDate> userInfo = Resovle.getUserInfo(response);
-			String incommunitystr = userInfo.get(0).getmInfo().getUserInfoInfo().getIncommunity();
-			String incommunitynumstr = userInfo.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
-			int incommunitynum = Integer.valueOf(incommunitynumstr);
-			//核对是否加入小区
-			if (incommunitystr != null && incommunitynum > 0) {
-				isJoinCommunity = true;
-			} else {
-				isJoinCommunity = false;
-			}
-		}
-
 		if (requestCode == MainActivity.START_HELP && resultCode == RESULT_OK) {
 			String inx = data.getStringExtra("data");
 			int i = R.id.rb_main_home;
@@ -374,10 +356,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	 */
 	@Override
 	public void checkJoinComunnity() {
-		String userDetail = (String) SPUtils.get(this, "userDetail", null);
+		String userDetail = (String) SPUtils.get(this, "userDetail","");
 		ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
 		String uid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
-
 		List params0 = new ArrayList<String>();
 		params0.add(uid);
 		HttpUtils.post(Api.USER, Api.User.GETUSERINFO, params0, new ResponseHandler() {
