@@ -22,6 +22,7 @@ import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CircleDetailsActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.CreateCircleActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.activity.SeekCircleActivity;
@@ -32,6 +33,7 @@ import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleRound;
 import com.hyzsnt.onekeyhelp.module.stroll.widget.CustomExpandaleListView;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import org.json.JSONException;
@@ -72,9 +74,13 @@ public class StrollFragment extends BaseFragment {
 	private StrollHeaderAdapter mAdapter;
 	private CircleFragmentAdapter mMCircleFragmentAdapter;
 	private CircleRound mRound;
-	private ArrayList<MDate> mUserInfo;
+
 	private String mLat;
 	private String mLon;
+	private String mIncommunitynum;
+	private String mUid;
+	private ArrayList<MDate> mUserInfo;
+
 
 	@Nullable
 
@@ -166,9 +172,9 @@ public class StrollFragment extends BaseFragment {
 	public void CircleRound() {
 		//参数p
 		ArrayList<String> list1 = new ArrayList<>();
-		list1.add("23");
-		list1.add("39.923263");
-		list1.add("116.539572");
+		list1.add(mUid);
+		list1.add(mLat);
+		list1.add(mLon);
 		list1.add("");
 		list1.add("");
 		//网络请求
@@ -200,7 +206,7 @@ public class StrollFragment extends BaseFragment {
 	public void CircleMe() {
 		//参数p
 		ArrayList<String> list1 = new ArrayList<>();
-		list1.add("23");
+		list1.add(mUid);
 		list1.add(mLat);
 		list1.add(mLon);
 		//请求数据
@@ -254,6 +260,8 @@ public class StrollFragment extends BaseFragment {
 					}
 				} else {
 					ToastUtils.showShort(mActivity, "暂时没有圈子");
+					mRound.getList().clear();
+					mMCircleFragmentAdapter.notifyDataSetChanged();
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -314,9 +322,13 @@ public class StrollFragment extends BaseFragment {
 	 */
 
 	public void getUserinfo(){
-		/*SharedPreferences sp = mActivity.getSharedPreferences("userSP", Context.MODE_PRIVATE);
-		String userDetail = sp.getString("userDetail", "").trim();
-		mUserInfo = Resovle.getUserInfo(userDetail);*/
+		String userDetail = (String) SPUtils.get(mActivity, "userDetail", "");
+		//解析用户信息
+		mUserInfo = Resovle.getUserInfo(userDetail);
+		//获取已加入的小区数
+		mIncommunitynum = mUserInfo.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
+		//获取用户id
+		mUid = mUserInfo.get(0).getmInfo().getUserInfoInfo().getUid();
 		//获取经度
 		mLat = String.valueOf(App.getLocation().getLatitude());
 		//获取维度

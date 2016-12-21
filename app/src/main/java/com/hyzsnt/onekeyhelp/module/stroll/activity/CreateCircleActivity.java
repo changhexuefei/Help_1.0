@@ -1,4 +1,5 @@
 package com.hyzsnt.onekeyhelp.module.stroll.activity;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,12 +17,15 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.hyzsnt.onekeyhelp.MainActivity;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
-import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListList;
+import com.hyzsnt.onekeyhelp.module.home.bean.LoginCommunity;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleTypeAdapter;
@@ -31,11 +36,13 @@ import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.finalteam.galleryfinal.GalleryFinal;
@@ -70,8 +77,10 @@ public class CreateCircleActivity extends BaseActivity {
 	String result;
 	private String mIncommunitynum;
 	private String mUid;
+	private String mCid;
 	private ArrayList<MDate> mUserInfo;
 	private ArrayList<String> mAlist;
+	private ArrayList<LoginCommunity> mLoginCommunities;
 
 	@Override
 	protected int getLayoutId() {
@@ -82,17 +91,7 @@ public class CreateCircleActivity extends BaseActivity {
 	protected void initData() {
 		//获取用户信息
 		getUserInfo();
-		//修改小区
-		ArrayList<CommunityListList> communityListLists = mUserInfo.get(0).getmList().getCommunityListLists();
-		mAlist = new ArrayList<>();
-		for (int i = 0; i< mAlist.size(); i++){
-			if(mUserInfo.get(0).getmList().getCommunityListLists().get(i).getIfcur()=="0"){
-				mAlist.add(communityListLists.get(i).getCmname());
-			}else{
-				mTvCreateCircleAddress.setText(communityListLists.get(i).getCmname());
-			}
 
-		}
 
 		//用于获取标签
 		ArrayList<CircleType.ListEntry> list = new ArrayList<CircleType.ListEntry>();
@@ -161,52 +160,60 @@ public class CreateCircleActivity extends BaseActivity {
 
 			break;
 			case R.id.activity_create_circle: {
-				//添加p参数
-				List<String> list = new ArrayList<>();
-				list.add("23");
-				list.add("2803");
-				list.add(mEtCreateCircleName.getText().toString());
-				String str = "";
-				for (int i = 0; i < mtypelist.size(); i++) {
-					if (mtypelist.get(i).getIsselect()) {
-						str += mtypelist.get(i).getTagid();
-						if (i < mtypelist.size() - 1) {
-							str += "|";
+				if ("".equals(mCid)) {
+					//添加p参数
+					List<String> list = new ArrayList<>();
+					list.add(mUid);
+					list.add(mCid);
+					list.add(mEtCreateCircleName.getText().toString());
+					String str = "";
+					for (int i = 0; i < mtypelist.size(); i++) {
+						if (mtypelist.get(i).getIsselect()) {
+							str += mtypelist.get(i).getTagid();
+							if (i < mtypelist.size() - 1) {
+								str += "|";
+							}
 						}
 					}
+					list.add(str.substring(0, str.length() - 1));
+					list.add(mEtCreateCircleDes.getText().toString());
+					list.add(result);
+					HttpUtils.post(Api.CIRCLE, Api.Circle.CREATE_CIRCLE, list, new ResponseHandler() {
+						@Override
+						public void onError(Call call, Exception e, int id) {
+
+						}
+
+						@Override
+						public void onSuccess(String response, int id) {
+							if (JsonUtils.isSuccess(response)) {
+								Intent intent = new Intent(CreateCircleActivity.this, CircleDetailsActivity.class);
+								intent.putExtra("response", response);
+								intent.putExtra("title", mEtCreateCircleName.getText().toString());
+								startActivity(intent);
+								ToastUtils.showShort(CreateCircleActivity.this, "创建成功");
+								finish();
+							} else {
+								LogUtils.e("失败" + JsonUtils.getErrorMessage(response));
+							}
+						}
+
+						@Override
+						public void inProgress(float progress, long total, int id) {
+
+						}
+					});
+				} else {
+					ToastUtils.showShort(CreateCircleActivity.this, "请先加入一个小区");
+					Intent intent = new Intent(this, MainActivity.class);
+					App.code = 1;
+					startActivity(intent);
 				}
-				list.add(str.substring(0, str.length() - 1));
-				list.add(mEtCreateCircleDes.getText().toString());
-				list.add(result);
-				HttpUtils.post(Api.CIRCLE, Api.Circle.CREATE_CIRCLE, list, new ResponseHandler() {
-					@Override
-					public void onError(Call call, Exception e, int id) {
 
-					}
-
-					@Override
-					public void onSuccess(String response, int id) {
-						if (JsonUtils.isSuccess(response)) {
-							Intent intent = new Intent(CreateCircleActivity.this, CircleDetailsActivity.class);
-							intent.putExtra("response",response);
-							intent.putExtra("title",mEtCreateCircleName.getText().toString());
-							startActivity(intent);
-							ToastUtils.showShort(CreateCircleActivity.this,"创建成功");
-							finish();
-						} else {
-							LogUtils.e("失败" + JsonUtils.getErrorMessage(response));
-						}
-					}
-
-					@Override
-					public void inProgress(float progress, long total, int id) {
-
-					}
-				});
 			}
 			break;
 			case R.id.ll_exchange_community: {
-				if(mAlist.size()>0&&!"".equals(mAlist)){
+				if (mAlist.size() > 0 && !"".equals(mAlist)) {
 					View popupView = View.inflate(CreateCircleActivity.this, R.layout.pop_create_circle_community, null);
 					ListView lv = (ListView) popupView.findViewById(R.id.ll_create_circle_community);
 					PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
@@ -217,8 +224,19 @@ public class CreateCircleActivity extends BaseActivity {
 					CommunityAdapter communityAdapter = new CommunityAdapter(CreateCircleActivity.this);
 					communityAdapter.setdata(mAlist);
 					lv.setAdapter(communityAdapter);
-				}else{
-					ToastUtils.showShort(CreateCircleActivity.this,"暂时没有加入其它小区");
+					lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+						@Override
+						public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+							mTvCreateCircleAddress.setText(mAlist.get(position));
+							for (int i = 0; i < mLoginCommunities.size(); i++) {
+								if (mAlist.get(position).equals(mLoginCommunities.get(i).getCmname())) {
+									mCid = mLoginCommunities.get(i).getCmid();
+								}
+							}
+						}
+					});
+				} else {
+					ToastUtils.showShort(CreateCircleActivity.this, "暂时没有加入其它小区");
 				}
 			}
 			break;
@@ -279,6 +297,7 @@ public class CreateCircleActivity extends BaseActivity {
 
 	/**
 	 * 压缩
+	 *
 	 * @param image
 	 * @return
 	 */
@@ -287,7 +306,7 @@ public class CreateCircleActivity extends BaseActivity {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
 		int options = 100;
-		while ( baos.toByteArray().length / 1024>100) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+		while (baos.toByteArray().length / 1024 > 100) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
 			baos.reset();//重置baos即清空baos
 			image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
 			options -= 10;//每次都减少10
@@ -296,11 +315,12 @@ public class CreateCircleActivity extends BaseActivity {
 		Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
 		return bitmap;
 	}
+
 	private Bitmap getimage(String srcPath) {
 		BitmapFactory.Options newOpts = new BitmapFactory.Options();
 		//开始读入图片，此时把options.inJustDecodeBounds 设回true了
 		newOpts.inJustDecodeBounds = true;
-		Bitmap bitmap = BitmapFactory.decodeFile(srcPath,newOpts);//此时返回bm为空
+		Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);//此时返回bm为空
 		newOpts.inJustDecodeBounds = false;
 		int w = newOpts.outWidth;
 		int h = newOpts.outHeight;
@@ -321,8 +341,9 @@ public class CreateCircleActivity extends BaseActivity {
 		bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
 		return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
 	}
+
 	//获取用户信息以及小区的经纬度
-	public void getUserInfo(){
+	public void getUserInfo() {
 		String userDetail = (String) SPUtils.get(this, "userDetail", "");
 		//解析用户信息
 		mUserInfo = Resovle.getUserInfo(userDetail);
@@ -330,5 +351,21 @@ public class CreateCircleActivity extends BaseActivity {
 		mIncommunitynum = mUserInfo.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
 		//获取用户id
 		mUid = mUserInfo.get(0).getmInfo().getUserInfoInfo().getUid();
+		mAlist = new ArrayList<>();
+		//修改小区
+		if (Integer.parseInt(mIncommunitynum) > 0) {
+
+			mLoginCommunities = mUserInfo.get(0).getmList().getLoginCommunities();
+			LogUtils.e(mLoginCommunities.toString());
+			for (int i = 0; i < mAlist.size(); i++) {
+				if (mUserInfo.get(0).getmList().getCommunityListLists().get(i).getIfcur() == "0") {
+					mAlist.add(mLoginCommunities.get(i).getCmname());
+				} else {
+					mTvCreateCircleAddress.setText(mLoginCommunities.get(i).getCmname());
+					mCid = mLoginCommunities.get(i).getCmid();
+				}
+			}
+		}
+
 	}
 }

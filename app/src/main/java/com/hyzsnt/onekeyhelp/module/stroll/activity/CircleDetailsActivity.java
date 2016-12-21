@@ -10,10 +10,13 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.release.activity.TalkActivity;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CiecleDetailss;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleDetails;
@@ -22,6 +25,7 @@ import com.hyzsnt.onekeyhelp.module.stroll.fragment.JoinCircleDetailsFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.fragment.UnjoinCircleDetailsFragment;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +54,12 @@ public class CircleDetailsActivity extends BaseActivity {
 	private UnjoinCircleDetailsFragment mUnjoinCircleDetailsFragment;
 	private CircleDetails mDetails;
 	private String mCcid;
+	private String mIncommunitynum;
+	private String mUid;
+	private String mCid;
+	private ArrayList<MDate> mUserInfo;
+	private String mLat;
+	private String mLon;
 
 	@Override
 	protected int getLayoutId() {
@@ -58,6 +68,7 @@ public class CircleDetailsActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
+		getUserInfo();
 
 		String response = getIntent().getStringExtra("response");
 
@@ -88,10 +99,10 @@ public class CircleDetailsActivity extends BaseActivity {
 		mCcid = getIntent().getStringExtra("ccid");
 		//获取数据
 		List<String> list = new ArrayList<>();
-		list.add("23");
+		list.add(mUid);
 		list.add(mCcid);
-		list.add("39.923263");
-		list.add("116.539572");
+		list.add(mLat);
+		list.add(mLon);
 
 		HttpUtils.post(Api.CIRCLE, Api.Circle.CIRCLE_DETAILS, list, new ResponseHandler() {
 
@@ -217,5 +228,16 @@ public class CircleDetailsActivity extends BaseActivity {
 				startActivity(intent);
 				break;
 		}
+	}
+	public void getUserInfo(){
+		String userDetail = (String) SPUtils.get(this, "userDetail", "");
+		//解析用户信息
+		mUserInfo = Resovle.getUserInfo(userDetail);
+		//获取已加入的小区数
+		mIncommunitynum = mUserInfo.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
+		//获取用户id
+		mUid = mUserInfo.get(0).getmInfo().getUserInfoInfo().getUid();
+		mLat = String.valueOf(App.getLocation().getLatitude());
+		mLon = String.valueOf(App.getLocation().getLongitude());
 	}
 }
