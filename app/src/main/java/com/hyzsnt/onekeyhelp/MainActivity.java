@@ -46,6 +46,7 @@ import com.hyzsnt.onekeyhelp.module.stroll.fragment.StrollFragment;
 import com.hyzsnt.onekeyhelp.module.user.fragment.UserFragment;
 import com.hyzsnt.onekeyhelp.utils.DbUtils;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -78,8 +79,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	FrameLayout mFlMainContent;
 	@BindView(R.id.btn_sos)
 	Button mBtnSos;
-
-	private boolean isLogin = false;
 	private boolean isJoinCommunity = false;
 
 	/**
@@ -108,10 +107,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
-		//登录(不要改变顺序)
-		if(!isLogin){
-			setLogin();
-		}
 		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
 		initLocation();
 		SharedPreferences sp = getSharedPreferences("tags", Context.MODE_PRIVATE);
@@ -316,12 +311,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		String response = data.getStringExtra("response");
 		if(response!=null){
 			ArrayList<MDate> userInfo = Resovle.getUserInfo(response);
-			String res = userInfo.get(0).getRes();
-			if(res=="1"){
-				isLogin=true;
-			}else{
-				isLogin=false;
-			}
 			String incommunitystr = userInfo.get(0).getmInfo().getUserInfoInfo().getIncommunity();
 			String incommunitynumstr = userInfo.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
 			int incommunitynum=Integer.valueOf(incommunitynumstr);
@@ -333,11 +322,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 			}
 			mRgMainBottom.check(R.id.rb_main_home);
 		}
-		//储存用户信息(登录储存一次)
-		SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
-		SharedPreferences.Editor edit = sp.edit();
-		edit.putString("userDetail",response);
-		edit.commit();
+
 		if (requestCode == MainActivity.START_HELP && resultCode == RESULT_OK) {
 			String inx = data.getStringExtra("data");
 			int i = R.id.rb_main_home;
@@ -383,8 +368,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	 */
 	@Override
 	public void checkJoinComunnity() {
-		SharedPreferences sp = getSharedPreferences("user",MODE_PRIVATE);
-		String userDetail = sp.getString("userDetail", "");
+		String userDetail = (String) SPUtils.get(this, "userDetail", null);
 		ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
 		String uid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
 

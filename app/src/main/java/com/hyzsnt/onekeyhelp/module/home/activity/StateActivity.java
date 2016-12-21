@@ -87,6 +87,8 @@ public class StateActivity extends BaseActivity {
         //初始化数据
         if(tag.equals(Api.COMMUNITY)){
             initCommunity();
+        }else if(tag.equals(Api.CIRCLE)){
+            initCircle();
         }
         //回复调出软件盘
         stateDetailLlReplay.setOnClickListener(new View.OnClickListener() {
@@ -97,6 +99,11 @@ public class StateActivity extends BaseActivity {
             }
         });
     }
+
+    private void initCircle() {
+        bundle.getSerializable("");
+    }
+
     private void initCommunity() {
         DynamicListByCommunityList dynamicListByCommunity = (DynamicListByCommunityList) bundle.getSerializable("dynamicListByCommunity");
         stateDetailTvNickname.setText(dynamicListByCommunity.getNickname());
