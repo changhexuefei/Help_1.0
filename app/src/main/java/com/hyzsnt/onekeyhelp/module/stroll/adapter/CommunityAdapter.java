@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class CommunityAdapter  extends BaseAdapter{
 	private Context mContext;
-	private ArrayList<String> mCommunityListLists;
+	private ArrayList<String> mCommunityListLists = new ArrayList<>();
 
 	public CommunityAdapter(Context context) {
 		mContext = context;
@@ -27,7 +27,12 @@ public class CommunityAdapter  extends BaseAdapter{
     }
 	@Override
 	public int getCount() {
-		return mCommunityListLists.size();
+		 if(mCommunityListLists.size()>0&&!"".equals(mCommunityListLists)){
+			 return mCommunityListLists.size();
+		 }else {
+			 return 0;
+		 }
+
 	}
 
 	@Override

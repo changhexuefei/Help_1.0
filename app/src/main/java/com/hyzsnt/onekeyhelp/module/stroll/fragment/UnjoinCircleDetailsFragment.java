@@ -1,6 +1,5 @@
 package com.hyzsnt.onekeyhelp.module.stroll.fragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -17,13 +16,15 @@ import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
-import com.hyzsnt.onekeyhelp.module.stroll.activity.CircleMemberList;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CiecleDetailss;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 import com.hyzsnt.onekeyhelp.utils.DbUtils;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,15 +59,10 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 	TextView mTvUnjoinCircleStatus;
 	@BindView(R.id.tv_unjoin_circle_tag1)
 	TextView mTvUnjoinCircleTag1;
-
-
 	@BindView(R.id.tv_unjoin_circle_tag2)
 	TextView mTvUnjoinCircleTag2;
-
-
 	@BindView(R.id.tv_unjoin_circle_tag3)
 	TextView mTvUnjoinCircleTag3;
-
 	@BindView(R.id.linearLayout)
 	LinearLayout mLinearLayout;
 	@BindView(R.id.tv_unjoin_circle_summary)
@@ -136,7 +132,7 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 		if (info.getGender().equals("1")) {
 			mImUnjoinCirclegender.setImageResource(R.mipmap.man);
 		}
-		mTvUnjionCircleNum.setOnClickListener(new View.OnClickListener() {
+		/*mTvUnjionCircleNum.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(mActivity, CircleMemberList.class);
@@ -144,7 +140,7 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 				intent.putExtra("ccid", info.getCcid());
 				startActivity(intent);
 			}
-		});
+		});*/
 	}
 
 	@Override
@@ -180,19 +176,24 @@ public class UnjoinCircleDetailsFragment extends BaseFragment {
 	@OnClick(R.id.llayout_unjoin_circle_join)
 	public void onClick() {
 		ArrayList<String> list =  new ArrayList<>();
-		list.add("");
+		list.add("9");
 		list.add(mDetailss.getInfo().getCcid());
-		HttpUtils.post(Api.CIRCLE, Api.Circle.APPLYJOINCIRCLE, new ResponseHandler() {
+		HttpUtils.post(Api.CIRCLE, Api.Circle.APPLYJOINCIRCLE,list,new ResponseHandler() {
 			@Override
 			public void onError(Call call, Exception e, int id) {
 
 			}
-
 			@Override
 			public void onSuccess(String response, int id) {
 				LogUtils.e(response);
 				if(JsonUtils.isSuccess(response)){
-					ToastUtils.showShort(mActivity,"等待圈主处理");
+					try {
+						JSONObject obj = new JSONObject(response);
+						ToastUtils.showShort(mActivity,obj.getString("restr"));
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
 					mActivity.finish();
 				}else{
 					ToastUtils.showShort(mActivity,JsonUtils.getErrorMessage(response));

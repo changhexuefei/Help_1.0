@@ -209,16 +209,17 @@ public class CreateCircleActivity extends BaseActivity {
 				mPopupWindow.setBackgroundDrawable(new BitmapDrawable(CreateCircleActivity.this.getResources(), (Bitmap) null));
 				mPopupWindow.showAsDropDown(mLlExchangeCommunity);
 				CommunityAdapter communityAdapter = new CommunityAdapter(CreateCircleActivity.this);
-				lv.setAdapter(communityAdapter);
+
 				if(Integer.parseInt(mIncommunitynum)>=2){
 					ArrayList<CommunityListList> communityListLists = mUserInfo.get(0).getmList().getCommunityListLists();
 					ArrayList<String> alist = new ArrayList<>();
 					for (int i=0;i<alist.size();i++){
 						alist.add(communityListLists.get(i).getCmname());
+						LogUtils.e(communityListLists.get(i).getCmname());
 					}
 					communityAdapter.setdata(alist);
 				}
-
+				lv.setAdapter(communityAdapter);
 
 
 
@@ -325,7 +326,7 @@ public class CreateCircleActivity extends BaseActivity {
 	}
 	//获取用户信息以及小区的经纬度
 	public void getUserInfo(){
-		SharedPreferences sp = getSharedPreferences("userSP", Context.MODE_PRIVATE);
+		SharedPreferences sp = getSharedPreferences("user", Context.MODE_PRIVATE);
 		//用户信息
 		String userDetail = sp.getString("userDetail", "").trim();
 		LogUtils.e(userDetail);
