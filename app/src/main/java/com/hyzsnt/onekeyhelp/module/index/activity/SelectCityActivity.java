@@ -17,6 +17,7 @@ import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.module.index.bean.ProvinceHasCityInfo;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
+import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,16 +78,21 @@ public class SelectCityActivity extends BaseActivity {
                 if (JsonUtils.isSuccess(response)) {
                     try {
                         JSONObject ct = new JSONObject(response);
-                        JSONArray list = ct.getJSONArray("list");
-                        mInfos = new ArrayList<ProvinceHasCityInfo>();
-                        for (int i = 0; i < list.length(); i++) {
+                        int res = ct.optInt("res", 0);
+                        if (res == 0) {
+                            ToastUtils.showShort(SelectCityActivity.this, "失败！");
 
-                            JSONObject jsonObject = list.getJSONObject(i);
-                            ProvinceHasCityInfo info = new ProvinceHasCityInfo();
-                            info.setcID(jsonObject.getString("regid"));
-                            info.setcName(jsonObject.getString("regname"));
-                            citys.add(jsonObject.getString("regname"));
-                            mInfos.add(info);
+                        } else if (res == 1) {
+                            JSONArray list = ct.getJSONArray("list");
+                            mInfos = new ArrayList<ProvinceHasCityInfo>();
+                            for (int i = 0; i < list.length(); i++) {
+                                JSONObject jsonObject = list.getJSONObject(i);
+                                ProvinceHasCityInfo info = new ProvinceHasCityInfo();
+                                info.setcID(jsonObject.getString("regid"));
+                                info.setcName(jsonObject.getString("regname"));
+                                citys.add(jsonObject.getString("regname"));
+                                mInfos.add(info);
+                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

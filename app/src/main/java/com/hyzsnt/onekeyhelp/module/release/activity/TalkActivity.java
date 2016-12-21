@@ -18,9 +18,14 @@ import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
-import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
 import com.hyzsnt.onekeyhelp.module.release.adapter.ChoosePhotoListAdapter;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
+import com.hyzsnt.onekeyhelp.utils.ToastUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,9 +70,9 @@ public class TalkActivity extends BaseActivity {
     private String lon;
     private String mTitle;
     private String mContent;
-    private List<PhotoInfo> photoList;
+    private ArrayList<PhotoInfo> photoList;
     private ChoosePhotoListAdapter adapter;
-    String[] iconString = new String[3];
+
     private GalleryFinal.OnHanlderResultCallback mOnHanlderResultCallback = new GalleryFinal.OnHanlderResultCallback() {
         @Override
         public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
@@ -124,7 +129,6 @@ public class TalkActivity extends BaseActivity {
 
             }
         });
-
         Intent intent = getIntent();
         String ccid = intent.getStringExtra("ccid");
         String tag = intent.getStringExtra("tag");
@@ -151,7 +155,7 @@ public class TalkActivity extends BaseActivity {
                 mBtnRelease.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(TalkActivity.this, StateActivity.class);
+//                        Intent intent = new Intent(TalkActivity.this, StateActivity.class);
 //                        Bundle bundle = new Bundle();
 //                        bundle.putString("mTitle", mTitle);
 //                        bundle.putString("mContent", mContent);
@@ -170,17 +174,41 @@ public class TalkActivity extends BaseActivity {
                         HttpUtils.post(Api.PUBLISH, PUBLISHDYNAMIC, p, new JsonResponseHandler() {
                             @Override
                             public void onError(Call call, Exception e, int id) {
+                                LogUtils.e("onError:" + e.getMessage());
+                                ToastUtils.showShort(TalkActivity.this, "发布失败！");
                             }
 
                             @Override
                             public void onSuccess(String response, int id) {
                                 Log.d("fabu", response);
+                                if(JsonUtils.isSuccess(response)){
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
+                                        int res = jsonObject.optInt("res", 0);
+                                        if (res == 0) {
+                                            ToastUtils.showShort(TalkActivity.this, "发布失败！");
+                                        } else if (res == 1) {
+                                            Toast.makeText(TalkActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+                                            mEtTitle.setText("");
+                                            mEtContent.setText("");
+                                            photoList.clear();
+                                            finish();
+
+                                        } else {
+                                            ToastUtils.showShort(TalkActivity.this, "未知错误！请重试。");
+                                        }
+
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
                         });
                         }else{
                             Toast.makeText(TalkActivity.this, "请输入标题和内容", Toast.LENGTH_SHORT).show();
                         }
-                        startActivity(intent);
+//                        startActivity(intent);
                     }
                 });
                 break;
