@@ -1,8 +1,5 @@
 package com.hyzsnt.onekeyhelp.module.stroll.activity;
-
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -32,14 +29,13 @@ import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 import com.hyzsnt.onekeyhelp.utils.DbUtils;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.finalteam.galleryfinal.GalleryFinal;
@@ -137,7 +133,6 @@ public class CreateCircleActivity extends BaseActivity {
 		});
 
 	}
-
 
 	@OnClick({R.id.im_circle_back, R.id.relayout_create_circle_two, R.id.activity_create_circle, R.id.ll_exchange_community})
 	public void onClick(View view) {
@@ -336,13 +331,9 @@ public class CreateCircleActivity extends BaseActivity {
 	}
 	//获取用户信息以及小区的经纬度
 	public void getUserInfo(){
-		SharedPreferences sp = getSharedPreferences("user", Context.MODE_PRIVATE);
-		//用户信息
-		String userDetail = sp.getString("userDetail", "").trim();
-		LogUtils.e(userDetail);
+		String userDetail = (String) SPUtils.get(this, "userDetail", null);
 		//解析用户信息
 		mUserInfo = Resovle.getUserInfo(userDetail);
-		LogUtils.e(mUserInfo.toString());
 		//获取已加入的小区数
 		mIncommunitynum = mUserInfo.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
 		//获取用户id
