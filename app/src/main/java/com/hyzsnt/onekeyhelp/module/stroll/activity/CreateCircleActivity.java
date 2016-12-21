@@ -323,7 +323,7 @@ public class CreateCircleActivity extends BaseActivity {
 	}
 	//获取用户信息以及小区的经纬度
 	public void getUserInfo(){
-		String userDetail = (String) SPUtils.get(this, "userDetail", null);
+		String userDetail = (String) SPUtils.get(this, "userDetail", "");
 		//解析用户信息
 		mUserInfo = Resovle.getUserInfo(userDetail);
 		//获取已加入的小区数
