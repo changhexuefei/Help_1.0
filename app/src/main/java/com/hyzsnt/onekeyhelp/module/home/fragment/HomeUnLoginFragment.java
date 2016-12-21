@@ -26,8 +26,10 @@ import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginHeadAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.bean.UserInfoInfo;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,12 +85,18 @@ public class HomeUnLoginFragment extends BaseFragment {
         homeLrvHead.setAdapter(homeHeadAdapter);
         homeLrvHead.setItemAnimator(new DefaultItemAnimator());
 
+
+        String userDetail = (String) SPUtils.get(getActivity(), "userDetail", "");
+        ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+        UserInfoInfo userInfoInfo = userInfo.get(0).getmInfo().getUserInfoInfo();
+        String uid = userInfoInfo.getUid();
+
         List params = new ArrayList<String>();
         //params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
         params.add("0");
         params.add("10");
         params.add("1");
-        params.add("5");
+        params.add(uid);
         params.add("39.923594");
         params.add("116.539995");
         params.add("");
@@ -159,7 +167,6 @@ public class HomeUnLoginFragment extends BaseFragment {
         String registrationID = JPushInterface.getRegistrationID(getActivity());
         List params = new ArrayList<String>();
         //params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
-
         params.add("2803");
         params.add("7");
         HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY, params, new ResponseHandler() {

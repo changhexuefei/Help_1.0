@@ -23,9 +23,11 @@ import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.adapter.StateDetailAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.DynamicListByCommunityList;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.bean.UserInfoInfo;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.Topicinfo;
 import com.hyzsnt.onekeyhelp.utils.KeyBoardUtils;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +58,8 @@ public class StateActivity extends BaseActivity {
     private TextView stateDetailTvGoodnum;
     private TextView stateDetailTvReplynum;
     private LinearLayout stateDetailLlReplay;
+    private String tag;
+    private Topicinfo.InfoEntry info;
 
     @Override
     protected int getLayoutId() {
@@ -68,7 +72,7 @@ public class StateActivity extends BaseActivity {
         //imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         Intent i = getIntent();
         bundle = i.getExtras();
-        String tag = bundle.getString("tag");
+        tag = bundle.getString("tag");
         mStateDetailAdapter = new StateDetailAdapter(this);
         final LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mStateDetailAdapter);
         stateRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -102,12 +106,15 @@ public class StateActivity extends BaseActivity {
     }
 
     private void initCircle() {
-        Topicinfo.InfoEntry info=bundle.getParcelable("topicinfo");
+        info = bundle.getParcelable("topicinfo");
+        Log.e("55555555555555",""+info.toString());
         ArrayList<String> imags=bundle.getStringArrayList("imgs");
         stateDetailTvNickname.setText(info.getNickname());
         stateDetailTvContent.setText(info.getContent());
         stateDetailTvGoodnum.setText(info.getGoodnum());
         stateDetailTvReplynum.setText(info.getReplynum());
+        //获取回复列表
+        getreplay(info.getTid(),info.getCcid(),info.getUid());
     }
     private void initCommunity() {
         DynamicListByCommunityList dynamicListByCommunity = (DynamicListByCommunityList) bundle.getSerializable("dynamicListByCommunity");
@@ -135,20 +142,23 @@ public class StateActivity extends BaseActivity {
                 break;
             case R.id.state_tv_replay:
                 //发布话题回复
-                replay();
-                //获取列表
-                getreplay();
+                if(tag.equals(Api.CIRCLE)){
+                    replay(info.getTid(),info.getCcid());
+                    //获取列表
+                    getreplay(info.getTid(),info.getCcid(),info.getUid());
+                }
+
                 sateLl.setVisibility(View.GONE);
                 KeyBoardUtils.closeKeybord(stateEtReplay, this);
                 break;
         }
     }
 
-    private void getreplay() {
+    private void getreplay(String tid,String ccid,String uid) {
         List params = new ArrayList<String>();
-        params.add("7");
-        params.add("14");
-        params.add("23");
+        params.add(tid);
+        params.add(ccid);
+        params.add(uid);
         params.add("1");
         HttpUtils.post(Api.CIRCLE, Api.Circle.GETCOMMENTLISTBYTOPIC, params, new ResponseHandler() {
             @Override
@@ -161,22 +171,29 @@ public class StateActivity extends BaseActivity {
                 Log.e("555555555555",commentListByTopic+"");
                 mStateDetailAdapter.setDates(commentListByTopic);
                 mStateDetailAdapter.notifyDataSetChanged();
+                stateDetailTvReplynum.setText(""+commentListByTopic.get(0).getmList().getCommentListByTopics().size());
             }
             @Override
             public void inProgress(float progress, long total, int id) {
             }
         });
     }
-    private void replay() {
+    private void replay(String tid,String ccid) {
+        String userDetail = (String) SPUtils.get(this, "userDetail", "");
+        ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+        UserInfoInfo userInfoInfo = userInfo.get(0).getmInfo().getUserInfoInfo();
+
+        String trim = stateEtReplay.getText().toString().trim();
         List params = new ArrayList<String>();
-        params.add("7");
-        params.add("14");
-        params.add("23");//用户id
+        params.add(tid);
+        params.add(ccid);
+        params.add(userInfoInfo.getUid());//用户id
         params.add("39.923594");
         params.add("116.539995");
-        params.add("哈哈哈啊哈哈哈");
+        params.add(trim);
         params.add("");
         params.add("");
+        stateEtReplay.setText("");
         HttpUtils.post(Api.CIRCLE, Api.Circle.PUBLISHTOPICREPLY, params, new ResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -184,7 +201,6 @@ public class StateActivity extends BaseActivity {
             @Override
             public void onSuccess(String response, int id) {
                 Log.e("444444444444444444",response+"");
-                getreplay();
             }
             @Override
             public void inProgress(float progress, long total, int id) {
