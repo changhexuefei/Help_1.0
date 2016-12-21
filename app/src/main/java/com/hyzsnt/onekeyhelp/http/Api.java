@@ -31,9 +31,9 @@ public class Api {
 	 */
 	public static final String CIRCLE = "circle";
 	/**
-	 *发布类字段
+	 * 发布类字段
 	 */
-	public static  final String PUBLISH ="publish";
+	public static final String PUBLISH = "publish";
 
 
 	/**
@@ -144,6 +144,58 @@ public class Api {
 		public static final String JOINCOMMUNITY = "joinCommunity";
 
 
+		/**
+		 * 添加紧急联系人
+		 * a:addEmergLinker
+		 * p:	用户ID
+		 * 紧急联系人手机号
+		 * return：
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":"",		//
+		 * "list":"",		//
+		 * }
+		 */
+		public static final String ADDEMERGLINKER = "addEmergLinker";
+		/**
+		 * 解除紧急联系人关系
+		 * a:delEmergLinker
+		 * p:	用户ID
+		 * 关系ID
+		 * return：
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":"",		//
+		 * "list":"",		//
+		 * }
+		 */
+		public static final String DELEMERGLINKER = "delEmergLinker";
+		/**
+		 * 获取紧急联系人列表
+		 * a:getEnergLinkerList
+		 * p:	用户ID
+		 * return：
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":"",		//
+		 * "list":		//
+		 * [
+		 * {
+		 * "emlid":"",		//关系ID
+		 * "uid":"",		//用户ID
+		 * "linkerphoneno":"",	//联系人电话
+		 * "linkeruid":"",		//联系人ID	联系人为非平台用户此值为0
+		 * "nickname":"",		//联系人昵称	联系人为非平台用户此值为null
+		 * "headportraid":"",	//联系人头像	联系人为非平台用户此值为null
+		 * }
+		 * ......
+		 * ]
+		 * }
+		 */
+		public static final String GETENERGLINKERLIST = "getEnergLinkerList";
 	}
 
 	/**
@@ -152,15 +204,14 @@ public class Api {
 	public static final class Community {
 		/**
 		 * 1、获取小区列表				a:getCommunityList
-		 2、获取单个小区信息			a:getCommunityInfo
-		 3、获取单个小区下圈子列表		a:getCircleListByCommunity
-		 4、获取小区成员列表			a:getMemberListByCommunity
-		 5、获取动态信息列表			a:getDynamicListByCommunity
-		 6、删除动态				a:deleteDynamic
-		 7、动态点赞				a:giveGoodToDynamic			?
-		 8、发布动态回复				a:publishDynamicReply			?
-		 9、删除动态回复				a:publishDynamicReply			?
-
+		 * 2、获取单个小区信息			a:getCommunityInfo
+		 * 3、获取单个小区下圈子列表		a:getCircleListByCommunity
+		 * 4、获取小区成员列表			a:getMemberListByCommunity
+		 * 5、获取动态信息列表			a:getDynamicListByCommunity
+		 * 6、删除动态				a:deleteDynamic
+		 * 7、动态点赞				a:giveGoodToDynamic			?
+		 * 8、发布动态回复				a:publishDynamicReply			?
+		 * 9、删除动态回复				a:publishDynamicReply			?
 		 */
 		public static final String GETCOMMUNITYLIST = "getCommunityList";
 		public static final String GETCOMMUNITYINFO = "getCommunityInfo";
@@ -173,54 +224,47 @@ public class Api {
 		/**
 		 * 闲逛获取热门标签a
 		 */
-		public static final String CIRCLE_HOTTAG ="getRecomTags";
+		public static final String CIRCLE_HOTTAG = "getRecomTags";
 		/**
-	     * 闲逛周边圈子列表
+		 * 闲逛周边圈子列表
 		 */
-		public static final String ROUNDLIST ="getCircleList";
+		public static final String ROUNDLIST = "getCircleList";
 		/**
 		 * 闲逛我的列表
 		 */
-		public static final String MELIST ="getCircleListByUser";
+		public static final String MELIST = "getCircleListByUser";
 		/**
 		 * 闲逛圈子详情
-		 *
 		 */
-		public static final String CIRCLE_DETAILS ="getCircleInfo";
+		public static final String CIRCLE_DETAILS = "getCircleInfo";
 		/**
 		 * 闲逛成员列表
 		 */
-		public static final String CIRCLE_MEMBER ="getMemberListCircle";
+		public static final String CIRCLE_MEMBER = "getMemberListCircle";
 		/**
 		 * 闲逛加入申请列表
-		 *
 		 */
-		public static final String CIRCLE_join ="getJoinApplyList";
+		public static final String CIRCLE_join = "getJoinApplyList";
 		/**
 		 * 闲逛创建圈子
-		 *
 		 */
-		public static final String CREATE_CIRCLE ="createCircle";
+		public static final String CREATE_CIRCLE = "createCircle";
 		/**
 		 * 闲逛申请加入圈子
-		 *
 		 */
-		public static final String APPLYJOINCIRCLE ="applyJoinCircle";
+		public static final String APPLYJOINCIRCLE = "applyJoinCircle";
 		/**
 		 * 闲逛加入圈子申请处理
-		 *
 		 */
-		public static final String DOWITHJOINAPPLY ="dowithJoinApply";
+		public static final String DOWITHJOINAPPLY = "dowithJoinApply";
 		/**
 		 * 发布话题回复
-		 *
 		 */
-		public static final String PUBLISHTOPICREPLY ="publishTopicReply";
+		public static final String PUBLISHTOPICREPLY = "publishTopicReply";
 		/**
 		 * 获取话题回复列表
-		 *
 		 */
-		public static final String GETCOMMENTLISTBYTOPIC="getCommentListByTopic";
+		public static final String GETCOMMENTLISTBYTOPIC = "getCommentListByTopic";
 	}
 
 

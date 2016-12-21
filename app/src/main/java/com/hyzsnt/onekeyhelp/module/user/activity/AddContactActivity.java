@@ -13,9 +13,17 @@ import android.widget.EditText;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
+import com.hyzsnt.onekeyhelp.http.Api;
+import com.hyzsnt.onekeyhelp.http.HttpUtils;
+import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 public class AddContactActivity extends BaseActivity {
 	
@@ -34,7 +42,7 @@ public class AddContactActivity extends BaseActivity {
 	
 	@Override
 	protected void initData() {
-
+		SPUtils.get(this, "", "");
 	}
 	
 	@OnClick({R.id.iv_add_contact_back, R.id.iv_add_contact_finish})
@@ -44,9 +52,28 @@ public class AddContactActivity extends BaseActivity {
 				finish();
 				break;
 			case R.id.iv_add_contact_finish:
-				
+				addContact();
 				break;
 		}
+	}
+
+	/**
+	 * 添加联系人
+	 */
+	private void addContact() {
+		List<String> params = new ArrayList<>();
+		params.add("");
+		HttpUtils.post(Api.USER, Api.User.ADDEMERGLINKER, params, new JsonResponseHandler() {
+			@Override
+			public void onError(Call call, Exception e, int id) {
+
+			}
+
+			@Override
+			public void onSuccess(String response, int id) {
+
+			}
+		});
 	}
 
 	@Override
