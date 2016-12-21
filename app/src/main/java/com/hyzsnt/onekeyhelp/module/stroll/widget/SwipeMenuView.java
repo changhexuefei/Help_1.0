@@ -1,9 +1,5 @@
 package com.hyzsnt.onekeyhelp.module.stroll.widget;
 
-/**
- * Created by Administrator on 2016/12/16.
- */
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
@@ -21,6 +17,7 @@ import android.view.animation.OvershootInterpolator;
 public class SwipeMenuView extends ViewGroup {
 	private static final String TAG = "zxt";
 	private boolean isSwipeEnable = true;//右滑删除功能的开关,默认开
+
 	private int mScaleTouchSlop;//为了处理单击事件的冲突
 	private int mMaxVelocity;//计算滑动速度用
 	private int mPointerId;//多点触摸只算第一根手指的速度
@@ -90,6 +87,7 @@ public class SwipeMenuView extends ViewGroup {
 
 	/**
 	 * 设置是否开启IOS阻塞式交互
+	 *
 	 * @param ios
 	 */
 	public SwipeMenuView setIos(boolean ios) {
@@ -103,6 +101,7 @@ public class SwipeMenuView extends ViewGroup {
 
 	/**
 	 * 设置是否开启左滑出菜单，设置false 为右滑出菜单
+	 *
 	 * @param leftSwipe
 	 * @return
 	 */
@@ -349,9 +348,9 @@ public class SwipeMenuView extends ViewGroup {
 						if (ev.getX() < getWidth() - getScrollX()) {
 							return true;//true表示拦截
 						}
-					}else {
+					} else {
 						float gap = mLastP.x - ev.getRawX();
-						if(gap<0 && getScaleX() == 1.0) {
+						if (gap < 0 && getScaleX() == 1.0) {
 							return true;
 						}
 					}
@@ -517,4 +516,3 @@ public class SwipeMenuView extends ViewGroup {
 	}
 
 }
-
