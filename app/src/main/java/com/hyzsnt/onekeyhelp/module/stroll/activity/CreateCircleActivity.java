@@ -146,7 +146,6 @@ public class CreateCircleActivity extends BaseActivity {
 					@Override
 					public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
 						String img_path = resultList.get(0).getPhotoPath();
-
 						Bitmap getimage = getimage(img_path);
 						mImUploadPicture.setVisibility(View.VISIBLE);
 						mImUploadPicture.setImageBitmap(getimage);
@@ -221,13 +220,6 @@ public class CreateCircleActivity extends BaseActivity {
 				}else{
 					ToastUtils.showShort(CreateCircleActivity.this,"暂时没有加入其它小区");
 				}
-
-
-
-
-
-
-
 			}
 			break;
 		}
