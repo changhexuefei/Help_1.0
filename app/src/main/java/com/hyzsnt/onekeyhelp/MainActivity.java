@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
-		checkJoinComunnity();
+		//checkJoinComunnity();
 		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
 		initLocation();
 		SharedPreferences sp = getSharedPreferences("tags", Context.MODE_PRIVATE);

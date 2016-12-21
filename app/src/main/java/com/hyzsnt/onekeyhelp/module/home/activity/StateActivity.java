@@ -24,6 +24,7 @@ import com.hyzsnt.onekeyhelp.module.home.adapter.StateDetailAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.DynamicListByCommunityList;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.Topicinfo;
 import com.hyzsnt.onekeyhelp.utils.KeyBoardUtils;
 
 import java.util.ArrayList;
@@ -101,9 +102,13 @@ public class StateActivity extends BaseActivity {
     }
 
     private void initCircle() {
-        bundle.getSerializable("");
+        Topicinfo.InfoEntry info=bundle.getParcelable("topicinfo");
+        ArrayList<String> imags=bundle.getStringArrayList("imgs");
+        stateDetailTvNickname.setText(info.getNickname());
+        stateDetailTvContent.setText(info.getContent());
+        stateDetailTvGoodnum.setText(info.getGoodnum());
+        stateDetailTvReplynum.setText(info.getReplynum());
     }
-
     private void initCommunity() {
         DynamicListByCommunityList dynamicListByCommunity = (DynamicListByCommunityList) bundle.getSerializable("dynamicListByCommunity");
         stateDetailTvNickname.setText(dynamicListByCommunity.getNickname());
@@ -166,7 +171,7 @@ public class StateActivity extends BaseActivity {
         List params = new ArrayList<String>();
         params.add("7");
         params.add("14");
-        params.add("23");
+        params.add("23");//用户id
         params.add("39.923594");
         params.add("116.539995");
         params.add("哈哈哈啊哈哈哈");
