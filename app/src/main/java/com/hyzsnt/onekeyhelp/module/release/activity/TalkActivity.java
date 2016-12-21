@@ -1,7 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.release.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.app.App;
@@ -20,8 +20,8 @@ import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
 import com.hyzsnt.onekeyhelp.module.release.adapter.ChoosePhotoListAdapter;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +59,7 @@ public class TalkActivity extends BaseActivity {
     TextView mAddIcon;
     //checkBox默认选中
     boolean isChecked = true;
+    String mUid;
 
     private String lat;
     private String lon;
@@ -100,6 +101,7 @@ public class TalkActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        mUid = (String) SPUtils.get(this,"uid","");
         //用户的经纬度
         lat = Double.toString(App.getLocation().getLatitude());
         Log.d("333333",""+App.getLocation().getLatitude());
@@ -142,22 +144,25 @@ public class TalkActivity extends BaseActivity {
                 });
                 break;
             case R.id.btn_release:
-                //点击发布信息后，将文字信息和图片信息发送到详情页面
+                //点击发布按钮后，将文字信息和图片信息发送到详情页面
                 mBtnRelease.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(TalkActivity.this, StateActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("mTitle", mTitle);
-                        bundle.putString("mContent", mContent);
-                        bundle.putSerializable("icon", (Serializable) photoList);
-                        intent.putExtras(bundle);
-                        p.add("4");
-//                        p.add("2803");
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("mTitle", mTitle);
+//                        bundle.putString("mContent", mContent);
+//                        bundle.putSerializable("icon", (Serializable) photoList);
+//                        intent.putExtras(bundle);
+                        if(mTitle!=null && mContent!=null){
+                        StringBuffer sb = new StringBuffer();
+                        sb.append(mTitle).append("|*|").append(mContent);
+                        String talk = sb.toString();
+                        p.add(mUid);
                         p.add(lat);
                         p.add(lon);
-                        p.add(mTitle);
-                        p.add("1");
+                        p.add(talk);
+                        p.add("0");
                         p.add("");
                         HttpUtils.post(Api.PUBLISH, PUBLISHDYNAMIC, p, new JsonResponseHandler() {
                             @Override
@@ -169,6 +174,9 @@ public class TalkActivity extends BaseActivity {
                                 Log.d("fabu", response);
                             }
                         });
+                        }else{
+                            Toast.makeText(TalkActivity.this, "请输入标题和内容", Toast.LENGTH_SHORT).show();
+                        }
                         startActivity(intent);
                     }
                 });

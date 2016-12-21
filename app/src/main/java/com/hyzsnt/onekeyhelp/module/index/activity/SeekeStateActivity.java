@@ -123,7 +123,7 @@ public class SeekeStateActivity extends BaseActivity {
         parms.add(userid);
         parms.add(lat);
         parms.add(lon);
-        parms.add("110000");
+        parms.add("110105");
 
         HttpUtils.post(Api.PUBLIC, HOTAREA, parms, new JsonResponseHandler() {
             @Override
@@ -323,7 +323,7 @@ public class SeekeStateActivity extends BaseActivity {
             parms.add(lon);
             parms.add("");
             parms.add("");
-            parms.add(hrtext.toString());
+            parms.add("");
 
             HttpUtils.post(Api.COMMUNITY, "getCommunityList", parms, new JsonResponseHandler() {
                 @Override

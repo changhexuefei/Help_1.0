@@ -21,6 +21,7 @@ import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
 import com.hyzsnt.onekeyhelp.module.release.media.MediaManager;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import java.io.BufferedInputStream;
@@ -63,6 +64,7 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
     private String lon;
     private AudioManager mAudioManager;
     private String mPath;
+    private String mUid;
 
 
     @Override
@@ -72,9 +74,10 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
 
     @Override
     protected void initData() {
+        mUid = (String) SPUtils.get(this, "uid","");
         //用户的经纬度
         lat = Double.toString(App.getLocation().getLatitude());
-        Log.d("4444",""+App.getLocation().getLatitude());
+        Log.d("4444", "" + App.getLocation().getLatitude());
         Log.d("lat", lat);
         lon = Double.toString(App.getLocation().getLongitude());
         Log.d("lon", lon);
@@ -154,7 +157,7 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
                 }
             }
         }
-        p.add("4");
+        p.add(mUid);
         p.add(lat);
         p.add(lon);
         p.add(nickName);
@@ -205,4 +208,5 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
         int code = mAudioManager.startRecordAndFile();
         Toast.makeText(VoiceReleaseActivity.this, "code:" + ErrorCode.getErrorInfo(this, code), Toast.LENGTH_SHORT).show();
     }
+
 }
