@@ -349,15 +349,15 @@ public class CreateCircleActivity extends BaseActivity {
 		mUserInfo = Resovle.getUserInfo(userDetail);
 		//获取已加入的小区数
 		mIncommunitynum = mUserInfo.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
+		LogUtils.e(mIncommunitynum);
 		//获取用户id
 		mUid = mUserInfo.get(0).getmInfo().getUserInfoInfo().getUid();
 		mAlist = new ArrayList<>();
 		//修改小区
 		if (Integer.parseInt(mIncommunitynum) > 0) {
-
 			mLoginCommunities = mUserInfo.get(0).getmList().getLoginCommunities();
 			LogUtils.e(mLoginCommunities.toString());
-			for (int i = 0; i < mAlist.size(); i++) {
+			for (int i = 0; i < mLoginCommunities.size(); i++) {
 				if (mUserInfo.get(0).getmList().getCommunityListLists().get(i).getIfcur() == "0") {
 					mAlist.add(mLoginCommunities.get(i).getCmname());
 				} else {
