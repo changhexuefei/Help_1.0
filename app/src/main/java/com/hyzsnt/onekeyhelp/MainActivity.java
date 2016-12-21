@@ -315,7 +315,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 			edit.remove("userDetail");
 			edit.putString(response, "userDetail");
 		}
-
+		edit.commit();
 		if (requestCode == MainActivity.START_HELP && resultCode == RESULT_OK) {
 			String inx = data.getStringExtra("data");
 			int i = R.id.rb_main_home;
