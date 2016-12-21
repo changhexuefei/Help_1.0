@@ -182,7 +182,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				})
 				.show();
 	}
-
 	@OnPermissionDenied({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
 	public void showDeniedForLocation() {
 		ToastUtils.showShort(this, "您已经拒绝一键帮助获取定位权限，部分功能将无法正常使用！");

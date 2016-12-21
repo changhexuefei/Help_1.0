@@ -54,7 +54,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 	@Override
 	protected void initData() {
 	}
-
 	@Override
 	protected void initListener() {
 		super.initListener();
@@ -126,26 +125,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 				//储存用户信息(登录储存一次)
 				SPUtils.put(LoginActivity.this,"userDetail",response);
 				//LogUtils.e("onSuccess:" + response);
-//				if (JsonUtils.isSuccess(response)) {
-//					try {
-//						JSONObject jsonObject = new JSONObject(response);
-//						int res = jsonObject.optInt("res", 0);
-//						if (res == 0) {
-//							ToastUtils.showShort(LoginActivity.this, "录登失败！");
-//						} else if (res == 1) {
-//							startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//							finish();
-//							SPUtils.put(App.getContext(), "islogin", true);
-//						} else {
-//							ToastUtils.showShort(LoginActivity.this, "未知错误！请重试。");
-//						}
-//					} catch (JSONException e) {
-//						e.printStackTrace();
-//						ToastUtils.showShort(LoginActivity.this, "录登失败，系统数据异常！");
-//					}
-//				} else {
-//					ToastUtils.showShort(LoginActivity.this, JsonUtils.getErrorMessage(response));
-//				}
+				if (JsonUtils.isSuccess(response)) {
+					try {
+						JSONObject jsonObject = new JSONObject(response);
+						int res = jsonObject.optInt("res", 0);
+						if (res == 0) {
+							ToastUtils.showShort(LoginActivity.this, "录登失败！");
+						} else if (res == 1) {
+							startActivity(new Intent(LoginActivity.this, MainActivity.class));
+							finish();
+							SPUtils.put(App.getContext(), "islogin", true);
+						} else {
+							ToastUtils.showShort(LoginActivity.this, "未知错误！请重试。");
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+						ToastUtils.showShort(LoginActivity.this, "录登失败，系统数据异常！");
+					}
+				} else {
+					ToastUtils.showShort(LoginActivity.this, JsonUtils.getErrorMessage(response));
+				}
 			}
 		});
 	}
