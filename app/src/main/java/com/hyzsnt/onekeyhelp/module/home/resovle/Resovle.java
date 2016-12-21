@@ -673,7 +673,7 @@ public class Resovle {
         dates.add(mDate);
         return dates;
     }
-    //
+    //回复列表
     public static ArrayList<MDate> getCommentListByTopic(String str) {
         ArrayList<MDate> dates = new ArrayList<>();
         MDate mDate = new MDate();
