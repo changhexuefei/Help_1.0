@@ -1,8 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.login.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,7 +42,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 	TextView reset;
 	@BindView(R.id.tv_login_register)
 	TextView regist;
-	private String validcode = "";
 
 	@Override
 	protected int getLayoutId() {
@@ -80,8 +77,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 				case R.id.btn_login:// 登录
 					String user_phone = phone_edit.getText().toString();
 					String user_pass = password_edit.getText().toString();
-					user_phone="13161117888";
-					user_pass="123456";
 					if ("".equals(user_phone) && user_phone.length() != 11) {
 						Toast.makeText(this, "电话号码有误", Toast.LENGTH_SHORT).show();
 					} else if (!InPutUtils.isMobilePhone(user_phone)) {
@@ -101,6 +96,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 			}
 		}
 	}
+
 	/**
 	 * 登录
 	 *
@@ -110,8 +106,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 	private void login(String user_phone, String user_pass) {
 		final List<String> params = new ArrayList<>();
 		params.add(user_phone);
-		params.add("39.923594");
-		params.add("116.539995");
+		params.add("");
+		params.add("");
 		String registrationID = JPushInterface.getRegistrationID(this);
 		params.add(registrationID);
 		HttpUtils.post(Api.PUBLIC, Api.Public.LOGIN, params, new JsonResponseHandler() {
@@ -123,29 +119,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 			@Override
 			public void onSuccess(String response, int id) {
-				//储存用户信息(登录储存一次)
-				SPUtils.put(LoginActivity.this,"userDetail",response);
-				//LogUtils.e("onSuccess:" + response);
-//				if (JsonUtils.isSuccess(response)) {
-//					try {
-//						JSONObject jsonObject = new JSONObject(response);
-//						int res = jsonObject.optInt("res", 0);
-//						if (res == 0) {
-//							ToastUtils.showShort(LoginActivity.this, "录登失败！");
-//						} else if (res == 1) {
-//							startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//							finish();
-//							SPUtils.put(App.getContext(), "islogin", true);
-//						} else {
-//							ToastUtils.showShort(LoginActivity.this, "未知错误！请重试。");
-//						}
-//					} catch (JSONException e) {
-//						e.printStackTrace();
-//						ToastUtils.showShort(LoginActivity.this, "录登失败，系统数据异常！");
-//					}
-//				} else {
-//					ToastUtils.showShort(LoginActivity.this, JsonUtils.getErrorMessage(response));
-//				}
+				if (JsonUtils.isSuccess(response)) {
+					try {
+						JSONObject jsonObject = new JSONObject(response);
+						int res = jsonObject.optInt("res", 0);
+						if (res == 0) {
+							ToastUtils.showShort(LoginActivity.this, "录登失败！");
+						} else if (res == 1) {
+							startActivity(new Intent(LoginActivity.this, MainActivity.class));
+							finish();
+							//储存用户信息(登录储存一次)
+							SPUtils.put(LoginActivity.this, "userDetail", response);
+							SPUtils.put(App.getContext(), "islogin", true);
+						} else {
+							ToastUtils.showShort(LoginActivity.this, "未知错误！请重试。");
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+						ToastUtils.showShort(LoginActivity.this, "录登失败，系统数据异常！");
+					}
+				} else {
+					ToastUtils.showShort(LoginActivity.this, JsonUtils.getErrorMessage(response));
+				}
 			}
 		});
 	}
