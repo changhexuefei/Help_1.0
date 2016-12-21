@@ -217,7 +217,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		 * 首页
 		 */
 		mRgMainBottom.setOnCheckedChangeListener(this);
-		//mRgMainBottom.check(R.id.rb_main_home);
+		mRgMainBottom.check(R.id.rb_main_home);
 	}
 
 	@Override
@@ -320,7 +320,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 			}else{
 				isJoinCommunity=false;
 			}
-			mRgMainBottom.check(R.id.rb_main_home);
 		}
 
 		if (requestCode == MainActivity.START_HELP && resultCode == RESULT_OK) {
@@ -371,7 +370,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		String userDetail = (String) SPUtils.get(this, "userDetail", null);
 		ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
 		String uid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
-
 
 		List params0 = new ArrayList<String>();
 		params0.add(uid);
