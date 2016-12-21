@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListList;
+
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2016/12/18.
@@ -15,19 +18,22 @@ import com.hyzsnt.onekeyhelp.R;
 
 public class CommunityAdapter  extends BaseAdapter{
 	private Context mContext;
+	private ArrayList<CommunityListList> mCommunityListLists;
 
 	public CommunityAdapter(Context context) {
 		mContext = context;
 	}
-
+    public void setdata(ArrayList<CommunityListList> mCommunityListLists){
+	    this.mCommunityListLists = mCommunityListLists;
+    }
 	@Override
 	public int getCount() {
-		return 3;
+		return mCommunityListLists.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return null;
+		return mCommunityListLists.get(position);
 	}
 
 	@Override
@@ -39,7 +45,7 @@ public class CommunityAdapter  extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup parent) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_create_circle_pop,null);
 		TextView textView = (TextView) view.findViewById(R.id.tv_create_circle_community);
-		textView.setText("西颐小区");
+		textView.setText(mCommunityListLists.get(position).getCmname());
 		return view;
 	}
 }

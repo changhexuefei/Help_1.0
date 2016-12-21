@@ -1,6 +1,8 @@
 package com.hyzsnt.onekeyhelp.module.stroll.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -22,6 +24,9 @@ import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
+import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListList;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CircleTypeAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.CommunityAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
@@ -68,6 +73,9 @@ public class CreateCircleActivity extends BaseActivity {
 	//标识选中的标签数
 	private int count = 0;
 	String result;
+	private String mIncommunitynum;
+	private String mUid;
+	private ArrayList<MDate> mUserInfo;
 
 	@Override
 	protected int getLayoutId() {
@@ -76,6 +84,9 @@ public class CreateCircleActivity extends BaseActivity {
 
 	@Override
 	protected void initData() {
+		//获取用户信息
+		getUserInfo();
+		//用于获取标签
 		ArrayList<CircleType.ListEntry> list = new ArrayList<CircleType.ListEntry>();
 		mtypelist = new ArrayList<CircleType.ListEntry>();
 		//从数据库中取出数据
@@ -197,9 +208,15 @@ public class CreateCircleActivity extends BaseActivity {
 				mPopupWindow.setOutsideTouchable(true);
 				mPopupWindow.setBackgroundDrawable(new BitmapDrawable(CreateCircleActivity.this.getResources(), (Bitmap) null));
 				mPopupWindow.showAsDropDown(mLlExchangeCommunity);
-				ArrayList<String> alist = new ArrayList<>();
-				alist.add("旺达小区");
-				alist.add("一航小区");
+
+				if(Integer.parseInt(mIncommunitynum)>=2){
+					ArrayList<CommunityListList> communityListLists = mUserInfo.get(0).getmList().getCommunityListLists();
+					ArrayList<String> alist = new ArrayList<>();
+					for (int i=0;i<alist.size();i++){
+						communityListLists.get(i).getCmname();
+					}
+				}
+
 			}
 			break;
 		}
@@ -301,5 +318,19 @@ public class CreateCircleActivity extends BaseActivity {
 		//重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
 		bitmap = BitmapFactory.decodeFile(srcPath, newOpts);
 		return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
+	}
+	//获取用户信息以及小区的经纬度
+	public void getUserInfo(){
+		SharedPreferences sp = getSharedPreferences("userSP", Context.MODE_PRIVATE);
+		//用户信息
+		String userDetail = sp.getString("userDetail", "").trim();
+		LogUtils.e(userDetail);
+		//解析用户信息
+		mUserInfo = Resovle.getUserInfo(userDetail);
+		LogUtils.e(mUserInfo.toString());
+		//获取已加入的小区数
+		mIncommunitynum = mUserInfo.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
+		//获取用户id
+		mUid = mUserInfo.get(0).getmInfo().getUserInfoInfo().getUid();
 	}
 }
