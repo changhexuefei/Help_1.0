@@ -7,16 +7,25 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
+import com.hyzsnt.onekeyhelp.utils.InPutUtils;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +43,7 @@ public class AddContactActivity extends BaseActivity {
 	EditText mEtAddContactPhone;
 	@BindView(R.id.et_add_contact_note)
 	EditText mEtAddContactNote;
+	private String mUid;
 	
 	@Override
 	protected int getLayoutId() {
@@ -42,7 +52,9 @@ public class AddContactActivity extends BaseActivity {
 	
 	@Override
 	protected void initData() {
-		SPUtils.get(this, "", "");
+		String userDetail = (String) SPUtils.get(this, "userDetail", "");
+		ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+		mUid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
 	}
 	
 	@OnClick({R.id.iv_add_contact_back, R.id.iv_add_contact_finish})
@@ -62,16 +74,36 @@ public class AddContactActivity extends BaseActivity {
 	 */
 	private void addContact() {
 		List<String> params = new ArrayList<>();
-		params.add("");
+		String phone = mEtAddContactPhone.getText().toString();
+		if ((!TextUtils.isEmpty(mUid)) && InPutUtils.isMobilePhone(phone)) {
+			params.add(mUid);
+			params.add(phone);
+		} else {
+			Toast.makeText(AddContactActivity.this, "手机号码不正确！", Toast.LENGTH_SHORT).show();
+			return;
+		}
 		HttpUtils.post(Api.USER, Api.User.ADDEMERGLINKER, params, new JsonResponseHandler() {
 			@Override
 			public void onError(Call call, Exception e, int id) {
-
+				Toast.makeText(AddContactActivity.this, "网络连接失败！", Toast.LENGTH_SHORT).show();
 			}
 
 			@Override
 			public void onSuccess(String response, int id) {
+				if (JsonUtils.isSuccess(response)) {
+					try {
+						JSONObject object = new JSONObject(response);
+						String res = object.getString("res");
+						if ("1".equals(res)) {
+							Toast.makeText(AddContactActivity.this, "添加成功！", Toast.LENGTH_SHORT).show();
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 
+				} else {
+					Toast.makeText(AddContactActivity.this, "请求错误：" + JsonUtils.getErrorMessage(response), Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}

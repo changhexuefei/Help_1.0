@@ -161,7 +161,7 @@ public class MapHelpFragment extends BaseFragment implements BDLocationListener 
 			MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
 			mBaiduMap.animateMapStatus(msu);
 			isFirstIn = false;
-			Toast.makeText(mActivity, bdLocation.getAddrStr(),
+			Toast.makeText(mActivity, "地址：" + bdLocation.getAddrStr(),
 					Toast.LENGTH_SHORT).show();
 			centerToMyLocation();
 		}

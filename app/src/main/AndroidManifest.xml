@@ -43,16 +43,8 @@
 			android:name="com.baidu.lbsapi.API_KEY"
 			android:value="8YGxkZtWGuYqmm9Tsyw86lulSBCSIyiQ"/>
 		<!-- 主页面 -->
-		<activity android:name=".MainActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-		</activity>
+		<activity android:name=".MainActivity"/>
 		<!-- 物品置换 -->
-
-
 		<!-- 一键求助页面 -->
 		<activity android:name=".module.help.activity.HelpActivity"/>
 		<!-- 搜索圈子 -->
@@ -61,19 +53,20 @@
 		<activity
 			android:name=".module.stroll.activity.CreateCircleActivity"
 			android:windowSoftInputMode="adjustPan|stateHidden"/>
-
 		<!-- 我的邻居列表 -->
-		<activity android:name=".module.index.activity.MyNeighborListActivity">
-		</activity>
-
+		<activity android:name=".module.index.activity.MyNeighborListActivity"/>
 		<!-- 搜索小区 -->
-		<activity android:name=".module.index.activity.SeekeStateActivity">
-		</activity>
+		<activity android:name=".module.index.activity.SeekeStateActivity"/>
 		<!-- 欢迎页 -->
-		<activity android:name=".activity.SplashActivity"/>
-		<!-- 引导页 -->
-		<activity android:name=".activity.GuideActivity">
+		<activity android:name=".activity.SplashActivity">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
 		</activity>
+		<!-- 引导页 -->
+		<activity android:name=".activity.GuideActivity"/>
 		<!-- 登录页面 -->
 		<activity android:name=".module.login.activity.LoginActivity"/>
 		<!-- 重置密码页 -->
@@ -88,7 +81,6 @@
 		<activity android:name=".module.stroll.activity.CircleDetailsActivity"/>
 		<!-- 发布说说 -->
 		<activity android:name=".module.release.activity.TalkActivity"/>
-
 		<!-- 发布综合信息 -->
 		<activity android:name=".module.release.activity.GeneralMessageActivity"/>
 		<activity android:name=".module.home.activity.StateActivity"/>
@@ -104,27 +96,12 @@
 			</intent-filter>
 		</service>
 		<!-- 圈子成员列表 -->
-		<activity android:name=".module.stroll.activity.CircleMemberList">
-		</activity>
+		<activity android:name=".module.stroll.activity.CircleMemberList"/>
 		<!-- 随便说说 -->
-		<activity android:name=".module.release.activity.VoiceReleaseActivity">
-		</activity>
-		<!--
- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
-		<meta-data
-			android:name="com.google.android.gms.version"
-			android:value="@integer/google_play_services_version"/>
-
-		<activity android:name=".module.index.activity.SelectCityActivity">
-		</activity>
-		<activity android:name=".module.index.activity.ProvinceListActivity">
-		</activity>
-		<activity android:name=".module.user.activity.EmergencyContactActivity">
-		</activity>
-		<activity android:name=".module.user.activity.AddContactActivity">
-		</activity>
+		<activity android:name=".module.release.activity.VoiceReleaseActivity"/>
+		<activity android:name=".module.index.activity.SelectCityActivity"/>
+		<activity android:name=".module.index.activity.ProvinceListActivity"/>
+		<activity android:name=".module.user.activity.EmergencyContactActivity"/>
+		<activity android:name=".module.user.activity.AddContactActivity"/>
 	</application>
-
 </manifest>
