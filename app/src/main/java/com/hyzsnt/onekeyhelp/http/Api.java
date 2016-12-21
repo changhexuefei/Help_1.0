@@ -265,6 +265,10 @@ public class Api {
 		 * 获取话题回复列表
 		 */
 		public static final String GETCOMMENTLISTBYTOPIC = "getCommentListByTopic";
+		/**
+		 * 获取话题详情
+		 */
+		public static final String GETTOPICINFO = "getTopicInfo";
 	}
 
 
