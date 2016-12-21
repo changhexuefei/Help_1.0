@@ -14,6 +14,7 @@ import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.stroll.adapter.MemberHostAdapter;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleJoin;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleMember;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +62,12 @@ public class CircleMemberList extends BaseActivity {
 
 			@Override
 			public void onSuccess(String response, int id) {
-
 				Gson gson = new Gson();
 				CircleMember circleMember = gson.fromJson(response, CircleMember.class);
               if(circleMember.getInfo().getTotalnum()>0){
 	              adapter.setCircleMember(circleMember);
               }
-
+				LogUtils.e(response);
 			}
 
 			@Override

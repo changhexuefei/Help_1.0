@@ -18,7 +18,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
@@ -76,6 +75,7 @@ public class CreateCircleActivity extends BaseActivity {
 	private String mIncommunitynum;
 	private String mUid;
 	private ArrayList<MDate> mUserInfo;
+	private ArrayList<String> mAlist;
 
 	@Override
 	protected int getLayoutId() {
@@ -86,6 +86,18 @@ public class CreateCircleActivity extends BaseActivity {
 	protected void initData() {
 		//获取用户信息
 		getUserInfo();
+		//修改小区
+		ArrayList<CommunityListList> communityListLists = mUserInfo.get(0).getmList().getCommunityListLists();
+		mAlist = new ArrayList<>();
+		for (int i = 0; i< mAlist.size(); i++){
+			if(mUserInfo.get(0).getmList().getCommunityListLists().get(i).getIfcur()=="0"){
+				mAlist.add(communityListLists.get(i).getCmname());
+			}else{
+				mTvCreateCircleAddress.setText(communityListLists.get(i).getCmname());
+			}
+
+		}
+
 		//用于获取标签
 		ArrayList<CircleType.ListEntry> list = new ArrayList<CircleType.ListEntry>();
 		mtypelist = new ArrayList<CircleType.ListEntry>();
@@ -200,26 +212,24 @@ public class CreateCircleActivity extends BaseActivity {
 			}
 			break;
 			case R.id.ll_exchange_community: {
-				View popupView = View.inflate(CreateCircleActivity.this, R.layout.pop_create_circle_community, null);
-				ListView lv = (ListView) popupView.findViewById(R.id.ll_create_circle_community);
-
-				PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-				mPopupWindow.setTouchable(true);
-				mPopupWindow.setOutsideTouchable(true);
-				mPopupWindow.setBackgroundDrawable(new BitmapDrawable(CreateCircleActivity.this.getResources(), (Bitmap) null));
-				mPopupWindow.showAsDropDown(mLlExchangeCommunity);
-				CommunityAdapter communityAdapter = new CommunityAdapter(CreateCircleActivity.this);
-
-				if(Integer.parseInt(mIncommunitynum)>=2){
-					ArrayList<CommunityListList> communityListLists = mUserInfo.get(0).getmList().getCommunityListLists();
-					ArrayList<String> alist = new ArrayList<>();
-					for (int i=0;i<alist.size();i++){
-						alist.add(communityListLists.get(i).getCmname());
-						LogUtils.e(communityListLists.get(i).getCmname());
-					}
-					communityAdapter.setdata(alist);
+				if(mAlist.size()>0&&!"".equals(mAlist)){
+					View popupView = View.inflate(CreateCircleActivity.this, R.layout.pop_create_circle_community, null);
+					ListView lv = (ListView) popupView.findViewById(R.id.ll_create_circle_community);
+					PopupWindow mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+					mPopupWindow.setTouchable(true);
+					mPopupWindow.setOutsideTouchable(true);
+					mPopupWindow.setBackgroundDrawable(new BitmapDrawable(CreateCircleActivity.this.getResources(), (Bitmap) null));
+					mPopupWindow.showAsDropDown(mLlExchangeCommunity);
+					CommunityAdapter communityAdapter = new CommunityAdapter(CreateCircleActivity.this);
+					communityAdapter.setdata(mAlist);
+					lv.setAdapter(communityAdapter);
+				}else{
+					ToastUtils.showShort(CreateCircleActivity.this,"暂时没有加入其它小区");
 				}
-				lv.setAdapter(communityAdapter);
+
+
+
+
 
 
 

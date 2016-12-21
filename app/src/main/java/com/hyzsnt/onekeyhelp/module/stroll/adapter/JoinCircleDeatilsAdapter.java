@@ -78,7 +78,7 @@ public class JoinCircleDeatilsAdapter extends RecyclerView.Adapter implements Vi
 					@Override
 					public void onClick(View v) {
 						Intent intent = new Intent(mContext, CircleMemberList.class);
-						intent.putExtra("ishost",true);
+						intent.putExtra("ishost",false);
 						intent.putExtra("ccid", joinSuccess.getInfo().getCcid());
 						mContext.startActivity(intent);
 					}
