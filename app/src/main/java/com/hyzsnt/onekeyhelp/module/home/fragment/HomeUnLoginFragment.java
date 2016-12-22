@@ -2,15 +2,12 @@ package com.hyzsnt.onekeyhelp.module.home.fragment;
 
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -154,38 +151,40 @@ public class HomeUnLoginFragment extends BaseFragment {
         }
     }
 
-    @Override
-    protected void initView(View contentView) {
-        super.initView(contentView);
-    }
+	@Override
+	protected void initView(View contentView) {
+		super.initView(contentView);
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 
-    @OnClick(R.id.home_image_location)
-    public void onClick() {
-        String registrationID = JPushInterface.getRegistrationID(getActivity());
-        List params = new ArrayList<String>();
-        //params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
-        params.add("2803");
-        params.add("7");
-        HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY, params, new ResponseHandler() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-            }
+	@OnClick(R.id.home_image_location)
+	public void onClick() {
+		String registrationID = JPushInterface.getRegistrationID(getActivity());
+		List params = new ArrayList<String>();
+		//params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
+		params.add("2803");
+		params.add("7");
+		HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY, params, new ResponseHandler() {
+			@Override
+			public void onError(Call call, Exception e, int id) {
+			}
 
-            @Override
-            public void onSuccess(String response, int id) {
-                Log.e("8888888888888888888",response+"");
-            }
-            @Override
-            public void inProgress(float progress, long total, int id) {
-            }
-        });
-    }
+			@Override
+			public void onSuccess(String response, int id) {
+				Log.e("8888888888888888888", response + "");
+			}
+
+			@Override
+			public void inProgress(float progress, long total, int id) {
+			}
+		});
+	}
+
+	public void setTitle(String addrStr) {
+		if (addrStr != null) {
+			homeTvTitle.setText(addrStr);
+		} else {
+			homeTvTitle.setText("定位中...");
+		}
+	}
 }

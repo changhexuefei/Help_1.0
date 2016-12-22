@@ -56,7 +56,7 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener, IjoinCommunnity ,Serializable{
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener, IjoinCommunnity, Serializable {
 	public static final int START_HELP = 1;
 	@BindView(R.id.rb_main_home)
 	RadioButton mRbMainHome;
@@ -100,8 +100,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
-		checkJoinComunnity();
-		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
 		initLocation();
 		SharedPreferences sp = getSharedPreferences("tags", Context.MODE_PRIVATE);
 		Boolean isfirst = sp.getBoolean("isfirst", true);
@@ -173,6 +171,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				})
 				.show();
 	}
+
 	@OnPermissionDenied({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
 	public void showDeniedForLocation() {
 		ToastUtils.showShort(this, "您已经拒绝一键帮助获取定位权限，部分功能将无法正常使用！");
@@ -181,12 +180,6 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@OnNeverAskAgain({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
 	public void showNeverAskForLocation() {
 		ToastUtils.showShort(this, "您已经拒绝一键帮助获取定位权限，部分功能将无法正常使用！");
-	}
-
-	@Override
-	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
 	}
 
 	@Override
@@ -300,6 +293,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	@Override
 	protected void onResume() {
 		super.onResume();
+		checkJoinComunnity();
+
 		if (App.code == 1) {
 			mRgMainBottom.check(R.id.rb_main_home);
 			App.code = 0;
@@ -349,6 +344,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		location.setTime(bdLocation.getTime());
 		location.setAddrStr(bdLocation.getAddrStr());
 		App.setLocation(location);
+		mHomeUnLoginFragment.setTitle(location.getAddrStr());
 	}
 
 	/**
@@ -356,7 +352,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	 */
 	@Override
 	public void checkJoinComunnity() {
-		String userDetail = (String) SPUtils.get(this, "userDetail","");
+		String userDetail = (String) SPUtils.get(this, "userDetail", "");
 		ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
 		String uid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
 		List params0 = new ArrayList<String>();
@@ -368,7 +364,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 			@Override
 			public void onSuccess(String response, int id) {
-				SPUtils.put(MainActivity.this,"userDetail", response);
+				SPUtils.put(MainActivity.this, "userDetail", response);
 				final ArrayList<MDate> loginCommunities = Resovle.getUserInfo(response);
 				String incommunitystr = loginCommunities.get(0).getmInfo().getUserInfoInfo().getIncommunity();
 				String incommunitynumstr = loginCommunities.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
@@ -405,4 +401,5 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		});
 
 	}
+
 }

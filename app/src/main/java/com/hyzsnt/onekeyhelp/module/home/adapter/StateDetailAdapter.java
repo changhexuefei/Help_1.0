@@ -1,15 +1,19 @@
 package com.hyzsnt.onekeyhelp.module.home.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommentListByTopic;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.utils.BitmapUtils;
 
 import java.util.ArrayList;
 
@@ -20,6 +24,7 @@ import butterknife.BindView;
  */
 
 public class StateDetailAdapter extends RecyclerView.Adapter {
+
     private Context mContext;
     private ArrayList<MDate> dates = new ArrayList<>();
 
@@ -45,11 +50,16 @@ public class StateDetailAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CommentListByTopic commentListByTopic = dates.get(0).getmList().getCommentListByTopics().get(position);
-        if(getItemViewType(position)==1){
-            if(holder instanceof StateDetailViewHolder1){
+        if (getItemViewType(position) == 1) {
+            if (holder instanceof StateDetailViewHolder1) {
+                Bitmap bit = BitmapDescriptorFactory.fromResource(R.mipmap.cc).getBitmap();
+                Bitmap bitmap1 = BitmapUtils.toRoundBitmap(bit);
+                ((StateDetailViewHolder1) holder).item1StateHeadportraid.setImageBitmap(bitmap1);
+
                 ((StateDetailViewHolder1) holder).item1StateNickname.setText(commentListByTopic.getNickname());
                 ((StateDetailViewHolder1) holder).item1StateContent.setText(commentListByTopic.getContent());
-                ((StateDetailViewHolder1) holder).item1StatePosttime.setText(commentListByTopic.getPosttime()+"分钟前");
+                int count = Integer.valueOf(commentListByTopic.getPosttime()) / 1000 / 60;
+                ((StateDetailViewHolder1) holder).item1StatePosttime.setText(count + "分钟前");
             }
         }
     }
@@ -76,22 +86,26 @@ public class StateDetailAdapter extends RecyclerView.Adapter {
         TextView item1StateNickname;
         TextView item1StateContent;
         TextView item1StatePosttime;
+        ImageView item1StateHeadportraid;
 
         public StateDetailViewHolder1(View itemView) {
             super(itemView);
-            item1StateNickname= (TextView) itemView.findViewById(R.id.item1_state_nickname);
-            item1StateContent=(TextView) itemView.findViewById(R.id.item1_state_content);
-            item1StatePosttime=(TextView) itemView.findViewById(R.id.item1_state_posttime);
+            item1StateNickname = (TextView) itemView.findViewById(R.id.item1_state_nickname);
+            item1StateContent = (TextView) itemView.findViewById(R.id.item1_state_content);
+            item1StatePosttime = (TextView) itemView.findViewById(R.id.item1_state_posttime);
+            item1StateHeadportraid = (ImageView) itemView.findViewById(R.id.item1_state_headportraid);
 
         }
     }
+
     static class StateDetailViewHolder2 extends RecyclerView.ViewHolder {
         TextView item2StateNickname;
         TextView item2StateContent;
+
         public StateDetailViewHolder2(View itemView) {
             super(itemView);
-            item2StateNickname= (TextView) itemView.findViewById(R.id.item2_state_nickname);
-            item2StateContent=(TextView) itemView.findViewById(R.id.item2_state_content);
+            item2StateNickname = (TextView) itemView.findViewById(R.id.item2_state_nickname);
+            item2StateContent = (TextView) itemView.findViewById(R.id.item2_state_content);
         }
     }
 }

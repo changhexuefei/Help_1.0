@@ -78,64 +78,64 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CommunityListList communityListList = dates.get(0).getmList().getCommunityListLists().get(position);
         final String cmid = communityListList.getCmid();
-        if (getItemViewType(position) == 0) {
+        if (getItemViewType(position) == 1) {
             if (holder instanceof HomeViewHolder1) {
                 ((HomeViewHolder1) holder).homeUnListTvCmanem.setText(communityListList.getCmname());
-
                 //加入小区
                 ((HomeViewHolder1) holder).homeUnBtJoin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        List params = new ArrayList<String>();
-                        params.add(uid);
-                        params.add(cmid);//2061  2803
-                        HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY, new ResponseHandler() {
-                            @Override
-                            public void onError(Call call, Exception e, int id) {
-                            }
-                            @Override
-                            public void onSuccess(String response, int id) {
-                                Log.e("444444400000000",response+"--"+cmid+"---"+uid);
-                                ArrayList<MDate> joinCommunity = Resovle.getJoinCommunity(response);
-                                String res = joinCommunity.get(0).getRes();
-                                if("0".equals(res)){
-                                    ToastUtils.showLong(mContext,"加入失败" );
-                                }else if("1".equals(res)){
-                                    //修改用户信息
-                                    writeUser();
-                                    activity.checkJoinComunnity();
-                                    //查询小区信息
-                                    List paramsDetail = new ArrayList<String>();
-                                    paramsDetail.add(cmid);//2061  2803
-                                    paramsDetail.add(uid);
-                                    HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, paramsDetail, new ResponseHandler() {
-                                        @Override
-                                        public void onError(Call call, Exception e, int id) {
-                                        }
-                                        @Override
-                                        public void onSuccess(String response, int id) {
-
-                                            ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
-                                            Bundle bundle = new Bundle();
-                                            bundle.putSerializable("communityInfoList", communityInfoList);
-                                            Intent i = new Intent(mContext, CompoundInfoActivity.class);
-                                            i.putExtras(bundle);
-                                            mContext.startActivity(i);
-                                        }
-
-                                        @Override
-                                        public void inProgress(float progress, long total, int id) {
-                                        }
-                                    });
-                                }
-
-                            }
-
-                            @Override
-                            public void inProgress(float progress, long total, int id) {
-
-                            }
-                        });
+                        Intent i = new Intent(mContext, CompoundInfoActivity.class);
+                        mContext.startActivity(i);
+//                        List params = new ArrayList<String>();
+//                        params.add(uid);
+//                        params.add(cmid);//2061  2803
+//                        HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY,params, new ResponseHandler() {
+//                            @Override
+//                            public void onError(Call call, Exception e, int id) {
+//                            }
+//                            @Override
+//                            public void onSuccess(String response, int id) {
+//                                ArrayList<MDate> joinCommunity = Resovle.getJoinCommunity(response);
+//                                String res = joinCommunity.get(0).getRes();
+//                                if("0".equals(res)){
+//                                    ToastUtils.showLong(mContext,"加入失败" );
+//                                }else if("1".equals(res)){
+//                                    //修改用户信息
+//                                    writeUser();
+//                                    //activity.checkJoinComunnity();
+//                                    //查询小区信息
+//                                    List paramsDetail = new ArrayList<String>();
+//                                    paramsDetail.add(cmid);//2061  2803
+//                                    paramsDetail.add(uid);
+//                                    HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, paramsDetail, new ResponseHandler() {
+//                                        @Override
+//                                        public void onError(Call call, Exception e, int id) {
+//                                        }
+//                                        @Override
+//                                        public void onSuccess(String response, int id) {
+//
+//                                            ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
+//                                            Bundle bundle = new Bundle();
+//                                            bundle.putSerializable("communityInfoList", communityInfoList);
+//                                            Intent i = new Intent(mContext, CompoundInfoActivity.class);
+//                                            i.putExtras(bundle);
+//                                            mContext.startActivity(i);
+//                                        }
+//
+//                                        @Override
+//                                        public void inProgress(float progress, long total, int id) {
+//                                        }
+//                                    });
+//                                }
+//
+//                            }
+//
+//                            @Override
+//                            public void inProgress(float progress, long total, int id) {
+//
+//                            }
+//                        });
                     }
                 });
                 Bitmap bit = BitmapDescriptorFactory.fromResource(R.drawable.img).getBitmap();
@@ -182,13 +182,14 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
                         List params = new ArrayList<String>();
                         params.add(cmid);//2061  2803
                         params.add(uid);
+                        Log.e("44444444444-------",cmid+"--"+uid);
                         HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, params, new ResponseHandler() {
                             @Override
                             public void onError(Call call, Exception e, int id) {
                             }
-
                             @Override
                             public void onSuccess(String response, int id) {
+                                Log.e("44444444444-------","--"+response);
                                 ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("communityInfoList", communityInfoList);
@@ -289,10 +290,11 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
     }
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
-            return 0;
-        } else {
-            return 0;
+        if(position>=0){
+            return 1;
+        }else{
+            return -1;
         }
+
     }
 }
