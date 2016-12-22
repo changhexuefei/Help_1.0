@@ -140,7 +140,6 @@ public class HomeUnLoginFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.home_image_location:
-
                 break;
             case R.id.homeimage_search:
                 Intent i = new Intent(getActivity(), SeekeStateActivity.class);

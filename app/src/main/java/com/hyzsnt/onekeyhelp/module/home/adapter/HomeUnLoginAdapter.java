@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +26,8 @@ import com.hyzsnt.onekeyhelp.module.home.bean.HomeCircle;
 import com.hyzsnt.onekeyhelp.module.home.bean.LoginCommunity;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.bean.UserInfoInfo;
+import com.hyzsnt.onekeyhelp.module.home.fragment.HomeLoginFragment;
+import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 import com.hyzsnt.onekeyhelp.utils.BitmapUtils;
@@ -92,13 +95,15 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
                             }
                             @Override
                             public void onSuccess(String response, int id) {
-                                //Log.e("444444400000000",response+"--"+cmid+"---"+uid);
+                                Log.e("444444400000000",response+"--"+cmid+"---"+uid);
                                 ArrayList<MDate> joinCommunity = Resovle.getJoinCommunity(response);
                                 String res = joinCommunity.get(0).getRes();
                                 if("0".equals(res)){
                                     ToastUtils.showLong(mContext,"加入失败" );
                                 }else if("1".equals(res)){
                                     activity.checkJoinComunnity();
+                                    //修改用户信息
+                                    writeUser();
                                     //查询小区信息
                                     List paramsDetail = new ArrayList<String>();
                                     paramsDetail.add(cmid);//2061  2803
@@ -203,6 +208,30 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
         } else {
 
         }
+    }
+
+    private void writeUser() {
+        String userDetail = (String) SPUtils.get(mContext,"userDetail","");
+        ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+        String uid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
+        List params0 = new ArrayList<String>();
+        params0.add(uid);
+        HttpUtils.post(Api.USER, Api.User.GETUSERINFO, params0, new ResponseHandler() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+            }
+
+            @Override
+            public void onSuccess(String response, int id) {
+                SPUtils.put(mContext, "userDetail", response);
+
+            }
+
+            @Override
+            public void inProgress(float progress, long total, int id) {
+            }
+        });
+
     }
 
     @Override
