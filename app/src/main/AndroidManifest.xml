@@ -60,7 +60,8 @@
 		<!-- 我的邻居列表 -->
 		<activity android:name=".module.index.activity.MyNeighborListActivity"/>
 		<!-- 搜索小区 -->
-		<activity android:name=".module.index.activity.SeekeStateActivity"/>
+		<activity android:name=".module.index.activity.SeekeStateActivity"
+			android:launchMode="singleTask"/>
 		<!-- 欢迎页 -->
 		<activity android:name=".activity.SplashActivity">
 			<intent-filter>

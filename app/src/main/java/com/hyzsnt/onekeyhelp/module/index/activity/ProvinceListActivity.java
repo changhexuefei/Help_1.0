@@ -1,6 +1,7 @@
 package com.hyzsnt.onekeyhelp.module.index.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -115,19 +116,22 @@ public class ProvinceListActivity extends BaseActivity {
                             mProvinceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    String cityID = mSortCities.get(position).getId();
-                                    ToastUtils.showLong(ProvinceListActivity.this, cityID);
+//                                    String cityID = mSortCities.get(position).getId();
+//                                    ToastUtils.showLong(ProvinceListActivity.this, cityID);
                                     Intent intent = new Intent(ProvinceListActivity.this, SelectCityActivity.class);
-                                    intent.putExtra("cityid", cityID);
-                                    intent.putExtra("initial", mSortCities.get(position).getSortLetters());
-                                    intent.putExtra("provinceName", mSortCities.get(position).getName());
+                                    SortCity city = mSortCities.get(position);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("city", city);
+                                    intent.putExtras(bundle);
+//                                    intent.putExtra("cityid", cityID);
+//                                    intent.putExtra("initial", mSortCities.get(position).getSortLetters());
+//                                    intent.putExtra("provinceName", mSortCities.get(position).getName());
                                     startActivity(intent);
+//                                    finish();
                                 }
                             });
 
-                        } else
-
-                        {
+                        } else {
                             String err = JsonUtils.getErrorMessage(response);
                             LogUtils.e(err);
                         }
