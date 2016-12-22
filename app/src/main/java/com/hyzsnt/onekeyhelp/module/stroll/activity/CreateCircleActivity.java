@@ -91,8 +91,6 @@ public class CreateCircleActivity extends BaseActivity {
 	protected void initData() {
 		//获取用户信息
 		getUserInfo();
-
-
 		//用于获取标签
 		ArrayList<CircleType.ListEntry> list = new ArrayList<CircleType.ListEntry>();
 		mtypelist = new ArrayList<CircleType.ListEntry>();
@@ -160,7 +158,7 @@ public class CreateCircleActivity extends BaseActivity {
 
 			break;
 			case R.id.activity_create_circle: {
-				if ("".equals(mCid)) {
+				if (!"".equals(mCid)) {
 					//添加p参数
 					List<String> list = new ArrayList<>();
 					list.add(mUid);
@@ -227,6 +225,7 @@ public class CreateCircleActivity extends BaseActivity {
 					lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 						@Override
 						public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+							getUserInfo();
 							mTvCreateCircleAddress.setText(mAlist.get(position));
 							for (int i = 0; i < mLoginCommunities.size(); i++) {
 								if (mAlist.get(position).equals(mLoginCommunities.get(i).getCmname())) {
@@ -242,8 +241,6 @@ public class CreateCircleActivity extends BaseActivity {
 			break;
 		}
 	}
-
-
 	public class SpaceItemDecoration extends RecyclerView.ItemDecoration {
 
 		private int space;
@@ -358,7 +355,7 @@ public class CreateCircleActivity extends BaseActivity {
 			mLoginCommunities = mUserInfo.get(0).getmList().getLoginCommunities();
 			LogUtils.e(mLoginCommunities.toString());
 			for (int i = 0; i < mLoginCommunities.size(); i++) {
-				if (mUserInfo.get(0).getmList().getCommunityListLists().get(i).getIfcur() == "0") {
+				if (mUserInfo.get(0).getmList().getLoginCommunities().get(i).getIfcur() == "0") {
 					mAlist.add(mLoginCommunities.get(i).getCmname());
 				} else {
 					mTvCreateCircleAddress.setText(mLoginCommunities.get(i).getCmname());

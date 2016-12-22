@@ -1,6 +1,8 @@
 package com.hyzsnt.onekeyhelp.module.stroll.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +17,11 @@ import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleJoin;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleMember;
+import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 import com.hyzsnt.onekeyhelp.module.stroll.widget.SwipeMenuView;
+import com.hyzsnt.onekeyhelp.utils.DbUtils;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -31,16 +36,19 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 	private Context context;
 	private CircleMember mCircleMember;
 	private CircleJoin circlejoin;
-	private Boolean ishost;
+	private Boolean ishost =false;
+	ArrayList<CircleType.ListEntry> queryall;
 
 	public MemberHostAdapter(Context activity, Boolean ishost) {
 		this.context = activity;
 		this.ishost = ishost;
-
+		DbUtils db = new DbUtils(context);
+		queryall =  db.queryall();
 	}
 
 	public void setCircleMember(CircleMember circleMember) {
 		mCircleMember = circleMember;
+
 	}
 
 	public void setCirclejoin(CircleJoin circlejoin) {
@@ -100,9 +108,9 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 					((SwipeMenuView) viewHolder.itemView).setIos(false).setLeftSwipe(true);
 				if (circlejoin != null && !circlejoin.equals("")) {
 					position = position - circlejoin.getList().size();
-					if (!ishost) {
-						((SwipeMenuView) viewHolder.itemView).setSwipeEnable(false);
-					}
+				}
+				if (!ishost) {
+					((SwipeMenuView) viewHolder.itemView).setSwipeEnable(false);
 				}
 				CircleMember.ListEntry listEntry = mCircleMember.getList().get(position);
 				//昵称
@@ -118,33 +126,47 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 				}else if("2".equals(gender)){
 					((MViewHolder) holder).gender.setImageResource(R.mipmap.female);
 				}
-				/*String flags =listEntry.getHobbytags();
+				String flags =listEntry.getHobbytags();
 				String[] flist = flags.split("\\|");
-				DbUtils db = new DbUtils(context);
-
-				for(int j=0;j<flist.length;j++){
-
-					if(flist.length==3){
-						CircleType.ListEntry query = db.query(flist[2]);
-						((MViewHolder) holder).tagthree.setText(query.getTagname());
-						GradientDrawable myGrad = (GradientDrawable) ((MViewHolder) holder).tagthree.getBackground();
-						myGrad.setColor(Color.parseColor(query.getTagdesc()));
-						((MViewHolder) holder).tagthree.setVisibility(View.VISIBLE);
+				if(flist.length==3){
+					CircleType.ListEntry query = null;
+					for(int j=0;j<queryall.size();j++){
+						if(queryall.get(j).getTagid().equals(flist[2])){
+							query= queryall.get(j);
+						}
 					}
-					if(flist.length>=2){
-						CircleType.ListEntry query = db.query(flist[1]);
-						((MViewHolder) holder).tagtwo.setText(query.getTagname());
-						GradientDrawable myGrad = (GradientDrawable)((MViewHolder) holder).tagtwo.getBackground();
-						myGrad.setColor(Color.parseColor(query.getTagdesc()));
-						((MViewHolder) holder).tagtwo.setVisibility(View.VISIBLE);
-					} if(flist.length>=1){
-						CircleType.ListEntry query = db.query(flist[0]);
-						((MViewHolder) holder).tagone.setText(query.getTagname());
-						GradientDrawable myGrad = (GradientDrawable) ((MViewHolder) holder).tagone.getBackground();
-						myGrad.setColor(Color.parseColor(query.getTagdesc()));
-						((MViewHolder) holder).tagone.setVisibility(View.VISIBLE);
+					((MViewHolder) holder).tagone.setText(query.getTagname());
+					GradientDrawable myGrad = (GradientDrawable)((MViewHolder) holder).tagone.getBackground();
+					myGrad.setColor(Color.parseColor(query.getTagdesc()));
+					((MViewHolder) holder).tagone.setVisibility(View.VISIBLE);
+				}
+				if(flist.length>=2){
+					CircleType.ListEntry query = null;
+					for(int j=0;j<queryall.size();j++){
+						if(queryall.get(j).getTagid().equals(flist[1])){
+							query= queryall.get(j);
+						}
 					}
-				}*/
+					((MViewHolder) holder).tagtwo.setText(query.getTagname());
+					GradientDrawable myGrad = (GradientDrawable) ((MViewHolder) holder).tagtwo.getBackground();
+					myGrad.setColor(Color.parseColor(query.getTagdesc()));
+					((MViewHolder) holder).tagtwo.setVisibility(View.VISIBLE);
+				} if(flist.length>=1){
+					CircleType.ListEntry query = null;
+					for(int j=0;j<queryall.size();j++){
+						LogUtils.e(queryall.toString());
+						if(queryall.get(j).getTagid().equals(flist[0])){
+							query= queryall.get(j);
+							LogUtils.e(query.toString());
+						}
+					}
+					/*LogUtils.e(query.toString()+"hhh");
+				   ((MViewHolder) holder).tagthree.setText(query.getTagname());
+					GradientDrawable myGrad = (GradientDrawable) ((MViewHolder) holder).tagthree.getBackground();
+					myGrad.setColor(Color.parseColor(query.getTagdesc()));
+					((MViewHolder) holder).tagthree.setVisibility(View.VISIBLE);*/
+				}
+
 
 			}
 		}
@@ -239,9 +261,10 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 					circlejoin.getList().remove(position);
 					notifyItemRemoved(position);
 					notifyItemRangeChanged(position,circlejoin.getList().size());
+				}else{
+					LogUtils.e(JsonUtils.getErrorMessage(response));
 				}
 			}
-
 			@Override
 			public void inProgress(float progress, long total, int id) {
 

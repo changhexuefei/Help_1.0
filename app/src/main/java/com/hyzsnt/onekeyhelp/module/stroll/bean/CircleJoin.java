@@ -355,7 +355,6 @@ public class CircleJoin implements Parcelable {
 		public CircleJoin createFromParcel(Parcel source) {
 			return new CircleJoin(source);
 		}
-
 		@Override
 		public CircleJoin[] newArray(int size) {
 			return new CircleJoin[size];
