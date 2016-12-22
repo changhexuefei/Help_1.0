@@ -41,16 +41,21 @@ import okhttp3.Call;
 public class CircleDetailsActivity extends BaseActivity {
 
 	public String isjoin = "";
+	//标题
 	@BindView(R.id.tv_circle_details_titile)
 	TextView mTvCircleDetailsTitile;
+	//返回键
 	@BindView(R.id.im_circle_details_back)
 	ImageView mImCircleDetailsBack;
+	//发布话题按钮
 	@BindView(R.id.tv_publish_topic)
 	TextView mTvPublishTopic;
 	private CiecleDetailss mDetailss;
 	@BindView(R.id.frlayout_circle_dietails)
 	FrameLayout mFrlayoutCircleDietails;
+	//加入圈子的fragment
 	private JoinCircleDetailsFragment mJoinCircleDetailsFragment;
+	//未加入圈子的fragment
 	private UnjoinCircleDetailsFragment mUnjoinCircleDetailsFragment;
 	private CircleDetails mDetails;
 	private String mCcid;
