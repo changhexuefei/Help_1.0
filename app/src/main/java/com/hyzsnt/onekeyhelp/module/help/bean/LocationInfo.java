@@ -10,6 +10,24 @@ public class LocationInfo {
 	private double mLatitude;
 	private double mLongitude;
 	private String mAddrStr;
+	private String regid;
+	private String regname;
+
+	public String getRegid() {
+		return regid;
+	}
+
+	public void setRegid(String regid) {
+		this.regid = regid;
+	}
+
+	public String getRegname() {
+		return regname;
+	}
+
+	public void setRegname(String regname) {
+		this.regname = regname;
+	}
 
 	public int getLocType() {
 		return mLocType;
@@ -59,6 +77,8 @@ public class LocationInfo {
 				", mLatitude=" + mLatitude +
 				", mLongitude=" + mLongitude +
 				", mAddrStr='" + mAddrStr + '\'' +
+				", regid='" + regid + '\'' +
+				", regname='" + regname + '\'' +
 				'}';
 	}
 }
