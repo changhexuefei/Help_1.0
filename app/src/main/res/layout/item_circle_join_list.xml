@@ -19,7 +19,7 @@
 			android:layout_width="45dp"
 			android:layout_height="45dp"
 			android:layout_marginBottom="@dimen/dp_12"
-			android:layout_marginLeft="@dimen/dp_24"
+			android:layout_marginLeft="@dimen/dp_18"
 			android:layout_marginTop="@dimen/dp_15"
 			android:src="@mipmap/cc"/>
 
@@ -64,42 +64,47 @@
 			android:layout_marginRight="@dimen/dp_6"
 			android:layout_marginTop="@dimen/dp_24"
 			android:background="@drawable/stroll_type_three"
-			android:text="亲子"
-			android:textSize="@dimen/sp_10"
 			android:gravity="center"
-			android:textColor="#FFFFFF"/>
+			android:text="亲子"
+android:visibility="gone"
+			android:textColor="#FFFFFF"
+			android:textSize="@dimen/sp_10"/>
 
 		<TextView
 			android:id="@+id/im_member_tag_two"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+
 			android:layout_marginRight="@dimen/dp_6"
 			android:layout_marginTop="@dimen/dp_24"
 			android:layout_toLeftOf="@id/im_member_tag_one"
 			android:background="@drawable/stroll_type_three"
-			android:text="亲子"
-			android:textSize="@dimen/sp_10"
 			android:gravity="center"
-			android:textColor="#FFFFFF"/>
+			android:text="亲子"
+			android:visibility="gone"
+			android:textColor="#FFFFFF"
+			android:textSize="@dimen/sp_10"/>
 
 		<TextView
 			android:id="@+id/im_member_tag_three"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:visibility="gone"
 			android:layout_marginRight="@dimen/dp_6"
 			android:layout_marginTop="@dimen/dp_24"
 			android:layout_toLeftOf="@id/im_member_tag_two"
-
 			android:background="@drawable/stroll_type_three"
-			android:text="亲子"
-			android:textSize="@dimen/sp_10"
 			android:gravity="center"
-			android:textColor="#FFFFFF"></TextView>
+			android:text="亲子"
+			android:textColor="#FFFFFF"
+			android:textSize="@dimen/sp_10"
+		></TextView>
+
 		<View
-			android:layout_alignParentBottom="true"
 			android:id="@+id/view1"
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
+			android:layout_alignParentBottom="true"
 			android:background="#ebebeb"></View>/>
 	</RelativeLayout>
 

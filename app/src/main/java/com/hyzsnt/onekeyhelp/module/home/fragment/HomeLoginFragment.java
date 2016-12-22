@@ -35,6 +35,7 @@ import com.hyzsnt.onekeyhelp.module.home.adapter.HomeLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeLoginHeadAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.LoginCommunityAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.DynamicListByCommunityList;
+import com.hyzsnt.onekeyhelp.module.home.bean.LoginCommunity;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.bean.UserInfoInfo;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
@@ -62,6 +63,8 @@ public class HomeLoginFragment extends BaseFragment {
     LRecyclerView homeLoginLrv;
     @BindView(R.id.homeimage_search)
     ImageView homeimageSearch;
+    @BindView(R.id.home_tv_title)
+    TextView homeTvTitle;
 
     private RecyclerView homeLoginItemHomeheadRlv;
     private ImageView homeLoginItemHeadIvNeighbor;
@@ -117,14 +120,14 @@ public class HomeLoginFragment extends BaseFragment {
         final ImageView homeLoginCommunityDetail = (ImageView) header.findViewById(R.id.home_login_community_detail);
 
 
-
         List paramshead = new ArrayList<String>();
-        paramshead.add(incommunity+"");//2061  2803
-        paramshead.add(uid+"");
+        paramshead.add(incommunity + "");//2061  2803
+        paramshead.add(uid + "");
         HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, paramshead, new ResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
             }
+
             @Override
             public void onSuccess(String response, int id) {
                 ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
@@ -217,7 +220,6 @@ public class HomeLoginFragment extends BaseFragment {
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 String id1 = dynamicKinds.get(0).getmList().getDynamicKindses().get(position).getId();
                                 dinamicGet(null, id1);
-                                ToastUtils.showShort(getActivity(), id1 + "");
                                 mPopupWindow.dismiss();
                             }
                         });
@@ -235,7 +237,7 @@ public class HomeLoginFragment extends BaseFragment {
             public void onItemClick(View view, int position) {
                 DynamicListByCommunityList dynamicListByCommunity = dynamicListByCommunitys.get(0).getmList().getDynamicListByCommunityLists().get(position);
                 Bundle bundle = new Bundle();
-                bundle.putString("tag",Api.COMMUNITY);
+                bundle.putString("tag", Api.COMMUNITY);
                 bundle.putSerializable("dynamicListByCommunity", dynamicListByCommunity);
                 Intent i = new Intent(getActivity(), StateActivity.class);
                 i.putExtras(bundle);
@@ -272,16 +274,13 @@ public class HomeLoginFragment extends BaseFragment {
 
             @Override
             public void onSuccess(String response, int id) {
-                Log.e("8888888888888----", response);
                 ArrayList<MDate> dynamicListByCommunitys0 = Resovle.getDynamicListByCommunity(response);
                 dynamicListByCommunitys.clear();
                 dynamicListByCommunitys.addAll(dynamicListByCommunitys0);
                 mHomeLoginAdapter.setDates(dynamicListByCommunitys);
                 mHomeLoginAdapter.notifyDataSetChanged();
                 adapter.notifyDataSetChanged();
-                ToastUtils.showShort(getActivity(), dynamicListByCommunitys.get(0).getmList().getDynamicListByCommunityLists().size() + "");
             }
-
             @Override
             public void inProgress(float progress, long total, int id) {
             }
@@ -300,6 +299,18 @@ public class HomeLoginFragment extends BaseFragment {
             @Override
             public void onSuccess(String response, int id) {
                 final ArrayList<MDate> loginCommunities = Resovle.getUserInfo(response);
+                if(loginCommunities.get(0).getmList()!=null){
+                    ArrayList<LoginCommunity> loginCommunities1 = loginCommunities.get(0).getmList().getLoginCommunities();
+                    for (int i = 0; i < loginCommunities1.size(); i++) {
+                        LoginCommunity loginCommunity = loginCommunities1.get(i);
+                        String ifcur = loginCommunity.getIfcur();
+                        if("1".equals(ifcur)){
+                            homeTvTitle.setText(loginCommunity.getCmname());
+                        }
+                    }
+                }
+
+
                 homeLoginIvSwich.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -329,10 +340,8 @@ public class HomeLoginFragment extends BaseFragment {
                                     public void onSuccess(String response, int id) {
                                         dynamicListByCommunitys = Resovle.getDynamicListByCommunity(response);
                                         dinamicGet(cmid, null);
-                                        ToastUtils.showShort(getActivity(), cmid + "");
                                         mPopupWindow.dismiss();
                                     }
-
                                     @Override
                                     public void inProgress(float progress, long total, int id) {
 

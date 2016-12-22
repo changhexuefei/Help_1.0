@@ -28,8 +28,7 @@ import butterknife.OnClick;
 import okhttp3.Call;
 
 public class CircleMemberList extends BaseActivity {
-
-
+	//
 	@BindView(R.id.re_member_host)
 	LRecyclerView mReMemberHost;
 	@BindView(R.id.im_circle_back)
@@ -59,14 +58,13 @@ public class CircleMemberList extends BaseActivity {
 		LRecyclerViewAdapter lRecyclerViewAdapter = new LRecyclerViewAdapter(adapter);
 		mReMemberHost.setAdapter(lRecyclerViewAdapter);
 		mReMemberHost.setPullRefreshEnabled(false);
-
 		//获取成员数据
 		List<String> list = new ArrayList<>();
 		list.add(mUid);
 		list.add(ccid);
 		list.add(mLat);
 		list.add(mLon);
-		list.add(mMnickname);
+		list.add("");
 		HttpUtils.post(Api.CIRCLE, Api.Circle.CIRCLE_MEMBER, list, new ResponseHandler() {
 			@Override
 			public void onError(Call call, Exception e, int id) {
@@ -90,17 +88,15 @@ public class CircleMemberList extends BaseActivity {
 		});
 		if(ishost){
 			List<String> slist =new ArrayList<>();
-			slist.add("23");
+			slist.add(mUid);
 			slist.add(ccid);
 			HttpUtils.post(Api.CIRCLE, Api.Circle.CIRCLE_join, slist, new ResponseHandler() {
 				@Override
 				public void onError(Call call, Exception e, int id) {
 
 				}
-
 				@Override
 				public void onSuccess(String response, int id) {
-
 					Gson gson = new Gson();
 					CircleJoin circleJoin = gson.fromJson(response, CircleJoin.class);
 					adapter.setCirclejoin(circleJoin);
