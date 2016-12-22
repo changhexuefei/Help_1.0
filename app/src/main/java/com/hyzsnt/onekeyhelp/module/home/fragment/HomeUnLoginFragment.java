@@ -183,7 +183,6 @@ public class HomeUnLoginFragment extends BaseFragment {
             public void onSuccess(String response, int id) {
                 Log.e("8888888888888888888",response+"");
             }
-
             @Override
             public void inProgress(float progress, long total, int id) {
             }
