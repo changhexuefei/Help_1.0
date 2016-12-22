@@ -2,15 +2,12 @@ package com.hyzsnt.onekeyhelp.module.home.fragment;
 
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
@@ -154,15 +150,7 @@ public class HomeUnLoginFragment extends BaseFragment {
 	protected void initView(View contentView) {
 		super.initView(contentView);
 	}
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO: inflate a fragment view
-		View rootView = super.onCreateView(inflater, container, savedInstanceState);
-		ButterKnife.bind(this, rootView);
-		return rootView;
-	}
-	
+
 	@OnClick(R.id.home_image_location)
 	public void onClick() {
 		String registrationID = JPushInterface.getRegistrationID(getActivity());
