@@ -7,17 +7,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.http.Api;
+import com.hyzsnt.onekeyhelp.http.HttpUtils;
+import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.module.stroll.widget.SwipeMenuView;
 import com.hyzsnt.onekeyhelp.module.user.bean.ContactInfoBean;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
 
 /**
  * Created by 14369 on 2016/12/21.
@@ -26,9 +37,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.MyViewHolder> {
 
 	private Context mContext;
-	private List<ContactInfoBean> mData;
+	private List<ContactInfoBean.ListBean> mData;
 
-	public ContactListAdapter(Context context, List<ContactInfoBean> data) {
+	public ContactListAdapter(Context context, List<ContactInfoBean.ListBean> data) {
 		mContext = context;
 		mData = data;
 	}
@@ -40,12 +51,12 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 	}
 
 	@Override
-	public void onBindViewHolder(MyViewHolder holder, int position) {
-		ContactInfoBean bean = mData.get(position);
+	public void onBindViewHolder(MyViewHolder holder, final int position) {
+		final ContactInfoBean.ListBean bean = mData.get(position);
 		//这句话关掉IOS阻塞式交互效果 并依次打开左滑右滑
 		((SwipeMenuView) holder.itemView).setIos(false).setLeftSwipe(true);
-		holder.tv_item_contact_name.setText(bean.getName());
-		holder.tv_item_contact_phone.setText(bean.getPhone());
+		holder.tv_item_contact_name.setText("暂无数据");
+		holder.tv_item_contact_phone.setText(bean.getLinkerphoneno());
 
 		holder.tv_item_contact_alter.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -57,6 +68,42 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 			@Override
 			public void onClick(View v) {
 				ToastUtils.showShort(mContext, "删除");
+				deleteContacts(bean.getUid(), bean.getEmlid(), position);
+			}
+		});
+	}
+
+	private void deleteContacts(String uid, String emlid, final int position) {
+
+		List<String> params = new ArrayList<>();
+		params.add(uid);
+		params.add(emlid);
+		HttpUtils.post(Api.USER, Api.User.DELEMERGLINKER, params, new JsonResponseHandler() {
+			@Override
+			public void onError(Call call, Exception e, int id) {
+				Toast.makeText(mContext, "网络连接失败！", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onSuccess(String response, int id) {
+				LogUtils.e("onSuccess:" + response);
+				if (JsonUtils.isSuccess(response)) {
+					try {
+						JSONObject object = new JSONObject(response);
+						String res = object.getString("res");
+						if ("1".equals(res)) {
+							Toast.makeText(mContext, "删除成功！", Toast.LENGTH_SHORT).show();
+							mData.remove(position);
+							notifyDataSetChanged();
+							notifyItemChanged(position);
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
+				} else {
+					Toast.makeText(mContext, "请求错误：" + JsonUtils.getErrorMessage(response), Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}
