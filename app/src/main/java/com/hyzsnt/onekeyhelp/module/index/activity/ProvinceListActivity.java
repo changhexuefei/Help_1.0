@@ -56,74 +56,87 @@ public class ProvinceListActivity extends BaseActivity {
         getProvinceList(regid);
     }
 
-    private void getProvinceList(String regid) {
+    private void getProvinceList(final String regid) {
         parms.add(regid);
         HttpUtils.post(Api.PUBLIC, REGIONAL, parms, new JsonResponseHandler() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-
-            }
-
-            @Override
-            public void onSuccess(String response, int id) {
-                Toast.makeText(ProvinceListActivity.this, "成功了", Toast.LENGTH_SHORT).show();
-                Log.d("0000000000", response);
-
-                if (JsonUtils.isSuccess(response)) {
-                    try {
-                        JSONObject object = new JSONObject(response);
-//                        final JSONObject list = object.getJSONObject("list");
-                        JSONArray list = object.getJSONArray("list");
-                        mSortCities = new ArrayList<SortCity>();
-                        for (int i = 0; i <list.length() ; i++) {
-                            JSONObject jsonObject = list.getJSONObject(i);
-                            SortCity city = new SortCity();
-                            city.setId(jsonObject.getString("regid"));
-                            city.setName(jsonObject.getString("regname"));
-                            province.add(jsonObject.getString("regname"));
-                            for (int j = 0; j < province.size(); j++) {
-                                String firstSpell1 = PinyinUtils.getFirstSpell(province.get(i));
-                                String sortString = firstSpell1.substring(0, 1).toUpperCase();
-                                // 正则表达式，判断首字母是否是英文字母
-                                if (sortString.matches("[A-Z]")) {
-                                    city.setSortLetters(sortString.toUpperCase());
-                                } else {
-                                    city.setSortLetters("#");
-                                }
-                            }
-                            Log.d("999999", "" + province);
-
-                            mSortCities.add(city);
-                        }
-//
-                        mProvinceListView.setVisibility(View.VISIBLE);
-                        Collections.sort(mSortCities, pinyinComparator);
-                        mAdapter = new ProvinceListAdapter(ProvinceListActivity.this);
-                        mAdapter.setList(mSortCities);
-                        mProvinceListView.setAdapter(mAdapter);
-                        //点击省份的每一行出现省份下辖市
-                        mProvinceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                String cityID = mSortCities.get(position).getId();
-                                ToastUtils.showLong(ProvinceListActivity.this, cityID);
-                                Intent intent = new Intent(ProvinceListActivity.this, SelectCityActivity.class);
-                                intent.putExtra("cityid", cityID);
-                                intent.putExtra("initial", mSortCities.get(position).getSortLetters());
-                                intent.putExtra("provinceName", mSortCities.get(position).getName());
-                                startActivity(intent);
-                            }
-                        });
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        LogUtils.e("onError:" + e.getMessage());
+                        ToastUtils.showLong(ProvinceListActivity.this, "失败了！");
                     }
-                } else {
-                    String err = JsonUtils.getErrorMessage(response);
-                    LogUtils.e(err);
+
+                    @Override
+                    public void onSuccess(String response, int id) {
+                        Log.d("0000000000", response);
+
+                        if (JsonUtils.isSuccess(response)) {
+                            try {
+
+                                Toast.makeText(ProvinceListActivity.this, "成功！", Toast.LENGTH_SHORT).show();
+                                JSONObject object = new JSONObject(response);
+                                int res = object.optInt("res", 0);
+                                if (res == 0) {
+                                    ToastUtils.showShort(ProvinceListActivity.this, "链接失败！");
+                                } else if (res == 1) {
+
+                                    JSONArray list = object.getJSONArray("list");
+                                    mSortCities = new ArrayList<SortCity>();
+                                    for (int i = 0; i < list.length(); i++) {
+                                        JSONObject jsonObject = list.getJSONObject(i);
+                                        SortCity city = new SortCity();
+                                        city.setId(jsonObject.getString("regid"));
+                                        city.setName(jsonObject.getString("regname"));
+                                        province.add(jsonObject.getString("regname"));
+                                        for (int j = 0; j < province.size(); j++) {
+                                            String firstSpell1 = PinyinUtils.getFirstSpell(province.get(i));
+                                            String sortString = firstSpell1.substring(0, 1).toUpperCase();
+                                            // 正则表达式，判断首字母是否是英文字母
+                                            if (sortString.matches("[A-Z]")) {
+                                                city.setSortLetters(sortString.toUpperCase());
+                                            } else {
+                                                city.setSortLetters("#");
+                                            }
+                                        }
+                                        Log.d("999999", "" + province);
+
+                                        mSortCities.add(city);
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            mProvinceListView.setVisibility(View.VISIBLE);
+                            Collections.sort(mSortCities, pinyinComparator);
+                            mAdapter = new ProvinceListAdapter(ProvinceListActivity.this);
+                            mAdapter.setList(mSortCities);
+                            mProvinceListView.setAdapter(mAdapter);
+                            //点击省份的每一行出现省份下辖市
+                            mProvinceListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    String cityID = mSortCities.get(position).getId();
+                                    ToastUtils.showLong(ProvinceListActivity.this, cityID);
+                                    Intent intent = new Intent(ProvinceListActivity.this, SelectCityActivity.class);
+                                    intent.putExtra("cityid", cityID);
+                                    intent.putExtra("initial", mSortCities.get(position).getSortLetters());
+                                    intent.putExtra("provinceName", mSortCities.get(position).getName());
+                                    startActivity(intent);
+                                }
+                            });
+
+                        } else
+
+                        {
+                            String err = JsonUtils.getErrorMessage(response);
+                            LogUtils.e(err);
+                        }
+                    }
                 }
-            }
-        });
+
+        );
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

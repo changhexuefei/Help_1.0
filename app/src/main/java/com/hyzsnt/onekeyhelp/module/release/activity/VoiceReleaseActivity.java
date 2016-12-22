@@ -1,6 +1,5 @@
 package com.hyzsnt.onekeyhelp.module.release.activity;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -19,10 +18,14 @@ import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
-import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
 import com.hyzsnt.onekeyhelp.module.release.media.MediaManager;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -130,7 +133,7 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
                 byte[] bytes = new byte[1024 * 4];
                 while ((len = bis.read(bytes)) != -1) {
                     baos.write(bytes, 0, len);
-                    Log.d("33333", baos + "");
+//                    Log.d("33333", baos + "");
                     baos.flush();
                 }
                 mVoice = baos.toString();
@@ -166,17 +169,35 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
         HttpUtils.post(Api.PUBLISH, PUBLISHDYNAMIC, p, new JsonResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
-
+                LogUtils.e("onError:" + e.getMessage());
+                ToastUtils.showShort(VoiceReleaseActivity.this, "发布失败！");
             }
 
             @Override
             public void onSuccess(String response, int id) {
                 Log.d("语音", response);
+                if (JsonUtils.isSuccess(response)) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        int res = jsonObject.optInt("res", 0);
+                        if (res == 0) {
+                            ToastUtils.showShort(VoiceReleaseActivity.this, "发布失败！");
+                        } else if (res == 1) {
+                            Toast.makeText(VoiceReleaseActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            ToastUtils.showShort(VoiceReleaseActivity.this, "未知错误！请重试。");
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 Toast.makeText(VoiceReleaseActivity.this, "发布语音成功", Toast.LENGTH_LONG).show();
             }
         });
-        Intent i = new Intent(VoiceReleaseActivity.this, StateActivity.class);
-        startActivity(i);
+//        Intent i = new Intent(VoiceReleaseActivity.this, StateActivity.class);
+//        startActivity(i);
     }
 
     @Override
@@ -208,5 +229,4 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
         int code = mAudioManager.startRecordAndFile();
         Toast.makeText(VoiceReleaseActivity.this, "code:" + ErrorCode.getErrorInfo(this, code), Toast.LENGTH_SHORT).show();
     }
-
 }
