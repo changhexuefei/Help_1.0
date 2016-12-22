@@ -85,57 +85,57 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
                 ((HomeViewHolder1) holder).homeUnBtJoin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(mContext, CompoundInfoActivity.class);
-                        mContext.startActivity(i);
-//                        List params = new ArrayList<String>();
-//                        params.add(uid);
-//                        params.add(cmid);//2061  2803
-//                        HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY,params, new ResponseHandler() {
-//                            @Override
-//                            public void onError(Call call, Exception e, int id) {
-//                            }
-//                            @Override
-//                            public void onSuccess(String response, int id) {
-//                                ArrayList<MDate> joinCommunity = Resovle.getJoinCommunity(response);
-//                                String res = joinCommunity.get(0).getRes();
-//                                if("0".equals(res)){
-//                                    ToastUtils.showLong(mContext,"加入失败" );
-//                                }else if("1".equals(res)){
-//                                    //修改用户信息
-//                                    writeUser();
-//                                    //activity.checkJoinComunnity();
-//                                    //查询小区信息
-//                                    List paramsDetail = new ArrayList<String>();
-//                                    paramsDetail.add(cmid);//2061  2803
-//                                    paramsDetail.add(uid);
-//                                    HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, paramsDetail, new ResponseHandler() {
-//                                        @Override
-//                                        public void onError(Call call, Exception e, int id) {
-//                                        }
-//                                        @Override
-//                                        public void onSuccess(String response, int id) {
-//
-//                                            ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
-//                                            Bundle bundle = new Bundle();
-//                                            bundle.putSerializable("communityInfoList", communityInfoList);
-//                                            Intent i = new Intent(mContext, CompoundInfoActivity.class);
-//                                            i.putExtras(bundle);
-//                                            mContext.startActivity(i);
-//                                        }
-//
-//                                        @Override
-//                                        public void inProgress(float progress, long total, int id) {
-//                                        }
-//                                    });
-//                                }
-//
-//                            }
-//
-//                            @Override
-//                            public void inProgress(float progress, long total, int id) {
-//
-//                            }
-//                        });
+//                        Intent i = new Intent(mContext, CompoundInfoActivity.class);
+//                        mContext.startActivity(i);
+                        List params = new ArrayList<String>();
+                        params.add(uid);
+                        params.add(cmid);//2061  2803
+                        HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY,params, new ResponseHandler() {
+                            @Override
+                            public void onError(Call call, Exception e, int id) {
+                            }
+                            @Override
+                            public void onSuccess(String response, int id) {
+                                ArrayList<MDate> joinCommunity = Resovle.getJoinCommunity(response);
+                                String res = joinCommunity.get(0).getRes();
+                                if("0".equals(res)){
+                                    ToastUtils.showLong(mContext,"加入失败" );
+                                }else if("1".equals(res)){
+                                    //修改用户信息
+                                    writeUser();
+                                    //activity.checkJoinComunnity();
+                                    //查询小区信息
+                                    List paramsDetail = new ArrayList<String>();
+                                    paramsDetail.add(cmid);//2061  2803
+                                    paramsDetail.add(uid);
+                                    HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, paramsDetail, new ResponseHandler() {
+                                        @Override
+                                        public void onError(Call call, Exception e, int id) {
+                                        }
+                                        @Override
+                                        public void onSuccess(String response, int id) {
+
+                                            ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putSerializable("communityInfoList", communityInfoList);
+                                            Intent i = new Intent(mContext, CompoundInfoActivity.class);
+                                            i.putExtras(bundle);
+                                            mContext.startActivity(i);
+                                        }
+
+                                        @Override
+                                        public void inProgress(float progress, long total, int id) {
+                                        }
+                                    });
+                                }
+
+                            }
+
+                            @Override
+                            public void inProgress(float progress, long total, int id) {
+
+                            }
+                        });
                     }
                 });
                 Bitmap bit = BitmapDescriptorFactory.fromResource(R.drawable.img).getBitmap();
