@@ -3,6 +3,7 @@ package com.hyzsnt.onekeyhelp.module.user.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,9 +56,12 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 		final ContactInfoBean.ListBean bean = mData.get(position);
 		//这句话关掉IOS阻塞式交互效果 并依次打开左滑右滑
 		((SwipeMenuView) holder.itemView).setIos(false).setLeftSwipe(true);
-		holder.tv_item_contact_name.setText("暂无数据");
+		if (!TextUtils.isEmpty(bean.getLinkerdesc())) {
+			holder.tv_item_contact_name.setText(bean.getLinkername() + "（" + bean.getLinkerdesc() + "）");
+		} else {
+			holder.tv_item_contact_name.setText(bean.getLinkername());
+		}
 		holder.tv_item_contact_phone.setText(bean.getLinkerphoneno());
-
 		holder.tv_item_contact_alter.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

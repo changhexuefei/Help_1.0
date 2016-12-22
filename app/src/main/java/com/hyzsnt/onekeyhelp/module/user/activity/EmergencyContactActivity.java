@@ -62,7 +62,7 @@ public class EmergencyContactActivity extends BaseActivity {
 				if (JsonUtils.isSuccess(response)) {
 					ContactInfoBean contactInfoBean = new Gson().fromJson(response, ContactInfoBean.class);
 					mList = contactInfoBean.getList();
-					mAdapter = new ContactListAdapter(EmergencyContactActivity.this,mList);
+					mAdapter = new ContactListAdapter(EmergencyContactActivity.this, mList);
 					mLRecyclerViewAdapter = new LRecyclerViewAdapter(mAdapter);
 					mRlContactList.setLayoutManager(new LinearLayoutManager(EmergencyContactActivity.this, OrientationHelper.VERTICAL, false));
 					mRlContactList.setAdapter(mLRecyclerViewAdapter);
@@ -86,5 +86,11 @@ public class EmergencyContactActivity extends BaseActivity {
 				startActivity(intent);
 				break;
 		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		initData();
 	}
 }
