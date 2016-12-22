@@ -68,8 +68,6 @@ public class StateActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        //得到InputMethodManager的实例
-        //imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         Intent i = getIntent();
         bundle = i.getExtras();
         tag = bundle.getString("tag");
@@ -107,7 +105,6 @@ public class StateActivity extends BaseActivity {
 
     private void initCircle() {
         info = bundle.getParcelable("topicinfo");
-        Log.e("55555555555555",""+info.toString());
         ArrayList<String> imags=bundle.getStringArrayList("imgs");
         stateDetailTvNickname.setText(info.getNickname());
         stateDetailTvContent.setText(info.getContent());
@@ -166,9 +163,7 @@ public class StateActivity extends BaseActivity {
             }
             @Override
             public void onSuccess(String response, int id) {
-                Log.e("555555555555",response+"");
                 ArrayList<MDate> commentListByTopic = Resovle.getCommentListByTopic(response);
-                Log.e("555555555555",commentListByTopic+"");
                 mStateDetailAdapter.setDates(commentListByTopic);
                 mStateDetailAdapter.notifyDataSetChanged();
                 stateDetailTvReplynum.setText(""+commentListByTopic.get(0).getmList().getCommentListByTopics().size());
