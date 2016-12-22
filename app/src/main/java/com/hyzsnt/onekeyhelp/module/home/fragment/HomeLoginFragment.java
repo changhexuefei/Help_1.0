@@ -36,10 +36,12 @@ import com.hyzsnt.onekeyhelp.module.home.adapter.HomeLoginHeadAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.LoginCommunityAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.DynamicListByCommunityList;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.bean.UserInfoInfo;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 import com.hyzsnt.onekeyhelp.module.index.activity.MyNeighborListActivity;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -68,6 +70,8 @@ public class HomeLoginFragment extends BaseFragment {
     private ArrayList<MDate> dynamicListByCommunitys = new ArrayList<>();
     private HomeLoginAdapter mHomeLoginAdapter;
     private LRecyclerViewAdapter adapter;
+    private String uid;
+    private String incommunity;
 
     public HomeLoginFragment() {
         // Required empty public constructor
@@ -80,6 +84,12 @@ public class HomeLoginFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
+        String userDetail = (String) SPUtils.get(getActivity(), "userDetail", "");
+        ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+        UserInfoInfo userInfoInfo = userInfo.get(0).getmInfo().getUserInfoInfo();
+        uid = userInfoInfo.getUid();
+        incommunity = userInfoInfo.getIncommunity();
+
         //初始化数据
         initCommunity();
         //切换小区
@@ -106,9 +116,11 @@ public class HomeLoginFragment extends BaseFragment {
         homeLoginItemheadIvDynamicselect = (ImageView) header.findViewById(R.id.home_login_itemhead_iv_dynamicselect);
         final ImageView homeLoginCommunityDetail = (ImageView) header.findViewById(R.id.home_login_community_detail);
 
+
+
         List paramshead = new ArrayList<String>();
-        paramshead.add(2061 + "");//2061  2803
-        paramshead.add(5 + "");
+        paramshead.add(incommunity+"");//2061  2803
+        paramshead.add(uid+"");
         HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, paramshead, new ResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -142,8 +154,8 @@ public class HomeLoginFragment extends BaseFragment {
         homeLoginItemHomeheadRlv.setItemAnimator(new DefaultItemAnimator());
         //我的邻居
         List params = new ArrayList<String>();
-        params.add("2803");//2061  2803
-        params.add("8");
+        params.add(incommunity);//2061  2803
+        params.add(uid);
         params.add("1");
         //params.add("15551675396");//15551675396
         HttpUtils.post(Api.COMMUNITY, Api.Community.GETMEMBERLISTBYCOMMUNITY, params, new ResponseHandler() {
@@ -230,7 +242,7 @@ public class HomeLoginFragment extends BaseFragment {
                 startActivity(i);
             }
         });
-        dinamicGet("2061", "all");
+        dinamicGet(incommunity, "all");
     }
 
     String communityMemery;
@@ -278,7 +290,7 @@ public class HomeLoginFragment extends BaseFragment {
 
     private void switchCommunity() {
         List params0 = new ArrayList<String>();
-        params0.add("8");
+        params0.add(uid);
         //params.add("2061");//2061  2803
         HttpUtils.post(Api.USER, Api.User.GETUSERINFO, params0, new ResponseHandler() {
             @Override
@@ -305,7 +317,7 @@ public class HomeLoginFragment extends BaseFragment {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 List paramsSwich = new ArrayList<String>();
-                                paramsSwich.add("8");
+                                paramsSwich.add(uid);
                                 final String cmid = loginCommunities.get(0).getmList().getLoginCommunities().get(position).getCmid();
                                 paramsSwich.add(cmid);//2061  2803
                                 HttpUtils.post(Api.USER, Api.User.SWITCHCOMMUNITY, paramsSwich, new ResponseHandler() {

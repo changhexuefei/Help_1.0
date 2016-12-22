@@ -368,6 +368,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 			@Override
 			public void onSuccess(String response, int id) {
+				SPUtils.put(MainActivity.this,"userDetail", response);
 				final ArrayList<MDate> loginCommunities = Resovle.getUserInfo(response);
 				String incommunitystr = loginCommunities.get(0).getmInfo().getUserInfoInfo().getIncommunity();
 				String incommunitynumstr = loginCommunities.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();
