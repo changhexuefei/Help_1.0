@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
@@ -93,7 +92,6 @@ public class HomeUnLoginFragment extends BaseFragment {
         ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
         UserInfoInfo userInfoInfo = userInfo.get(0).getmInfo().getUserInfoInfo();
         String uid = userInfoInfo.getUid();
-
         List params = new ArrayList<String>();
         //params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
         params.add("0");
@@ -123,22 +121,18 @@ public class HomeUnLoginFragment extends BaseFragment {
         });
 
     }
-
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home_un_login;
     }
-
     @Override
     public String getC() {
         return null;
     }
-
     @Override
     public String getA() {
         return null;
     }
-
     @OnClick({R.id.home_image_location, R.id.homeimage_search})
     public void onClick(View view) {
         switch (view.getId()) {

@@ -50,9 +50,6 @@ import static com.hyzsnt.onekeyhelp.utils.JsonUtils.isSuccess;
  */
 
 public class StrollFragment extends BaseFragment {
-	//创建圈子按钮
-	@BindView(R.id.im_create_circle)
-	ImageView mImCreateCircle;
 	//搜索圈子按钮
 	@BindView(R.id.im_stroll_seek)
 	ImageView mImStrollSeek;

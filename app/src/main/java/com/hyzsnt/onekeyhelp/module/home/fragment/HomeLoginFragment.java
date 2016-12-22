@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,6 @@ import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 import com.hyzsnt.onekeyhelp.module.index.activity.MyNeighborListActivity;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
-import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,18 +85,15 @@ public class HomeLoginFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
-        String userDetail = (String) SPUtils.get(getActivity(), "userDetail", "");
+        String userDetail = (String) SPUtils.get(getActivity(),"userDetail", "");
         ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
         UserInfoInfo userInfoInfo = userInfo.get(0).getmInfo().getUserInfoInfo();
         uid = userInfoInfo.getUid();
         incommunity = userInfoInfo.getIncommunity();
-
         //初始化数据
         initCommunity();
         //切换小区
         switchCommunity();
-
-
     }
 
     private void initCommunity() {
@@ -118,8 +113,6 @@ public class HomeLoginFragment extends BaseFragment {
         homeLoginItemHeadTvNeighbor = (TextView) header.findViewById(R.id.home_login_item_head_tv_neighbor);
         homeLoginItemheadIvDynamicselect = (ImageView) header.findViewById(R.id.home_login_itemhead_iv_dynamicselect);
         final ImageView homeLoginCommunityDetail = (ImageView) header.findViewById(R.id.home_login_community_detail);
-
-
         List paramshead = new ArrayList<String>();
         paramshead.add(incommunity + "");//2061  2803
         paramshead.add(uid + "");
@@ -142,7 +135,6 @@ public class HomeLoginFragment extends BaseFragment {
                     }
                 });
             }
-
             @Override
             public void inProgress(float progress, long total, int id) {
             }
@@ -165,7 +157,6 @@ public class HomeLoginFragment extends BaseFragment {
             @Override
             public void onError(Call call, Exception e, int id) {
             }
-
             @Override
             public void onSuccess(String response, int id) {
                 final ArrayList<MDate> memberListByCommunity = Resovle.getMemberListByCommunity(response);
@@ -246,7 +237,6 @@ public class HomeLoginFragment extends BaseFragment {
         });
         dinamicGet(incommunity, "all");
     }
-
     String communityMemery;
     String swichMemery;
 

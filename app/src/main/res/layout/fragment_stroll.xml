@@ -7,29 +7,17 @@
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/dp_48"
-		android:background="@color/colorReseda"
-		>
+		android:background="@color/colorReseda">
 
-		<ImageView
+		<TextView
 			android:id="@+id/im_create_circle"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
-			android:paddingLeft="@dimen/dp_18"
-			android:paddingRight="@dimen/dp_6"
-
-			android:paddingBottom="@dimen/dp_10"
-			android:paddingTop="@dimen/dp_10"
-			android:src="@mipmap/stroll_create"
-			/>
-
-		<TextView
-			android:id="@+id/tv_create_circle"
-			android:layout_width="wrap_content"
-			android:layout_height="@dimen/dp_22"
-			android:layout_centerVertical="true"
-			android:layout_toRightOf="@+id/im_create_circle"
+			android:drawableLeft="@mipmap/stroll_create"
+			android:drawablePadding="8dp"
 			android:gravity="center_vertical"
+			android:padding="11dp"
 			android:text="@string/stroll_circle_create"
 			android:textColor="@color/color_ff"
 			android:textSize="@dimen/sp_14"/>
@@ -42,7 +30,7 @@
 			android:layout_centerVertical="true"
 			android:layout_gravity="center_horizontal"
 			android:text="@string/stroll_title"
-			android:textColor="@color/color_ff"
+			android:textColor="@color/white"
 			android:textSize="16sp"
 
 			/>
@@ -53,10 +41,7 @@
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
-			android:paddingRight="@dimen/dp_18"
-			android:paddingLeft="@dimen/dp_18"
-			android:paddingBottom="@dimen/dp_10"
-			android:paddingTop="@dimen/dp_10"
+			android:padding="15dp"
 			android:src="@drawable/home_image_search"/>
 
 	</RelativeLayout>
@@ -100,9 +85,9 @@
 					android:layout_height="match_parent"
 					android:layout_weight="1"
 					android:background="@drawable/skip_btn_on_bg"
+					android:clickable="true"
 					android:gravity="center"
 					android:text="周边"
-				    android:clickable="true"
 					/>
 
 				<TextView
@@ -116,10 +101,10 @@
 			</LinearLayout>
 
 			<com.hyzsnt.onekeyhelp.module.stroll.widget.CustomExpandaleListView
-				android:divider="@null"
 				android:id="@+id/ex_circle_fragment"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				android:divider="@null"
 				android:groupIndicator="@null"
 				></com.hyzsnt.onekeyhelp.module.stroll.widget.CustomExpandaleListView>
 		</LinearLayout>

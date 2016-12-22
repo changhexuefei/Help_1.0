@@ -42,10 +42,9 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
-			android:layout_marginRight="@dimen/dp_14"
+			android:padding="@dimen/dp_15"
 			android:src="@drawable/home_image_search"/>
 	</LinearLayout>
-
 
 	<com.github.jdsjlzx.recyclerview.LRecyclerView
 		android:id="@+id/home_lrv"

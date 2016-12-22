@@ -13,7 +13,8 @@
         <RelativeLayout
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50">
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+
                 android:layout_width="@dimen/dp_50"
                 android:layout_height="@dimen/dp_50"
                 android:src="@drawable/img"
