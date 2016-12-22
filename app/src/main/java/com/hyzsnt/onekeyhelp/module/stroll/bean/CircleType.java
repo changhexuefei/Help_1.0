@@ -82,6 +82,16 @@ public class CircleType {
 			this.tagname = tagname;
 		}
 
+		@Override
+		public String toString() {
+			return "ListEntry{" +
+					"tagdesc='" + tagdesc + '\'' +
+					", tagid='" + tagid + '\'' +
+					", tagname='" + tagname + '\'' +
+					", isselect=" + isselect +
+					'}';
+		}
+
 		public void setTagdesc(String tagdesc) {
 			this.tagdesc = tagdesc;
 		}

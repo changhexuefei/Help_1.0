@@ -8,9 +8,10 @@ import java.util.List;
 
 public class ContactInfoBean {
 
+
 	/**
 	 * info : []
-	 * list : [{"emlid":"3","linkerphoneno":"13635676978","linkeruid":"0","uid":"5"},{"emlid":"4","linkerphoneno":"13635676978","linkeruid":"0","uid":"5"},{"emlid":"5","linkerphoneno":"15210016348","linkeruid":"0","uid":"5"},{"emlid":"6","linkerphoneno":"18298115431","linkeruid":"0","uid":"5"},{"emlid":"7","linkerphoneno":"15555826656","linkeruid":"0","uid":"5"}]
+	 * list : [{"emlid":"1","headportraid":"0","linkerdesc":"666","linkername":"陈宇勋","linkerphoneno":"18516521194","linkeruid":"0","nickname":"陈宇勋","uid":"5"}]
 	 * res : 1
 	 * restr :
 	 */
@@ -54,15 +55,23 @@ public class ContactInfoBean {
 
 	public static class ListBean {
 		/**
-		 * emlid : 3
-		 * linkerphoneno : 13635676978
+		 * emlid : 1
+		 * headportraid : 0
+		 * linkerdesc : 666
+		 * linkername : 陈宇勋
+		 * linkerphoneno : 18516521194
 		 * linkeruid : 0
+		 * nickname : 陈宇勋
 		 * uid : 5
 		 */
 
 		private String emlid;
+		private String headportraid;
+		private String linkerdesc;
+		private String linkername;
 		private String linkerphoneno;
 		private String linkeruid;
+		private String nickname;
 		private String uid;
 
 		public String getEmlid() {
@@ -71,6 +80,30 @@ public class ContactInfoBean {
 
 		public void setEmlid(String emlid) {
 			this.emlid = emlid;
+		}
+
+		public String getHeadportraid() {
+			return headportraid;
+		}
+
+		public void setHeadportraid(String headportraid) {
+			this.headportraid = headportraid;
+		}
+
+		public String getLinkerdesc() {
+			return linkerdesc;
+		}
+
+		public void setLinkerdesc(String linkerdesc) {
+			this.linkerdesc = linkerdesc;
+		}
+
+		public String getLinkername() {
+			return linkername;
+		}
+
+		public void setLinkername(String linkername) {
+			this.linkername = linkername;
 		}
 
 		public String getLinkerphoneno() {
@@ -87,6 +120,14 @@ public class ContactInfoBean {
 
 		public void setLinkeruid(String linkeruid) {
 			this.linkeruid = linkeruid;
+		}
+
+		public String getNickname() {
+			return nickname;
+		}
+
+		public void setNickname(String nickname) {
+			this.nickname = nickname;
 		}
 
 		public String getUid() {
