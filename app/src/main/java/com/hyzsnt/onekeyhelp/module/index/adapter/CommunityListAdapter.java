@@ -1,6 +1,7 @@
 package com.hyzsnt.onekeyhelp.module.index.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ public class CommunityListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public void setCommunityLists(List<CommunityList.ListBean> communityLists) {
         mCommunityLists = communityLists;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -41,10 +43,15 @@ public class CommunityListAdapter extends RecyclerView.Adapter<RecyclerView.View
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             Glide.with(App.getContext()).load(R.drawable.test).into(itemViewHolder.mSeekCurcumHeadportrait);
             itemViewHolder.mSeekCurcumHeadportrait.setImageResource(R.drawable.test);
-            double dis = Double.parseDouble(mCommunityLists.get(position).getDistance());
-            DecimalFormat df = new DecimalFormat("######0"); //四色五入转换成整数
-            String distance = df.format(dis);
-            itemViewHolder.tv_community_distance.setText(distance+" 米");
+            String distance1 = mCommunityLists.get(position).getDistance();
+            if(distance1!=null){
+                double dis = Double.parseDouble(distance1);
+                Log.d("dis",dis+"");
+                DecimalFormat df = new DecimalFormat("######0"); //四色五入转换成整数
+                String distance = df.format(dis);
+                itemViewHolder.tv_community_distance.setText(distance+" 米");
+            }
+
             itemViewHolder.tv_community_name.setText(mCommunityLists.get(position).getCmname());
 //            itemViewHolder.homeIvDetail.setImageResource(mCommunityLists.get(position).getNeighborSexIcon());
         }

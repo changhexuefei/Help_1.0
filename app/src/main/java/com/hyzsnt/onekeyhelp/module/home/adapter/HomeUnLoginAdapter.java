@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,16 +16,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.hyzsnt.onekeyhelp.MainActivity;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.home.bean.CommunityListList;
 import com.hyzsnt.onekeyhelp.module.home.bean.HomeCircle;
+import com.hyzsnt.onekeyhelp.module.home.bean.LoginCommunity;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.bean.UserInfoInfo;
+import com.hyzsnt.onekeyhelp.module.home.fragment.HomeLoginFragment;
+import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 import com.hyzsnt.onekeyhelp.utils.BitmapUtils;
+import com.hyzsnt.onekeyhelp.utils.SPUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -40,9 +47,16 @@ import okhttp3.Call;
 public class HomeUnLoginAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private ArrayList<MDate> dates = new ArrayList<>();
-
+    private String uid;
+    private MainActivity activity;
     public HomeUnLoginAdapter(Context mContext) {
         this.mContext = mContext;
+        activity = (MainActivity) mContext;
+
+        String userDetail = (String) SPUtils.get(mContext, "userDetail", "");
+        ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+        UserInfoInfo userInfoInfo = userInfo.get(0).getmInfo().getUserInfoInfo();
+        uid = userInfoInfo.getUid();
 
     }
 
@@ -63,6 +77,7 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CommunityListList communityListList = dates.get(0).getmList().getCommunityListLists().get(position);
+        final String cmid = communityListList.getCmid();
         if (getItemViewType(position) == 0) {
             if (holder instanceof HomeViewHolder1) {
                 ((HomeViewHolder1) holder).homeUnListTvCmanem.setText(communityListList.getCmname());
@@ -72,31 +87,34 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(View v) {
                         List params = new ArrayList<String>();
-                        params.add(5 + "");
-                        params.add(2061 + "");//2061  2803
+                        params.add(uid);
+                        params.add(cmid);//2061  2803
                         HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY, new ResponseHandler() {
                             @Override
                             public void onError(Call call, Exception e, int id) {
-
                             }
-
                             @Override
                             public void onSuccess(String response, int id) {
+                                Log.e("444444400000000",response+"--"+cmid+"---"+uid);
                                 ArrayList<MDate> joinCommunity = Resovle.getJoinCommunity(response);
                                 String res = joinCommunity.get(0).getRes();
                                 if("0".equals(res)){
                                     ToastUtils.showLong(mContext,"加入失败" );
                                 }else if("1".equals(res)){
+                                    activity.checkJoinComunnity();
+                                    //修改用户信息
+                                    writeUser();
                                     //查询小区信息
                                     List paramsDetail = new ArrayList<String>();
-                                    paramsDetail.add(2061 + "");//2061  2803
-                                    paramsDetail.add(5 + "");
+                                    paramsDetail.add(cmid);//2061  2803
+                                    paramsDetail.add(uid);
                                     HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, paramsDetail, new ResponseHandler() {
                                         @Override
                                         public void onError(Call call, Exception e, int id) {
                                         }
                                         @Override
                                         public void onSuccess(String response, int id) {
+
                                             ArrayList<MDate> communityInfoList = Resovle.getCommunityInfo(response);
                                             Bundle bundle = new Bundle();
                                             bundle.putSerializable("communityInfoList", communityInfoList);
@@ -157,15 +175,13 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
                     ((HomeViewHolder1) holder).rl1.setVisibility(View.GONE);
                     ((HomeViewHolder1) holder).rl2.setVisibility(View.GONE);
                 }
-
-
                 ((HomeViewHolder1) holder).homeIvDetail.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         //查询小区信息
                         List params = new ArrayList<String>();
-                        params.add(2061 + "");//2061  2803
-                        params.add(5 + "");
+                        params.add(cmid);//2061  2803
+                        params.add(uid);
                         HttpUtils.post(Api.COMMUNITY, Api.Community.GETCOMMUNITYINFO, params, new ResponseHandler() {
                             @Override
                             public void onError(Call call, Exception e, int id) {
@@ -192,6 +208,30 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
         } else {
 
         }
+    }
+
+    private void writeUser() {
+        String userDetail = (String) SPUtils.get(mContext,"userDetail","");
+        ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+        String uid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
+        List params0 = new ArrayList<String>();
+        params0.add(uid);
+        HttpUtils.post(Api.USER, Api.User.GETUSERINFO, params0, new ResponseHandler() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+            }
+
+            @Override
+            public void onSuccess(String response, int id) {
+                SPUtils.put(mContext, "userDetail", response);
+
+            }
+
+            @Override
+            public void inProgress(float progress, long total, int id) {
+            }
+        });
+
     }
 
     @Override
@@ -247,7 +287,6 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
             rl2 = (RelativeLayout) itemView.findViewById(R.id.rl2);
         }
     }
-
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {

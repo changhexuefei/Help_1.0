@@ -1,55 +1,141 @@
 package com.hyzsnt.onekeyhelp.module.user.bean;
 
+import java.util.List;
+
 /**
  * Created by 14369 on 2016/12/21.
  */
 
 public class ContactInfoBean {
 
-	private String name;
-	private String phone;
-	private String icon;
 
+	/**
+	 * info : []
+	 * list : [{"emlid":"1","headportraid":"0","linkerdesc":"666","linkername":"陈宇勋","linkerphoneno":"18516521194","linkeruid":"0","nickname":"陈宇勋","uid":"5"}]
+	 * res : 1
+	 * restr :
+	 */
 
-	public ContactInfoBean(String name, String phone, String icon) {
-		this.name = name;
-		this.phone = phone;
-		this.icon = icon;
+	private int res;
+	private String restr;
+	private List<?> info;
+	private List<ListBean> list;
+
+	public int getRes() {
+		return res;
 	}
 
-	public ContactInfoBean() {
+	public void setRes(int res) {
+		this.res = res;
 	}
 
-	@Override
-	public String toString() {
-		return "ContactInfoBean{" +
-				"name='" + name + '\'' +
-				", phone='" + phone + '\'' +
-				", icon='" + icon + '\'' +
-				'}';
+	public String getRestr() {
+		return restr;
 	}
 
-	public String getName() {
-		return name;
+	public void setRestr(String restr) {
+		this.restr = restr;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public List<?> getInfo() {
+		return info;
 	}
 
-	public String getPhone() {
-		return phone;
+	public void setInfo(List<?> info) {
+		this.info = info;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public List<ListBean> getList() {
+		return list;
 	}
 
-	public String getIcon() {
-		return icon;
+	public void setList(List<ListBean> list) {
+		this.list = list;
 	}
 
-	public void setIcon(String icon) {
-		this.icon = icon;
+	public static class ListBean {
+		/**
+		 * emlid : 1
+		 * headportraid : 0
+		 * linkerdesc : 666
+		 * linkername : 陈宇勋
+		 * linkerphoneno : 18516521194
+		 * linkeruid : 0
+		 * nickname : 陈宇勋
+		 * uid : 5
+		 */
+
+		private String emlid;
+		private String headportraid;
+		private String linkerdesc;
+		private String linkername;
+		private String linkerphoneno;
+		private String linkeruid;
+		private String nickname;
+		private String uid;
+
+		public String getEmlid() {
+			return emlid;
+		}
+
+		public void setEmlid(String emlid) {
+			this.emlid = emlid;
+		}
+
+		public String getHeadportraid() {
+			return headportraid;
+		}
+
+		public void setHeadportraid(String headportraid) {
+			this.headportraid = headportraid;
+		}
+
+		public String getLinkerdesc() {
+			return linkerdesc;
+		}
+
+		public void setLinkerdesc(String linkerdesc) {
+			this.linkerdesc = linkerdesc;
+		}
+
+		public String getLinkername() {
+			return linkername;
+		}
+
+		public void setLinkername(String linkername) {
+			this.linkername = linkername;
+		}
+
+		public String getLinkerphoneno() {
+			return linkerphoneno;
+		}
+
+		public void setLinkerphoneno(String linkerphoneno) {
+			this.linkerphoneno = linkerphoneno;
+		}
+
+		public String getLinkeruid() {
+			return linkeruid;
+		}
+
+		public void setLinkeruid(String linkeruid) {
+			this.linkeruid = linkeruid;
+		}
+
+		public String getNickname() {
+			return nickname;
+		}
+
+		public void setNickname(String nickname) {
+			this.nickname = nickname;
+		}
+
+		public String getUid() {
+			return uid;
+		}
+
+		public void setUid(String uid) {
+			this.uid = uid;
+		}
 	}
 }

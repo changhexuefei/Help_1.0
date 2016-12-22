@@ -22,6 +22,7 @@ import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.utils.InPutUtils;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
 
 import org.json.JSONException;
@@ -78,6 +79,8 @@ public class AddContactActivity extends BaseActivity {
 		if ((!TextUtils.isEmpty(mUid)) && InPutUtils.isMobilePhone(phone)) {
 			params.add(mUid);
 			params.add(phone);
+			params.add(mEtAddContactName.getText().toString());
+			params.add(mEtAddContactNote.getText().toString());
 		} else {
 			Toast.makeText(AddContactActivity.this, "手机号码不正确！", Toast.LENGTH_SHORT).show();
 			return;
@@ -90,12 +93,14 @@ public class AddContactActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess(String response, int id) {
+				LogUtils.e("onSuccess:" + response);
 				if (JsonUtils.isSuccess(response)) {
 					try {
 						JSONObject object = new JSONObject(response);
 						String res = object.getString("res");
 						if ("1".equals(res)) {
 							Toast.makeText(AddContactActivity.this, "添加成功！", Toast.LENGTH_SHORT).show();
+							AddContactActivity.this.finish();
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();

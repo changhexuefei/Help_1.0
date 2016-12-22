@@ -70,36 +70,39 @@ public class CompoundInfoActivity extends BaseActivity {
             mCompoundInfo.setText(Compound.getSummary());
             mCompoundIcon.setImageResource(R.drawable.img);
             mCompoundPeopleNum.setText(Compound.getCurnum() + " 人");
+            if(mDate.size()>0){
+                if(mDate.get(0).getmList().getCommunityInfoLists().size()>0){
+                    if (mDate.get(0).getmList().getCommunityInfoLists().size() == 3) {
+                        //街道办信息
+                        CommunityInfoList mSubdistrict = mDate.get(0).getmList().getCommunityInfoLists().get(0);
+                        mSubdistrictName.setText(mSubdistrict.getName());
+                        mSubdistrictAddress.setText(mSubdistrict.getAddress());
+                        mSubdistrictPhone.setText(mSubdistrict.getTelno());
 
-            if (mDate.get(0).getmList().getCommunityInfoLists().size() == 3) {
+                        //物业公司信息
+                        CommunityInfoList mEstate = mDate.get(0).getmList().getCommunityInfoLists().get(1);
+                        mEstateAddress.setText(mEstate.getAddress());
+                        mEstateInfo.setText(mEstate.getSummary());
+                        mEstateName.setText(mEstate.getName());
+                        mEstatePhone.setText(mEstate.getTelno());
 
-                //街道办信息
-                CommunityInfoList mSubdistrict = mDate.get(0).getmList().getCommunityInfoLists().get(0);
-                mSubdistrictName.setText(mSubdistrict.getName());
-                mSubdistrictAddress.setText(mSubdistrict.getAddress());
-                mSubdistrictPhone.setText(mSubdistrict.getTelno());
+                        //其他机构信息
+                        CommunityInfoList mOther = mDate.get(0).getmList().getCommunityInfoLists().get(2);
+                        mOtherAddress.setText(mOther.getAddress());
+                        mOtherName.setText(mOther.getName());
+                        mOtherPhone.setText(mOther.getTelno());
+                        mOtherInfo.setText(mOther.getSummary());
+                    } else {
+                        //街道办信息
+                        CommunityInfoList mSubdistrict = mDate.get(0).getmList().getCommunityInfoLists().get(0);
+                        mSubdistrictName.setText(mSubdistrict.getName());
+                        mSubdistrictAddress.setText(mSubdistrict.getAddress());
+                        mSubdistrictPhone.setText(mSubdistrict.getTelno());
 
-                //物业公司信息
-                CommunityInfoList mEstate = mDate.get(0).getmList().getCommunityInfoLists().get(1);
-                mEstateAddress.setText(mEstate.getAddress());
-                mEstateInfo.setText(mEstate.getSummary());
-                mEstateName.setText(mEstate.getName());
-                mEstatePhone.setText(mEstate.getTelno());
-
-                //其他机构信息
-                CommunityInfoList mOther = mDate.get(0).getmList().getCommunityInfoLists().get(2);
-                mOtherAddress.setText(mOther.getAddress());
-                mOtherName.setText(mOther.getName());
-                mOtherPhone.setText(mOther.getTelno());
-                mOtherInfo.setText(mOther.getSummary());
-            } else {
-                //街道办信息
-                CommunityInfoList mSubdistrict = mDate.get(0).getmList().getCommunityInfoLists().get(0);
-                mSubdistrictName.setText(mSubdistrict.getName());
-                mSubdistrictAddress.setText(mSubdistrict.getAddress());
-                mSubdistrictPhone.setText(mSubdistrict.getTelno());
-
+                    }
+                }
             }
+
         }
 
 
