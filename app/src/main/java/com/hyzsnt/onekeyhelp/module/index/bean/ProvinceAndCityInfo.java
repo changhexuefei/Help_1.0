@@ -51,4 +51,14 @@ public class ProvinceAndCityInfo {
 
     public ProvinceAndCityInfo() {
     }
+
+    @Override
+    public String toString() {
+        return "ProvinceAndCityInfo{" +
+                "provinceID='" + provinceID + '\'' +
+                ", provinceName='" + provinceName + '\'' +
+                ", cityID='" + cityID + '\'' +
+                ", cityName='" + cityName + '\'' +
+                '}';
+    }
 }
