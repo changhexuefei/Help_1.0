@@ -77,6 +77,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	FrameLayout mFlMainContent;
 	@BindView(R.id.btn_sos)
 	Button mBtnSos;
+	private boolean isHome = true;
 	private boolean isJoinCommunity = false;
 
 	/**
@@ -106,7 +107,11 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
-		checkJoinComunnity();
+		if(isHome){
+			checkJoinComunnity();
+			isHome=false;
+		}
+
 		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
 		initLocation();
 		SharedPreferences sp = getSharedPreferences("tags", Context.MODE_PRIVATE);
@@ -239,6 +244,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 					}
 					transaction.show(mHomeUnLoginFragment);
 				}
+				isHome=true;
 				break;
 			case R.id.rb_main_stroll:
 				if (mStrollFragment == null) {
