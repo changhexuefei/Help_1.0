@@ -8,11 +8,13 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -21,6 +23,7 @@ import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
+import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.help.activity.HelpActivity;
 import com.hyzsnt.onekeyhelp.module.help.bean.LocationInfo;
@@ -30,6 +33,7 @@ import com.hyzsnt.onekeyhelp.module.home.fragment.HomeLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.inner.IjoinCommunnity;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
+import com.hyzsnt.onekeyhelp.module.index.bean.LocationBean;
 import com.hyzsnt.onekeyhelp.module.login.activity.LoginActivity;
 import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
@@ -47,6 +51,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -56,7 +61,7 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener, IjoinCommunnity ,Serializable{
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, BDLocationListener, IjoinCommunnity, Serializable {
 	public static final int START_HELP = 1;
 	@BindView(R.id.rb_main_home)
 	RadioButton mRbMainHome;
@@ -92,6 +97,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	 */
 	private UserFragment mUserFragment;
 	private LocationService mLocationService;
+	private String mUid;
 
 	@Override
 	protected int getLayoutId() {
@@ -100,6 +106,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
+		String userDetail = (String) SPUtils.get(this, "userDetail", "");
+		ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+		mUid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
 		checkJoinComunnity();
 		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
 		initLocation();
@@ -173,6 +182,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				})
 				.show();
 	}
+
 	@OnPermissionDenied({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
 	public void showDeniedForLocation() {
 		ToastUtils.showShort(this, "您已经拒绝一键帮助获取定位权限，部分功能将无法正常使用！");
@@ -331,24 +341,50 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	}
 
 	@Override
-	public void onReceiveLocation(BDLocation bdLocation) {
-		LocationInfo location;
+	public void onReceiveLocation(final BDLocation bdLocation) {
+		final LocationInfo location;
 		if (App.getLocation() != null) {
 			location = App.getLocation();
 		} else {
 			location = new LocationInfo();
 		}
-		double latitude = bdLocation.getLatitude();
-		double longitude = bdLocation.getLongitude();
+		final double latitude = bdLocation.getLatitude();
+		final double longitude = bdLocation.getLongitude();
 		if ((latitude + "").contains("E") || (latitude + "").contains("E")) {
 			return;
 		}
-		location.setLatitude(latitude);
-		location.setLongitude(longitude);
-		location.setLocType(bdLocation.getLocType());
-		location.setTime(bdLocation.getTime());
-		location.setAddrStr(bdLocation.getAddrStr());
-		App.setLocation(location);
+		List<String> params = new ArrayList<>();
+		params.add(mUid);
+		params.add(bdLocation.getLatitude() + "");
+		params.add(bdLocation.getLongitude() + "");
+		params.add(bdLocation.getAddrStr());
+		params.add(JPushInterface.getRegistrationID(this));
+		HttpUtils.post(Api.PUBLIC, Api.Public.SUBMITCOORDINATE, params, new JsonResponseHandler() {
+			@Override
+			public void onError(Call call, Exception e, int id) {
+				Toast.makeText(MainActivity.this, "网络连接失败！", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onSuccess(String response, int id) {
+				LogUtils.e("List_onSuccess:" + response);
+				if (JsonUtils.isSuccess(response)) {
+					Log.e("TAG", "上报位置成功！");
+					LocationBean bean = new Gson().fromJson(response, LocationBean.class);
+					location.setLatitude(latitude);
+					location.setLongitude(longitude);
+					location.setLocType(bdLocation.getLocType());
+					location.setTime(bdLocation.getTime());
+					location.setAddrStr(bean.getInfo().getPosition());
+					location.setRegid(bean.getInfo().getRegid());
+					location.setRegname(bean.getInfo().getRegname());
+					App.setLocation(location);
+					mHomeUnLoginFragment.setTitle(location.getAddrStr());
+				} else {
+					Toast.makeText(MainActivity.this, "请求错误：" + JsonUtils.getErrorMessage(response), Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 	}
 
 	/**
@@ -356,7 +392,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	 */
 	@Override
 	public void checkJoinComunnity() {
-		String userDetail = (String) SPUtils.get(this, "userDetail","");
+		String userDetail = (String) SPUtils.get(this, "userDetail", "");
 		ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
 		String uid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
 		List params0 = new ArrayList<String>();
@@ -368,6 +404,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 			@Override
 			public void onSuccess(String response, int id) {
+				SPUtils.put(MainActivity.this, "userDetail", response);
 				final ArrayList<MDate> loginCommunities = Resovle.getUserInfo(response);
 				String incommunitystr = loginCommunities.get(0).getmInfo().getUserInfoInfo().getIncommunity();
 				String incommunitynumstr = loginCommunities.get(0).getmInfo().getUserInfoInfo().getIncommunitynum();

@@ -130,6 +130,28 @@ public class Api {
 		 * 获取圈子标签
 		 */
 		public static final String GETCIRCLETAGS = "getCircleTags";
+		/**
+		 * 上报用户位置
+		 * a:submitCoordinate
+		 * p:	用户ID
+		 * 纬度
+		 * 经度
+		 * 百度地图翻译地址
+		 * 设备绑定号
+		 * return：
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":		//
+		 * {
+		 * "position"=>位置描述,
+		 * "regid"=>行政区域ID,
+		 * "regname"=>行政区域名称
+		 * },
+		 * "list":""	//
+		 * }
+		 */
+		public static final String SUBMITCOORDINATE = "submitCoordinate";
 	}
 
 	/**
