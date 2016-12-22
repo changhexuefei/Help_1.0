@@ -315,6 +315,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		super.onResume();
 		if(isHome){
 			checkJoinComunnity();
+			isHome=false;
 		}
 		if (App.code == 1) {
 			mRgMainBottom.check(R.id.rb_main_home);
