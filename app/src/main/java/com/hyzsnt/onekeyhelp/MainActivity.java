@@ -348,11 +348,16 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		} else {
 			location = new LocationInfo();
 		}
-		final double latitude = bdLocation.getLatitude();
-		final double longitude = bdLocation.getLongitude();
+		double latitude = bdLocation.getLatitude();
+		double longitude = bdLocation.getLongitude();
 		if ((latitude + "").contains("E") || (latitude + "").contains("E")) {
 			return;
 		}
+		location.setLatitude(latitude);
+		location.setLongitude(longitude);
+		location.setLocType(bdLocation.getLocType());
+		location.setTime(bdLocation.getTime());
+		location.setAddrStr(bdLocation.getAddrStr());
 		List<String> params = new ArrayList<>();
 		params.add(mUid);
 		params.add(bdLocation.getLatitude() + "");
@@ -371,20 +376,15 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 				if (JsonUtils.isSuccess(response)) {
 					Log.e("TAG", "上报位置成功！");
 					LocationBean bean = new Gson().fromJson(response, LocationBean.class);
-					location.setLatitude(latitude);
-					location.setLongitude(longitude);
-					location.setLocType(bdLocation.getLocType());
-					location.setTime(bdLocation.getTime());
-					location.setAddrStr(bean.getInfo().getPosition());
 					location.setRegid(bean.getInfo().getRegid());
 					location.setRegname(bean.getInfo().getRegname());
-					App.setLocation(location);
-					mHomeUnLoginFragment.setTitle(location.getAddrStr());
 				} else {
 					Toast.makeText(MainActivity.this, "请求错误：" + JsonUtils.getErrorMessage(response), Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
+		App.setLocation(location);
+		mHomeUnLoginFragment.setTitle(location.getAddrStr());
 	}
 
 	/**
