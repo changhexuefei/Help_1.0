@@ -1,13 +1,10 @@
 package com.hyzsnt.onekeyhelp.module.stroll.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
@@ -54,30 +50,41 @@ import static com.hyzsnt.onekeyhelp.utils.JsonUtils.isSuccess;
  */
 
 public class StrollFragment extends BaseFragment {
-
+	//创建圈子按钮
 	@BindView(R.id.im_create_circle)
 	ImageView mImCreateCircle;
+	//搜索圈子按钮
 	@BindView(R.id.im_stroll_seek)
 	ImageView mImStrollSeek;
+	//头部的图片横行展示
 	@BindView(R.id.re_stroll_header_list)
 	RecyclerView mReStrollHeaderList;
+	//周边切换按钮
 	@BindView(R.id.tv_stroll_fragment_round)
 	TextView mTvStrollFragmentRound;
+	//我的切换按钮
 	@BindView(R.id.tv_stroll_fragment_me)
 	TextView mTvStrollFragmentMe;
+	//圈子列表展示
 	@BindView(R.id.ex_circle_fragment)
 	CustomExpandaleListView mExCircleFragment;
 	@BindView(R.id.scrollView)
 	ScrollView mScrollView;
 	//实例化热门圈子类
 	CircleHotTag hotTagData = null;
+	//头部的图片横行展示适配器
 	private StrollHeaderAdapter mAdapter;
+	//圈子列表展示适配器
 	private CircleFragmentAdapter mMCircleFragmentAdapter;
+	//圈子对象
 	private CircleRound mRound;
-
+	//经度
 	private String mLat;
+	//纬度
 	private String mLon;
+	//加入小区的条目数
 	private String mIncommunitynum;
+	//用户id
 	private String mUid;
 	private ArrayList<MDate> mUserInfo;
 
@@ -94,13 +101,10 @@ public class StrollFragment extends BaseFragment {
 	protected void initData(String content) {
 		//获取用户信息
 		getUserinfo();
-
 		//热门圈子
 		HotTags(content);
-		//获取周边信息
+		//初始化获取周边信息
 		CircleRound();
-		mScrollView.smoothScrollTo(0,20);
-
 	}
 
 	@Override
@@ -126,16 +130,19 @@ public class StrollFragment extends BaseFragment {
 				mActivity.startActivity(new Intent(mActivity, CreateCircleActivity.class));
 				break;
 			case R.id.im_stroll_seek:
-				//跳转到创建圈子页面
+				//跳转到搜索圈子页面
 				mActivity.startActivity(new Intent(mActivity, SeekCircleActivity.class));
 				break;
-			case R.id.tv_stroll_fragment_round:
+			//点击周边按钮
+			case R.id.tv_stroll_fragment_round:{
+				//选中背景色的改变以及周边圈子数据的请求
 				mTvStrollFragmentRound.setBackgroundResource(R.drawable.skip_btn_on_bg);
 				mTvStrollFragmentMe.setBackgroundResource(R.drawable.skip_btn_nomal_bg);
-				CircleRound();
+				CircleRound();}
 				break;
+			//点击我的按钮
 			case R.id.tv_stroll_fragment_me:
-
+				//选中背景色的改变以及我的圈子数据的请求
 				mTvStrollFragmentRound.setBackgroundResource(R.drawable.skip_btn_nomal_bg);
 				mTvStrollFragmentMe.setBackgroundResource(R.drawable.skip_btn_on_bg);
 				CircleMe();
@@ -145,22 +152,24 @@ public class StrollFragment extends BaseFragment {
 
 	/**
 	 * 添加数据到热门标签
+	 * @param content 请求的数据
 	 */
 	public void HotTags(String content) {
 		//设置Recycleview横向排布
 		LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
 		layoutManager.setOrientation(LinearLayout.HORIZONTAL);
 		mReStrollHeaderList.setLayoutManager(layoutManager);
-		//解析数据
+		//判断请求数据是否正确
 		if (isSuccess(content)) {
+			//通过gson解析数据
 			Gson gson = new Gson();
 			hotTagData = gson.fromJson(content, CircleHotTag.class);
+			//添加数据到适配器
 			mAdapter.setdata(hotTagData.getList());
+			//热门标签添加适配器
 			mReStrollHeaderList.setAdapter(mAdapter);
-
 		} else {
 			String err = JsonUtils.getErrorMessage(content);
-			LogUtils.e(err);
 		}
 		//设置点击监听
 
@@ -172,9 +181,9 @@ public class StrollFragment extends BaseFragment {
 	public void CircleRound() {
 		//参数p
 		ArrayList<String> list1 = new ArrayList<>();
-		list1.add(mUid);
-		list1.add(mLat);
-		list1.add(mLon);
+		list1.add(mUid);//用户id
+		list1.add(mLat);//经度
+		list1.add(mLon);//纬度
 		list1.add("");
 		list1.add("");
 		//网络请求
@@ -183,16 +192,10 @@ public class StrollFragment extends BaseFragment {
 			public void onError(Call call, Exception e, int id) {
 
 			}
-
 			@Override
 			public void onSuccess(String response, int id) {
-
-				LogUtils.e("圈子"+response);
-
 				getdata(response);
-
 			}
-
 			@Override
 			public void inProgress(float progress, long total, int id) {
 
@@ -201,30 +204,23 @@ public class StrollFragment extends BaseFragment {
 	}
 
 	/**
-	 * 获取已加入圈子信息
+	 * 获取已加入圈子信息（我的）
 	 */
 	public void CircleMe() {
 		//参数p
 		ArrayList<String> list1 = new ArrayList<>();
-		list1.add(mUid);
-		list1.add(mLat);
-		list1.add(mLon);
+		list1.add(mUid);//用户id
+		list1.add(mLat);//经度
+		list1.add(mLon);//纬度
 		//请求数据
 		HttpUtils.post(Api.CIRCLE, Api.Circle.MELIST, list1, new ResponseHandler() {
 			@Override
 			public void onError(Call call, Exception e, int id) {
-
 			}
-
 			@Override
 			public void onSuccess(String response, int id) {
-
-                LogUtils.e("我的"+response);
 				getdata(response);
-
-
 			}
-
 			@Override
 			public void inProgress(float progress, long total, int id) {
 
@@ -252,7 +248,9 @@ public class StrollFragment extends BaseFragment {
 					//解析全部的数据
 					Gson gson = new Gson();
 					mRound = gson.fromJson(response, CircleRound.class);
+					//添加数据到适配器
 					mMCircleFragmentAdapter.setdata(mRound.getList());
+					//圈子列表
 					mExCircleFragment.setAdapter(mMCircleFragmentAdapter);
 					//设置将ExpandableListView以展开的方式呈现
 					for (int i = 0; i < mMCircleFragmentAdapter.getGroupCount(); i++) {
@@ -260,44 +258,40 @@ public class StrollFragment extends BaseFragment {
 					}
 				} else {
 					ToastUtils.showShort(mActivity, "暂时没有圈子");
+					//清除请求数据以便于周边/我的之间的切换
 					mRound.getList().clear();
 					mMCircleFragmentAdapter.notifyDataSetChanged();
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-
-
 		} else {
 			LogUtils.e("圈子列表请求数据失败");
 		}
 	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO: inflate a fragment view
-		View rootView = super.onCreateView(inflater, container, savedInstanceState);
-		ButterKnife.bind(this, rootView);
-		return rootView;
-	}
-
+	/**
+	 * 初始化控件
+	 * @param contentView
+	 */
 	@Override
 	protected void initView(View contentView) {
 		super.initView(contentView);
 		//添加适配器到Recycleview
 		mAdapter = new StrollHeaderAdapter(mActivity);
-
+		//热门标签的条目点击事件
 		mAdapter.setOnItemClickListener(new StrollHeaderAdapter.OnRecyclerViewItemClickListener() {
 			@Override
 			public void onItemClick(View view, int data) {
+				//跳转到搜索圈子进行收索
 				Intent intent = new Intent(mActivity, SeekCircleActivity.class);
+				//携带热门标签名称传递
 				intent.putExtra("tag", hotTagData.getList().get(data).getTagname());
 				startActivity(intent);
 			}
 		});
 		//添加适配器
 		mMCircleFragmentAdapter = new CircleFragmentAdapter(mActivity);
-
 		//设置group不能点击收缩
 		mExCircleFragment.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 			@Override
@@ -305,11 +299,12 @@ public class StrollFragment extends BaseFragment {
 				return true;
 			}
 		});
-		//子条目点击跳转
+		//子条目点击跳转到圈子的详情
 		mExCircleFragment.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 			@Override
 			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 				Intent intent = new Intent(mActivity, CircleDetailsActivity.class);
+				//圈子的id
 				intent.putExtra("ccid", mRound.getList().get(groupPosition).getCircle().get(childPosition).getCcid());
 				startActivity(intent);
 				return false;
@@ -320,7 +315,6 @@ public class StrollFragment extends BaseFragment {
 	/**
 	 * 获取用户信息
 	 */
-
 	public void getUserinfo(){
 		String userDetail = (String) SPUtils.get(mActivity, "userDetail", "");
 		//解析用户信息
@@ -331,7 +325,7 @@ public class StrollFragment extends BaseFragment {
 		mUid = mUserInfo.get(0).getmInfo().getUserInfoInfo().getUid();
 		//获取经度
 		mLat = String.valueOf(App.getLocation().getLatitude());
-		//获取维度
+		//获取纬度
 		mLon = String.valueOf(App.getLocation().getLongitude());
 	}
 }

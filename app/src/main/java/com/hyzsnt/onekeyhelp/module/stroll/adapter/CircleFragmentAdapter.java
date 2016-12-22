@@ -118,7 +118,7 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 
 		String flags =circles.getTags();
 		String[] flist = flags.split("\\|");
-           if(flist.length==3){
+           if(flist.length>=3){
 	           CircleType.ListEntry query = null;
 	           for(int j=0;j<queryall.size();j++){
 		           if(queryall.get(j).getTagid().equals(flist[2])){
@@ -134,7 +134,6 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 				CircleType.ListEntry query = null;
 				for(int j=0;j<queryall.size();j++){
 					if(queryall.get(j).getTagid().equals(flist[1])){
-						query= queryall.get(j);
 					}
 				}
 				childViewHolder.child_type_two.setText(query.getTagname());
@@ -153,10 +152,6 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 				myGrad.setColor(Color.parseColor(query.getTagdesc()));
 				childViewHolder.child_type_one.setVisibility(View.VISIBLE);
 			}
-
-
-
-
 		return view;
 	}
 
@@ -180,7 +175,5 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 		public TextView child_type_three;
 		public TextView child_num;
 		public TextView child_topic;
-
-
 	}
 }
