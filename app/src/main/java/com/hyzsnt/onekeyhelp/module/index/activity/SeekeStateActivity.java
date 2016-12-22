@@ -2,6 +2,7 @@ package com.hyzsnt.onekeyhelp.module.index.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -75,6 +76,9 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
     TextView tv_hotArea;
     @BindView(R.id.fuzzyList)
     LRecyclerView mComList;
+    @BindView(R.id.currentLocation)
+    TextView tv_currentLocation;
+
     List<CommunityList.ListBean> mCommunityLists;
     CommunityListAdapter mAdapter;
     ArrayList<HotAreaInfo> mHotAreaInfos;
@@ -99,13 +103,15 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
     private static final String AREA = "1";
     //用户ID
     private String userid = "";
-    //上级行政区域ID
+    //最高級上级行政区域ID
     private String regid = "100000";
     //条件集合
     List<String> parms = new ArrayList<>();
     private String lat;
     private String lon;
     private LRecyclerViewAdapter mLRecyclerViewAdapter;
+    private String mCityID;
+
 
     @Override
     protected int getLayoutId() {
@@ -113,18 +119,20 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
     }
 
     @Override
-    protected void initData() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
-        userid = (String) SPUtils.get(this, "uid", "");
+    }
+
+    @Override
+    protected void initData() {
+        userid = (String) SPUtils.get(this, "uid", "0");
         Log.d("ggg", userid);
         mAdapter = new CommunityListAdapter();
         mHotAreaInfos = new ArrayList<HotAreaInfo>();
         manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.myFragment, new SearchHotAreaFragment()).commit();
-
         getCurrentLocation();
-
-
     }
 
     /**
@@ -137,13 +145,16 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
             Log.d("lat", lat);
             lon = Double.toString(App.getLocation().getLongitude());
             Log.d("lon", lon);
-
+            mCityID = App.getLocation().getRegid();
+            String regname = App.getLocation().getRegname();
+            Log.i("zzzz", regname);
+            tv_currentLocation.setText(regname);
 //            parms.add("");
             parms.add("0");
             parms.add(userid);
             parms.add(lat);
             parms.add(lon);
-            parms.add("110000");
+            parms.add(mCityID);
             HttpUtils.post(Api.PUBLIC, HOTAREA, parms, new JsonResponseHandler() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
@@ -204,7 +215,7 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
             });
 
         } else {
-            return;
+
         }
     }
 
@@ -253,7 +264,7 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
                 parms.add("4");
                 parms.add(lat);
                 parms.add(lon);
-                parms.add("110105");
+                parms.add(mCityID);
                 parms.add("");
                 parms.add(s.toString());
 
@@ -310,8 +321,40 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
         });
     }
 
+    @Subscriber(tag = "toSeek", mode = ThreadMode.ASYNC)
+    private void receivePCmsg(ProvinceAndCityInfo info) {
+        LogUtils.e(info.toString());
+        Log.i("EventBus", "receiverPCmsg.toSeek = " + info.getCityID());
+        String provinceName = info.getProvinceName();
+        mCityID = info.getCityID();
+        String cityName = info.getCityName();
+        StringBuffer sb = new StringBuffer();
+        final String PCName = sb.append(provinceName).append(cityName).toString();
+        Log.d("PCName", PCName);
+//        tv_cityName.setText("");
+        tv_cityName.post(new Runnable() {
+            @Override
+            public void run() {
+                tv_cityName.setText(PCName);
+            }
+        });
+
+        ToastUtils.showShort(this, PCName);
+        final FragmentTransaction ft = manager.beginTransaction();
+        SearchHotAreaFragment searchCommunityListFragment = new SearchHotAreaFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("mCityID", mCityID);
+        Log.i("232323", mCityID);
+        Log.i("8888", bundle + "");
+        searchCommunityListFragment.setArguments(bundle);
+        ft.replace(R.id.myFragment, searchCommunityListFragment);
+        ft.commit();
+
+    }
+
+
     @Override
-    public void SendMessageValue(final String comID, String comName) {
+    public void SendMessageValue(final String comID, String comName, final String mCityID) {
 
         if (comName != null) {
             tv_hotArea.setVisibility(View.VISIBLE);
@@ -329,13 +372,18 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
                 public void onClick(View v) {
                     tv_hotArea.setText("");
                     tv_hotArea.setVisibility(View.GONE);
-                    SearchHotAreaFragment hotAreaFragment = new SearchHotAreaFragment();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    SearchHotAreaFragment hotAreaFragment = new SearchHotAreaFragment();
+//                    Bundle b = new Bundle();
+//                    b.putString("mCityID",mCityID);
+//                    Log.i("abcdef",b+"");
+//                    Log.d("%%%%%",mCityID);
+//                    hotAreaFragment.setArguments(b);
                     transaction.replace(R.id.myFragment, hotAreaFragment).commit();
                 }
             });
 
-        } else {
+        } else if ("".equals(comName)) {
             tv_hotArea.setVisibility(View.GONE);
         }
     }
@@ -344,26 +392,6 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-    }
-    @Subscriber(tag = "toSeek", mode = ThreadMode.ASYNC)
-    private void receivePCmsg(ProvinceAndCityInfo info) {
-        Log.i("EventBus", "receiverPCmsg.toSeek = " + info.getProvinceName());
-        String provinceName = info.getProvinceName();
-        String cityID = info.getCityID();
-        String cityName = info.getCityName();
-        StringBuffer sb = new StringBuffer();
-        final String PCName = sb.append(provinceName).append(cityName).toString();
-        Log.d("PCName",PCName);
-//        tv_cityName.setText("");
-        tv_cityName.post(new Runnable() {
-            @Override
-            public void run() {
-                tv_cityName.setText(PCName);
-            }
-        });
-
-
-
     }
 
 
