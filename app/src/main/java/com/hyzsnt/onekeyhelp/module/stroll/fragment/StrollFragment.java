@@ -324,7 +324,7 @@ public class StrollFragment extends BaseFragment {
 		//获取用户id
 		mUid = mUserInfo.get(0).getmInfo().getUserInfoInfo().getUid();
 		//获取经度
-		mLat = String.valueOf(App.getLocation().getLatitude());
+		 mLat = String.valueOf(App.getLocation().getLatitude());
 		//获取纬度
 		mLon = String.valueOf(App.getLocation().getLongitude());
 	}

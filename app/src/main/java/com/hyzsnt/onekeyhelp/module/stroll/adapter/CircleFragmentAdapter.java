@@ -134,6 +134,7 @@ public class CircleFragmentAdapter extends BaseExpandableListAdapter {
 				CircleType.ListEntry query = null;
 				for(int j=0;j<queryall.size();j++){
 					if(queryall.get(j).getTagid().equals(flist[1])){
+						query= queryall.get(j);
 					}
 				}
 				childViewHolder.child_type_two.setText(query.getTagname());

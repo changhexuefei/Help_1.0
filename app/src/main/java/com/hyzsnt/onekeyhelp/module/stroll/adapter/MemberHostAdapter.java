@@ -128,17 +128,17 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 				}
 				String flags =listEntry.getHobbytags();
 				String[] flist = flags.split("\\|");
-				if(flist.length==3){
+				if(flist.length>=3){
 					CircleType.ListEntry query = null;
 					for(int j=0;j<queryall.size();j++){
 						if(queryall.get(j).getTagid().equals(flist[2])){
 							query= queryall.get(j);
 						}
 					}
-					((MViewHolder) holder).tagone.setText(query.getTagname());
-					GradientDrawable myGrad = (GradientDrawable)((MViewHolder) holder).tagone.getBackground();
+					((MViewHolder) holder).tagthree.setText(query.getTagname());
+					GradientDrawable myGrad = (GradientDrawable)((MViewHolder) holder).tagthree.getBackground();
 					myGrad.setColor(Color.parseColor(query.getTagdesc()));
-					((MViewHolder) holder).tagone.setVisibility(View.VISIBLE);
+					((MViewHolder) holder).tagthree.setVisibility(View.VISIBLE);
 				}
 				if(flist.length>=2){
 					CircleType.ListEntry query = null;
@@ -154,17 +154,14 @@ public class MemberHostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 				} if(flist.length>=1){
 					CircleType.ListEntry query = null;
 					for(int j=0;j<queryall.size();j++){
-						LogUtils.e(queryall.toString());
 						if(queryall.get(j).getTagid().equals(flist[0])){
 							query= queryall.get(j);
-							LogUtils.e(query.toString());
 						}
 					}
-					/*LogUtils.e(query.toString()+"hhh");
-				   ((MViewHolder) holder).tagthree.setText(query.getTagname());
-					GradientDrawable myGrad = (GradientDrawable) ((MViewHolder) holder).tagthree.getBackground();
+				   ((MViewHolder) holder).tagone.setText(query.getTagname());
+					GradientDrawable myGrad = (GradientDrawable) ((MViewHolder) holder).tagone.getBackground();
 					myGrad.setColor(Color.parseColor(query.getTagdesc()));
-					((MViewHolder) holder).tagthree.setVisibility(View.VISIBLE);*/
+					((MViewHolder) holder).tagone.setVisibility(View.VISIBLE);
 				}
 
 
