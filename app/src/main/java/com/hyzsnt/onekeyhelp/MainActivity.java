@@ -244,7 +244,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 					}
 					transaction.show(mHomeUnLoginFragment);
 				}
-				isHome=true;
+				//isHome=true;
 				break;
 			case R.id.rb_main_stroll:
 				if (mStrollFragment == null) {
