@@ -1,6 +1,7 @@
 package com.hyzsnt.onekeyhelp.module.index.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -14,7 +15,9 @@ import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
+import com.hyzsnt.onekeyhelp.module.index.bean.ProvinceAndCityInfo;
 import com.hyzsnt.onekeyhelp.module.index.bean.ProvinceHasCityInfo;
+import com.hyzsnt.onekeyhelp.module.index.bean.SortCity;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
@@ -22,6 +25,7 @@ import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.simple.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +42,11 @@ public class SelectCityActivity extends BaseActivity {
     LinearLayout myLayout;
     private List<String> parms;
     private static final String REGIONAL = "getRegional";
-
-    private List<String> citys;
+//    private List<String> citys;
     List<ProvinceHasCityInfo> mInfos;
+    private SortCity city;
+    private String provinceID;
+    private String provinceName;
 
 
     @Override
@@ -50,16 +56,23 @@ public class SelectCityActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        citys = new ArrayList<>();
+//        citys = new ArrayList<>();
         parms = new ArrayList<>();
         Intent intent = getIntent();
-        String cityID = intent.getStringExtra("cityid");
-        String initial = intent.getStringExtra("initial");
-        String provinceName = intent.getStringExtra("provinceName");
-        mProvinceInitial.setText(initial);
-        mProvinceName.setText(provinceName);
-        Toast.makeText(this, cityID, Toast.LENGTH_SHORT).show();
-        getProvinceHasCityList(cityID);
+
+        Bundle bundle = intent.getExtras();
+
+        if(bundle!=null){
+            city = (SortCity) bundle.get("city");
+            Log.d("city+++++++++", city +"");
+            provinceID = city.getId();
+            provinceName=  city.getName();
+            mProvinceInitial.setText(city.getSortLetters());
+            mProvinceName.setText(city.getName());
+            String cityID = city.getId();
+//            Toast.makeText(this, cityID, Toast.LENGTH_SHORT).show();
+            getProvinceHasCityList(cityID);
+        }
     }
 
     private void getProvinceHasCityList(String cityID) {
@@ -90,7 +103,7 @@ public class SelectCityActivity extends BaseActivity {
                                 ProvinceHasCityInfo info = new ProvinceHasCityInfo();
                                 info.setcID(jsonObject.getString("regid"));
                                 info.setcName(jsonObject.getString("regname"));
-                                citys.add(jsonObject.getString("regname"));
+//                                citys.add(jsonObject.getString("regname"));
                                 mInfos.add(info);
                             }
                         }
@@ -123,8 +136,8 @@ public class SelectCityActivity extends BaseActivity {
         LinearLayout.LayoutParams textViewLP = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         textViewLP.setMargins((int) dipToPx(8), 0, 0, 0);
-        for (int i = 0; i < citys.size(); i++) {
-            Log.d("++++++++++++++++++++", "" + citys.size());
+        for (int i = 0; i < mInfos.size(); i++) {
+            Log.d("++++++++++++++++++++", "" + mInfos.size());
 //            若当前为新起的一行，先添加旧的那行
 //            然后重新创建布局对象，设置参数，将isNewLayout判断重置为false
             if (isNewLayout) {
@@ -135,12 +148,21 @@ public class SelectCityActivity extends BaseActivity {
             }
 //            计算是否需要换行
             final TextView textView = (TextView) getLayoutInflater().inflate(R.layout.item_textview, null);
-            textView.setText(citys.get(i));
+            textView.setText(mInfos.get(i).getcName());
+            final int finalI = i;
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(SelectCityActivity.this, textView.getText(), Toast.LENGTH_SHORT).show();
+                    String cID = mInfos.get(finalI).getcID();
+                    String cName = mInfos.get(finalI).getcName();
+                    Log.d("wwwww",cID+">>>>"+cName);
+                    Toast.makeText(SelectCityActivity.this, cID+">>>>>"+cName, Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(SelectCityActivity.this, "" + v.getId(), Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(SelectCityActivity.this,SeekeStateActivity.class);
+                    //发送消息
+                    EventBus.getDefault().post(new ProvinceAndCityInfo(provinceID,provinceName,cID,cName),"toSeek");
+                    startActivity(intent);
+                    finish();
                 }
             });
             textView.measure(0, 0);
