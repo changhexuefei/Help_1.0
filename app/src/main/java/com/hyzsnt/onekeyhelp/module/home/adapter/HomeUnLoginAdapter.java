@@ -101,9 +101,9 @@ public class HomeUnLoginAdapter extends RecyclerView.Adapter {
                                 if("0".equals(res)){
                                     ToastUtils.showLong(mContext,"加入失败" );
                                 }else if("1".equals(res)){
-                                    activity.checkJoinComunnity();
                                     //修改用户信息
                                     writeUser();
+                                    activity.checkJoinComunnity();
                                     //查询小区信息
                                     List paramsDetail = new ArrayList<String>();
                                     paramsDetail.add(cmid);//2061  2803

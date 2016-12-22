@@ -19,10 +19,12 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.view.CommonHeader;
 import com.hyzsnt.onekeyhelp.R;
+import com.hyzsnt.onekeyhelp.app.App;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
+import com.hyzsnt.onekeyhelp.module.help.bean.LocationInfo;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeUnLoginHeadAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
@@ -66,6 +68,10 @@ public class HomeUnLoginFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
+        LocationInfo location = App.getLocation();
+        if(location!=null){
+            homeTvTitle.setText(location.getAddrStr());
+        }
 
         final HomeUnLoginAdapter mHomeAdapter = new HomeUnLoginAdapter(getActivity());
         homeLrv.setLayoutManager(new LinearLayoutManager(getActivity()));

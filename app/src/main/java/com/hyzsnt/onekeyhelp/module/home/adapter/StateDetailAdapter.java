@@ -33,7 +33,7 @@ public class StateDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == 0) {
+        if (viewType == 1) {
             View v1 = LayoutInflater.from(mContext).inflate(R.layout.item_activity_state_detail_1, parent, false);
             return new StateDetailViewHolder1(v1);
         } else {
