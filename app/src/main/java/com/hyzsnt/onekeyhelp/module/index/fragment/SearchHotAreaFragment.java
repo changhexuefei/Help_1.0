@@ -2,6 +2,9 @@ package com.hyzsnt.onekeyhelp.module.index.fragment;
 
 
 import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.TypedValue;
@@ -37,7 +40,7 @@ import static com.hyzsnt.onekeyhelp.app.App.getLocation;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchHotAreaFragment extends BaseFragment  {
+public class SearchHotAreaFragment extends BaseFragment {
     @BindView(R.id.classify)
     LinearLayout mLayout;
     List<String> parms = new ArrayList<>();
@@ -50,21 +53,63 @@ public class SearchHotAreaFragment extends BaseFragment  {
     private String comID;
     private String comName;
     CallBackValue callBackValue;
+    private String mCityID;
 
 
     @Override
     protected List<String> getParams() {
         return null;
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        //当前fragment从activity重写了回调接口  得到接口的实例化对象
+        callBackValue = (CallBackValue) getActivity();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            mCityID = bundle.getString("mCityID");
+            Log.d("565656", mCityID);
+        }
+
+
+    }
+
     /**
      * fragment与activity产生关联是  回调这个方法
      */
+
+
     @Override
     public void onAttach(Activity activity) {
 
         super.onAttach(activity);
         //当前fragment从activity重写了回调接口  得到接口的实例化对象
-        callBackValue =(CallBackValue) getActivity();
+        callBackValue = (CallBackValue) getActivity();
+
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            mCityID = bundle.getString("mCityID");
+            Log.d("565656", mCityID);
+        }
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            mCityID = bundle.getString("mCityID");
+            Log.d("909090", mCityID);
+        }
+
     }
 
 
@@ -74,7 +119,7 @@ public class SearchHotAreaFragment extends BaseFragment  {
         Log.d("lat", lat);
         lon = Double.toString(getLocation().getLongitude());
         Log.d("lon", lon);
-        getCurrentLocation();
+        getHotAreaInfo(mCityID);
 
     }
 
@@ -130,7 +175,7 @@ public class SearchHotAreaFragment extends BaseFragment  {
                     Log.d("comID", comID);
                     comName = mHotAreaInfos.get(finalI).getList().getHotName().trim();
                     Log.d("comName", comName);
-                    callBackValue.SendMessageValue(comID,comName);
+                    callBackValue.SendMessageValue(comID, comName, mCityID);
                     Toast.makeText(mActivity, "" + v.getId(), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -182,18 +227,17 @@ public class SearchHotAreaFragment extends BaseFragment  {
     }
 
 
-    private void getCurrentLocation() {
+    private void getHotAreaInfo(String mCityID) {
         lat = Double.toString(getLocation().getLatitude());
         Log.d("lat", lat);
         lon = Double.toString(getLocation().getLongitude());
         Log.d("lon", lon);
-
         parms.add("0");
         parms.add("4");
         parms.add(lat);
         parms.add(lon);
-        parms.add("110000");
-
+        parms.add(mCityID);
+        LogUtils.e("params: " + parms.toString());
         HttpUtils.post(Api.PUBLIC, "getHotArea", parms, new JsonResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
@@ -202,7 +246,7 @@ public class SearchHotAreaFragment extends BaseFragment  {
 
             @Override
             public void onSuccess(String response, int id) {
-                Log.d("我的位置是：", response);
+                Log.d("uuuuuu", response);
                 if (JsonUtils.isSuccess(response)) {
                     try {
                         mMyHotAreaInfo = new MyHotAreaInfo();
@@ -251,9 +295,10 @@ public class SearchHotAreaFragment extends BaseFragment  {
             }
         });
     }
+
     //定义一个回调接口
-    public interface CallBackValue{
-        void SendMessageValue(String comID,String comName);
+    public interface CallBackValue {
+        void SendMessageValue(String comID, String comName, String mCityID);
     }
 
 
