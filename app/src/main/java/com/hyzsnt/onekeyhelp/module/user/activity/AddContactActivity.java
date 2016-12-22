@@ -79,6 +79,8 @@ public class AddContactActivity extends BaseActivity {
 		if ((!TextUtils.isEmpty(mUid)) && InPutUtils.isMobilePhone(phone)) {
 			params.add(mUid);
 			params.add(phone);
+			params.add(mEtAddContactName.getText().toString());
+			params.add(mEtAddContactNote.getText().toString());
 		} else {
 			Toast.makeText(AddContactActivity.this, "手机号码不正确！", Toast.LENGTH_SHORT).show();
 			return;
