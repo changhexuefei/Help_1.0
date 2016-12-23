@@ -1,7 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.index.fragment;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,6 +26,7 @@ import com.hyzsnt.onekeyhelp.utils.LogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.simple.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -61,43 +61,22 @@ public class SearchHotAreaFragment extends BaseFragment {
         return null;
     }
 
+
+    /**
+     * fragment与activity产生关联是  回调这个方法
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         //当前fragment从activity重写了回调接口  得到接口的实例化对象
         callBackValue = (CallBackValue) getActivity();
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            mCityID = bundle.getString("mCityID");
-            Log.d("565656", mCityID);
-        }
-
-
-    }
-
-    /**
-     * fragment与activity产生关联是  回调这个方法
-     */
-
-
-    @Override
-    public void onAttach(Activity activity) {
-
-        super.onAttach(activity);
-        //当前fragment从activity重写了回调接口  得到接口的实例化对象
-        callBackValue = (CallBackValue) getActivity();
-
-
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            mCityID = bundle.getString("mCityID");
-            Log.d("565656", mCityID);
-        }
+        //在接收消息的页面注册EventBus
+        EventBus.getDefault().register(this);
 
     }
 
@@ -301,5 +280,10 @@ public class SearchHotAreaFragment extends BaseFragment {
         void SendMessageValue(String comID, String comName, String mCityID);
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //反注册EventBus
+        EventBus.getDefault().unregister(this);
+    }
 }
