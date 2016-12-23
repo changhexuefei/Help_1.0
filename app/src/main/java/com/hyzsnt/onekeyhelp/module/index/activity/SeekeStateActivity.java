@@ -49,6 +49,7 @@ import org.simple.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import okhttp3.Call;
@@ -126,9 +127,11 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
 
     @Override
     protected void initData() {
-        userid = (String) SPUtils.get(this, "uid", "0");
-        Log.d("ggg", userid);
+        Map<String, ?> all = SPUtils.getAll(this);
+        Log.d("ggg", all+"");
+        String uid = (String) all.get("uid");
         mAdapter = new CommunityListAdapter();
+        ToastUtils.showLong(this,uid);
         mHotAreaInfos = new ArrayList<HotAreaInfo>();
         manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.myFragment, new SearchHotAreaFragment()).commit();
@@ -147,7 +150,8 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
             Log.d("lon", lon);
             mCityID = App.getLocation().getRegid();
             String regname = App.getLocation().getRegname();
-            Log.i("zzzz", regname);
+//            Log.i("zzzz", regname);
+            ToastUtils.showLong(this,regname);
             tv_currentLocation.setText(regname);
 //            parms.add("");
             parms.add("0");
@@ -182,7 +186,7 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
                                 mMyHotAreaInfo.setPosition(position);
 
                                 Log.d("12345678", mMyHotAreaInfo.getRegname());
-                                if (mMyHotAreaInfo.getRegname() != null) {
+                                if (!mMyHotAreaInfo.getRegname().equals("")) {
                                     tv_cityName.setText(mMyHotAreaInfo.getRegname());
                                 } else {
                                     tv_cityName.setVisibility(View.GONE);
