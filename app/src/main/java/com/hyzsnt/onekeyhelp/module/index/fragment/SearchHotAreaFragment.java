@@ -283,7 +283,7 @@ public class SearchHotAreaFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //反注册EventBus 
+        //反注册EventBus
         EventBus.getDefault().unregister(this);
     }
 }
