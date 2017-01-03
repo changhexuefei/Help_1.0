@@ -1,5 +1,6 @@
 package com.hyzsnt.onekeyhelp.module.user.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -34,9 +35,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Call;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 
+@RuntimePermissions
 public class AddContactActivity extends BaseActivity {
-	
+
 	private static final int OPEN_CONTACTS = 0;
 	@BindView(R.id.et_add_contact_name)
 	EditText mEtAddContactName;
@@ -45,19 +49,27 @@ public class AddContactActivity extends BaseActivity {
 	@BindView(R.id.et_add_contact_note)
 	EditText mEtAddContactNote;
 	private String mUid;
-	
+
 	@Override
 	protected int getLayoutId() {
 		return R.layout.activity_add_contact;
 	}
-	
+
 	@Override
 	protected void initData() {
 		String userDetail = (String) SPUtils.get(this, "userDetail", "");
 		ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
 		mUid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
+		AddContactActivityPermissionsDispatcher.initPermissionsWithCheck(this);
+		initPermissions();
 	}
-	
+
+	@NeedsPermission(Manifest.permission.READ_CONTACTS)
+	public void initPermissions() {
+
+	}
+
+
 	@OnClick({R.id.iv_add_contact_back, R.id.iv_add_contact_finish})
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -116,6 +128,7 @@ public class AddContactActivity extends BaseActivity {
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		AddContactActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
 	}
 
 	@Override
