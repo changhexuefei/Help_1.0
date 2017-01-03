@@ -34,6 +34,10 @@ public class Api {
 	 * 发布类字段
 	 */
 	public static final String PUBLISH = "publish";
+	/**
+	 * 求救类字段
+	 */
+	public static final String RESCUE = "rescue";
 
 
 	/**
@@ -152,7 +156,164 @@ public class Api {
 		 * }
 		 */
 		public static final String SUBMITCOORDINATE = "submitCoordinate";
+
+
+		/**
+		 * 获取热门地区信息
+		 * a:getHotArea
+		 * p:	条件类别	//0定位检索，1区域检索
+		 * 用户ID		//
+		 * 坐标X		//
+		 * 坐标Y		//
+		 * 上级行政区域ID	//
+		 * <p>
+		 * return：
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":		//当条件类别为0时，返回对该用户的定位结果
+		 * {
+		 * "position":位置描述,
+		 * "regid":行政区域ID,
+		 * "regname":行政区域名称
+		 * },
+		 * "list":		//
+		 * {
+		 * 区域ID:区域名称,
+		 * 区域ID:区域名称,
+		 * ...
+		 * }
+		 * }
+		 */
+		public static final String GETHOTAREA = "getHotArea";
+
+		/**
+		 * 获取行政区信息
+		 * a:getRegional
+		 * p:	上级区域ID	//最高级为100000
+		 * <p>
+		 * return：
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":"0",	//是否为最后一级 0否1是
+		 * "list":		//
+		 * {
+		 * 区域ID:区域名称,
+		 * 区域ID:区域名称,
+		 * ...
+		 * }
+		 * }
+		 */
+		public static final String GETREGIONAL = "getRegional";
+
+
 	}
+
+	/**
+	 * 求救类
+	 */
+	public static final class Rescue {
+		/**
+		 * 提交发起求救信息（数据保存有效期）
+		 * a:sponsorHelp
+		 * p:	用户ID
+		 * return：
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":		//
+		 * {
+		 * "uid":"",		//发起用户ID
+		 * "emid":"",		//发起信息流水ID
+		 * "posttime":"",		//发起时间
+		 * }
+		 * "list":		//
+		 * }
+		 */
+		public static final String SPONSORHELP = "sponsorHelp";
+
+		/**
+		 * 发布求救信息（定位、语音）
+		 * a:makeSureCallHelp
+		 * p:	用户ID
+		 * 发起信息流水ID
+		 * 来源	//-1安卓 -2IOS
+		 * 音频串
+		 * return：
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":		//
+		 * "list":		//
+		 * }
+		 */
+		public static final String MAKESURECALLHELP = "makeSureCallHelp";
+
+
+		/**
+		 * 中断或结束求救
+		 * a:cancelCallHelp
+		 */
+		public static final String CANCELCALLHELP = "cancelCallHelp";
+
+		/**
+		 * 获取可提供帮助人列表
+		 * a:getAroundOnlineUser
+		 * p:	用户ID
+		 * return：
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":		//
+		 * {
+		 * "totalnum":"",		//返回人数
+		 * }
+		 * "list":		//
+		 * [
+		 * {
+		 * "cmid":"",	//小区ID
+		 * "cmname":"",	//小区名称
+		 * "cmcover":"",	//小区封面图链接
+		 * "curnum":"",	//成员人数
+		 * "ifcur":""	//是否为当前小区 0否1是
+		 * },
+		 * ...
+		 * ]
+		 * }
+		 */
+		public static final String GETAROUNDONLINEUSER = "getAroundOnlineUser";
+		/**
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":		//
+		 * {
+		 * "totalnum":"",		//返回行数
+		 * }
+		 * "list":		//
+		 * [
+		 * {
+		 * "uid":"",		//发起用户ID
+		 * "emid":"",		//发起信息流水ID
+		 * "posttime":"",		//发起时间
+		 * "flag":"",		//信息状态
+		 * "content":"",		//0未确认,3过程中,1或2完结或中止
+		 * "lat":"",		//纬度
+		 * "lng":"",		//经度
+		 * "phoneno":"",		//发起人电话
+		 * "nickname":"",		//发起人昵称
+		 * "headportraid":"",	//发起人头像
+		 * "objcmid":"",		//发起用户所属小区ID
+		 * "objcmname":"",		//发起用户所属小区名称
+		 * }
+		 * ...
+		 * ]
+		 * }
+		 */
+		public static final String GETHELPCALLERLIST = "getHelpCallerList";
+	}
+
 
 	/**
 	 * 用户类
@@ -291,7 +452,52 @@ public class Api {
 		 * 获取话题详情
 		 */
 		public static final String GETTOPICINFO = "getTopicInfo";
+		/**
+		 *
+		 */
+		public static final String PUBLISHTOPIC = "publishTopic";
 	}
 
+	public static final class Publish {
+		/**
+		 * 发布动态(随便说说)
+		 * a:publishDynamic
+		 * p:	用户ID
+		 * 用户纬度
+		 * 用户经度
+		 * 内容信息
+		 * 附件数量	//0时代表只有文字；大于0时代表图片文件个数，大于1时附件信息扩展；等于-1时代表安卓语音，等于-2时代表苹果语音，附件信息为语音文件
+		 * 附件信息
+		 * return：
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":"",		//
+		 * "list":"",		//
+		 * }
+		 */
+		public static final String PUBLISHDYNAMIC = "publishDynamic";
 
+		/**
+		 * 获取发布类别
+		 * a:getMTypeDynamic
+		 * p:	用户ID
+		 * return：
+		 * {
+		 * "res":"",	//结果0失败，1成功
+		 * "restr":"",	//失败则返回文字信息
+		 * "info":"",		//
+		 * "list":		//
+		 * [
+		 * {
+		 * "pkey":"",//对应mtype
+		 * "pval":"",//类别名称
+		 * "desc":"",//类别描述
+		 * }
+		 * ...
+		 * ]
+		 * }
+		 */
+		public static final String GETMTYPEDYNAMIC = "getMTypeDynamic";
+	}
 }

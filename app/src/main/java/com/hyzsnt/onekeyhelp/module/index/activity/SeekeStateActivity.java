@@ -49,7 +49,6 @@ import org.simple.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import okhttp3.Call;
@@ -97,7 +96,6 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
     private static final String NUM = "1";
     //获取页数，初次检索默认1
     private static final String PAGENUM = "1";
-
     //定位检索
     private static final String ORIENTATION = "0";
     //区域检索
@@ -127,11 +125,9 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
 
     @Override
     protected void initData() {
-        Map<String, ?> all = SPUtils.getAll(this);
-        Log.d("ggg", all+"");
-        String uid = (String) all.get("uid");
+        userid = (String) SPUtils.get(this, "uid", "0");
+        Log.d("ggg", userid);
         mAdapter = new CommunityListAdapter();
-        ToastUtils.showLong(this,uid);
         mHotAreaInfos = new ArrayList<HotAreaInfo>();
         manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.myFragment, new SearchHotAreaFragment()).commit();
@@ -142,18 +138,19 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
      * 得到当前位置的方法
      */
     private void getCurrentLocation() {
+
         if (Double.toString(App.getLocation().getLatitude()) != null &&
                 Double.toString(App.getLocation().getLongitude()) != null) {
+            //获取经度
             lat = Double.toString(App.getLocation().getLatitude());
-            Log.d("lat", lat);
+            //获取维度
             lon = Double.toString(App.getLocation().getLongitude());
-            Log.d("lon", lon);
+            //上级行政区域id
             mCityID = App.getLocation().getRegid();
             String regname = App.getLocation().getRegname();
 //            Log.i("zzzz", regname);
-            ToastUtils.showLong(this,regname);
             tv_currentLocation.setText(regname);
-//            parms.add("");
+//          parms.add("");
             parms.add("0");
             parms.add(userid);
             parms.add(lat);
@@ -186,7 +183,7 @@ public class SeekeStateActivity extends BaseActivity implements SearchHotAreaFra
                                 mMyHotAreaInfo.setPosition(position);
 
                                 Log.d("12345678", mMyHotAreaInfo.getRegname());
-                                if (!mMyHotAreaInfo.getRegname().equals("")) {
+                                if (mMyHotAreaInfo.getRegname() != null) {
                                     tv_cityName.setText(mMyHotAreaInfo.getRegname());
                                 } else {
                                     tv_cityName.setVisibility(View.GONE);

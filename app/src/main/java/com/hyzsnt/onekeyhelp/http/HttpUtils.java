@@ -42,7 +42,6 @@ public class HttpUtils {
 	 * @return 本次请求的tag，用于取消请求
 	 */
 	public static String post(String c, String a, List<String> params, final ResponseHandler handler) {
-
 		String t = time();
 		String p = "";
 		if (params != null) {
@@ -62,7 +61,7 @@ public class HttpUtils {
 		param.put("j", j);
 		param.put("p", Base64.encodeToString(p.getBytes(), Base64.DEFAULT));
 		LogUtils.e(param.toString());
-			OkHttpUtils.post().url(Api.BASE_URL).params(param).tag(t).build().execute(new StringCallback() {
+		OkHttpUtils.post().url(Api.BASE_URL).params(param).tag(t).build().execute(new StringCallback() {
 			@Override
 			public void onError(Call call, Exception e, int id) {
 				handler.onError(call, e, id);
@@ -78,7 +77,6 @@ public class HttpUtils {
 				handler.inProgress(progress, total, id);
 			}
 		});
-
 		return t;
 	}
 

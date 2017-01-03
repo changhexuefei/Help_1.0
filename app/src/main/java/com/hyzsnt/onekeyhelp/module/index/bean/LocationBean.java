@@ -2,9 +2,7 @@ package com.hyzsnt.onekeyhelp.module.index.bean;
 
 import java.util.List;
 
-/**
- * Created by 14369 on 2016/12/22.
- */
+
 
 public class LocationBean {
 
@@ -62,6 +60,8 @@ public class LocationBean {
 		private String position;
 		private String regid;
 		private String regname;
+		private int selfemerg;
+		private int surroundingemerg;
 
 		public String getPosition() {
 			return position;
@@ -85,6 +85,22 @@ public class LocationBean {
 
 		public void setRegname(String regname) {
 			this.regname = regname;
+		}
+
+		public int getSelfemerg() {
+			return selfemerg;
+		}
+
+		public void setSelfemerg(int selfemerg) {
+			this.selfemerg = selfemerg;
+		}
+
+		public int getSurroundingemerg() {
+			return surroundingemerg;
+		}
+
+		public void setSurroundingemerg(int surroundingemerg) {
+			this.surroundingemerg = surroundingemerg;
 		}
 	}
 }

@@ -9,9 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -28,6 +26,7 @@ import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
+import com.hyzsnt.onekeyhelp.module.home.activity.HelpListActivity;
 import com.hyzsnt.onekeyhelp.module.home.activity.StateActivity;
 import com.hyzsnt.onekeyhelp.module.home.adapter.DynamicKindsAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeLoginAdapter;
@@ -40,14 +39,14 @@ import com.hyzsnt.onekeyhelp.module.home.bean.UserInfoInfo;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.CompoundInfoActivity;
 import com.hyzsnt.onekeyhelp.module.index.activity.MyNeighborListActivity;
-import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
+import com.hyzsnt.onekeyhelp.module.search.SearchCommunityActivity;
+import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
@@ -55,24 +54,29 @@ import okhttp3.Call;
  * A simple {@link Fragment} subclass.
  */
 public class HomeLoginFragment extends BaseFragment {
+    //切换小区
     @BindView(R.id.home_login_iv_swich)
     ImageView homeLoginIvSwich;
+    //展示小区动态
     @BindView(R.id.home_login_lrv)
     LRecyclerView homeLoginLrv;
+    //搜索
     @BindView(R.id.homeimage_search)
     ImageView homeimageSearch;
+    //当前小区名称
     @BindView(R.id.home_tv_title)
     TextView homeTvTitle;
 
     private RecyclerView homeLoginItemHomeheadRlv;
     private ImageView homeLoginItemHeadIvNeighbor;
     private TextView homeLoginItemHeadTvNeighbor;
-    private ImageView homeLoginItemheadIvDynamicselect;
+    private LinearLayout homeLoginItemheadIvDynamicselect;
     private ArrayList<MDate> dynamicListByCommunitys = new ArrayList<>();
     private HomeLoginAdapter mHomeLoginAdapter;
     private LRecyclerViewAdapter adapter;
     private String uid;
     private String incommunity;
+    private TextView mHelpping;
 
     public HomeLoginFragment() {
         // Required empty public constructor
@@ -85,11 +89,8 @@ public class HomeLoginFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
-        String userDetail = (String) SPUtils.get(getActivity(),"userDetail", "");
-        ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
-        UserInfoInfo userInfoInfo = userInfo.get(0).getmInfo().getUserInfoInfo();
-        uid = userInfoInfo.getUid();
-        incommunity = userInfoInfo.getIncommunity();
+        //获取用户信息
+        getUserInfo();
         //初始化数据
         initCommunity();
         //切换小区
@@ -108,10 +109,11 @@ public class HomeLoginFragment extends BaseFragment {
         CommonHeader header = new CommonHeader(getActivity(), R.layout.item_home_login_head);
         adapter.addHeaderView(header);
         //初始化控件
+        mHelpping = (TextView) header.findViewById(R.id.tv_help);
         homeLoginItemHomeheadRlv = (RecyclerView) header.findViewById(R.id.home_login_item_homehead_rlv);
         homeLoginItemHeadIvNeighbor = (ImageView) header.findViewById(R.id.home_login_item_head_iv_neighbor);
         homeLoginItemHeadTvNeighbor = (TextView) header.findViewById(R.id.home_login_item_head_tv_neighbor);
-        homeLoginItemheadIvDynamicselect = (ImageView) header.findViewById(R.id.home_login_itemhead_iv_dynamicselect);
+        homeLoginItemheadIvDynamicselect = (LinearLayout) header.findViewById(R.id.home_login_itemhead_iv_dynamicselect);
         final ImageView homeLoginCommunityDetail = (ImageView) header.findViewById(R.id.home_login_community_detail);
         List paramshead = new ArrayList<String>();
         paramshead.add(incommunity + "");//2061  2803
@@ -135,6 +137,7 @@ public class HomeLoginFragment extends BaseFragment {
                     }
                 });
             }
+
             @Override
             public void inProgress(float progress, long total, int id) {
             }
@@ -157,6 +160,7 @@ public class HomeLoginFragment extends BaseFragment {
             @Override
             public void onError(Call call, Exception e, int id) {
             }
+
             @Override
             public void onSuccess(String response, int id) {
                 final ArrayList<MDate> memberListByCommunity = Resovle.getMemberListByCommunity(response);
@@ -200,7 +204,6 @@ public class HomeLoginFragment extends BaseFragment {
                         mPopupWindow.setOutsideTouchable(true);
                         mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
                         mPopupWindow.showAsDropDown(homeLoginItemheadIvDynamicselect);
-
                         GridView gv = (GridView) popupView.findViewById(R.id.item_item_head_pop_gv);
                         gv.setNumColumns(5);
                         DynamicKindsAdapter dynamicKindsAdapter = new DynamicKindsAdapter(getActivity(), dynamicKinds);
@@ -237,6 +240,7 @@ public class HomeLoginFragment extends BaseFragment {
         });
         dinamicGet(incommunity, "all");
     }
+
     String communityMemery;
     String swichMemery;
 
@@ -268,9 +272,11 @@ public class HomeLoginFragment extends BaseFragment {
                 dynamicListByCommunitys.clear();
                 dynamicListByCommunitys.addAll(dynamicListByCommunitys0);
                 mHomeLoginAdapter.setDates(dynamicListByCommunitys);
+                LogUtils.e("___" + response);
                 mHomeLoginAdapter.notifyDataSetChanged();
                 adapter.notifyDataSetChanged();
             }
+
             @Override
             public void inProgress(float progress, long total, int id) {
             }
@@ -289,12 +295,12 @@ public class HomeLoginFragment extends BaseFragment {
             @Override
             public void onSuccess(String response, int id) {
                 final ArrayList<MDate> loginCommunities = Resovle.getUserInfo(response);
-                if(loginCommunities.get(0).getmList()!=null){
+                if (loginCommunities.get(0).getmList() != null) {
                     ArrayList<LoginCommunity> loginCommunities1 = loginCommunities.get(0).getmList().getLoginCommunities();
                     for (int i = 0; i < loginCommunities1.size(); i++) {
                         LoginCommunity loginCommunity = loginCommunities1.get(i);
                         String ifcur = loginCommunity.getIfcur();
-                        if("1".equals(ifcur)){
+                        if ("1".equals(ifcur)) {
                             homeTvTitle.setText(loginCommunity.getCmname());
                         }
                     }
@@ -305,7 +311,7 @@ public class HomeLoginFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
                         View popupView = View.inflate(getActivity(), R.layout.item_item_home_login_head_pop, null);
-                        final PopupWindow mPopupWindow = new PopupWindow(popupView, 150, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+                        final PopupWindow mPopupWindow = new PopupWindow(popupView, 215, LinearLayout.LayoutParams.WRAP_CONTENT, true);
                         mPopupWindow.setTouchable(true);
                         mPopupWindow.setOutsideTouchable(true);
                         mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getActivity().getResources(), (Bitmap) null));
@@ -326,12 +332,14 @@ public class HomeLoginFragment extends BaseFragment {
                                     public void onError(Call call, Exception e, int id) {
 
                                     }
+
                                     @Override
                                     public void onSuccess(String response, int id) {
                                         dynamicListByCommunitys = Resovle.getDynamicListByCommunity(response);
                                         dinamicGet(cmid, null);
                                         mPopupWindow.dismiss();
                                     }
+
                                     @Override
                                     public void inProgress(float progress, long total, int id) {
 
@@ -365,17 +373,38 @@ public class HomeLoginFragment extends BaseFragment {
         return null;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
     @OnClick(R.id.homeimage_search)
     public void onClick() {
-        Intent i = new Intent(getActivity(), SeekeStateActivity.class);
+        Intent i = new Intent(mActivity, SearchCommunityActivity.class);
         startActivity(i);
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public void getUserInfo() {
+        String userDetail = (String) SPUtils.get(getActivity(), "userDetail", "");
+        ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+        UserInfoInfo userInfoInfo = userInfo.get(0).getmInfo().getUserInfoInfo();
+        uid = userInfoInfo.getUid();
+        incommunity = userInfoInfo.getIncommunity();
+    }
+
+    public void helpHelp(int surroundingemerg) {
+        if (surroundingemerg > 0) {
+            mHelpping.setText("附近有" + surroundingemerg + "人求救");
+            mHelpping.setVisibility(View.VISIBLE);
+            mHelpping.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mActivity, HelpListActivity.class);
+                    intent.putExtra("uid", uid);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            mHelpping.setVisibility(View.GONE);
+        }
+
     }
 }

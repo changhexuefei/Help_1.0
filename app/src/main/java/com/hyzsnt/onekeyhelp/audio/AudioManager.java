@@ -1,14 +1,13 @@
 package com.hyzsnt.onekeyhelp.audio;
 
 import android.media.MediaRecorder;
-import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
 
 public class AudioManager {
     private boolean isRecord = false;
-
+    private boolean isPrepared;// 是否准备好了
     private MediaRecorder mMediaRecorder;
 
     private AudioManager() {
@@ -35,10 +34,16 @@ public class AudioManager {
                     mMediaRecorder.start();
                     // 让录制状态为true
                     isRecord = true;
+                    // 准备结束
+                    isPrepared = true;
+                    // 已经准备好了，可以录制了
+                    if (mListener != null) {
+                        mListener.wellPrepared();
+                    }
+
                     return ErrorCode.SUCCESS;
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                    Log.e("TAG 11", ex.getMessage());
                     return ErrorCode.E_UNKOWN;
                 }
             }
@@ -47,6 +52,45 @@ public class AudioManager {
         }
     }
 
+    /**
+     * 回调函数，准备完毕，准备好后，button才会开始显示录音框
+     *
+     * @author nickming
+     */
+    public interface AudioStageListener {
+        void wellPrepared();
+    }
+
+    public AudioStageListener mListener;
+
+    public void setOnAudioStageListener(AudioStageListener listener) {
+        mListener = listener;
+    }
+
+
+    // 获得声音的level
+    public int getVoiceLevel(int maxLevel) {
+        // mRecorder.getMaxAmplitude()这个是音频的振幅范围，值域是1-32767
+        if (isPrepared) {
+            try {
+                // 取证+1，否则去不到7
+                return maxLevel * mMediaRecorder.getMaxAmplitude() / 32768 + 1;
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+            }
+        }
+        return 1;
+    }
+
+    // 取消,因为prepare时产生了一个文件，所以cancel方法应该要删除这个文件，
+    // 这是与release的方法的区别
+    public void cancel() {
+        close();
+        if (getRecordFilePath() != null) {
+            File file = new File(getRecordFilePath());
+            file.delete();
+        }
+    }
 
     public void stopRecordAndFile() {
         close();
@@ -58,7 +102,7 @@ public class AudioManager {
 
 
     private void createMediaRecord() {
-         /* ①Initial：实例化MediaRecorder对象 */
+	     /* ①Initial：实例化MediaRecorder对象 */
         mMediaRecorder = new MediaRecorder();
 
         /* setAudioSource/setVedioSource*/
@@ -81,10 +125,8 @@ public class AudioManager {
         mMediaRecorder.setOutputFile(AudioConfig.getAACFilePath());
     }
 
-
     private void close() {
         if (mMediaRecorder != null) {
-            System.out.println("stopRecord");
             isRecord = false;
             mMediaRecorder.stop();
             mMediaRecorder.release();

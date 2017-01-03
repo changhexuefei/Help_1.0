@@ -1,6 +1,5 @@
 package com.hyzsnt.onekeyhelp.module.index.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -73,11 +72,11 @@ public class CompoundInfoActivity extends BaseActivity {
             mCompoundInfo.setText(Compound.getSummary());
             mCompoundIcon.setImageResource(R.drawable.img);
             mCompoundPeopleNum.setText(Compound.getCurnum() + " 人");
-            if(mDate!=null){
-                if(mDate.size()>0){
-                    if(mDate.get(0).getmList()!=null){
-                        if(mDate.get(0).getmList().getCommunityInfoLists()!=null){
-                            if(mDate.get(0).getmList().getCommunityInfoLists().size()>0){
+            if (mDate != null) {
+                if (mDate.size() > 0) {
+                    if (mDate.get(0).getmList() != null) {
+                        if (mDate.get(0).getmList().getCommunityInfoLists() != null) {
+                            if (mDate.get(0).getmList().getCommunityInfoLists().size() > 0) {
                                 if (mDate.get(0).getmList().getCommunityInfoLists().size() == 3) {
                                     //街道办信息
                                     CommunityInfoList mSubdistrict = mDate.get(0).getmList().getCommunityInfoLists().get(0);
@@ -115,11 +114,12 @@ public class CompoundInfoActivity extends BaseActivity {
 
         }
 
-
         mBtnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent intent = new Intent(CompoundInfoActivity.this, MainActivity.class);
+                App.code = 1;
+                startActivity(intent);
 
             }
         });

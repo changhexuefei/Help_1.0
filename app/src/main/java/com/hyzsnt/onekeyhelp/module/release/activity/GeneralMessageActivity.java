@@ -40,8 +40,6 @@ public class GeneralMessageActivity extends BaseActivity {
     @BindView(R.id.btn_return)
     ImageButton mBtnReturn;
     @BindView(R.id.tv_msg)
-    TextView mTvMsg;
-    @BindView(R.id.et_title)
     TextView mEtTitle;
     @BindView(R.id.et_content)
     EditText mEtContent;
@@ -97,10 +95,10 @@ public class GeneralMessageActivity extends BaseActivity {
         Intent intent = getIntent();
         String tag = intent.getStringExtra("tag1");
         if (tag.equals("iv_gener")) {
-            mTvMsg.setText("发表综合信息");
+            mEtTitle.setText("发表综合信息");
         }
-        mTitle = mEtTitle.getText().toString();
-        mContent = mEtContent.getText().toString();
+
+
 
 
     }
@@ -122,7 +120,8 @@ public class GeneralMessageActivity extends BaseActivity {
                     public void onClick(View v) {
                         if (mTitle != null && mContent != null) {
                             StringBuffer sb = new StringBuffer();
-                            final String result = sb.append(mTitle).append("|*|").append(mContent).toString();
+                            mContent = mEtContent.getText().toString();
+                            final String result = mContent.toString();
                             p.add((String) SPUtils.get(GeneralMessageActivity.this, "uid", ""));
                             p.add(App.getLocation().getLatitude() + "");
                             p.add(App.getLocation().getLongitude() + "");
@@ -162,7 +161,7 @@ public class GeneralMessageActivity extends BaseActivity {
                                     }
                                 }
                             });
-//                            startActivity(new Intent(GeneralMessageActivity.this, StateActivity.class));
+                            //  startActivity(new Intent(GeneralMessageActivity.this, StateActivity.class));
                         } else {
                             Toast.makeText(GeneralMessageActivity.this, "请输入标题和内容", Toast.LENGTH_SHORT).show();
                         }

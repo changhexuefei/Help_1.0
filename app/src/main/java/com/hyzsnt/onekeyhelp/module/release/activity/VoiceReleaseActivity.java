@@ -1,31 +1,30 @@
 package com.hyzsnt.onekeyhelp.module.release.activity;
 
+import android.Manifest;
 import android.media.MediaPlayer;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.app.App;
-import com.hyzsnt.onekeyhelp.audio.AudioManager;
-import com.hyzsnt.onekeyhelp.audio.ErrorCode;
+import com.hyzsnt.onekeyhelp.audio.AudioRecordButton;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
+import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
+import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.release.media.MediaManager;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -40,11 +39,16 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 
-public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchListener {
 
-    private static final String PUBLISHDYNAMIC = "publishDynamic";
-    List<String> p;
+
+
+@RuntimePermissions
+public class VoiceReleaseActivity extends BaseActivity {
+
+    List<String> params;
     @BindView(R.id.talk_voice_icon)
     CircleImageView mTalkVoiceIcon;
     @BindView(R.id.talker_nickname)
@@ -52,22 +56,18 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
     @BindView(R.id.release_time)
     TextView mReleaseTime;
     @BindView(R.id.play_voice)
-    ImageView play_voice;
+    Button play_voice;
     @BindView(R.id.delete_voice)
     TextView mDeleteVoice;
     @BindView(R.id.release_voice)
     Button mReleaseVoice;
-    @BindView(R.id.press)
-    ImageButton ivbtn_press;
-    @BindView(R.id.cancel_release_voice)
-    TextView tv_cancel_release;
-    @BindView(R.id.tv_voice)
-    TextView tv_voice;
+    @BindView(R.id.btn_release_record)
+    AudioRecordButton mBtnReleaseRecord;
     private String lat;
     private String lon;
-    private AudioManager mAudioManager;
-    private String mPath;
     private String mUid;
+    private String mRecordPath;
+    private boolean isPlaying;
 
 
     @Override
@@ -77,19 +77,37 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
 
     @Override
     protected void initData() {
-        mUid = (String) SPUtils.get(this, "uid","");
+        VoiceReleaseActivityPermissionsDispatcher.initPermissionWithCheck(this);
+        String userDetail = (String) SPUtils.get(this, "userDetail", "");
+        ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+        mUid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
         //用户的经纬度
         lat = Double.toString(App.getLocation().getLatitude());
-        Log.d("4444", "" + App.getLocation().getLatitude());
-        Log.d("lat", lat);
         lon = Double.toString(App.getLocation().getLongitude());
-        Log.d("lon", lon);
+        initPermission();
+    }
+
+
+    @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO})
+    protected void initPermission() {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        VoiceReleaseActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-        ivbtn_press.setOnTouchListener(this);
+        mBtnReleaseRecord.setAudioFinishRecorderListener(new AudioRecordButton.AudioFinishRecorderListener() {
+            @Override
+            public void onFinished(float seconds, String filePath) {
+                mRecordPath = filePath;
+            }
+        });
     }
 
     @OnClick({R.id.play_voice, R.id.cancel_release_voice, R.id.delete_voice, R.id.release_voice})
@@ -99,17 +117,54 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
                 finish();
                 break;
             case R.id.delete_voice:
+                if (TextUtils.isEmpty(mRecordPath)) {
+                    ToastUtils.showShort(this, "还没录音呢！");
+                    return;
+                } else {
+                    File file = new File(mRecordPath);
+                    if (file.exists()) {
+                        file.delete();
+                    }
+                    mRecordPath = "";
+                }
                 break;
             case R.id.play_voice:
-                Toast.makeText(this, "点我了", Toast.LENGTH_SHORT).show();
-                MediaManager.playSound(mPath, new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        ToastUtils.showLong(VoiceReleaseActivity.this, "播放完成了！");
-//                        mp.stop();
-                        mp.release();
-                    }
-                });
+                if (TextUtils.isEmpty(mRecordPath)) {
+                    ToastUtils.showShort(this, "还没录音呢！");
+                    return;
+                }
+                if (isPlaying) {
+                    MediaManager.pause();
+                    return;
+                }
+                isPlaying = true;
+				/*ToastUtils.showShort(this, mRecordPath);
+				MediaManager.playSound(AudioConfig.getAACFilePath(), new MediaPlayer.OnCompletionListener() {
+					@Override
+					public void onCompletion(MediaPlayer mp) {
+						isPlaying = false;
+					}
+				});*/
+
+                try {
+                    MediaPlayer   player  =   new MediaPlayer();
+                    player.setDataSource(mRecordPath);
+                    LogUtils.e(mRecordPath);
+                    player.prepare();
+                    player.start();
+                    player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            isPlaying = false;
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
                 break;
             case R.id.release_voice:
                 releaseVoice();
@@ -119,54 +174,19 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
 
     //发布语音的方法
     private void releaseVoice() {
-        String mVoice = "";
-        p = new ArrayList<>();
-        String nickName = mTalkerNickname.getText().toString();
-        File file = new File(mPath);
-        if (file.exists()) {
-            BufferedInputStream bis = null;
-            ByteArrayOutputStream baos = null;
-            try {
-                baos = new ByteArrayOutputStream();
-                bis = new BufferedInputStream(new FileInputStream(file));
-                int len = 0;
-                byte[] bytes = new byte[1024 * 4];
-                while ((len = bis.read(bytes)) != -1) {
-                    baos.write(bytes, 0, len);
-//                    Log.d("33333", baos + "");
-                    baos.flush();
-                }
-                mVoice = baos.toString();
-                Log.d("1111111111", mVoice);
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (baos != null) {
-                    try {
-                        baos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    if (bis != null) {
-                        try {
-                            bis.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
+        if (TextUtils.isEmpty(mRecordPath)) {
+            ToastUtils.showShort(this, "还没录音呢！");
+            return;
         }
-        p.add(mUid);
-        p.add(lat);
-        p.add(lon);
-        p.add(nickName);
-        p.add("-1");
-        p.add(mVoice);
-        HttpUtils.post(Api.PUBLISH, PUBLISHDYNAMIC, p, new JsonResponseHandler() {
+        String mVoice = Base64.encodeToString(fileToByte(mRecordPath), 1);
+        params = new ArrayList<>();
+        params.add(mUid);
+        params.add(lat);
+        params.add(lon);
+        params.add("");
+        params.add("-1");
+        params.add(mVoice);
+        HttpUtils.post(Api.PUBLISH, Api.Publish.PUBLISHDYNAMIC, params, new JsonResponseHandler() {
             @Override
             public void onError(Call call, Exception e, int id) {
                 LogUtils.e("onError:" + e.getMessage());
@@ -175,58 +195,58 @@ public class VoiceReleaseActivity extends BaseActivity implements View.OnTouchLi
 
             @Override
             public void onSuccess(String response, int id) {
-                Log.d("语音", response);
+                Log.d("onSuccess", response);
                 if (JsonUtils.isSuccess(response)) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        int res = jsonObject.optInt("res", 0);
-                        if (res == 0) {
-                            ToastUtils.showShort(VoiceReleaseActivity.this, "发布失败！");
-                        } else if (res == 1) {
-                            Toast.makeText(VoiceReleaseActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
-
-                        } else {
-                            ToastUtils.showShort(VoiceReleaseActivity.this, "未知错误！请重试。");
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    LogUtils.e("语音发布成功");
+                    ToastUtils.showShort(VoiceReleaseActivity.this, "发布成功");
+                    finish();
+                } else {
+                    LogUtils.e("Error:" + JsonUtils.getErrorMessage(response));
+                    Toast.makeText(VoiceReleaseActivity.this, "发布语音失败！" + JsonUtils.getErrorMessage(response), Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(VoiceReleaseActivity.this, "发布语音成功", Toast.LENGTH_LONG).show();
             }
         });
-//        Intent i = new Intent(VoiceReleaseActivity.this, StateActivity.class);
-//        startActivity(i);
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                tv_voice.setText("松开结束");
-                startRecord();
-                break;
-            case MotionEvent.ACTION_UP:
-                tv_voice.setText("按住说话");//
-                stopRecord();
-                break;
-            default:
-                break;
+    private byte[] fileToByte(String path) {
+        File file = new File(path);
+        ByteArrayOutputStream baos = null;
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        if (file.exists()) {
+            try {
+                fis = new FileInputStream(file);
+                bis = new BufferedInputStream(fis);
+                baos = new ByteArrayOutputStream();
+                byte[] buf = new byte[1024];
+                int i = 0;
+                while ((i = bis.read(buf)) != -1) {
+                    baos.write(buf, 0, buf.length);
+                }
+                baos.flush();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    fis.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    baos.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    bis.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return false;
+        return baos == null ? null : baos.toByteArray();
     }
 
-    private void stopRecord() {
-        mAudioManager.stopRecordAndFile();
-        mPath = mAudioManager.getRecordFilePath();
-        Log.d("录制完成", mPath);
-        Toast.makeText(VoiceReleaseActivity.this, "录制完成" + mPath, Toast.LENGTH_SHORT).show();
-    }
-
-    public void startRecord() {
-        mAudioManager = AudioManager.getInstance();
-        int code = mAudioManager.startRecordAndFile();
-        Toast.makeText(VoiceReleaseActivity.this, "code:" + ErrorCode.getErrorInfo(this, code), Toast.LENGTH_SHORT).show();
-    }
 }

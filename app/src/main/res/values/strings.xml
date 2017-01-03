@@ -1,16 +1,24 @@
 <resources>
-	<string name="app_name">OneKeyHelp</string>
-	<string name="hello_blank_fragment">Hello blank fragment</string>
-	<string name="stroll_title">闲逛</string>
-	<string name="stroll_circle_create">创建圈子</string>
-	<string name="stroll_hot_circle">热门圈子</string>
-	<string name="circle_create">圈子创建</string>
+    <string name="app_name">一键帮助</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="stroll_title">闲逛</string>
+    <string name="stroll_circle_create">创建圈子</string>
+    <string name="stroll_hot_circle">热门圈子</string>
+    <string name="circle_create">圈子创建</string>
 
-	<string name="home_life_circle">生活圈</string>
-	<string name="home_run_circle">夜跑圈</string>
-	<string name="home_fitness_circle">健身圈</string>
+    <string name="home_life_circle">生活圈</string>
+    <string name="home_run_circle">夜跑圈</string>
+    <string name="home_fitness_circle">健身圈</string>
 
-	<string name="error_no_sdcard">没有SD卡，无法存储录音数据</string>
-	<string name="error_state_record">正在录音中，请先停止录音</string>
-	<string name="error_unknown">无法识别的错误</string>
+    <string name="error_no_sdcard">没有SD卡，无法存储录音数据</string>
+    <string name="error_state_record">正在录音中，请先停止录音</string>
+    <string name="error_unknown">无法识别的错误</string>
+
+    <string name="normal">按住 说话</string>
+    <string name="recording">松开 结束</string>
+    <string name="want_to_cancle">松开手指，取消发送</string>
+    <string name="shouzhishanghua">手指上滑，取消发送</string>
+    <string name="tooshort">录音时间过短</string>
 </resources>
+
+

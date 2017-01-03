@@ -3,7 +3,6 @@ package com.hyzsnt.onekeyhelp.module.release.fragment;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,7 +15,6 @@ import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.http.Api;
 import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
-import com.hyzsnt.onekeyhelp.module.release.activity.GeneralMessageActivity;
 import com.hyzsnt.onekeyhelp.module.release.activity.TalkActivity;
 import com.hyzsnt.onekeyhelp.module.release.activity.VoiceReleaseActivity;
 import com.hyzsnt.onekeyhelp.module.release.adapter.ReleaseListAdapter;
@@ -89,11 +87,9 @@ public class ReleaseFragment extends BaseFragment {
             @Override
             public void onSuccess(String response, int id) {
                 if (JsonUtils.isSuccess(response)) {
-                     releaseList = new ArrayList<Release.ListBean>();
-                    Log.d("发布动态", response);
+                    releaseList = new ArrayList<Release.ListBean>();
                     Gson gson = new Gson();
                     Release release = gson.fromJson(response, Release.class);
-                    Log.d("release", release + "");
                     releaseList = release.getList();
                     mAdapter = new ReleaseListAdapter(mActivity);
                     mAdapter.setListBeen(releaseList);
@@ -101,21 +97,19 @@ public class ReleaseFragment extends BaseFragment {
                     mReleaseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            if(releaseList.get(position).getPkey()!=null){
-                                if(releaseList.get(position).getPkey().equals("3")){
+                            if (releaseList.get(position).getPkey() != null) {
+                                if (releaseList.get(position).getPkey().equals("3")) {
                                     popupDialog();
-                                }else if(releaseList.get(position).getPkey().equals("2")){
-                                    Intent i1 = new Intent(mActivity, GeneralMessageActivity.class);
-                                    i1.putExtra("tag1", "iv_gener");
-                                    startActivity(i1);
+                                } else if (releaseList.get(position).getPkey().equals("2")) {
+                                    ToastUtils.showShort(mActivity,"暂未开通");
                                 }
-//                                else if(){
-//                                         房屋出租
-//
-//                                }else if(){
-//                                          闲置物品
-//
-//                                }
+                                //                                else if(){
+                                //                                         房屋出租
+                                //
+                                //                                }else if(){
+                                //                                          闲置物品
+                                //
+                                //                                }
                             }
                         }
                     });
@@ -128,30 +122,30 @@ public class ReleaseFragment extends BaseFragment {
         });
     }
 
-    public void popupDialog(){
+    public void popupDialog() {
         final List<String> strings = new ArrayList<>();
-                strings.add("文字发布");
-                strings.add("语音发布");
-                StyledDialog.buildBottomItemDialog(mActivity, strings, "取消", new MyItemDialogListener() {
+        strings.add("文字发布");
+        strings.add("语音发布");
+        StyledDialog.buildBottomItemDialog(mActivity, strings, "取消", new MyItemDialogListener() {
 
-                    @Override
-                    public void onItemClick(CharSequence charSequence, int i) {
-                        ToastUtils.showShort(mActivity, charSequence);
-                        if (i == 0) {
-                            Intent i2 = new Intent(mActivity, TalkActivity.class);
-                            i2.putExtra("tag", "iv_talk");
-                            startActivity(i2);
-                        }
-                        if (i == 1) {
-                            Intent i3 = new Intent(mActivity, VoiceReleaseActivity.class);
-                            i3.putExtra("tag2", "iv_voice");
-                            startActivity(i3);
-                        }
-                    }
-                    @Override
-                    public void onBottomBtnClick() {
-                    }
-                }).show();
+            @Override
+            public void onItemClick(CharSequence charSequence, int i) {
+                if (i == 0) {
+                    Intent i2 = new Intent(mActivity, TalkActivity.class);
+                    i2.putExtra("tag", "iv_talk");
+                    startActivity(i2);
+                }
+                if (i == 1) {
+                    Intent i3 = new Intent(mActivity, VoiceReleaseActivity.class);
+                    i3.putExtra("tag2", "iv_voice");
+                    startActivity(i3);
+                }
+            }
+
+            @Override
+            public void onBottomBtnClick() {
+            }
+        }).show();
 
     }
 

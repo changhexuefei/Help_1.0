@@ -1,12 +1,15 @@
 package com.hyzsnt.onekeyhelp;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +29,7 @@ import com.hyzsnt.onekeyhelp.http.HttpUtils;
 import com.hyzsnt.onekeyhelp.http.response.JsonResponseHandler;
 import com.hyzsnt.onekeyhelp.http.response.ResponseHandler;
 import com.hyzsnt.onekeyhelp.module.help.activity.HelpActivity;
+import com.hyzsnt.onekeyhelp.module.help.bean.HelpBean;
 import com.hyzsnt.onekeyhelp.module.help.bean.LocationInfo;
 import com.hyzsnt.onekeyhelp.module.help.service.LocationService;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
@@ -34,7 +38,6 @@ import com.hyzsnt.onekeyhelp.module.home.fragment.HomeUnLoginFragment;
 import com.hyzsnt.onekeyhelp.module.home.inner.IjoinCommunnity;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.bean.LocationBean;
-import com.hyzsnt.onekeyhelp.module.login.activity.LoginActivity;
 import com.hyzsnt.onekeyhelp.module.release.fragment.ReleaseFragment;
 import com.hyzsnt.onekeyhelp.module.stroll.bean.CircleType;
 import com.hyzsnt.onekeyhelp.module.stroll.fragment.StrollFragment;
@@ -99,6 +102,8 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	private UserFragment mUserFragment;
 	private LocationService mLocationService;
 	private String mUid;
+	private LocalBroadcastManager mBroadcastManager;
+	private LocalBroadcastReceiver mReceiver;
 
 	@Override
 	protected int getLayoutId() {
@@ -107,11 +112,14 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 	@Override
 	protected void initData() {
-		if(isHome){
+		String userDetail = (String) SPUtils.get(this, "userDetail", "");
+		ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+		mUid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
+		initBroadcast();
+		if (isHome) {
 			checkJoinComunnity();
-			isHome=false;
+			isHome = false;
 		}
-
 		MainActivityPermissionsDispatcher.initLocationWithCheck(this);
 		initLocation();
 		SharedPreferences sp = getSharedPreferences("tags", Context.MODE_PRIVATE);
@@ -146,21 +154,24 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 
 				}
 			});
-			SharedPreferences sps = getSharedPreferences("tags", Context.MODE_PRIVATE);
 			SharedPreferences.Editor edit = sp.edit();
 			edit.putBoolean("isfirst", false);
 			edit.commit();
-
 		}
 
 	}
 
-	private void setLogin() {
-		Intent i = new Intent(this, LoginActivity.class);
-		startActivityForResult(i, 200);
+	private void initBroadcast() {
+		mBroadcastManager = LocalBroadcastManager.getInstance(this);
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction("com.hyzsnt.onekeyhelp.SELF_HELPING");
+		intentFilter.addAction("com.hyzsnt.onekeyhelp.SURROUND_HELPING");
+		mReceiver = new LocalBroadcastReceiver();
+		mBroadcastManager.registerReceiver(mReceiver, intentFilter);
 	}
 
-	@NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,})
+
+	@NeedsPermission({Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_PHONE_STATE})
 	public void initLocation() {
 		mLocationService = new LocationService(this);
 		mLocationService.registerListener(this);
@@ -194,6 +205,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	public void showNeverAskForLocation() {
 		ToastUtils.showShort(this, "您已经拒绝一键帮助获取定位权限，部分功能将无法正常使用！");
 	}
+
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -305,22 +317,48 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 	 */
 	@OnClick(R.id.btn_sos)
 	public void startHelp(View view) {
-		Intent intent = new Intent(this, HelpActivity.class);
-		startActivityForResult(intent, START_HELP);
-		overridePendingTransition(0, 0);
+		List<String> params = new ArrayList<>();
+		params.add(mUid);
+		LogUtils.e("params-id:" + mUid);
+		HttpUtils.post(Api.RESCUE, Api.Rescue.SPONSORHELP, params, new JsonResponseHandler() {
+			@Override
+			public void onError(Call call, Exception e, int id) {
+				LogUtils.e("Exception:" + e.getMessage());
+			}
+
+			@Override
+			public void onSuccess(String response, int id) {
+				LogUtils.e(response);
+				if (JsonUtils.isSuccess(response)) {
+					HelpBean helpBean = new Gson().fromJson(response, HelpBean.class);
+					HelpBean.InfoBean helpBeanInfo = helpBean.getInfo();
+					Intent intent = new Intent(MainActivity.this, HelpActivity.class);
+					intent.putExtra("helpInfo", helpBeanInfo);
+					startActivityForResult(intent, START_HELP);
+					overridePendingTransition(0, 0);
+				} else {
+					LogUtils.e("Error:" + JsonUtils.getErrorMessage(response));
+				}
+			}
+		});
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if(isHome){
-			checkJoinComunnity();
-			isHome=false;
-		}
+
 		if (App.code == 1) {
 			mRgMainBottom.check(R.id.rb_main_home);
 			App.code = 0;
+			checkJoinComunnity();
 		}
+
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mBroadcastManager.unregisterReceiver(mReceiver);
 	}
 
 	@Override
@@ -385,6 +423,14 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 					LocationBean bean = new Gson().fromJson(response, LocationBean.class);
 					location.setRegid(bean.getInfo().getRegid());
 					location.setRegname(bean.getInfo().getRegname());
+					if (bean.getInfo().getSelfemerg() > 0) {
+						Intent intent = new Intent("com.hyzsnt.onekeyhelp.SELF_HELPING");
+						intent.putExtra("selfemerg", bean.getInfo().getSelfemerg());
+						mBroadcastManager.sendBroadcast(intent);
+					}
+					Intent intent = new Intent("com.hyzsnt.onekeyhelp.SURROUND_HELPING");
+					intent.putExtra("surroundingemerg", bean.getInfo().getSurroundingemerg());
+					mBroadcastManager.sendBroadcast(intent);
 				} else {
 					Toast.makeText(MainActivity.this, "请求错误：" + JsonUtils.getErrorMessage(response), Toast.LENGTH_SHORT).show();
 				}
@@ -402,9 +448,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 		String userDetail = (String) SPUtils.get(this, "userDetail", "");
 		ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
 		String uid = userInfo.get(0).getmInfo().getUserInfoInfo().getUid();
-		List params0 = new ArrayList<String>();
-		params0.add(uid);
-		HttpUtils.post(Api.USER, Api.User.GETUSERINFO, params0, new ResponseHandler() {
+		List<String> params = new ArrayList();
+		params.add(uid);
+		HttpUtils.post(Api.USER, Api.User.GETUSERINFO, params, new ResponseHandler() {
 			@Override
 			public void onError(Call call, Exception e, int id) {
 			}
@@ -446,7 +492,28 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
 			public void inProgress(float progress, long total, int id) {
 			}
 		});
-
 	}
 
+
+	class LocalBroadcastReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String action = intent.getAction();
+			switch (action) {
+				case "com.hyzsnt.onekeyhelp.SELF_HELPING":
+					Intent helpIntent = new Intent(context, HelpActivity.class);
+					helpIntent.putExtra("emid", intent.getIntExtra("selfemerg", 0));
+					startActivity(helpIntent);
+					overridePendingTransition(0, 0);
+					break;
+				case "com.hyzsnt.onekeyhelp.SURROUND_HELPING":
+					if (mHomeLoginFragment != null) {
+						int surroundingemerg = intent.getIntExtra("surroundingemerg", 0);
+						mHomeLoginFragment.helpHelp(surroundingemerg);
+					}
+					break;
+			}
+		}
+	}
 }

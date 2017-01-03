@@ -21,7 +21,7 @@ public class ReleaseListAdapter extends BaseAdapter {
     private static final String TALK = "3";
     private static final String GENERAL = "2";
     //    private static final String UNUSE = "家中闲置";
-//    private static final String RENT = "房屋出租";
+    //    private static final String RENT = "房屋出租";
     private Context mContext;
     private LayoutInflater mInflater;
     List<Release.ListBean> mListBeen;
@@ -72,14 +72,14 @@ public class ReleaseListAdapter extends BaseAdapter {
             } else if (GENERAL.equals(mListBeen.get(position).getPkey())) {
                 itemViewHolder.iv_release_icon.setImageResource(R.mipmap.general_message);
             }
-//            else if (UNUSE.equals(mListBeen.get(position).getPkey())) {
-//
-//                itemViewHolder.iv_release_icon.setImageResource(R.mipmap.unuse_goods);
-//
-//            } else if (RENT.equals(mListBeen.get(position).getPkey())) {
-//
-//                itemViewHolder.iv_release_icon.setImageResource(R.mipmap.house_lease);
-//            }
+            //            else if (UNUSE.equals(mListBeen.get(position).getPkey())) {
+            //
+            //                itemViewHolder.iv_release_icon.setImageResource(R.mipmap.unuse_goods);
+            //
+            //            } else if (RENT.equals(mListBeen.get(position).getPkey())) {
+            //
+            //                itemViewHolder.iv_release_icon.setImageResource(R.mipmap.house_lease);
+            //            }
             itemViewHolder.tv_realease_title.setText(mListBeen.get(position).getPval());
             itemViewHolder.tv_release_remark.setText(mListBeen.get(position).getDesc());
         }
