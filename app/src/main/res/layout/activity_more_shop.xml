@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.hyzsnt.onekeyhelp.module.home.activity.MoreShopActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/iv_more_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:src="@drawable/home_goback"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="更多商品"
+            android:textColor="#FFF"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_more_swi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="15dp"
+            android:text="筛选"
+            android:textColor="#FFF"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/shop_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <FrameLayout
+        android:id="@+id/fl_more_cart"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:background="#DFDFDF">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shop_cart"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="我的购物车"
+                android:textColor="#E4433B"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

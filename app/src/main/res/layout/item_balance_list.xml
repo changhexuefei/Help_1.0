@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_balance_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="今天"/>
+
+    <TextView
+        android:id="@+id/tv_balance_item_times"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_balance_item_time"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_2"
+        android:textSize="@dimen/sp_12"
+        android:text="13:40"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/im_balance_headportraid"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/tv_balance_item_time"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_10"
+        android:src="@mipmap/cc"/>
+    <TextView
+        android:id="@+id/tv_balance_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/im_balance_headportraid"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="-58:00"/>
+    <TextView
+        android:id="@+id/tv_balance_item_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/im_balance_headportraid"
+        android:layout_below="@id/tv_balance_item_price"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_2"
+        android:text="短信支出"/>
+    <TextView
+        android:id="@+id/tv_balance_item_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="成功"
+        android:layout_marginRight="@dimen/dp_5"/>
+    <View
+        android:layout_below="@id/tv_balance_item_times"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dbdbdb">
+
+    </View>
+</RelativeLayout>

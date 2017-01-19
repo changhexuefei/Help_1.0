@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_balance"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.hyzsnt.onekeyhelp.module.user.activity.BalanceActivity">
+    <RelativeLayout
+        android:id="@+id/relayout_create_circle_one"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="@color/colorReseda"
+        >
+
+        <ImageView
+            android:id="@+id/im_balace_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:src="@mipmap/circle_back"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:text="交易详情"
+            android:textColor="@color/color_ff"
+            android:textSize="@dimen/sp_16"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_balance_filtrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_18"
+            android:paddingRight="@dimen/dp_18"
+            android:paddingTop="@dimen/dp_10"
+            android:text="筛选"
+            android:textColor="@color/color_ff"
+            android:textSize="@dimen/sp_14"
+            />
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/re_balance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

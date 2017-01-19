@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#1CCD9a">
+
+        <ImageView
+            android:id="@+id/iv_recharge_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:src="@drawable/home_goback"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="充值"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"/>
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#F9F9F9"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:text="支付方式"
+        android:textColor="#716F76"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            style="@style/rb_pay_type"
+            android:drawableLeft="@drawable/zhifubao"
+            android:text="支付宝"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#F9F9F9"/>
+
+        <RadioButton
+            style="@style/rb_pay_type"
+            android:drawableLeft="@drawable/weixin"
+            android:text="微信"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#F9F9F9"
+        android:gravity="center_vertical"
+        android:paddingLeft="8dp"
+        android:text="充值金额"
+        android:textColor="#716F76"/>
+
+    <RadioGroup
+        android:id="@+id/rg_rec_rg1"
+        style="@style/rg_money">
+
+        <RadioButton
+            android:id="@+id/rb_rg1_10"
+            style="@style/rb_money_check"
+            android:text="￥10.00"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:id="@+id/rb_rg1_20"
+            style="@style/rb_money_check"
+            android:text="￥20.00"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:id="@+id/rb_rg1_50"
+            style="@style/rb_money_check"
+            android:text="￥50.00"/>
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/rg_rec_rg2"
+        style="@style/rg_money">
+
+        <RadioButton
+            android:id="@+id/rb_rg2_100"
+            style="@style/rb_money_check"
+            android:text="￥100.00"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:id="@+id/rb_rg2_500"
+            style="@style/rb_money_check"
+            android:text="￥500.00"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:id="@+id/rb_rg2_1000"
+            style="@style/rb_money_check"
+            android:text="￥1000.00"/>
+    </RadioGroup>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/shape_btn_green"
+        android:text="充值"
+        android:textColor="#FFF"
+        android:textSize="16sp"/>
+
+</LinearLayout>

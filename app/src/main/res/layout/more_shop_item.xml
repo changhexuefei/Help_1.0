@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:padding="8dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitStart"
+        android:src="@drawable/more_shop_item"/>
+
+    <Button
+        android:textSize="12sp"
+        android:id="@+id/btn_add_cart"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:layout_gravity="bottom|right"
+        android:background="@drawable/shape_btn_green"
+        android:text="加入购物车"
+        android:textColor="#FFF"/>
+
+</FrameLayout>

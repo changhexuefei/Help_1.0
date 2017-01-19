@@ -8,6 +8,9 @@ import android.widget.TextView;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseFragment;
 import com.hyzsnt.onekeyhelp.module.user.activity.EmergencyContactActivity;
+import com.hyzsnt.onekeyhelp.module.user.activity.MessageActivity;
+import com.hyzsnt.onekeyhelp.module.user.activity.OrderActivity;
+import com.hyzsnt.onekeyhelp.module.user.activity.WalletActivity;
 import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import java.util.List;
@@ -75,13 +78,14 @@ public class UserFragment extends BaseFragment {
 				ToastUtils.showShort(mActivity, "我的求助");
 				break;
 			case R.id.tv_user_lease:
-				ToastUtils.showShort(mActivity, "我的租赁");
+				startActivity(new Intent(mActivity, OrderActivity.class));
 				break;
 			case R.id.tv_user_circle:
 				ToastUtils.showShort(mActivity, "我的圈子");
 				break;
 			case R.id.tv_user_purse:
-				ToastUtils.showShort(mActivity, "我的钱包");
+				Intent intent_wallet = new Intent(mActivity, WalletActivity.class);
+				startActivity(intent_wallet);
 				break;
 			case R.id.tv_user_release:
 				ToastUtils.showShort(mActivity, "我的发布");
@@ -90,7 +94,8 @@ public class UserFragment extends BaseFragment {
 				ToastUtils.showShort(mActivity, "我的求助");
 				break;
 			case R.id.tv_user_msg:
-				ToastUtils.showShort(mActivity, "系统消息");
+				//ToastUtils.showShort(mActivity, "系统消息");
+				startActivity(new Intent(mActivity, MessageActivity.class));
 				break;
 			case R.id.tv_user_contacts:
 				Intent intent = new Intent(mActivity, EmergencyContactActivity.class);

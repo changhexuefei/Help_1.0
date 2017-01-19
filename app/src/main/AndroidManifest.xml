@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-		  package="com.hyzsnt.onekeyhelp">
+          package="com.hyzsnt.onekeyhelp">
 
     <!-- SD卡权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -117,6 +117,30 @@
         <activity android:name=".module.search.activity.SwitchCityActivity">
         </activity>
         <activity android:name=".module.home.activity.HelpListActivity">
+        </activity>
+        <activity android:name=".module.user.activity.WalletActivity">
+        </activity>
+        <activity android:name=".module.user.activity.RechargeActivity">
+        </activity>
+        <activity android:name=".module.home.activity.ShopActivity">
+        </activity>
+        <activity android:name=".module.home.activity.MoreShopActivity">
+        </activity>
+        <activity android:name=".module.user.activity.MessageActivity">
+        </activity>
+        <activity android:name=".module.user.activity.OrderActivity">
+        </activity>
+        <activity android:name=".module.home.activity.ShopDetailActivity">
+        </activity>
+        <activity android:name=".module.home.activity.ShoppingCarActivity">
+        </activity>
+        <activity android:name=".module.user.activity.OrderDetailsActivity">
+        </activity>
+        <activity android:name=".module.home.activity.NewsActivity">
+        </activity>
+        <activity android:name=".module.home.activity.NewsDetailWebActivity">
+        </activity>
+        <activity android:name=".module.user.activity.BalanceActivity">
         </activity>
     </application>
 

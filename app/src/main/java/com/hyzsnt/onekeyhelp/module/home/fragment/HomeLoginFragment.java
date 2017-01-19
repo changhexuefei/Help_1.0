@@ -33,6 +33,7 @@ import com.hyzsnt.onekeyhelp.module.home.adapter.HomeLoginAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.HomeLoginHeadAdapter;
 import com.hyzsnt.onekeyhelp.module.home.adapter.LoginCommunityAdapter;
 import com.hyzsnt.onekeyhelp.module.home.bean.DynamicListByCommunityList;
+import com.hyzsnt.onekeyhelp.module.home.bean.EbSendMessage;
 import com.hyzsnt.onekeyhelp.module.home.bean.LoginCommunity;
 import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.bean.UserInfoInfo;
@@ -42,6 +43,8 @@ import com.hyzsnt.onekeyhelp.module.index.activity.MyNeighborListActivity;
 import com.hyzsnt.onekeyhelp.module.search.SearchCommunityActivity;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
+
+import org.simple.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +92,7 @@ public class HomeLoginFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
+        EventBus.getDefault().register(this);
         //获取用户信息
         getUserInfo();
         //初始化数据
@@ -162,7 +166,8 @@ public class HomeLoginFragment extends BaseFragment {
             }
 
             @Override
-            public void onSuccess(String response, int id) {
+            public void onSuccess(final String response, int id) {
+                LogUtils.e("成员"+response);
                 final ArrayList<MDate> memberListByCommunity = Resovle.getMemberListByCommunity(response);
                 if (memberListByCommunity.size() > 0) {
                     int sum = Integer.valueOf(memberListByCommunity.get(0).getmInfo().getCommunityListInfo().getTotalnum());
@@ -171,6 +176,7 @@ public class HomeLoginFragment extends BaseFragment {
                     homeLoginItemHeadIvNeighbor.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("memberListByCommunity", memberListByCommunity);
                             Intent i = new Intent(getActivity(), MyNeighborListActivity.class);
@@ -406,5 +412,10 @@ public class HomeLoginFragment extends BaseFragment {
             mHelpping.setVisibility(View.GONE);
         }
 
+    }
+    public void onEventMainThread(EbSendMessage event) {
+        if("success".equals(event.getMassage())){
+
+        }
     }
 }

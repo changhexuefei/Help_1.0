@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_order_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#dbdbdb"
+    tools:context="com.hyzsnt.onekeyhelp.module.user.activity.OrderDetailsActivity">
+    <RelativeLayout
+        android:id="@+id/relayout_create_circle_one"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="@color/colorReseda"
+        >
+
+        <ImageView
+            android:id="@+id/im_circle_details_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="15dp"
+            android:src="@mipmap/circle_back"
+            />
+
+        <TextView
+            android:id="@+id/tv_circle_details_titile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:text="订单详情"
+            android:textColor="@color/color_ff"
+            android:textSize="@dimen/sp_16"
+            />
+    </RelativeLayout>
+
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
+        android:id="@+id/lre_order_detailss"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+
+</LinearLayout>

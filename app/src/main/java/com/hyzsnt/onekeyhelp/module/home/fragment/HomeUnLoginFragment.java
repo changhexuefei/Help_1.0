@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,7 +27,9 @@ import com.hyzsnt.onekeyhelp.module.home.bean.MDate;
 import com.hyzsnt.onekeyhelp.module.home.bean.UserInfoInfo;
 import com.hyzsnt.onekeyhelp.module.home.resovle.Resovle;
 import com.hyzsnt.onekeyhelp.module.index.activity.SeekeStateActivity;
+import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.SPUtils;
+import com.hyzsnt.onekeyhelp.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,11 @@ public class HomeUnLoginFragment extends BaseFragment {
     ImageView homeImageLocation;
     @BindView(R.id.home_lrv)
     LRecyclerView homeLrv;
+    private String mUid;
+    private double mLatitude;
+    private double mLongitude;
+    private UserInfoInfo mUserInfoInfo;
+
     public HomeUnLoginFragment() {
         // Required empty public constructor
     }
@@ -64,11 +70,12 @@ public class HomeUnLoginFragment extends BaseFragment {
 
     @Override
     protected void initData(String content) {
+
         LocationInfo location = App.getLocation();
         if(location!=null){
             homeTvTitle.setText(location.getAddrStr());
         }
-
+        initUserinfo();
         final HomeUnLoginAdapter mHomeAdapter = new HomeUnLoginAdapter(getActivity());
         homeLrv.setLayoutManager(new LinearLayoutManager(getActivity()));
         final LRecyclerViewAdapter adapter = new LRecyclerViewAdapter(mHomeAdapter);
@@ -88,18 +95,16 @@ public class HomeUnLoginFragment extends BaseFragment {
         homeLrvHead.setItemAnimator(new DefaultItemAnimator());
 
 
-        String userDetail = (String) SPUtils.get(getActivity(), "userDetail", "");
-        ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
-        UserInfoInfo userInfoInfo = userInfo.get(0).getmInfo().getUserInfoInfo();
-        String uid = userInfoInfo.getUid();
         List params = new ArrayList<String>();
-        //params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
-        params.add("0");
+        // 检索类别(0定位检索，1条件检索)/ 获取数量(每次展现数量)/获取页数(获取页数，初次检索默认1)/用户ID/纬度/经度	/区县编码	热区编码	 小区名称
+
+        //获取小区列表
+        params.add("0");//
         params.add("10");
         params.add("1");
-        params.add(uid);
-        params.add("39.923594");
-        params.add("116.539995");
+        params.add(mUid);
+        params.add(String.valueOf(mLatitude));
+        params.add(String.valueOf(mLongitude));
         params.add("");
         params.add("");
         params.add("");
@@ -109,10 +114,15 @@ public class HomeUnLoginFragment extends BaseFragment {
             }
             @Override
             public void onSuccess(String response, int id) {
-                ArrayList<MDate> dates = Resovle.getCommunityList(response);
-                mHomeAdapter.setDates(dates);
-                mHomeAdapter.notifyDataSetChanged();
-                adapter.notifyDataSetChanged();
+                if(JsonUtils.isSuccess(response)){
+                    ArrayList<MDate> dates = Resovle.getCommunityList(response);
+                    mHomeAdapter.setDates(dates);
+                    mHomeAdapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
+                }else {
+                    ToastUtils.showShort(mActivity,JsonUtils.getErrorMessage(response));
+                }
+
             }
 
             @Override
@@ -133,52 +143,74 @@ public class HomeUnLoginFragment extends BaseFragment {
     public String getA() {
         return null;
     }
-    @OnClick({R.id.home_image_location, R.id.homeimage_search})
+    @OnClick({R.id.homeimage_search,R.id.home_image_location})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.home_image_location:
-                break;
+            //搜索小区
             case R.id.homeimage_search:
-                Intent i = new Intent(getActivity(), SeekeStateActivity.class);
-                startActivity(i);
+                startActivity(new Intent(getActivity(), SeekeStateActivity.class));
                 break;
+            //加入小区
+            case R.id.home_image_location:{
+                String registrationID = JPushInterface.getRegistrationID(getActivity());
+                List params = new ArrayList<String>();
+                //params 用户id/小区id
+                params.add(mUid);
+                //获取当前小区id
+                params.add( mUserInfoInfo.getIncommunity());
+                HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY, params, new ResponseHandler() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                    }
+
+                    @Override
+                    public void onSuccess(String response, int id) {
+                        if(JsonUtils.isSuccess(response)){
+                            ToastUtils.showShort(mActivity,"加入小区成功");
+                        }else{
+                            ToastUtils.showShort(mActivity,JsonUtils.getErrorMessage(response));
+                        }
+                    }
+
+                    @Override
+                    public void inProgress(float progress, long total, int id) {
+                    }
+                });
+            }
         }
     }
 
-	@Override
-	protected void initView(View contentView) {
-		super.initView(contentView);
-	}
+    @Override
+    protected void initView(View contentView) {
+        super.initView(contentView);
+    }
+
+    public void setTitle(String addrStr) {
+        if (addrStr != null) {
+            homeTvTitle.setText(addrStr);
+        } else {
+            homeTvTitle.setText("定位中...");
+        }
+    }
+    //初始化用户信息
+    public void initUserinfo(){
+        //用户信息详情
+        String userDetail = (String) SPUtils.get(getActivity(), "userDetail", "");
+        //用户信息解析
+        ArrayList<MDate> userInfo = Resovle.getUserInfo(userDetail);
+        //用户信息
+        mUserInfoInfo = userInfo.get(0).getmInfo().getUserInfoInfo();
+        //用户id
+        mUid = mUserInfoInfo.getUid();
+        //用户经纬度
+        if(App.getLocation() == null){
+            mLatitude =69.233;
+            mLongitude = 133.56643;
+        }else{
+            mLatitude = App.getLocation().getLatitude();
+            mLongitude = App.getLocation().getLongitude();
+        }
 
 
-	@OnClick(R.id.home_image_location)
-	public void onClick() {
-		String registrationID = JPushInterface.getRegistrationID(getActivity());
-		List params = new ArrayList<String>();
-		//params.add("15551675396");//用户ID：7   纬度	：	39.923594   经度	：	116.539995
-		params.add("2803");
-		params.add("7");
-		HttpUtils.post(Api.USER, Api.User.JOINCOMMUNITY, params, new ResponseHandler() {
-			@Override
-			public void onError(Call call, Exception e, int id) {
-			}
-
-			@Override
-			public void onSuccess(String response, int id) {
-				Log.e("8888888888888888888", response + "");
-			}
-
-			@Override
-			public void inProgress(float progress, long total, int id) {
-			}
-		});
-	}
-
-	public void setTitle(String addrStr) {
-		if (addrStr != null) {
-			homeTvTitle.setText(addrStr);
-		} else {
-			homeTvTitle.setText("定位中...");
-		}
-	}
+    }
 }

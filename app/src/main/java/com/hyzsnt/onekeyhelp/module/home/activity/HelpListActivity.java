@@ -1,9 +1,11 @@
 package com.hyzsnt.onekeyhelp.module.home.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
+import android.view.View;
 import com.google.gson.Gson;
 import com.hyzsnt.onekeyhelp.R;
 import com.hyzsnt.onekeyhelp.base.BaseActivity;
@@ -14,10 +16,8 @@ import com.hyzsnt.onekeyhelp.module.help.adapter.HelpListAdapter;
 import com.hyzsnt.onekeyhelp.module.help.bean.HelpList;
 import com.hyzsnt.onekeyhelp.utils.JsonUtils;
 import com.hyzsnt.onekeyhelp.utils.LogUtils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +27,6 @@ import okhttp3.Call;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
-import static android.Manifest.permission.CALL_PHONE;
 
 @RuntimePermissions
 public class HelpListActivity extends BaseActivity {
@@ -58,7 +57,6 @@ public class HelpListActivity extends BaseActivity {
             public void onError(Call call, Exception e, int id) {
 
             }
-
             @Override
             public void onSuccess(String response, int id) {
 
@@ -68,9 +66,18 @@ public class HelpListActivity extends BaseActivity {
                         Object list1 = jsonObject.get("list");
                         if (list1 != null && !list.equals("")) {
                             Gson gson = new Gson();
-                            HelpList helpList = gson.fromJson(response, HelpList.class);
+                            final HelpList helpList = gson.fromJson(response, HelpList.class);
                             adapter.setData(helpList.getList());
                             adapter.notifyDataSetChanged();
+                            adapter.setOnItemCallClickListener(new HelpListAdapter.OnItemCallClickListener() {
+                                @Override
+                                public void onItemClick(View view, int data) {
+
+                                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + helpList.getList().get(data).getPhoneno()));
+                                    LogUtils.e(data+helpList.getList().get(data).getPhoneno());
+                                    startActivity(intent);
+                                }
+                            });
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -86,11 +93,9 @@ public class HelpListActivity extends BaseActivity {
 
             }
         });
-
-
     }
 
-    @NeedsPermission(CALL_PHONE)
+    @NeedsPermission(android.Manifest.permission.CALL_PHONE)
     public void requestCallPhonePermission() {
 
     }

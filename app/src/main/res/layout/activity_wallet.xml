@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#1CCD9a">
+
+        <ImageView
+            android:id="@+id/iv_wallet_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:src="@drawable/home_goback"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="钱包"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_wallet_balance_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="13dp"
+            android:text="余额明细"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_wallet_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:drawablePadding="15dp"
+        android:drawableTop="@drawable/mooney"
+        android:gravity="center_horizontal"
+        android:text="账户余额"
+        android:textColor="#000000"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_wallet_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_wallet_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:text="￥3000.00"
+        android:textColor="#353535"
+        android:textSize="25sp"/>
+
+    <Button
+        android:id="@+id/btn_wallet_pay"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/shape_btn_green"
+        android:text="充值"
+        android:textColor="#FFF"
+        android:textSize="16sp"/>
+
+    <Button
+        android:id="@+id/btn_wallet_draw"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/btn_wallet_pay"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_btn_white"
+        android:text="提现"
+        android:textColor="#353535"
+        android:textSize="16sp"/>
+
+</RelativeLayout>
